@@ -25,6 +25,8 @@ Merge branches: git merge den_du_vil_merge_med
 
 Forket Anya sitt repo og lagt til medlemmer på nytt 
 
+Alle i teamet har programmert i Java og Python. Noen med mer kompetanse enn andre. 
+
 
 ## Om spillet
 
