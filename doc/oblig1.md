@@ -10,36 +10,27 @@
 ## **Oppgave A2: Konsept**
 ### Spillmekanikker:
 
-Vi har basert *Skadedyrkontrollørene* etter [BloonsTD](https://no.wikipedia.org/wiki/Bloons_Tower_Defense)
+Vi har basert *Skadedyrkontrollørene* etter [BloonsTD](https://no.wikipedia.org/wiki/Bloons_Tower_Defense) 
 
   
 **Forsvarere som kan plasseres:**  
   - Spilleren kan plassere ut forskjellige typer katter langs rottenes rute for å forsvare byen. Hver kattetype har unike evner, som prosjektilangrep, nærkamp, eller spesialeffekter som å fryse eller bremse ned fiender.
 
-
 **Todimensjonal byverden:**
-  - **Bygater og Avløp** 
-      - Horisontale og vertikale flater som utgjør rottenes faste rute gjennom byen.
-  - **Bygninger og Hindringer:** 
-      - Vertikale flater som blokkerer eller omruter rottehordene, og som også kan tjene som strategiske punkter for plassering av forsvarere.
-
+  - Horisontale og vertikale flater som utgjør rottenes faste rute gjennom byen. 
+  - Katter kan plasseres strategisk rundt rottenes sti.
 
 **Fiender som beveger seg langs en fast rute:** 
-  - Rottene invaderer byen langs en forhåndsbestemt rute, og spilleren må bruke katter for å stoppe dem
-
+  - Rottene invaderer byen langs en forhåndsbestemt rute, og spilleren må bruke katter for å stoppe dem.
 
 **Poengsamling:** 
   - Spilleren tjener poeng ved å eliminere rotter og kan bruke poengene til å kjøpe eller oppgradere forsvarere.
-
 
 **Utfordringer i spillet:** 
   - Spillet øker i vanskelighetsgrad ved å introdusere raskere, sterkere, og spesielle rotter som krever strategiske beslutninger for å bekjempe.
 
 **Byen bygget opp av blokker:** 
-  - Spillverdenen er delt inn i et rutenett hvor hver blokk kan inneholde en forsvarer eller fungerer som en del av rottenes rute.
-
-**Skjulte gjenstander og hemmeligheter:** 
-  - Ved å utforske og beskytte visse områder av byen, kan spilleren oppdage skjulte gjenstander som gir bonuser eller ekstra poeng.
+  - Spillverdenen er delt inn i et rutenett hvor hver blokk kan inneholde en forsvarer eller fungerer som en del av rottenes rute. 
 
 **Forsvarere kan oppgraderes:** 
   - Med poengene tjent, kan spilleren oppgradere sine forsvarere for å øke deres effektivitet mot de stadig tøffere bølgene av rotter.
@@ -60,21 +51,21 @@ Målet med spillet er å beskytte byen mot invasjon av rotter ved å strategisk 
 - Enkel bakgrunnsgrafikk der katter kan bli plassert.
 
 **2. Katt- og Rotte-Enheter**
-- **Katt-Enheter:** Minst to typer katter (f.eks., Korthårs katt som angriper rotter direkte, Langhårs katt som setter opp hinder).
+- **Katt-Enheter:** Minst to typer katter som kan oppgraderes (f.eks., Korthårs katt som angriper rotter direkte, Langhårs katt som setter opp hinder).
 - **Rotte-Enheter:** Minst én type rotte som følger stien til mål.
 
 **3. Enkel Spillopplevelse**
 - Start, Speedup, Pause, og Restart funksjoner.
 - Opptjene penger per rotte som blir drept, skal være mulig å kjøre flere forsvarsbrikker/katter.
 - Livstelling som viser spillerens gjenværende liv.
-- Forskjellige lyder vil bli spilt når man setter ut en katt, en katt skyter et prosjektil eller en en rotte dør 
+- Forskjellige lyder vil bli spilt når man setter ut en katt, en katt skyter et prosjektil eller en en rotte dør. 
 
 **4. Grunnleggende Brukergrensesnitt (UI)**
 - Enkel meny for å starte spillet.
 - Skjermvisninger for score og spillerliv.
 - Kjøpsmeny for å kjøpe flere katter.
 
-**5. Brukerhistorier i prioritert rekkefølge**
+### **5. Brukerhistorier i prioritert rekkefølge**
 1. Som en spiller, ønsker jeg å kunne se en sti hvor rotter kan bevege seg fra start til slutt, slik at jeg vet hvor jeg skal plassere mine katter for å forsvare området.
 
 2. Som en spiller, ønsker jeg å kunne plassere katter langs stien, slik at jeg kan stoppe rotter fra å nå slutten av stien.
