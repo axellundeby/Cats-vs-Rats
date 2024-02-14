@@ -1,28 +1,19 @@
 # Rapport – Innlevering 1
 
 ## Team: Skadedyrkontrollørene_inc (Gruppe 1)
+
 - Jonathan Christensen
 - Axel Lundeby
 - Theodor Nissen-Meyer
 - Jacob Foss
-  
-<br>
 
-## Oppgave A1: 
+## Spillkonsept: Skadedyrkontrollørene
 
-<br>
+### Oppgave A2: Konsept
 
-
-## Oppgave A2: Konsept
-
-<br>
-
-#### **Spillmekanikker:**
-
-[Bæsh](bloons.jpeg)
+#### Spillmekanikker
 
 Inspirert av [BloonsTD](https://no.wikipedia.org/wiki/Bloons_Tower_Defense), består *Skadedyrkontrollørene* av følgende spillmekanikker:
-
 
 - **Forsvarere som kan plasseres:** Spillere kan utplassere ulike kattetyper langs ruten til rotter for å forsvare byen. Hver katt har unike evner som prosjektilangrep, nærkamp, eller spesialeffekter som å fryse eller bremse ned fiender.
 
@@ -38,21 +29,17 @@ Inspirert av [BloonsTD](https://no.wikipedia.org/wiki/Bloons_Tower_Defense), bes
 
 - **Oppgraderbare forsvarere:** Forsvarerne kan oppgraderes med poeng tjent for å effektivt håndtere stadig tøffere rottebølger.
 
-#### **Spillets Mål:**
+#### Spillets Mål
 
 Målet er å beskytte byen mot en rotteinvasjon ved å strategisk plassere og oppgradere katter langs invasjonsrutene. Spillerne må balansere ressursbruk for å takle de varierte truslene rottene utgjør.
 
-<br>
+### Oppgave A3.0: Velg og tilpass en prosess for teamet
 
-## Oppgave A3.0: Velg og tilpass en prosess for teamet
-
-<br>
-
-### **Valg av Prosjektmetodikk**
+#### Valg av Prosjektmetodikk
 
 Vi har valgt å bruke Kanban og Scrum for prosjektstyring. Kanban hjelper oss å se og styre arbeidsflyten, mens Scrum strukturerer arbeidet vårt i korte perioder kalt sprinter. Denne kombinasjonen gir oss fleksibiliteten til å tilpasse oss endringer raskt og holder oss på sporet mot våre mål.
 
-### **Teamdiskusjon og Metodevalg**
+#### Teamdiskusjon og Metodevalg
 
 Gjennom teamdiskusjoner har vi identifisert følgende metodiske elementer som essensielle for vårt prosjekt:
 
@@ -64,16 +51,16 @@ Gjennom teamdiskusjoner har vi identifisert følgende metodiske elementer som es
 
 Vi vil involvere vår gruppeleder i denne diskusjonen for å identifisere mulige utfordringer og motta veiledning på beste praksiser.
 
-### **Viktige Prosesselementer**
+#### Viktige Prosesselementer
 
 Vår prosess vil omfatte:
 
 - **Møter:** Ukentlige sprint planleggingsmøter, statusmøter, og stand-ups.
 - **Kommunikasjon:** Discord for daglig kommunikasjon, og Git for å spore endringer og versjonskontroll.
-- **Arbeidsfordeling:** God og hyppig kommunikasjon og flytende tildeling av arbeidsoppgaver fra Kanban tavle.
+- **Arbeidsfordeling:** God og hyppig kommunikasjon og flytende tildeling av arbeidsoppgaver fra Kanban-tavle.
 - **Deling og oppbevaring av dokumenter:** Oppbevaring av kode vil foregå på Git.
 
-### **Organisering av Teamet**
+#### Organisering av Teamet
 
 Vi vil organisere vårt arbeid med følgende plan:
 
@@ -84,35 +71,31 @@ Vi vil organisere vårt arbeid med følgende plan:
 
 Vi vil forsøke å forbedre oss og tilpasse vår prosess gjennom hele prosjektet basert på tilbakemeldinger og læringspunkter fra hver sprint.
 
-### **Konklusjon**
+#### Konklusjon
 
 Dette dokumentet vil tjene som en levende guide gjennom utviklingen av Skadedyrkontrollørene. Det vil bli revidert og oppdatert for å reflektere vårt voksende forståelse av prosjektet og teamdynamikken.
 
-<br>
 
 ## Oppgave A3.1: Velg og tilpass en prosess for teamet
 
-<br>
+#### Mål for Applikasjonen
 
-#### **Mål for Applikasjonen**
+Utvikle et spill som er engasjerende med et begrenset sett av funksjoner som definerer kjernen i spillopplevelsen. Dette inkluderer grunnleggende spillmekanikker som:
 
-- Utvikle et spill som er engasjerende med et begrenset sett av funksjoner som definerer kjernen i spillopplevelsen.
- **Inkludere grunnleggende spillmekanikker** som omfatter:
-  - Spillerbevegelse gjennom plassering og valg av katter langs stien.
-  - Interaksjon med spillverdenen, der spillerne må tenke strategisk om hvor de plasserer kattene for optimal forsvar.
-  - Poengsystem som belønner spillere basert på antall rotter forhindret i å krysse stien.
-  - Fiender i form av rotter med ulike egenskaper eller hastigheter, som krever at spilleren tilpasser forsvaret etter hvert som spillet utvikler seg.
-  - Klart definerte mål for hvert nivå, som kan inkludere å stoppe et visst antall rotter, overleve gjennom bølger av angrep, eller oppnå en spesifikk score.
+- **Spillerbevegelse** gjennom plassering og valg av katter langs stien.
+- **Interaksjon med spillverdenen,** der spillerne må tenke strategisk om hvor de plasserer kattene for optimalt forsvar.
+- **Poengsystem** som belønner spillere basert på antall rotter forhindret i å krysse stien.
+- **Fiender i form av rotter** med ulike egenskaper eller hastigheter, som krever at spilleren tilpasser forsvaret etter hvert som spillet utvikler seg.
+- **Klart definerte mål** for hvert nivå, som kan inkludere å stoppe et visst antall rotter, overleve gjennom bølger av angrep, eller oppnå en spesifikk score.
 
-
-#### **MVP Funksjoner**
+#### MVP Funksjoner
 
 1. **Basis Spillområde**
    - En sti for rottebevegelse fra start til slutt.
    - Enkel bakgrunnsgrafikk for kattutplassering.
 
 2. **Katt- og Rotte-Enheter**
-   - **Katt-Enheter:** Minst to oppgraderbare kattetyper (f.eks. korthårs- og langhårskatter).
+   - **Katt-Enheter:** Minst to oppgraderbare kattetyper (f.eks., korthårs- og langhårskatter).
    - **Rotte-Enheter:** Minst én rotte som følger stien mot et mål.
 
 3. **Enkel Spillopplevelse**
@@ -125,68 +108,42 @@ Dette dokumentet vil tjene som en levende guide gjennom utviklingen av Skadedyrk
    - Skjermdisplay for poeng og spillerliv.
    - Kjøpsmeny for flere katter.
 
-<br>
+### Brukerhistorier
 
-### **Brukerhistorier:**
-
-
-### Brukerhistorie 1: *Se en sti hvor rotter kan bevege seg*
-**Beskrivelse:** Som en spiller ønsker jeg å kunne se en sti hvor rotter kan bevege seg fra start til slutt, slik at jeg vet hvor jeg skal plassere mine katter for å forsvare området.
-
-**Akseptansekriterier:**
+#### Brukerhistorie 1: Se en sti hvor rotter kan bevege seg
+Som en spiller ønsker jeg å kunne se en sti hvor rotter kan bevege seg fra start til slutt, slik at jeg vet hvor jeg skal plassere mine katter for å forsvare området.
 - En tydelig definert sti er synlig på spillets skjerm.
 - Stien har klart markerte start- og sluttpunkter.
 - Bakgrunnsgrafikken indikerer hvor katter kan plasseres for forsvar.
 
-<br>
-
-### Brukerhistorie 2: *Plassere katter langs stien*
-**Beskrivelse:** Som en spiller ønsker jeg å kunne plassere katter langs stien, slik at jeg kan stoppe rotter fra å nå slutten av stien.
-
-**Akseptansekriterier:**
+#### Brukerhistorie 2: Plassere katter langs stien
+Som en spiller ønsker jeg å kunne plassere katter langs stien, slik at jeg kan stoppe rotter fra å nå slutten av stien.
 - Spilleren kan velge katter fra en meny og plassere dem langs stien.
 - Plasserte katter vises tydelig på skjermen.
 - Katter kan ikke plasseres utenfor den definerte stien.
 
-<br>
-
-### Brukerhistorie 3: *Velge mellom ulike kattetyper*
-**Beskrivelse:** Som en spiller ønsker jeg å velge mellom minst to typer katter, slik at jeg kan anvende ulike strategier.
-
-**Akseptansekriterier:**
+#### Brukerhistorie 3: Velge mellom ulike kattetyper
+Som en spiller ønsker jeg å velge mellom minst to typer katter, slik at jeg kan anvende ulike strategier.
 - Minst to forskjellige kattetyper er tilgjengelige for spilleren.
 - Hver kattetype har unike egenskaper eller angrepsmetoder.
 - Spilleren kan enkelt velge hvilken kattetype de ønsker å plassere.
 
-<br>
-
-### Brukerhistorie 4: *Se rotter bevege seg langs stien*
-**Beskrivelse:** Som en spiller ønsker jeg å se rotter bevege seg langs stien mot målet, slik at jeg kan planlegge hvor jeg skal plassere mine forsvarsbrikker.
-
-**Akseptansekriterier:**
+#### Brukerhistorie 4: Se rotter bevege seg langs stien
+Som en spiller ønsker jeg å se rotter bevege seg langs stien mot målet, slik at jeg kan planlegge hvor jeg skal plassere mine forsvarsbrikker.
 - Rotter vises tydelig mens de beveger seg langs stien.
 - Bevegelsesmønsteret til rottene er forutsigbart nok til at spilleren kan planlegge forsvar.
 - Rotter når et definert mål hvis de ikke stoppes.
 
-<br>
-
-### Brukerhistorie 5: *Kontrollere spillopplevelsen*
-**Beskrivelse:** Som en spiller ønsker jeg å kunne starte, akselerere, pause, og restarte spillet, slik at jeg har full kontroll over spillopplevelsen.
-
-**Akseptansekriterier:**
+#### Brukerhistorie 5: Kontrollere spillopplevelsen
+Som en spiller ønsker jeg å kunne starte, akselerere, pause, og restarte spillet, slik at jeg har full kontroll over spillopplevelsen.
 - Det er tydelige kontroller for å starte, akselerere spillets hastighet, pause, og restarte spillet.
 - Disse kontrollene er enkelt tilgjengelige og intuitive å bruke.
 
-<br>
-
-### Brukerhistorie 6: *Tjene og bruke penger*
-**Beskrivelse:** Som en spiller ønsker jeg å tjene penger for hver rotte jeg dreper, slik at jeg kan kjøpe flere forsvarsbrikker/katter for å forbedre mitt forsvar.
-
-**Akseptansekriterier:**
+#### Brukerhistorie 6: Tjene og bruke penger
+Som en spiller ønsker jeg å tjene penger for hver rotte jeg dreper, slik at jeg kan kjøpe flere forsvarsbrikker/katter for å forbedre mitt forsvar.
 - Spilleren tjener penger for hver drepte rotte.
 - Opptjente penger kan brukes i spillet til å kjøpe nye katter eller oppgradere eksisterende.
 
-<br>
 
 #### Brukerhistorier i prioritert rekkefølge
 
@@ -202,24 +159,18 @@ Dette dokumentet vil tjene som en levende guide gjennom utviklingen av Skadedyrk
 
 6. Som en spiller, ønsker jeg å tjene penger for hver rotte jeg dreper, slik at jeg kan kjøpe flere forsvarsbrikker/katter for å forbedre mitt forsvar.
 
-<<<<<<< HEAD
-
-
-
-
-=======
 ### Oppgave A5: Oppsummering
 
 #### Kort oppsummering av diskusjonen
 
- Vi erkjenner viktigheten av effektiv tidsstyring og prioritering, spesielt gitt utfordringene vi har møtt med tidspress fra andre emner. Her er en oppsummering av vår diskusjon:
+Vi erkjenner viktigheten av effektiv tidsstyring og prioritering, spesielt gitt utfordringene vi har møtt med tidspress fra andre emner. Her er en oppsummering av vår diskusjon:
 
 - **Hva som gikk bra:**
   - Etableringen av kommunikasjonskanaler og motivasjonen innad i teamet er stor.
   - Begynnelsen på å bruke Kanban-tavlen for å få en oversikt over oppgavene virker som en god strategi.
 
 - **Hva som ikke fungerte helt som forventet:**
-  - Tidspress fra andre emner har begrenset tiden tilgjengelig for prosjektet, noe som påvirket vår fremdrift. Vi må derfor allokere mer tid til prosjektet. 
+  - Tidspress fra andre emner har begrenset tiden tilgjengelig for prosjektet, noe som påvirket vår fremdrift. Vi må derfor allokere mer tid til prosjektet.
 
 #### Vurdering og justering for neste iterasjon
 
@@ -228,4 +179,3 @@ Basert på retrospektivet, anerkjenner vi behovet for å være mer realistiske i
 #### Konklusjon
 
 Diskusjonen har vært verdifullt for å identifisere både styrker og områder for forbedring i vårt prosjekt. Ved å endre vår strategi og innføre nye arbeidsmetoder, er vi optimistiske for bedre resultater i den kommende perioden.
->>>>>>> 439cd93 (ferdig med A5)
