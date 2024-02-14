@@ -34,6 +34,11 @@ Målet er å beskytte byen mot en rotteinvasjon ved å strategisk plassere og op
 
 ### Oppgave A3.1: Velg og tilpass en prosess for teamet
 
+#### Mål for Applikasjonen
+
+RatBurst er et strategisk og engasjerende spill der spillere bruker katter til å stoppe rotter fra å krysse en bane. Målet er å utfordre spillerens strategiske tenkning og tilpasningsevne gjennom progressive vanskelighetsgrader. Spillet kombinerer forsvarsmekanikker med en enkel og intuitiv brukeropplevelse, rettet mot et bredt publikum som søker underholdning og taktisk dybde.
+
+
 #### MVP Funksjoner
 
 1. **Basis Spillområde**
