@@ -32,7 +32,7 @@ Inspirert av [BloonsTD](https://no.wikipedia.org/wiki/Bloons_Tower_Defense), bes
 
 Målet er å beskytte byen mot en rotteinvasjon ved å strategisk plassere og oppgradere katter langs invasjonsrutene. Spillerne må balansere ressursbruk for å takle de varierte truslene rottene utgjør.
 
-### Oppgave A3: Velg og tilpass en prosess for teamet
+### Oppgave A3.1: Velg og tilpass en prosess for teamet
 
 #### MVP Funksjoner
 
@@ -54,6 +54,53 @@ Målet er å beskytte byen mot en rotteinvasjon ved å strategisk plassere og op
    - Skjermdisplay for poeng og spillerliv.
    - Kjøpsmeny for flere katter.
 
+
+### Brukerhistorie 1: Se en sti hvor rotter kan bevege seg
+**Beskrivelse:** Som en spiller ønsker jeg å kunne se en sti hvor rotter kan bevege seg fra start til slutt, slik at jeg vet hvor jeg skal plassere mine katter for å forsvare området.
+
+**Akseptansekriterier:**
+- En tydelig definert sti er synlig på spillets skjerm.
+- Stien har klart markerte start- og sluttpunkter.
+- Bakgrunnsgrafikken indikerer hvor katter kan plasseres for forsvar.
+
+### Brukerhistorie 2: Plassere katter langs stien
+**Beskrivelse:** Som en spiller ønsker jeg å kunne plassere katter langs stien, slik at jeg kan stoppe rotter fra å nå slutten av stien.
+
+**Akseptansekriterier:**
+- Spilleren kan velge katter fra en meny og plassere dem langs stien.
+- Plasserte katter vises tydelig på skjermen.
+- Katter kan ikke plasseres utenfor den definerte stien.
+
+### Brukerhistorie 3: Velge mellom ulike kattetyper
+**Beskrivelse:** Som en spiller ønsker jeg å velge mellom minst to typer katter, slik at jeg kan anvende ulike strategier.
+
+**Akseptansekriterier:**
+- Minst to forskjellige kattetyper er tilgjengelige for spilleren.
+- Hver kattetype har unike egenskaper eller angrepsmetoder.
+- Spilleren kan enkelt velge hvilken kattetype de ønsker å plassere.
+
+### Brukerhistorie 4: Se rotter bevege seg langs stien
+**Beskrivelse:** Som en spiller ønsker jeg å se rotter bevege seg langs stien mot målet, slik at jeg kan planlegge hvor jeg skal plassere mine forsvarsbrikker.
+
+**Akseptansekriterier:**
+- Rotter vises tydelig mens de beveger seg langs stien.
+- Bevegelsesmønsteret til rottene er forutsigbart nok til at spilleren kan planlegge forsvar.
+- Rotter når et definert mål hvis de ikke stoppes.
+
+### Brukerhistorie 5: Kontrollere spillopplevelsen
+**Beskrivelse:** Som en spiller ønsker jeg å kunne starte, akselerere, pause, og restarte spillet, slik at jeg har full kontroll over spillopplevelsen.
+
+**Akseptansekriterier:**
+- Det er tydelige kontroller for å starte, akselerere spillets hastighet, pause, og restarte spillet.
+- Disse kontrollene er enkelt tilgjengelige og intuitive å bruke.
+
+### Brukerhistorie 6: Tjene og bruke penger
+**Beskrivelse:** Som en spiller ønsker jeg å tjene penger for hver rotte jeg dreper, slik at jeg kan kjøpe flere forsvarsbrikker/katter for å forbedre mitt forsvar.
+
+**Akseptansekriterier:**
+- Spilleren tjener penger for hver drepte rotte.
+- Opptjente penger kan brukes i spillet til å kjøpe nye katter eller oppgradere eksisterende.
+
 #### Brukerhistorier i prioritert rekkefølge
 
 1. Som en spiller ønsker jeg å se en sti hvor rotter kan bevege seg fra start til slutt, for å vite hvor jeg skal plassere mine forsvarere.
@@ -63,7 +110,6 @@ Målet er å beskytte byen mot en rotteinvasjon ved å strategisk plassere og op
 3. Som en spiller ønsker jeg å velge mellom ulike forsvarertyper for å anvende diverse strategier.
 
 4. Som en spiller ønsker jeg å se rotter bevege seg mot målet for å planlegge forsvarsstrategier.
-
 
 
 5. Som en spiller, ønsker jeg å kunne starte, akselerere, pause, og restarte spillet, slik at jeg har full kontroll over spillopplevelsen.
