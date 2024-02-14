@@ -198,12 +198,34 @@ Dette dokumentet vil tjene som en levende guide gjennom utviklingen av Skadedyrk
 
 4. Som en spiller ønsker jeg å se rotter bevege seg mot målet for å planlegge forsvarsstrategier.
 
-
 5. Som en spiller, ønsker jeg å kunne starte, akselerere, pause, og restarte spillet, slik at jeg har full kontroll over spillopplevelsen.
 
 6. Som en spiller, ønsker jeg å tjene penger for hver rotte jeg dreper, slik at jeg kan kjøpe flere forsvarsbrikker/katter for å forbedre mitt forsvar.
 
+<<<<<<< HEAD
 
 
 
 
+=======
+### Oppgave A5: Oppsummering
+
+#### Kort oppsummering av diskusjonen
+
+ Vi erkjenner viktigheten av effektiv tidsstyring og prioritering, spesielt gitt utfordringene vi har møtt med tidspress fra andre emner. Her er en oppsummering av vår diskusjon:
+
+- **Hva som gikk bra:**
+  - Etableringen av kommunikasjonskanaler og motivasjonen innad i teamet er stor.
+  - Begynnelsen på å bruke Kanban-tavlen for å få en oversikt over oppgavene virker som en god strategi.
+
+- **Hva som ikke fungerte helt som forventet:**
+  - Tidspress fra andre emner har begrenset tiden tilgjengelig for prosjektet, noe som påvirket vår fremdrift. Vi må derfor allokere mer tid til prosjektet. 
+
+#### Vurdering og justering for neste iterasjon
+
+Basert på retrospektivet, anerkjenner vi behovet for å være mer realistiske i vår planlegging og prioritering av oppgaver for den neste fasen av prosjektet. Vi vil fokusere på MVPen og justere vårt arbeidsomfang til å passe bedre med tiden vi realistisk kan dedikere til prosjektet.
+
+#### Konklusjon
+
+Diskusjonen har vært verdifullt for å identifisere både styrker og områder for forbedring i vårt prosjekt. Ved å endre vår strategi og innføre nye arbeidsmetoder, er vi optimistiske for bedre resultater i den kommende perioden.
+>>>>>>> 439cd93 (ferdig med A5)
