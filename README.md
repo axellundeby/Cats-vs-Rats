@@ -1,3 +1,14 @@
+# INF112 Project - *Skadedyrkontrollørene INC, Return of the Rats*
+
+
+* Team: *Skadedyrkontrollørene_inc* (Gruppe 1): 
+    * *Jonathan Christensen*
+    * *Axel Lundeby*
+    * *Theodor Nissen-Meyer*
+    * *Jacob Foss*
+
+
+
 # INF112 libGDX + Maven template 
 Simple skeleton with [libGDX](https://libgdx.com/). 
 
