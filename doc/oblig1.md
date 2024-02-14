@@ -36,7 +36,13 @@ Målet er å beskytte byen mot en rotteinvasjon ved å strategisk plassere og op
 
 #### Mål for Applikasjonen
 
-RatBurst er et strategisk og engasjerende spill der spillere bruker katter til å stoppe rotter fra å krysse en bane. Målet er å utfordre spillerens strategiske tenkning og tilpasningsevne gjennom progressive vanskelighetsgrader. Spillet kombinerer forsvarsmekanikker med en enkel og intuitiv brukeropplevelse, rettet mot et bredt publikum som søker underholdning og taktisk dybde.
+- Utvikle et spill som er engasjerende med et begrenset sett av funksjoner som definerer kjernen i spillopplevelsen.
+ **Inkludere grunnleggende spillmekanikker** som omfatter:
+  - Spillerbevegelse gjennom plassering og valg av katter langs stien.
+  - Interaksjon med spillverdenen, der spillerne må tenke strategisk om hvor de plasserer kattene for optimal forsvar.
+  - Poengsystem som belønner spillere basert på antall rotter forhindret i å krysse stien.
+  - Fiender i form av rotter med ulike egenskaper eller hastigheter, som krever at spilleren tilpasser forsvaret etter hvert som spillet utvikler seg.
+  - Klart definerte mål for hvert nivå, som kan inkludere å stoppe et visst antall rotter, overleve gjennom bølger av angrep, eller oppnå en spesifikk score.
 
 
 #### MVP Funksjoner
