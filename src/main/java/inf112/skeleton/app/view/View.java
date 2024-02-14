@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.view;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.Texture;
 
-public class HelloWorld implements ApplicationListener {
+public class View implements ApplicationListener {
 	private SpriteBatch batch;
 	private BitmapFont font;
 	private Texture spriteImage;
@@ -27,8 +27,8 @@ public class HelloWorld implements ApplicationListener {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		font.setColor(Color.RED);
-		spriteImage = new Texture(Gdx.files.internal("obligator.png"));
-		spriteRect = new Rectangle(1, 1, spriteImage.getWidth() / 2, spriteImage.getHeight() / 2);
+		spriteImage = new Texture(Gdx.files.internal("P1271015.JPG"));
+		spriteRect = new Rectangle(1, 1, spriteImage.getWidth() / 10, spriteImage.getHeight() / 10);
 		bellSound = Gdx.audio.newSound(Gdx.files.internal("blipp.ogg"));
 		Gdx.graphics.setForegroundFPS(60);
 	}
@@ -61,7 +61,7 @@ public class HelloWorld implements ApplicationListener {
 
 		// Draw calls should be wrapped in batch.begin() ... batch.end()
 		batch.begin();
-		font.draw(batch, "Hello, World!", 200, 200);
+		font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 200);
 		batch.draw(spriteImage, spriteRect.x, spriteRect.y, spriteRect.width, spriteRect.height);
 		batch.end();
 
