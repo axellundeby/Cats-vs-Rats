@@ -5,7 +5,12 @@
 - Axel Lundeby
 - Theodor Nissen-Meyer
 - Jacob Foss
+  
+<br>
 
+## Oppgave A1: 
+
+<br>
 
 
 ## Oppgave A2: Konsept
@@ -14,7 +19,10 @@
 
 #### **Spillmekanikker:**
 
+[Bæsh](bloons.jpeg)
+
 Inspirert av [BloonsTD](https://no.wikipedia.org/wiki/Bloons_Tower_Defense), består *Skadedyrkontrollørene* av følgende spillmekanikker:
+
 
 - **Forsvarere som kan plasseres:** Spillere kan utplassere ulike kattetyper langs ruten til rotter for å forsvare byen. Hver katt har unike evner som prosjektilangrep, nærkamp, eller spesialeffekter som å fryse eller bremse ned fiender.
 
