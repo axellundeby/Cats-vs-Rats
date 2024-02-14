@@ -76,7 +76,7 @@ Vi vil forsøke å forbedre oss og tilpasse vår prosess gjennom hele prosjektet
 Dette dokumentet vil tjene som en levende guide gjennom utviklingen av Skadedyrkontrollørene. Det vil bli revidert og oppdatert for å reflektere vårt voksende forståelse av prosjektet og teamdynamikken.
 
 
-## Oppgave A3.1: Velg og tilpass en prosess for teamet
+## Oppgave A3.1: Få oversikt over forventet produkt
 
 #### Mål for Applikasjonen
 
