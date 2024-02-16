@@ -1,6 +1,6 @@
 package inf112.skeleton.app.model;
 
-public interface Ientity {
+public interface IEntity {
 
     /**
      * Oppdaterer rottens status og posisjon basert på tidsforløpet og spilllogikken.

@@ -12,7 +12,7 @@ public class Main {
         cfg.setTitle("Skadedyrkontrollørerne");
         cfg.setWindowedMode(1200, 800);
         Controller controller = new Controller();
-        controller.create();
+
 
         new Lwjgl3Application(new View(), cfg);
 
