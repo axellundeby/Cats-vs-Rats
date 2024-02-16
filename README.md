@@ -14,7 +14,8 @@ Vi tror det kan bli vanskelig å sørge for at kattene faktisk kaster objecter p
 
 ### Kjøring
 * Kompileres med `mvn package`.
-* Kjøres med `java -jar target/main
+* Kjøres med `java -jar target/gdx-app-1.0-SNAPSHOT-fat.jar`
+* Krever Java 21 eller senere
 
 ### Credits
 Bilde av rotte: https://pngtree.com/freepng/cute-rat-isolated_13147967.html
