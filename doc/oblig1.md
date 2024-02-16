@@ -170,6 +170,10 @@ Som en spiller ønsker jeg å tjene penger for hver rotte jeg dreper, slik at je
 
 6. Som en spiller, ønsker jeg å tjene penger for hver rotte jeg dreper, slik at jeg kan kjøpe flere forsvarsbrikker/katter for å forbedre mitt forsvar.
 
+### Oppgave A4: Progresjonsrapport
+
+Vi har dedikert tid til å forbedre vår forståelse av libGDX, og vi har besluttet å bruke dette rammeverket. Arkitekturen til spillet har blitt diskutert, og vi har implementert noen nøkkelklasser, som for eksempel en abstrakt `Rotte`-klasse, samt et model-view-controller-oppsett. Fremover vil prosessen involvere mer intensiv programmering nå som vi har en bedre oversikt og forståelse av både prosjektet og rammeverket.
+
 ### Oppgave A5: Oppsummering
 
 #### Kort oppsummering av diskusjonen
