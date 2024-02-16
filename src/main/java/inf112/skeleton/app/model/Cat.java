@@ -1,15 +1,21 @@
 package inf112.skeleton.app.model;
 
-public class Cat implements IEntity{
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+
+public class Cat {
 
     private int strength;
-    private final double range;
+    private double range;
     private Coordinate pos;
+	private Texture spriteImage;
 
-    public Cat(int strength, double range){
+    public Cat(int strength, double range, int type){
         this.strength = strength;
         this.range = range;
+        this.spriteImage = null;
     }
+
 
     public void shoot(Rat target){
 
@@ -29,19 +35,16 @@ public class Cat implements IEntity{
         return Math.pow(Math.pow(x_dist, 2.0) + Math.pow(y_dist, 2.0), 0.5);
     }
 
-    @Override
     public String name() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'name'");
     }
 
-    @Override
     public int getStrength() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getStrength'");
     }
 
-    @Override
     public Coordinate getPosition() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getLocation'");

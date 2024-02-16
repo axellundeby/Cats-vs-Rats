@@ -1,34 +1,28 @@
 package inf112.skeleton.app.model;
 
 
-public class Rat implements IEntity{
+public class Rat {
     private final int speed;
     private Coordinate pos;
     private int health;
-    private int size;
     private int strength;
+    
 
     public Rat(int health, int speed){
         this.health = health;
         this.speed = speed;
+        this.pos = new Coordinate(10, -50); // Alle rottene spawner ovenfor brettet
     }
 
     public void takeDamage(int damage){
         health -= damage;
     }
 
-    @Override
-    public String name() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'name'");
-    }
 
-    @Override
     public int getStrength() {
         return strength;
     }
 
-    @Override
     public Coordinate getPosition() {
         return pos;
     }
@@ -36,6 +30,6 @@ public class Rat implements IEntity{
     @Override
     public String toString(){
         return 
-            "Rat " + name() + " at position: " + pos + " with strength " + strength + " and health " + health;
+            "Rat " + " at position: " + pos + " with strength " + strength + " and health " + health;
     }
 }

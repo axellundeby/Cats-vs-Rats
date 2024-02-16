@@ -24,4 +24,5 @@ public interface IEntity {
      * @return a string representation of the object
      */
     String toString();
+
 }

@@ -9,13 +9,16 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import inf112.skeleton.app.model.Coordinate;
+
 import com.badlogic.gdx.graphics.Texture;
 
 public class View implements ApplicationListener {
 	private SpriteBatch batch;
 	private BitmapFont font;
 	private Texture spriteImage;
-	private Sound bellSound;
+	// private Sound bellSound;
 	private Rectangle spriteRect;
 	private Rectangle screenRect = new Rectangle();
 	private float dx = 1, dy = 1;
@@ -27,9 +30,9 @@ public class View implements ApplicationListener {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		font.setColor(Color.RED);
-		spriteImage = new Texture(Gdx.files.internal("P1271015.JPG"));
-		spriteRect = new Rectangle(1, 1, spriteImage.getWidth() / 10, spriteImage.getHeight() / 10);
-		bellSound = Gdx.audio.newSound(Gdx.files.internal("blipp.ogg"));
+		spriteImage = new Texture(Gdx.files.internal("rat1.png"));
+		spriteRect = new Rectangle(1, 1, spriteImage.getWidth() / 2, spriteImage.getHeight() / 2);
+		// bellSound = Gdx.audio.newSound(Gdx.files.internal("INSERT PATH TO SOUND"));
 		Gdx.graphics.setForegroundFPS(60);
 	}
 
@@ -47,7 +50,7 @@ public class View implements ApplicationListener {
 		batch.dispose();
 		font.dispose();
 		spriteImage.dispose();
-		bellSound.dispose();
+		// bellSound.dispose();
 	}
 
 	@Override
@@ -64,6 +67,10 @@ public class View implements ApplicationListener {
 		font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 200);
 		batch.draw(spriteImage, spriteRect.x, spriteRect.y, spriteRect.width, spriteRect.height);
 		batch.end();
+
+		int xtap = Gdx.input.getX();
+		int ytap = Gdx.input.getY();
+		System.out.println(new Coordinate(xtap, ytap));
 
 		// Move the alligator a bit. You normally shouldn't mix rendering with logic in
 		// this way. (Also, movement should probably be based on *time*, not on how
@@ -83,7 +90,8 @@ public class View implements ApplicationListener {
 
 		// Don't handle input this way – use event handlers!
 		if (Gdx.input.justTouched()) { // check for mouse click
-			bellSound.play();
+			
+			// bellSound.play();
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) { // check for key press
 			Gdx.app.exit();
