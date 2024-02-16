@@ -1,7 +1,7 @@
 # INF112 Project - *Skadedyrkontrollørene INC, Return of the Rats*
 
 
-* Team: *Skadedyrkontrollørene_inc* (Gruppe 1): 
+* **Team:** *Skadedyrkontrollørene_inc* (Gruppe 1): 
     * *Jonathan Christensen*
     * *Axel Lundeby*
     * *Theodor Nissen-Meyer*
