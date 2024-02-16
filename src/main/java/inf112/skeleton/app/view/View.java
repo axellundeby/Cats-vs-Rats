@@ -31,7 +31,7 @@ public class View implements ApplicationListener {
 		font = new BitmapFont();
 		font.setColor(Color.RED);
 		spriteImage = new Texture(Gdx.files.internal("rat1.png"));
-		spriteRect = new Rectangle(1, 1, spriteImage.getWidth() / 2, spriteImage.getHeight() / 2);
+		spriteRect = new Rectangle(1, 1, spriteImage.getWidth() / 10, spriteImage.getHeight() / 10);
 		// bellSound = Gdx.audio.newSound(Gdx.files.internal("INSERT PATH TO SOUND"));
 		Gdx.graphics.setForegroundFPS(60);
 	}
@@ -60,17 +60,17 @@ public class View implements ApplicationListener {
 		// This is a minimal example – don't write your application this way!
 
 		// Start with a blank screen
-		ScreenUtils.clear(Color.WHITE);
+		ScreenUtils.clear(Color.GREEN);
 
 		// Draw calls should be wrapped in batch.begin() ... batch.end()
 		batch.begin();
-		font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 200);
+		font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 10);
+		batch.draw(new Texture(Gdx.files.internal("map.png")), 0, 0);
 		batch.draw(spriteImage, spriteRect.x, spriteRect.y, spriteRect.width, spriteRect.height);
 		batch.end();
 
-		int xtap = Gdx.input.getX();
-		int ytap = Gdx.input.getY();
-		System.out.println(new Coordinate(xtap, ytap));
+		int mouseX = Gdx.input.getX();
+		int mouseY = Gdx.input.getY();
 
 		// Move the alligator a bit. You normally shouldn't mix rendering with logic in
 		// this way. (Also, movement should probably be based on *time*, not on how
