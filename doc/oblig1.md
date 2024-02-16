@@ -37,7 +37,7 @@ Målet er å beskytte byen mot en rotteinvasjon ved å strategisk plassere og op
 
 #### Valg av Prosjektmetodikk
 
-Vi har valgt å bruke Kanban og Scrum for prosjektstyring. Kanban hjelper oss å se og styre arbeidsflyten, mens Scrum strukturerer arbeidet vårt i korte perioder kalt sprinter. Denne kombinasjonen gir oss fleksibiliteten til å tilpasse oss endringer raskt og holder oss på sporet mot våre mål.
+Vi har valgt å bruke Kanban og Scrum for prosjektstyring. Kanban hjelper oss å se og styre arbeidsflyten, og Scrum bruker vi for å strukturerer arbeidet vårt i korte perioder kalt sprinter. Denne kombinasjonen gir oss fleksibiliteten til å tilpasse oss endringer raskt og holder oss på sporet mot våre mål.
 
 #### Teamdiskusjon og Metodevalg
 
@@ -47,7 +47,7 @@ Gjennom teamdiskusjoner har vi identifisert følgende metodiske elementer som es
 - Iterative utviklingssykluser (Sprints) fra Scrum for strukturert progresjon.
 - Kanban-tavle for visuell sporing av oppgaver og arbeidsflyt.
 - Regelmessige code reviews for å opprettholde høye standarder i kodebasen.
-- Alltid minst en på teamet som går igjennom koden før vi «merger»
+- Alltid minst en på teamet som går igjennom koden før vi merger med main
 
 Vi vil involvere vår gruppeleder i denne diskusjonen for å identifisere mulige utfordringer og motta veiledning på beste praksiser.
 
@@ -58,13 +58,13 @@ Vår prosess vil omfatte:
 - **Møter:** Ukentlige sprint planleggingsmøter, statusmøter, og stand-ups.
 - **Kommunikasjon:** Discord for daglig kommunikasjon, og Git for å spore endringer og versjonskontroll.
 - **Arbeidsfordeling:** God og hyppig kommunikasjon og flytende tildeling av arbeidsoppgaver fra Kanban-tavle.
-- **Deling og oppbevaring av dokumenter:** Oppbevaring av kode vil foregå på Git.
+- **Deling og oppbevaring av dokumenter:** Oppbevaring av kode/dokumentasjon vil foregå på Git.
 
 #### Organisering av Teamet
 
 Vi vil organisere vårt arbeid med følgende plan:
 
-- **Møter:** Ukentlige stand-ups kl 09:00, sprint planlegging hver andre mandag, og retrospektiv hver andre fredag.
+- **Møter:** Ukentlige stand-ups kl 09:00 (mandager), sprint planlegging hver andre mandag, og retrospektiv hver andre fredag.
 - **Kommunikasjon mellom møter:** Discord kanal innad i teamet.
 - **Arbeidsfordeling:** Roller vil bli tildelt basert på kompetanse og interesseområder, med mulighet for rotasjon for å fremme tverrfaglig læring.
 - **Oppfølging av arbeid:** Ukesoppsummering og regelmessige gruppetimer med gruppeleder for å sikre at alle er på riktig spor.
@@ -73,7 +73,9 @@ Vi vil forsøke å forbedre oss og tilpasse vår prosess gjennom hele prosjektet
 
 #### Konklusjon
 
-Dette dokumentet vil tjene som en levende guide gjennom utviklingen av Skadedyrkontrollørene. Det vil bli revidert og oppdatert for å reflektere vårt voksende forståelse av prosjektet og teamdynamikken.
+Dette dokumentet vil tjene som en levende guide gjennom utviklingen av Skadedyrkontrollørene. Det vil bli revidert og oppdatert for å reflektere vårt voksende forståelse av prosjektet og teamdynamikken. 
+
+Vi bruker Scrum, og Kanban. Stand-up en gang i uken (mandag 09:00), retro annenhver fredag og planlegging av sprint annenhver mandag. Vi kommuniserer gjennom discord (her er også gruppeleder inkludert). Tar flittig i bruk Git, hvor alle endringer må gjennom review hos en annen på teamet. 
 
 
 ## Oppgave A3.1: Få oversikt over forventet produkt
