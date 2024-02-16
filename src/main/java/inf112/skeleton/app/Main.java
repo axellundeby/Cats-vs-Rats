@@ -10,8 +10,7 @@ public class Main {
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
         cfg.setTitle("Skadedyrkontrollørerne");
-        cfg.setWindowedMode(1200, 800);
-        Controller controller = new Controller();
+        cfg.setWindowedMode(1200, 842);
 
 
         new Lwjgl3Application(new View(), cfg);
