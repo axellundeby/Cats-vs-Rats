@@ -3,7 +3,7 @@ package inf112.skeleton.app.model;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-public class Rat implements Ientity {
+public class Rat implements IEntity {
     private final int speed;
     private Vector2 pos;
     private int health;
