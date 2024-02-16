@@ -1,43 +1,28 @@
 package inf112.skeleton.app.controller;
 
-import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 
-public class Controller implements ApplicationListener {
-
+public class Controller extends ApplicationAdapter{
     @Override
     public void create() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        // Schedule a task to be executed every n milliseconds
+        float delay = 0; // delay before the task is first executed
+        float intervalSeconds = 1; // interval in seconds between executions of the task
+
+        Timer.schedule(clockTick(), delay, intervalSeconds);
     }
 
-    @Override
-    public void resize(int width, int height) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'resize'");
-    }
-
-    @Override
-    public void render() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'render'");
-    }
-
-    @Override
-    public void pause() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'pause'");
-    }
-
-    @Override
-    public void resume() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'resume'");
-    }
-
-    @Override
-    public void dispose() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'dispose'");
+    private Task clockTick() {
+        // Return a new Task with the overridden run method
+        return new Task() {
+            @Override
+            public void run() {
+                // This code will be executed every n seconds
+                System.out.println("Tick!");
+            }
+        };
     }
     
 }
