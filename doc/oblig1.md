@@ -1,13 +1,22 @@
-# Rapport – Innlevering 1
+# Rapport – Innlevering 1, *Return of the rats*
 
-## Team: Skadedyrkontrollørene_inc (Gruppe 1)
 
-- Jonathan Christensen
-- Axel Lundeby
-- Theodor Nissen-Meyer
-- Jacob Foss
+### Oppgave A1: Konsept
 
-## Spillkonsept: Skadedyrkontrollørene
+Checkliste fra oppskriften.
+ - Vi har opprettet et repo på gitt. 
+ - Vi har lagt til alle i teamet (som developers). Gruppeleder Tobias Innlegen og foreleser Anya Helene Bagge er lagt til som maintainers (ettersom det ikke fungerte å legge til gruppe)
+ - Vi har forket prosjektet til Anya
+ - README er oppdatert, og vil holdes oppdatert gjennom semesteret.
+
+
+#### Team: Skadedyrkontrollørene_inc (Gruppe 1)
+
+- Jonathan Christensen - Developer/Git
+- Axel Lundeby - Developer/Grafikk 
+- Theodor Nissen-Meyer - Lead Developer
+- Jacob Foss - Developer/Testansvarlig
+
 
 ### Oppgave A2: Konsept
 
