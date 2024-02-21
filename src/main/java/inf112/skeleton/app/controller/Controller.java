@@ -4,7 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
-public class Controller extends ApplicationAdapter{
+public class Controller extends ApplicationAdapter {
     @Override
     public void create() {
         // Schedule a task to be executed every n milliseconds
