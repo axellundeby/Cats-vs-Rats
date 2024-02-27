@@ -8,17 +8,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import inf112.skeleton.app.model.Cat;
+import inf112.skeleton.app.model.Rat;
 import inf112.skeleton.app.model.SkadedyrModel;
 
 
 public class SkadedyrView {
 	private SpriteBatch batch;
 	private BitmapFont font;
-	private Texture spriteImage;
 	// private Sound bellSound;
-	private Rectangle spriteRect;
 	private Rectangle screenRect = new Rectangle();
 	private final SkadedyrModel model;
+	
 
 	public SkadedyrView(SkadedyrModel model){
 		this.model = model;
@@ -31,8 +32,7 @@ public class SkadedyrView {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		font.setColor(Color.RED);
-		spriteImage = new Texture(Gdx.files.internal("rat1.png"));
-		spriteRect = new Rectangle(1, 1, spriteImage.getWidth() / 10, spriteImage.getHeight() / 10);
+
 		// bellSound = Gdx.audio.newSound(Gdx.files.internal("INSERT PATH TO SOUND"));
 		Gdx.graphics.setForegroundFPS(60);
 	}
@@ -45,9 +45,18 @@ public class SkadedyrView {
 		// (We might need to do something like this when loading a new game level in
 		// a large game, for instance, or if the user switches to another application
 		// temporarily (e.g., incoming phone call on a phone, or something).
+
+
 		batch.dispose();
 		font.dispose();
-		spriteImage.dispose();
+		for (Cat cat : model.getCats()) {
+			cat.getTexture().dispose();
+			
+		}
+		for (Rat rat : model.getRats()) {
+			rat.getTexture().dispose();
+			
+		}
 		// bellSound.dispose();
 	}
 
@@ -55,10 +64,21 @@ public class SkadedyrView {
 		// Start with a blank screen
 		ScreenUtils.clear(Color.GREEN);
 
+		
+
 		// Draw calls should be wrapped in batch.begin() ... batch.end()
 		batch.begin();
 		batch.draw(new Texture(Gdx.files.internal("map.png")), 0, 0);
-		batch.draw(spriteImage, spriteRect.x, spriteRect.y, spriteRect.width, spriteRect.height);
+		for (Cat cat : model.getCats()) {
+			Rectangle catRect = cat.getRectangle();
+			batch.draw(cat.getTexture(), catRect.x, catRect.y, catRect.width, catRect.height);
+			
+		}
+		for (Rat rat : model.getRats()) {
+			Rectangle ratRect = rat.getRectangle();
+			batch.draw(rat.getTexture(), ratRect.x, ratRect.y, ratRect.width, ratRect.height);
+			
+		}
 		font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 10);
 		batch.end();
 	}

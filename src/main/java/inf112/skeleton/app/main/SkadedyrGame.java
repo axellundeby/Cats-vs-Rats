@@ -15,26 +15,24 @@ public class SkadedyrGame implements ApplicationListener{
 
     public SkadedyrGame(){
         this.model  = new SkadedyrModel();
-        this.view = new SkadedyrView();
+        this.view = new SkadedyrView(model);
         this.controller = new Controller(model, view);
     }
 
     @Override
     public void create() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        controller.startTimer();
+        view.create();
     }
 
     @Override
     public void resize(int width, int height) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'resize'");
+        view.resize(width, height);
     }
 
     @Override
     public void render() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'render'");
+        view.draw();
     }
 
     @Override
@@ -51,7 +49,6 @@ public class SkadedyrGame implements ApplicationListener{
 
     @Override
     public void dispose() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'dispose'");
+        view.dispose();
     }
 }

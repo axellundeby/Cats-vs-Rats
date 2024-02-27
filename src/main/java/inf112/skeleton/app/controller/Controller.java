@@ -16,7 +16,7 @@ public class Controller  {
         this.view = view;
     }
 
-    public void create() {
+    public void startTimer() {
         // Schedule a task to be executed every n milliseconds
         float delay = 0; // delay before the task is first executed
         float intervalSeconds = 1; // interval in seconds between executions of the task

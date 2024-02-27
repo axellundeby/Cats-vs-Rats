@@ -1,6 +1,8 @@
 package inf112.skeleton.app.model;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Rat implements IEntity {
@@ -9,13 +11,19 @@ public class Rat implements IEntity {
     private int health;
     private Path path;
     private float distanceTraveled = 0f;
+    private Texture spriteImage;
+	private Rectangle spriteRect;
     
 
-    public Rat(int health, int speed){
+    public Rat(int health, int speed, Texture spriteImage){
         this.health = health;
         this.speed = speed;
+        this.spriteImage = spriteImage;
+        int size = 20;
         // Initialiserer posisjonen til rotta ved å bruke Vector2 direkte
         this.pos = new Vector2(10, -50); // Alle rottene spawner ovenfor brettet
+
+        this.spriteRect = new Rectangle(pos.x, pos.y, size, size);
     }
 
     public void takeDamage(int damage){
@@ -34,6 +42,13 @@ public class Rat implements IEntity {
                 pos.set(newPosition);
             }
         }
+    }
+
+    public Texture getTexture(){
+        return spriteImage;
+    }
+    public Rectangle getRectangle(){
+        return spriteRect;
     }
 
 

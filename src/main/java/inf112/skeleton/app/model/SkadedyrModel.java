@@ -1,5 +1,7 @@
 package inf112.skeleton.app.model;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -17,13 +19,30 @@ import inf112.skeleton.app.view.SkadedyrView;
 import com.badlogic.gdx.graphics.Texture;
 
 public class SkadedyrModel {
-    private SkadedyrView view;
     private float dx = 1, dy = 1;
 
-    public SkadedyrModel() {
+    private ArrayList<Cat> cats;
+    private ArrayList<Rat> aliveRats;
 
+    public SkadedyrModel() {
+        this.cats = new ArrayList<>();
+        this.aliveRats = new ArrayList<>();
     }
 
+    // Når katte- og rotteobjekter konstrueres, legges de inn i disse listene
+    public void addCat(Cat cat){
+        cats.add(cat);
+    }
+    public void addRat(Rat rat){
+        aliveRats.add(rat);
+    }
+
+    public ArrayList<Cat> getCats(){
+        return cats;
+    }
+    public ArrayList<Rat> getRats(){
+        return aliveRats;
+    }
 
 
     public void uselessfunction(Rectangle spriteRect, Rectangle screenRect) { // for å beholde koden
@@ -59,22 +78,4 @@ public class SkadedyrModel {
     }
 
 
-
-    public void startTimer(){
-        float delay = 0; // delay before the task is first executed
-        float intervalSeconds = 1; // interval in seconds between executions of the task
-
-        Timer.schedule(clockTick(), delay, intervalSeconds);
-    }
-
-    private Task clockTick() {
-        // Return a new Task with the overridden run method
-        return new Task() {
-            @Override
-            public void run() {
-                // This code will be executed every n seconds
-                System.out.println("Tick!");
-            }
-        };
-    }
 }

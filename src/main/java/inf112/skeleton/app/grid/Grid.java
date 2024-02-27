@@ -1,4 +1,4 @@
-package no.uib.inf101.grid;
+package inf112.skeleton.app.grid;
 
 import java.util.ArrayList;
 import java.util.Iterator;

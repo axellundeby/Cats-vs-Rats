@@ -3,8 +3,6 @@ package inf112.skeleton.app.main;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
-import inf112.skeleton.app.controller.Controller;
-import inf112.skeleton.app.model.SkadedyrModel;
 
 public class SkadedyrMain {
     public static void main(String[] args) {
