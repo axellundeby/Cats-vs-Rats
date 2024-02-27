@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 
-public class View {
+public class SkadedyrView {
 	private SpriteBatch batch;
 	private BitmapFont font;
 	private Texture spriteImage;

@@ -8,40 +8,23 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 
 import inf112.skeleton.app.model.Coordinate;
-import inf112.skeleton.app.view.View;
+import inf112.skeleton.app.view.SkadedyrView;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class Model implements ApplicationListener {
-    private View view;
+public class SkadedyrModel {
+    private SkadedyrView view;
     private float dx = 1, dy = 1;
 
-    public Model() {
-        this.view = new View();
-    }
-
-    @Override
-    public void create() {
-        // Called at startup
-        view.create();
+    public SkadedyrModel() {
 
     }
 
-    @Override
-    public void dispose() {
-        // Called at shutdown
-        view.dispose();
 
-    }
-
-    @Override
-    public void render() {
-        // Called when the application should draw a new frame (many times per second).
-        view.draw();
-
-    }
 
     public void uselessfunction(Rectangle spriteRect, Rectangle screenRect) { // for å beholde koden
 
@@ -75,19 +58,23 @@ public class Model implements ApplicationListener {
 
     }
 
-    @Override
-    public void resize(int width, int height) {
-        // Called whenever the window is resized (including with its original site at
-        // startup)
-        view.resize(width, height);
 
+
+    public void startTimer(){
+        float delay = 0; // delay before the task is first executed
+        float intervalSeconds = 1; // interval in seconds between executions of the task
+
+        Timer.schedule(clockTick(), delay, intervalSeconds);
     }
 
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
+    private Task clockTick() {
+        // Return a new Task with the overridden run method
+        return new Task() {
+            @Override
+            public void run() {
+                // This code will be executed every n seconds
+                System.out.println("Tick!");
+            }
+        };
     }
 }
