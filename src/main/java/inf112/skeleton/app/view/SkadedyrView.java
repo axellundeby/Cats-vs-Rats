@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import inf112.skeleton.app.model.SkadedyrModel;
+
 
 public class SkadedyrView {
 	private SpriteBatch batch;
@@ -16,8 +18,11 @@ public class SkadedyrView {
 	// private Sound bellSound;
 	private Rectangle spriteRect;
 	private Rectangle screenRect = new Rectangle();
+	private final SkadedyrModel model;
 
-
+	public SkadedyrView(SkadedyrModel model){
+		this.model = model;
+	}
 
 	public void create() {
 		// Called at startup
