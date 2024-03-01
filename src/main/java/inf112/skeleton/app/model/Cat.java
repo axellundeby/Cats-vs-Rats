@@ -12,16 +12,17 @@ public class Cat {
     private Vector2 pos;
 	private Texture spriteImage;
 	private Rectangle spriteRect;
+    int size;
 
     public Cat(int strength, double range, Texture spriteImage){
         this.strength = strength;
         this.range = range;
         this.spriteImage = spriteImage;
         this.pos = new Vector2();
-        int size = 20;
+        this.size = 60;
 
         this.spriteRect = new Rectangle(pos.x, pos.y, size, size);
-        
+
     }
 
 
@@ -31,7 +32,12 @@ public class Cat {
             target.takeDamage(strength);
     }
     
+    public void setPos(int x, int y){
+        pos.x = x;
+        pos.y = y;
+        this.spriteRect = new Rectangle(pos.x, pos.y, size, size);
 
+    }
     private boolean withinRange(Rat target) {
         Vector2 ratPos = target.getPosition();
         return range >= distance(ratPos, pos);

@@ -47,8 +47,7 @@ public class SkadedyrModel {
 
     public void uselessfunction(Rectangle spriteRect, Rectangle screenRect) { // for å beholde koden
 
-        int mouseX = Gdx.input.getX();
-        int mouseY = Gdx.input.getY();
+
 
         // Move the alligator a bit. You normally shouldn't mix rendering with logic in
         // this way. (Also, movement should probably be based on *time*, not on how
@@ -75,6 +74,19 @@ public class SkadedyrModel {
             Gdx.app.exit();
         }
 
+    }
+
+    public void update() {
+    }
+
+    public void mousePos(int mouseX, int mouseY) {
+    }
+    
+    public void newCat(int mouseX, int mouseY) {
+        Cat catTest = new BasicCat();
+        catTest.setPos(mouseX, mouseY);
+        addCat(catTest);
+        System.out.println(mouseX + ", " + mouseY);
     }
 
 

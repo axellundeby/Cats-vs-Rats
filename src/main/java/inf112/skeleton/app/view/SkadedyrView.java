@@ -68,6 +68,7 @@ public class SkadedyrView {
 
 		// Draw calls should be wrapped in batch.begin() ... batch.end()
 		batch.begin();
+		
 		batch.draw(new Texture(Gdx.files.internal("map.png")), 0, 0);
 		for (Cat cat : model.getCats()) {
 			Rectangle catRect = cat.getRectangle();
