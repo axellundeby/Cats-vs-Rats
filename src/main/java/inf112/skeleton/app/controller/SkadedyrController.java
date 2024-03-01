@@ -1,18 +1,19 @@
 package inf112.skeleton.app.controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.view.SkadedyrView;
 
-public class Controller  {
+public class SkadedyrController  {
 
     private final SkadedyrModel model;
     private final SkadedyrView view;
 
-    public Controller(SkadedyrModel model, SkadedyrView view){
+    public SkadedyrController(SkadedyrModel model, SkadedyrView view){
         this.model = model;
         this.view = view;
     }
@@ -20,7 +21,7 @@ public class Controller  {
     public void startTimer() {
         // Schedule a task to be executed every n milliseconds
         float delay = 0; // delay before the task is first executed
-        float intervalSeconds = (float) 0.1; // interval in seconds between executions of the task
+        float intervalSeconds = (float) 0.05; // interval in seconds between executions of the task
 
         Timer.schedule(clockTick(), delay, intervalSeconds);
     }
@@ -34,9 +35,15 @@ public class Controller  {
                 int mouseX = Gdx.input.getX();
                 int mouseY = Gdx.input.getY();
                 // model.mousePos();
+                model.moveRats();
+
+                if (Gdx.input.isKeyPressed(Input.Keys.U)){
+                    System.out.println("Key U pressed");
+                    model.update();
+                }
                 
                 if (Gdx.input.isTouched()) { // check for mouse click
-                    model.newCat(mouseX, mouseY);
+                    model.newCat(mouseX, 842-mouseY);
 
                 }
 

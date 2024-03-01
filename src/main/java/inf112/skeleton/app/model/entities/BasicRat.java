@@ -1,4 +1,4 @@
-package inf112.skeleton.app.model;
+package inf112.skeleton.app.model.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class BasicRat extends Rat {
 
     public BasicRat() {
-        super(1, 5, new Texture(Gdx.files.internal("rat1.png")));
+        super(1, 2, new Texture(Gdx.files.internal("rat1.png")));
         
     }
     

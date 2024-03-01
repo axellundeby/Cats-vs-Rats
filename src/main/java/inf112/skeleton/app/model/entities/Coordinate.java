@@ -1,4 +1,4 @@
-package inf112.skeleton.app.model;
+package inf112.skeleton.app.model.entities;
 
 public record Coordinate(int x, int y) {
     @Override

@@ -1,9 +1,11 @@
-package inf112.skeleton.app.model;
+package inf112.skeleton.app.model.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+
+import inf112.skeleton.app.model.Path;
 
 public class Rat implements IEntity {
     private final int speed;
@@ -19,9 +21,9 @@ public class Rat implements IEntity {
         this.health = health;
         this.speed = speed;
         this.spriteImage = spriteImage;
-        int size = 20;
+        int size = 50;
         // Initialiserer posisjonen til rotta ved å bruke Vector2 direkte
-        this.pos = new Vector2(10, -50); // Alle rottene spawner ovenfor brettet
+        this.pos = new Vector2(-10, 430); // Alle rottene spawner ovenfor brettet
 
         this.spriteRect = new Rectangle(pos.x, pos.y, size, size);
     }
@@ -32,16 +34,29 @@ public class Rat implements IEntity {
             killed();
         }
     }
+    public enum Direction {
+        UP,
+        RIGHT,
+        DOWN
+    }
  
     @Override
     public void move(float deltaTime) {
-        if (path != null) {
-            distanceTraveled += speed * deltaTime;
-            Vector2 newPosition = path.getPosition(distanceTraveled);
-            if (newPosition != null) {
-                pos.set(newPosition);
-            }
+        // if (path != null) {
+        //     distanceTraveled += speed * deltaTime;
+        //     Vector2 newPosition = path.getPosition(distanceTraveled);
+        //     if (newPosition != null) {
+        //         pos.set(newPosition);
+        //     }
+        // }
+        if (pos.x <= 165 && pos.y >= 425){
+            pos.x += speed;
         }
+        else if (pos.y >= 425 && pos.x <= 166)
+            pos.y += speed;
+        // pos.y += speed;
+        spriteRect.x = pos.x;
+        spriteRect.y = pos.y;
     }
 
     public Texture getTexture(){

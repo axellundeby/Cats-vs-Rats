@@ -1,4 +1,4 @@
-package inf112.skeleton.app.model;
+package inf112.skeleton.app.model.entities;
 
 public interface IEntity {
 

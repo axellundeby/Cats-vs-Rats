@@ -1,28 +1,33 @@
-package inf112.skeleton.app.model;
+package inf112.skeleton.app.model.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Cat {
 
     private int strength;
-    private double range;
+    private float range;
     private Vector2 pos;
 	private Texture spriteImage;
 	private Rectangle spriteRect;
-    int size;
+    private Circle rangeCircle;
+    private int size;
+    private int halfSize;
 
-    public Cat(int strength, double range, Texture spriteImage){
+    public Cat(int strength, float range, Texture spriteImage){
         this.strength = strength;
         this.range = range;
         this.spriteImage = spriteImage;
         this.pos = new Vector2();
         this.size = 60;
 
-        this.spriteRect = new Rectangle(pos.x, pos.y, size, size);
+        this.halfSize = size/2;
 
+        this.spriteRect = new Rectangle(pos.x-halfSize, pos.y-halfSize, size, size);
+        this.rangeCircle = new Circle(pos, range);
     }
 
 
@@ -35,7 +40,8 @@ public class Cat {
     public void setPos(int x, int y){
         pos.x = x;
         pos.y = y;
-        this.spriteRect = new Rectangle(pos.x, pos.y, size, size);
+        this.spriteRect = new Rectangle(pos.x-halfSize, pos.y-halfSize, size, size);
+        this.rangeCircle = new Circle(pos, range);
 
     }
     private boolean withinRange(Rat target) {
@@ -54,6 +60,10 @@ public class Cat {
     }
     public Rectangle getRectangle(){
         return spriteRect;
+    }
+
+    public Circle getRangeCircle(){
+        return rangeCircle;
     }
     
     public String name() {
