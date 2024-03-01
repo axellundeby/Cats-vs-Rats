@@ -38,7 +38,7 @@ public class SkadedyrController  {
                 model.moveRats();
 
                 if (Gdx.input.isKeyPressed(Input.Keys.U)){
-                    System.out.println("Key U pressed");
+                    System.out.println("Key 'U' pressed");
                     model.update();
                 }
                 

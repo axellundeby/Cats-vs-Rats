@@ -55,5 +55,5 @@ public class ModelTest {
         };
    new HeadlessApplication(listener, config);
 
-}
+    }
 }
