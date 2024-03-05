@@ -1,10 +1,13 @@
 package inf112.skeleton.app.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Queue;
 
 import inf112.skeleton.app.model.entities.BasicCat;
 import inf112.skeleton.app.model.entities.BasicRat;
@@ -20,6 +23,8 @@ public class SkadedyrModel implements ISkadedyrModel {
     private int lives = 5;
     private int money = 3000;
     private int points = 0;
+    private int level = 0;
+
 
     private Rat testRat;
 
@@ -65,29 +70,51 @@ public class SkadedyrModel implements ISkadedyrModel {
             }
         }
         if (lives <= 0) {
-           //gameOver();
+           gameOver();
         }
         return lives;
     }
 
-    public void attackRats(){
-        for (Cat cat : cats){
-            for (Rat rat : aliveRats){
-                if (cat.withinRange(rat)){
-                    rat.takeDamage(cat.getStrength());
-                    points += 10;
+    public HashMap<Cat, LinkedList<Rat>> attackRatsForEachCat() {
+        HashMap<Cat, LinkedList<Rat>> attackMap = new HashMap<>();
+        for (Cat cat : cats) {
+            LinkedList<Rat> attackableRats = new LinkedList<>();
+            for (Rat rat : aliveRats) {
+                if (cat.withinRange(rat)) {
+                    attackableRats.addLast(rat);
+                }
+            }
+            attackMap.put(cat, attackableRats);
+        }
+        return attackMap;
+    }
+    
+    public void attackRat() {
+        HashMap<Cat, LinkedList<Rat>> attackMap = attackRatsForEachCat();
+        for (Cat cat : cats) {
+            LinkedList<Rat> attackableRats = attackMap.get(cat);
+            if (attackableRats != null && !attackableRats.isEmpty()) { 
+                attackableRats.getFirst().takeDamage(cat.getStrength());
+                if (attackableRats.getFirst().isKilled()) {
+                    money += 1000; 
+                    points += 100; 
                 }
             }
         }
     }
+    
+    
 
     public void gameOver() {
             Gdx.app.exit(); //jacobs home screen
-            
     }
 
     public int getMoney(){
         return money;
+    }
+
+    public int getLevel(){
+        return level;
     }
 
     public int getPoints(){

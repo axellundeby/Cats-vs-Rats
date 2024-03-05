@@ -122,13 +122,6 @@ public class Rat implements IEntity {
         return Direction.OUT;
     }
 
-    public void attackable(){
-        if (this.cat.withinRange(this)){
-            //this.cat.shoot(this);
-            this.killed();
-        }
-    }
-
     @Override
     public void move() {
         // if (path != null) {
