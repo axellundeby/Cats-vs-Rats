@@ -2,7 +2,6 @@ package inf112.skeleton.app.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import inf112.skeleton.app.model.SkadedyrModel;
+import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Cat;
 import inf112.skeleton.app.model.entities.Rat;
 
@@ -63,6 +63,8 @@ public class SkadedyrView {
 	}
 
 	public void draw() {
+		CatMenu catMenu = new CatMenu(this);
+
 		// Start with a blank screen
 		ScreenUtils.clear(Color.GREEN);
 
@@ -74,33 +76,45 @@ public class SkadedyrView {
 
 		//
 		// Gdx.gl.glClearColor(1, 1, 1, 1);
-        // Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		// Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		//
 
+		catMenu.draw(shapeRenderer);
+		
+		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+
+		shapeRenderer.setColor(0, 0, 1, 1); // Set the color to blue
 		for (Cat cat : model.getCats()) {
-			// Draw cat's range  circle
+			// Draw cat's range circle
 			Circle range = cat.getRangeCircle();
-			shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-			shapeRenderer.setColor(0, 0, 1, 1); // Set the color to blue
 			// Draw the circle using the position and radius from the Circle object
 			shapeRenderer.circle(range.x, range.y, range.radius);
-			shapeRenderer.end();
 			
 		}
+		shapeRenderer.end();
+
 		batch.begin();
+		catMenu.draw(batch);
 		for (Cat cat : model.getCats()) {
 			Rectangle catRect = cat.getRectangle();
 			batch.draw(cat.getTexture(), catRect.x, catRect.y, catRect.width, catRect.height);
-
 
 		}
 		for (Rat rat : model.getRats()) {
 			Rectangle ratRect = rat.getRectangle();
 			batch.draw(rat.getTexture(), ratRect.x, ratRect.y, ratRect.width, ratRect.height);
-			//System.out.println("Rat at " + ratRect.x  + " " + ratRect.y);
+			// System.out.println("Rat at " + ratRect.x + " " + ratRect.y);
 		}
-		font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 10);
+		font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 100, screenRect.height - 20);
 		batch.end();
+	}
+
+	public float getScreenWidth() {
+		return screenRect.width;
+	}
+
+	public float getScreenHeight() {
+		return screenRect.height;
 	}
 
 	public void resize(int width, int height) {
