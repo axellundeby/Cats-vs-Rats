@@ -55,7 +55,7 @@ public class SkadedyrView {
         ScreenUtils.clear(Color.GREEN);
 
         batch.begin();
-        batch.draw(mapTexture, 0, 0); // Use the preloaded texture
+        batch.draw(mapTexture, 0, 0); 
         batch.end();
 
         Gdx.gl.glEnable(GL20.GL_BLEND);
@@ -72,21 +72,34 @@ public class SkadedyrView {
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
         batch.begin();
-        for (Cat cat : model.getCats()) {
+		drawCats();
+		drawRats();
+        batch.end();
+    }
+
+	public void drawGameInfo(){
+		font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 10);
+		font.draw(batch, "Dine liv: " + model.getLives(), 1000, 760);
+		font.draw(batch, "Dine penger: " + model.getMoney(), 1000, 840);
+		font.draw(batch, "Din Score: " + model.getPoints(), 1000, 800);
+		font.draw(batch, "Level: " + model.getLevel(), 1000, 720);
+		
+	}
+
+	public void drawCats(){
+		for (Cat cat : model.getCats()) {
             Rectangle catRect = cat.getRectangle();
             batch.draw(cat.getTexture(), catRect.x, catRect.y, catRect.width, catRect.height);
         }
-        for (Rat rat : model.getRats()) {
+	}
+
+	public void drawRats(){
+		for (Rat rat : model.getRats()) {
             Rectangle ratRect = rat.getRectangle();
             batch.draw(rat.getTexture(), ratRect.x, ratRect.y, ratRect.width, ratRect.height);
+			System.out.println(rat.getHealth() + " ");
         }
-        font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 10);
-        font.draw(batch, "Dine liv: " + model.getLives(), 1000, 760);
-        font.draw(batch, "Dine penger: " + model.getMoney(), 1000, 840);
-        font.draw(batch, "Din Score: " + model.getPoints(), 1000, 800);
-        font.draw(batch, "Level: " + model.getLevel(), 1000, 720);
-        batch.end();
-    }
+	}
 
     public void resize(int width, int height) {
         screenRect.width = width;

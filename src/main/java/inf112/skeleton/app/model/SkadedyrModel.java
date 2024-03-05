@@ -24,6 +24,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private int money = 3000;
     private int points = 0;
     private int level = 0;
+    private int ratWave = 10;
 
 
     private Rat testRat;
@@ -152,9 +153,9 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     }
 
-    public void update() {
+    public void spawnRats() {
         this.testRat = new BasicRat();
-        addRat(testRat);
+            addRat(testRat);
     }
 
     public void mousePos(int mouseX, int mouseY) {

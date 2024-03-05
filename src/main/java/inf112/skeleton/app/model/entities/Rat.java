@@ -38,6 +38,7 @@ public class Rat implements IEntity {
         if (isKilled()) {
             killed();
         }
+        //ANIMASJON
     }
 
     public enum Direction {
@@ -174,11 +175,16 @@ public class Rat implements IEntity {
         // Husk å initialisere 'ratTexture' i din faktiske spillkode
     }
 
+    public void newRound(){
+
+    }
+
     @Override
     public void killed() {
         pos.x = -100;
         pos.y = -100;
         speed = 0;
+        //ANIMSJON
     }
 
     @Override

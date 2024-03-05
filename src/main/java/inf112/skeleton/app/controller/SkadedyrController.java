@@ -13,6 +13,9 @@ public class SkadedyrController  {
 
     private final SkadedyrModel model;
     private final SkadedyrView view;
+    private float spawnTimer = 0;
+    private int ratSpawnDelay = 5;
+
 
     public SkadedyrController(SkadedyrModel model, SkadedyrView view){
         this.model = model;
@@ -32,19 +35,19 @@ public class SkadedyrController  {
         return new Task() {
             @Override
             public void run() {
+                spawnTimer += 0.05;
                 // This code will be executed every n seconds
                 int mouseX = Gdx.input.getX();
                 int mouseY = Gdx.input.getY();
-                // model.mousePos();
                 model.moveRats();
                 model.attackRat();
                 model.attackRatsForEachCat();
                 
-
-                if (Gdx.input.isKeyPressed(Input.Keys.U)){
-                    System.out.println("Key 'U' pressed");
-                    model.update();
+                if(spawnTimer > ratSpawnDelay){ //og ikke pause
+                    model.spawnRats();
+                    spawnTimer = 0;
                 }
+         
                 
                 if (Gdx.input.isTouched()) { // check for mouse click
                     model.newCat(mouseX, 842-mouseY);
