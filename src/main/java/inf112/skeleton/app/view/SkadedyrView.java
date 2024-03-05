@@ -16,95 +16,79 @@ import inf112.skeleton.app.model.entities.Cat;
 import inf112.skeleton.app.model.entities.Rat;
 
 public class SkadedyrView {
-	private SpriteBatch batch;
-	private BitmapFont font;
-	// private Sound bellSound;
-	private Rectangle screenRect = new Rectangle();
-	private final SkadedyrModel model;
+    private SpriteBatch batch;
+    private BitmapFont font;
+    private Rectangle screenRect = new Rectangle();
+    private final SkadedyrModel model;
 
-	private ShapeRenderer shapeRenderer;
+    private ShapeRenderer shapeRenderer;
+    private Texture mapTexture; // Hold the texture to avoid reloading it every frame
 
-	public SkadedyrView(SkadedyrModel model) {
-		this.model = model;
-	}
+    public SkadedyrView(SkadedyrModel model) {
+        this.model = model;
+    }
 
-	public void create() {
-		// Called at startup
-		this.shapeRenderer = new ShapeRenderer();
-		batch = new SpriteBatch();
-		font = new BitmapFont();
-		font.setColor(Color.RED);
+    public void create() {
+        this.shapeRenderer = new ShapeRenderer();
+        batch = new SpriteBatch();
+        font = new BitmapFont();
+        font.setColor(Color.GRAY);
 
-		// bellSound = Gdx.audio.newSound(Gdx.files.internal("INSERT PATH TO SOUND"));
-		Gdx.graphics.setForegroundFPS(60);
-	}
+        mapTexture = new Texture(Gdx.files.internal("map.png")); // Load once in create
+        Gdx.graphics.setForegroundFPS(60);
+    }
 
-	public void dispose() {
-		// Graphics and sound resources aren't managed by Java's garbage collector, so
-		// they must generally be disposed of manually when no longer needed. But,
-		// any remaining resources are typically cleaned up automatically when the
-		// application exits, so these aren't strictly necessary here.
-		// (We might need to do something like this when loading a new game level in
-		// a large game, for instance, or if the user switches to another application
-		// temporarily (e.g., incoming phone call on a phone, or something).
+    public void dispose() {
+        batch.dispose();
+        font.dispose();
+        mapTexture.dispose(); // Dispose the map texture
+        for (Cat cat : model.getCats()) {
+            cat.getTexture().dispose();
+        }
+        for (Rat rat : model.getRats()) {
+            rat.getTexture().dispose();
+        }
+        shapeRenderer.dispose();
+    }
 
-		batch.dispose();
-		font.dispose();
-		for (Cat cat : model.getCats()) {
-			cat.getTexture().dispose();
+    public void draw() {
+        ScreenUtils.clear(Color.GREEN);
 
-		}
-		for (Rat rat : model.getRats()) {
-			rat.getTexture().dispose();
+        batch.begin();
+        batch.draw(mapTexture, 0, 0); // Use the preloaded texture
+        batch.end();
 
-		}
-		shapeRenderer.dispose();
-		// bellSound.dispose();
-	}
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-	public void draw() {
-		// Start with a blank screen
-		ScreenUtils.clear(Color.GREEN);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        for (Cat cat : model.getCats()) {
+            Circle range = cat.getRangeCircle();
+			shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
+            shapeRenderer.circle(range.x, range.y, range.radius);
+        }
+        shapeRenderer.end();
 
-		// Draw calls should be wrapped in batch.begin() ... batch.end()
-		batch.begin();
+        Gdx.gl.glDisable(GL20.GL_BLEND);
 
-		batch.draw(new Texture(Gdx.files.internal("map.png")), 0, 0);
-		batch.end();
+        batch.begin();
+        for (Cat cat : model.getCats()) {
+            Rectangle catRect = cat.getRectangle();
+            batch.draw(cat.getTexture(), catRect.x, catRect.y, catRect.width, catRect.height);
+        }
+        for (Rat rat : model.getRats()) {
+            Rectangle ratRect = rat.getRectangle();
+            batch.draw(rat.getTexture(), ratRect.x, ratRect.y, ratRect.width, ratRect.height);
+        }
+        font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 10);
+        font.draw(batch, "Dine liv: " + model.getLives(), 1000, 760);
+        font.draw(batch, "Dine penger: " + model.getMoney(), 1000, 840);
+        font.draw(batch, "Din Score: " + model.getPoints(), 1000, 800);
+        batch.end();
+    }
 
-		//
-		// Gdx.gl.glClearColor(1, 1, 1, 1);
-        // Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		//
-
-		for (Cat cat : model.getCats()) {
-			// Draw cat's range  circle
-			Circle range = cat.getRangeCircle();
-			shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-			shapeRenderer.setColor(0, 0, 1, 1); // Set the color to blue
-			// Draw the circle using the position and radius from the Circle object
-			shapeRenderer.circle(range.x, range.y, range.radius);
-			shapeRenderer.end();
-			
-		}
-		batch.begin();
-		for (Cat cat : model.getCats()) {
-			Rectangle catRect = cat.getRectangle();
-			batch.draw(cat.getTexture(), catRect.x, catRect.y, catRect.width, catRect.height);
-
-
-		}
-		for (Rat rat : model.getRats()) {
-			Rectangle ratRect = rat.getRectangle();
-			batch.draw(rat.getTexture(), ratRect.x, ratRect.y, ratRect.width, ratRect.height);
-			//System.out.println("Rat at " + ratRect.x  + " " + ratRect.y);
-		}
-		font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 10);
-		batch.end();
-	}
-
-	public void resize(int width, int height) {
-		screenRect.width = width;
-		screenRect.height = height;
-	}
+    public void resize(int width, int height) {
+        screenRect.width = width;
+        screenRect.height = height;
+    }
 }

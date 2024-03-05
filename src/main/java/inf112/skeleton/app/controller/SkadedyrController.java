@@ -37,6 +37,7 @@ public class SkadedyrController  {
                 int mouseY = Gdx.input.getY();
                 // model.mousePos();
                 model.moveRats();
+                model.attackRats();
 
                 if (Gdx.input.isKeyPressed(Input.Keys.U)){
                     System.out.println("Key 'U' pressed");

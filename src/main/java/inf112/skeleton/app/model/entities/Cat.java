@@ -32,7 +32,6 @@ public class Cat {
 
 
     public void shoot(Rat target){
-
         if (withinRange(target))
             target.takeDamage(strength);
     }
@@ -44,7 +43,7 @@ public class Cat {
         this.rangeCircle = new Circle(pos, range);
 
     }
-    private boolean withinRange(Rat target) {
+    public boolean withinRange(Rat target) {
         Vector2 ratPos = target.getPosition();
         return range >= distance(ratPos, pos);
     }
@@ -72,8 +71,7 @@ public class Cat {
     }
 
     public int getStrength() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getStrength'");
+        return strength;
     }
 
     public Coordinate getPosition() {
