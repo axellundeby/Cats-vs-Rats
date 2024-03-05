@@ -18,6 +18,7 @@ public class Rat implements IEntity {
     private float secs;
     private int timeAlive;
     private Cat cat;
+
     
 
     public Rat(int health, int speed, Texture spriteImage) {
@@ -52,6 +53,7 @@ public class Rat implements IEntity {
     public void addTime() {
         this.timeAlive ++;
         this.secs += 0.05;
+        
     }
 
     public Direction getDirection() {

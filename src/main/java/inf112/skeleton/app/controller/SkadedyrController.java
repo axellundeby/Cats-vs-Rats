@@ -15,7 +15,7 @@ public class SkadedyrController  {
     private final SkadedyrView view;
     private float spawnTimer = 0;
     private int ratSpawnDelay = 5;
-
+    private boolean gameRunning = true;
 
     public SkadedyrController(SkadedyrModel model, SkadedyrView view){
         this.model = model;
@@ -25,7 +25,7 @@ public class SkadedyrController  {
     public void startTimer() {
         // Schedule a task to be executed every n milliseconds
         float delay = 0; // delay before the task is first executed
-        float intervalSeconds = (float) 0.05; // interval in seconds between executions of the task
+        float intervalSeconds = (float) 0.01; // interval in seconds between executions of the task
 
         Timer.schedule(clockTick(), delay, intervalSeconds);
     }
@@ -42,13 +42,12 @@ public class SkadedyrController  {
                 model.moveRats();
                 model.attackRat();
                 model.attackRatsForEachCat();
+                //kanskje en sleep
                 
-                if(spawnTimer > ratSpawnDelay){ //og ikke pause
+                if(spawnTimer > ratSpawnDelay && model.getRatsSpawned() < model.getRatLimitPerLevel()){ 
                     model.spawnRats();
                     spawnTimer = 0;
                 }
-         
-                
                 if (Gdx.input.isTouched()) { // check for mouse click
                     model.newCat(mouseX, 842-mouseY);
 

@@ -51,39 +51,35 @@ public class SkadedyrView {
         shapeRenderer.dispose();
     }
 
-    public void draw() {
-        ScreenUtils.clear(Color.GREEN);
-
-        batch.begin();
-        batch.draw(mapTexture, 0, 0); 
-        batch.end();
-
-        Gdx.gl.glEnable(GL20.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        for (Cat cat : model.getCats()) {
-            Circle range = cat.getRangeCircle();
+	public void draw() {
+		ScreenUtils.clear(Color.GREEN);
+	
+		batch.begin();
+		batch.draw(mapTexture, 0, 0); 
+		batch.end();
+	
+		Gdx.gl.glEnable(GL20.GL_BLEND);
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+	
+		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+		for (Cat cat : model.getCats()) {
+			Circle range = cat.getRangeCircle();
 			shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
-            shapeRenderer.circle(range.x, range.y, range.radius);
-        }
-        shapeRenderer.end();
-
-        Gdx.gl.glDisable(GL20.GL_BLEND);
-
-        batch.begin();
-		drawCats();
-		drawRats();
-        batch.end();
-    }
-
-	public void drawGameInfo(){
+			shapeRenderer.circle(range.x, range.y, range.radius);
+		}
+		shapeRenderer.end();
+	
+		Gdx.gl.glDisable(GL20.GL_BLEND);
+	
+		batch.begin();
 		font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 10);
 		font.draw(batch, "Dine liv: " + model.getLives(), 1000, 760);
 		font.draw(batch, "Dine penger: " + model.getMoney(), 1000, 840);
 		font.draw(batch, "Din Score: " + model.getPoints(), 1000, 800);
 		font.draw(batch, "Level: " + model.getLevel(), 1000, 720);
-		
+		drawCats();
+		drawRats();
+		batch.end();
 	}
 
 	public void drawCats(){
@@ -97,7 +93,6 @@ public class SkadedyrView {
 		for (Rat rat : model.getRats()) {
             Rectangle ratRect = rat.getRectangle();
             batch.draw(rat.getTexture(), ratRect.x, ratRect.y, ratRect.width, ratRect.height);
-			System.out.println(rat.getHealth() + " ");
         }
 	}
 
