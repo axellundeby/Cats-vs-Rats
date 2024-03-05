@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
 import inf112.skeleton.app.model.SkadedyrModel;
+import inf112.skeleton.app.model.entities.Rat;
 import inf112.skeleton.app.view.SkadedyrView;
 
 public class SkadedyrController  {
@@ -45,6 +46,10 @@ public class SkadedyrController  {
                 if (Gdx.input.isTouched()) { // check for mouse click
                     model.newCat(mouseX, 842-mouseY);
 
+                }
+                
+                for (Rat rat : model.getRats()) {
+                    rat.addTime();
                 }
 
             }

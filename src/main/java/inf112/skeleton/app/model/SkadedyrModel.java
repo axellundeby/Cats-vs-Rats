@@ -48,9 +48,11 @@ public class SkadedyrModel implements ISkadedyrModel {
     @Override
     public void moveRats() {
         for (Rat rat : aliveRats) {
-            rat.move(dx);
+            rat.move();
         }
     }
+
+   
 
     public void uselessfunction(Rectangle spriteRect, Rectangle screenRect) { // for å beholde koden
 
