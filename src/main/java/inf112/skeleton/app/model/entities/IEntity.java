@@ -1,4 +1,4 @@
-package inf112.skeleton.app.model;
+package inf112.skeleton.app.model.entities;
 
 public interface IEntity {
 
@@ -7,7 +7,7 @@ public interface IEntity {
      * 
      * @param deltaTime Tiden siden siste frame, brukt for å sikre jevn oppdatering over ulike enheter.
      */
-    void move(float deltaTime);
+    void move();
 
     /**
      * Tegner rotten på skjermen ved bruk av en SpriteBatch.
