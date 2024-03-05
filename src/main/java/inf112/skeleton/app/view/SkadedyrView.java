@@ -1,11 +1,13 @@
 package inf112.skeleton.app.view;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
@@ -14,6 +16,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.entities.Cat;
 import inf112.skeleton.app.model.entities.Rat;
+import inf112.skeleton.app.view.States.GameStateManager;
+import inf112.skeleton.app.view.States.MenuState;
 
 public class SkadedyrView {
 	private SpriteBatch batch;
@@ -21,6 +25,7 @@ public class SkadedyrView {
 	// private Sound bellSound;
 	private Rectangle screenRect = new Rectangle();
 	private final SkadedyrModel model;
+	private GameStateManager gsm;
 
 	private ShapeRenderer shapeRenderer;
 
@@ -34,6 +39,10 @@ public class SkadedyrView {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
 		font.setColor(Color.RED);
+		gsm = new GameStateManager();
+		gsm.set(new MenuState(gsm, model));
+		System.out.println("View created");
+
 
 		// bellSound = Gdx.audio.newSound(Gdx.files.internal("INSERT PATH TO SOUND"));
 		Gdx.graphics.setForegroundFPS(60);
@@ -61,47 +70,25 @@ public class SkadedyrView {
 		shapeRenderer.dispose();
 		// bellSound.dispose();
 	}
-
-	public void draw() {
-		// Start with a blank screen
-		ScreenUtils.clear(Color.GREEN);
-
-		// Draw calls should be wrapped in batch.begin() ... batch.end()
-		batch.begin();
-
-		batch.draw(new Texture(Gdx.files.internal("map.png")), 0, 0);
-		batch.end();
-
-		//
-		// Gdx.gl.glClearColor(1, 1, 1, 1);
-        // Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		//
-
-		for (Cat cat : model.getCats()) {
-			// Draw cat's range  circle
-			Circle range = cat.getRangeCircle();
-			shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-			shapeRenderer.setColor(0, 0, 1, 1); // Set the color to blue
-			// Draw the circle using the position and radius from the Circle object
-			shapeRenderer.circle(range.x, range.y, range.radius);
-			shapeRenderer.end();
-			
-		}
-		batch.begin();
-		for (Cat cat : model.getCats()) {
-			Rectangle catRect = cat.getRectangle();
-			batch.draw(cat.getTexture(), catRect.x, catRect.y, catRect.width, catRect.height);
-
-
-		}
-		for (Rat rat : model.getRats()) {
-			Rectangle ratRect = rat.getRectangle();
-			batch.draw(rat.getTexture(), ratRect.x, ratRect.y, ratRect.width, ratRect.height);
-			//System.out.println("Rat at " + ratRect.x  + " " + ratRect.y);
-		}
-		font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 10);
-		batch.end();
+	public float getScreenWidth() {
+		return screenRect.width;
 	}
+
+	public float getScreenHeight() {
+		return screenRect.height;
+	}
+
+	
+	public void render() {
+		System.out.println("Rendering in MainView");
+		gsm.update(Gdx.graphics.getDeltaTime());
+		gsm.render(batch);
+	}
+		
+
+		
+		
+	
 
 	public void resize(int width, int height) {
 		screenRect.width = width;
