@@ -7,6 +7,8 @@ import inf112.skeleton.app.model.entities.BasicCat;
 import inf112.skeleton.app.model.entities.BasicRat;
 import inf112.skeleton.app.model.entities.Cat;
 import inf112.skeleton.app.model.entities.Rat;
+import inf112.skeleton.app.model.entities.ShotgunCat;
+import inf112.skeleton.app.model.entities.freezeCat;
 import inf112.skeleton.app.model.entities.Rat.Direction;
 
 public class SkadedyrModel implements ISkadedyrModel {
@@ -125,15 +127,33 @@ public class SkadedyrModel implements ISkadedyrModel {
     public void attackRat() {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackRatsForEachCat();
         for (Cat cat : cats) {
-            LinkedList<Rat> attackableRats = attackMap.get(cat);
-            if (attackableRats != null && !attackableRats.isEmpty()) { 
-                attackableRats.getFirst().takeDamage(cat.getStrength());
-                if (attackableRats.getFirst().isKilled()) {
-                    money += 1000; 
-                    points += 100; 
+            if (true) { // om katten er en basic katt
+                LinkedList<Rat> attackableRats = attackMap.get(cat);
+                if (attackableRats != null && !attackableRats.isEmpty()) { 
+                    if (cat instanceof BasicCat) {
+                        attackableRats.getFirst().takeDamage(cat.getStrength());
+                    }
+                    if (cat instanceof freezeCat) {
+                        for (Rat rat : attackableRats) {
+                            rat.freeze();
+                            //må unfreeze etter x sekunder
+                        }
+                    }
+                    if (cat instanceof ShotgunCat) {
+                        for (int i = 0; i < 3; i++) {
+                            if (attackableRats.get(i) != null) {
+                                attackableRats.get(i).takeDamage(cat.getStrength());
+                            }
+                        }
+                        
+                    }
+                    if (attackableRats.getFirst().isKilled()) {
+                        money += 1000; 
+                        points += 100; 
+                    }
                 }
             }
-        }
+    }
     }
     public void newCat(int mouseX, int mouseY) {
         Cat catTest = new BasicCat();
@@ -143,3 +163,28 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
 }
+
+
+// else if(true){ //om katten er en freeze katt
+//     if(cat.withinRange(testRat)){
+//         testRat.freeze();
+//         if (testRat.isKilled()) {
+//             money += 1000; 
+//             points += 100; 
+//         }
+//         //må unfreeze etter x sekunder
+//     }
+// }
+
+// else if(true){ //om katten er en shotgun katt
+//     if(cat.withinRange(testRat)){
+//         LinkedList<Rat> attackableRats = attackMap.get(cat);
+//         if (attackableRats != null && !attackableRats.isEmpty()) { 
+//             attackableRats.getFirst().takeDamage(cat.getStrength());
+//             if (attackableRats.getFirst().isKilled()) {
+//                 money += 1000; 
+//                 points += 100; 
+//             }
+//     }
+// }
+//}

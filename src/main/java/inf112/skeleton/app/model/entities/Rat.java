@@ -203,4 +203,8 @@ public class Rat implements IEntity {
     public Vector2 getPosition() {
         return pos;
     }
+
+    public int freeze() {
+        return speed/2;
+    }
 }
