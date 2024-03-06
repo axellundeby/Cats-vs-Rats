@@ -105,8 +105,8 @@ public class SkadedyrController  {
 
     public void updateClockTick(){
         System.out.println(intervalSeconds);
-       if(intervalSeconds == (float) 0.05){
-        intervalSeconds = (float) 0.0025;
+        if(intervalSeconds == (float) 0.05){
+            intervalSeconds = (float) 0.0025;
         
         }
         else{

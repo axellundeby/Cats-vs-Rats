@@ -3,6 +3,7 @@ package inf112.skeleton.app.view;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,31 +21,29 @@ import inf112.skeleton.app.view.States.GameStateManager;
 import inf112.skeleton.app.view.States.MenuState;
 
 public class SkadedyrView {
-	private SpriteBatch batch;
-	private BitmapFont font;
-	// private Sound bellSound;
-	private Rectangle screenRect = new Rectangle();
-	private final SkadedyrModel model;
-	private GameStateManager gsm;
+    private SpriteBatch batch;
+    private BitmapFont font;
+    // private Sound bellSound;
+    private Rectangle screenRect = new Rectangle();
+    private final SkadedyrModel model;
+    private GameStateManager gsm;
 
     private ShapeRenderer shapeRenderer;
-    private Texture mapTexture; // Hold the texture to avoid reloading it every frame
+    public static Texture mapTexture; // Hold the texture to avoid reloading it every frame
 
     public SkadedyrView(SkadedyrModel model) {
         this.model = model;
     }
 
-	public void create() {
-		// Called at startup
-		this.shapeRenderer = new ShapeRenderer();
-		batch = new SpriteBatch();
-		font = new BitmapFont();
-		font.setColor(Color.RED);
-		gsm = new GameStateManager();
-		gsm.set(new MenuState(gsm, model));
-		System.out.println("View created");
-
-
+    public void create() {
+        // Called at startup
+        this.shapeRenderer = new ShapeRenderer();
+        batch = new SpriteBatch();
+        font = new BitmapFont();
+        font.setColor(Color.RED);
+        gsm = new GameStateManager();
+        gsm.set(new MenuState(gsm, model));
+        System.out.println("View created");
         mapTexture = new Texture(Gdx.files.internal("map.png")); // Load once in create
         Gdx.graphics.setForegroundFPS(60);
     }
@@ -62,41 +61,19 @@ public class SkadedyrView {
         shapeRenderer.dispose();
     }
 
-    public void draw() {
-        ScreenUtils.clear(Color.GREEN);
+    public float getScreenWidth() {
+        return screenRect.width;
+    }
 
-        batch.begin();
-        batch.draw(mapTexture, 0, 0); // Use the preloaded texture
-        batch.end();
+    public float getScreenHeight() {
+        return screenRect.height;
+    }
 
-        Gdx.gl.glEnable(GL20.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+    public void render() {
+        System.out.println("Rendering in MainView");
 
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        for (Cat cat : model.getCats()) {
-            Circle range = cat.getRangeCircle();
-			shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
-            shapeRenderer.circle(range.x, range.y, range.radius);
-        }
-        shapeRenderer.end();
-
-        Gdx.gl.glDisable(GL20.GL_BLEND);
-
-        batch.begin();
-        for (Cat cat : model.getCats()) {
-            Rectangle catRect = cat.getRectangle();
-            batch.draw(cat.getTexture(), catRect.x, catRect.y, catRect.width, catRect.height);
-        }
-        for (Rat rat : model.getRats()) {
-            Rectangle ratRect = rat.getRectangle();
-            batch.draw(rat.getTexture(), ratRect.x, ratRect.y, ratRect.width, ratRect.height);
-        }
-        font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 10);
-        font.draw(batch, "Dine liv: " + model.getLives(), 1000, 760);
-        font.draw(batch, "Dine penger: " + model.getMoney(), 1000, 840);
-        font.draw(batch, "Din Score: " + model.getPoints(), 1000, 800);
-        font.draw(batch, "Level: " + model.getLevel(), 1000, 720);
-        batch.end();
+        gsm.update(Gdx.graphics.getDeltaTime());
+        gsm.render(batch);
     }
 
     public void resize(int width, int height) {

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Model;
 
+import inf112.skeleton.app.main.SkadedyrMain;
 import inf112.skeleton.app.model.SkadedyrModel;
 
 public class MenuState extends State{
@@ -21,6 +22,7 @@ public class MenuState extends State{
 
     private BitmapFont titleFont;
     private BitmapFont textFont;
+    private Texture mapTexture;
 
 
     public MenuState(GameStateManager gsm, SkadedyrModel model) {
@@ -45,7 +47,7 @@ public class MenuState extends State{
            gsm.set(new PlayState(gsm, model));
            dispose();
        }
-       if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)){
+       if(Gdx.input.isKeyPressed(Keys.ESCAPE)){
            Gdx.app.exit();
        }
     }
@@ -79,7 +81,9 @@ public class MenuState extends State{
 
     @Override
     public void dispose() {
-        //playButton.dispose();
+        
+        titleFont.dispose();
+        textFont.dispose();
         
     }
     
