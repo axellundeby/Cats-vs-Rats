@@ -1,5 +1,7 @@
 package inf112.skeleton.app.controller;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.Timer;
@@ -7,7 +9,9 @@ import com.badlogic.gdx.utils.Timer.Task;
 
 import inf112.skeleton.app.main.SkadedyrMain;
 import inf112.skeleton.app.model.SkadedyrModel;
+import inf112.skeleton.app.model.entities.Cat;
 import inf112.skeleton.app.model.entities.Rat;
+import inf112.skeleton.app.model.entities.Cat.CatImageSwapper;
 import inf112.skeleton.app.view.SkadedyrView;
 
 public class SkadedyrController  {
@@ -17,27 +21,29 @@ public class SkadedyrController  {
     private boolean pausedGame = true;
     private boolean keyPHandled = false;  
     private boolean keySHandled = false; 
-    private boolean keyRHandled = false; 
     boolean speedUp = false; 
     private float intervalSeconds = (float) 0.05; // interval in seconds between executions of the task
     private Task currentClockTickTask = null;
     private float spawnTimer = 0;
     private int ratSpawnDelay = 5;
-    private boolean gameRunning = true;
-    private Rat rat;
-
-
+    private ArrayList<Cat> cats;
+    private ArrayList<Rat> rats;
+    private int fire = 0;
+    private int freezeTimer = 0;
+    
+  
+    
+    
     public SkadedyrController(SkadedyrModel model, SkadedyrView view){
         this.model = model;
         this.view = view;
+        this.cats = new ArrayList<Cat>(model.getCats());
+        this.rats = new ArrayList<Rat>(model.getRats());
     }
 
     public void startTimer() {
         // Schedule a task to be executed every n milliseconds
         float delay = 0; // delay before the task is first executed
-
-       
-
 
         if (currentClockTickTask != null) {
             currentClockTickTask.cancel();
@@ -54,7 +60,7 @@ public class SkadedyrController  {
             @Override
             public void run() {
 
-               
+
             // Check if 'P' is pressed and keyPHandled is false
             if (Gdx.input.isKeyPressed(Input.Keys.P) && !keyPHandled) {
                 pausedGame = !pausedGame;
@@ -89,14 +95,26 @@ public class SkadedyrController  {
     }
 
     public void GameLogic(){
+        fire += 0.05;
         //System.out.println(intervalSeconds);
         // This code will be executed every n seconds
         int mouseX = Gdx.input.getX();
         int mouseY = Gdx.input.getY();
         // model.mousePos();
         model.moveRats();
+        model.attackList();
         model.attackRat();
-        model.attackRatsForEachCat();
+  
+        //for (Cat cat : cats) {
+            // if (fire >= 50) {
+            //     fire = 0;
+            // }
+            //if (fire > 1) {
+
+                //cat.swapImage(CatImageSwapper.ATTACKING);
+               // fire = 0;
+           // }
+        //}
 
 
         spawnTimer += 0.05;
@@ -105,15 +123,14 @@ public class SkadedyrController  {
             spawnTimer = 0;
         }
 
-        //aner ikke om dette fungerer, men rotter skal være fryst i 5 sekunder
-        // if(rat.isFrozen()){
-        //     rat.freezeTimer += 0.05;
-        //     if(rat.freezeTimer > 5){
-        //         rat.isFrozen = false;
-        //         rat.freezeTimer = 0;
+        // for (Rat rat : rats) {
+        //     if (rat.isFrozen()) {
+        //         rat.freezeTimer += 0.05;
+        //         if (rat.freezeTimer > 5) {
+        //             rat.freezeTimer = 0;
+        //         }
         //     }
         // }
-        
 
         if (Gdx.input.isKeyPressed(Input.Keys.U)){
             System.out.println("Key 'U' pressed");

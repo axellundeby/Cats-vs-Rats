@@ -8,7 +8,7 @@ public class BasicCat extends Cat {
     public static Texture texture = new Texture(Gdx.files.internal("cat.png"));
 
     public BasicCat() {
-        super(1, 100, texture);
+        super(1, 1 ,100, texture);
 
     }
     

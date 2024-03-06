@@ -110,7 +110,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         return lives;
     }
 
-    public HashMap<Cat, LinkedList<Rat>> attackRatsForEachCat() {
+    public HashMap<Cat, LinkedList<Rat>> attackList() {
         HashMap<Cat, LinkedList<Rat>> attackMap = new HashMap<>();
         for (Cat cat : cats) {
             LinkedList<Rat> attackableRats = new LinkedList<>();
@@ -125,7 +125,8 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
     
     public void attackRat() {
-        HashMap<Cat, LinkedList<Rat>> attackMap = attackRatsForEachCat();
+        
+        HashMap<Cat, LinkedList<Rat>> attackMap = attackList();
         for (Cat cat : cats) {
             LinkedList<Rat> attackableRats = attackMap.get(cat);
             if (attackableRats != null && !attackableRats.isEmpty()) { 
@@ -180,8 +181,8 @@ public class SkadedyrModel implements ISkadedyrModel {
         Cat gangsta = new ShotgunCat();
         Cat froze = new freezeCat();
         Cat meow = new BasicCat();
-        froze.setPos(mouseX, mouseY);
-        addCat(froze);
+        gangsta.setPos(mouseX, mouseY);
+        addCat(gangsta);
     }
 
 }

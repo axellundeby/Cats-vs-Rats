@@ -1,10 +1,15 @@
 package inf112.skeleton.app.model.entities;
 
+import java.util.EnumMap;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+
+import inf112.skeleton.app.model.entities.Rat.ImageSwapper;
+
 
 public class Cat {
 
@@ -16,18 +21,38 @@ public class Cat {
     private Circle rangeCircle;
     private int size;
     private int halfSize;
+    private float fireRate;
+    public CatImageSwapper currentState = CatImageSwapper.DEFAULD;
+    private EnumMap<CatImageSwapper, Texture> attackingTextures = new EnumMap<>(CatImageSwapper.class);
 
-    public Cat(int strength, float range, Texture spriteImage){
+    public Cat(int strength,float fireRate ,float range, Texture spriteImage){
         this.strength = strength;
         this.range = range;
         this.spriteImage = spriteImage;
         this.pos = new Vector2();
         this.size = 60;
+        this.fireRate = fireRate;
 
         this.halfSize = size/2;
 
         this.spriteRect = new Rectangle(pos.x-halfSize, pos.y-halfSize, size, size);
         this.rangeCircle = new Circle(pos, range);
+
+        attackingTextures.put(CatImageSwapper.DEFAULD, spriteImage);
+        attackingTextures.put(CatImageSwapper.ATTACKING, new Texture(Gdx.files.internal("cat2.png")));
+    }
+
+    public enum CatImageSwapper {
+        ATTACKING,
+        DEFAULD;
+    }
+
+    public void swapImage(CatImageSwapper image) {
+        currentState = image; 
+    }
+
+    public Texture getTexture() {
+        return attackingTextures.get(currentState); 
     }
 
 
@@ -35,7 +60,11 @@ public class Cat {
         if (withinRange(target))
             target.takeDamage(strength);
     }
-    
+
+    public float getFireRate(){
+        return fireRate;
+    }
+
     public void setPos(int x, int y){
         pos.x = x;
         pos.y = y;
@@ -54,9 +83,6 @@ public class Cat {
         return Math.pow(Math.pow(x_dist, 2.0) + Math.pow(y_dist, 2.0), 0.5);
     }
     
-    public Texture getTexture(){
-        return spriteImage;
-    }
     public Rectangle getRectangle(){
         return spriteRect;
     }

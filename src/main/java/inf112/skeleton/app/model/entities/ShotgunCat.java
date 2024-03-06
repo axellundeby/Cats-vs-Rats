@@ -6,6 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 public class ShotgunCat extends Cat{
 
     public ShotgunCat() {
-        super(20, 50, new Texture(Gdx.files.internal("hagleKatt.png")));
+        super(1, 2 ,100,new Texture(Gdx.files.internal("hagleKatt.png")));
     }
 }

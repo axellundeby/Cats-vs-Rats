@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class freezeCat extends Cat{
 
     public freezeCat() {
-        super(1, 100, new Texture(Gdx.files.internal("freezeCat.png")));
+        super(1, 3 ,100, new Texture(Gdx.files.internal("freezeCat.png")));
     }
     
 }

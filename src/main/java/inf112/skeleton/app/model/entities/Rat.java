@@ -22,6 +22,7 @@ public class Rat implements IEntity {
     private boolean isFrozen;
     public ImageSwapper currentState = ImageSwapper.ALIVE;
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
+    public double freezeTimer;
 
     public Rat(int health, int speed, Texture texture) {
         this.health = health;
