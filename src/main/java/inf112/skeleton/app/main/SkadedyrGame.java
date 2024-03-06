@@ -17,6 +17,7 @@ public class SkadedyrGame implements ApplicationListener{
         this.model  = new SkadedyrModel();
         this.view = new SkadedyrView(model);
         this.controller = new SkadedyrController(model, view);
+
     }
 
     @Override
@@ -32,7 +33,8 @@ public class SkadedyrGame implements ApplicationListener{
 
     @Override
     public void render() {
-        view.draw();
+        view.render();
+       
     }
 
     @Override
