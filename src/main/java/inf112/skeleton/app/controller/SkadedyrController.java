@@ -61,7 +61,7 @@ public class SkadedyrController  {
 
                 if (Gdx.input.isTouched()) { // check for mouse click
                     model.newCat(mouseX, 842-mouseY);
-
+                    //legg til sleep på drept animasjon og freeze
                 }
                 
                 for (Rat rat : model.getRats()) {
