@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
+import inf112.skeleton.app.main.SkadedyrMain;
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.entities.Rat;
 import inf112.skeleton.app.view.SkadedyrView;
@@ -15,7 +16,8 @@ public class SkadedyrController  {
     private final SkadedyrView view;
     private boolean pausedGame = true;
     private boolean keyPHandled = false;  
-    private boolean keySHandled = false;  
+    private boolean keySHandled = false; 
+    private boolean keyRHandled = false; 
     boolean speedUp = false; 
     private float intervalSeconds = (float) 0.05; // interval in seconds between executions of the task
     private Task currentClockTickTask = null;
@@ -49,22 +51,25 @@ public class SkadedyrController  {
                 keyPHandled = true; // Prevent further toggling until key is released
 
             } 
+            if (!Gdx.input.isKeyPressed(Input.Keys.P)) {
+                keyPHandled = false; // Allow toggling again once the key is released
+            }
             if (Gdx.input.isKeyPressed(Input.Keys.S) && !keySHandled && !pausedGame ){
                 updateClockTick();
                 startTimer();
                 keySHandled = true;
                 System.out.println(keySHandled);
             }
-
             if (!Gdx.input.isKeyPressed(Input.Keys.S)) {
                 keySHandled = false; // Allow toggling again once the key is released
             }
-            if (!Gdx.input.isKeyPressed(Input.Keys.P)) {
-                keyPHandled = false; // Allow toggling again once the key is released
+            if ((Gdx.input.isKeyPressed(Input.Keys.R))){ //Press r to restart
+                SkadedyrMain.main(null);
             }
+        
             if (pausedGame) {
                 return; // Skip game logic if paused
-            } // Optional: Immediately exit this iteration to prevent further logic from running
+            } 
 
             GameLogic();
     
@@ -101,12 +106,11 @@ public class SkadedyrController  {
     public void updateClockTick(){
         System.out.println(intervalSeconds);
        if(intervalSeconds == (float) 0.05){
-        intervalSeconds = (float) 0.025;
-        System.out.println("Hei");
+        intervalSeconds = (float) 0.0025;
+        
         }
         else{
             intervalSeconds = (float) 0.05;
-            System.out.println("hade");
         }
         System.out.println(intervalSeconds);
     }
