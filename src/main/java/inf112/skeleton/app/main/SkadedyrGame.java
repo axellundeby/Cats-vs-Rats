@@ -33,7 +33,8 @@ public class SkadedyrGame implements ApplicationListener{
 
     @Override
     public void render() {
-        view.draw();
+        view.render();
+       
     }
 
     @Override

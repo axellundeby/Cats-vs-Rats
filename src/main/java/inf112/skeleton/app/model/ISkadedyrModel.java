@@ -1,6 +1,7 @@
 package inf112.skeleton.app.model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import inf112.skeleton.app.model.entities.Cat;
 import inf112.skeleton.app.model.entities.Rat;
