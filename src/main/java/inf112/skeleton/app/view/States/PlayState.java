@@ -126,9 +126,27 @@ public class PlayState extends State{
         font.draw(batch, "Dine penger: " + model.getMoney(), 1000, 840);
         font.draw(batch, "Din Score: " + model.getPoints(), 1000, 800);
         font.draw(batch, "Level: " + model.getLevel(), 1000, 720);
+        drawCats(batch);
+        drawRats(batch);
         batch.end();
 		 
 	 }
+
+	 public void drawCats(SpriteBatch batch){
+		for (Cat cat : model.getCats()) {
+            Rectangle catRect = cat.getRectangle();
+            batch.draw(cat.getTexture(), catRect.x, catRect.y, catRect.width, catRect.height);
+        }
+	}
+
+	public void drawRats(SpriteBatch batch){
+		for (Rat rat : model.getRats()) {
+            Rectangle ratRect = rat.getRectangle();
+			batch.draw(rat.getTexture(), ratRect.x, ratRect.y, ratRect.width, ratRect.height);
+        }
+	}
+
+
  
 
     @Override

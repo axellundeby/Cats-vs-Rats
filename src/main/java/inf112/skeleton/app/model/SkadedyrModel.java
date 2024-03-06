@@ -184,8 +184,8 @@ public class SkadedyrModel implements ISkadedyrModel {
         Cat gangsta = new ShotgunCat();
         Cat froze = new freezeCat();
         Cat meow = new BasicCat();
-        gangsta.setPos(mouseX, mouseY);
-        addCat(gangsta);
+        froze.setPos(mouseX, mouseY);
+        addCat(froze);
     }
 
 }
