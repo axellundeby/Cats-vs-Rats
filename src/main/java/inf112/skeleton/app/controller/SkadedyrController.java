@@ -16,6 +16,7 @@ public class SkadedyrController  {
     private float spawnTimer = 0;
     private int ratSpawnDelay = 5;
     private boolean gameRunning = true;
+    private Rat rat;
 
     public SkadedyrController(SkadedyrModel model, SkadedyrView view){
         this.model = model;
@@ -48,6 +49,16 @@ public class SkadedyrController  {
                     model.spawnRats();
                     spawnTimer = 0;
                 }
+
+                //aner ikke om dette fungerer, men rotter skal være fryst i 5 sekunder
+                // if(rat.isFrozen()){
+                //     rat.freezeTimer += 0.05;
+                //     if(rat.freezeTimer > 5){
+                //         rat.isFrozen = false;
+                //         rat.freezeTimer = 0;
+                //     }
+                // }
+
                 if (Gdx.input.isTouched()) { // check for mouse click
                     model.newCat(mouseX, 842-mouseY);
 

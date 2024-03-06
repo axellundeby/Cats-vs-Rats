@@ -136,16 +136,23 @@ public class SkadedyrModel implements ISkadedyrModel {
                     if (cat instanceof freezeCat) {
                         for (Rat rat : attackableRats) {
                             rat.freeze();
+                            System.out.println("Rat is frozen");
                             //må unfreeze etter x sekunder
                         }
                     }
-                    if (cat instanceof ShotgunCat) {
-                        for (int i = 0; i < 3; i++) {
-                            if (attackableRats.get(i) != null) {
-                                attackableRats.get(i).takeDamage(cat.getStrength());
+                    else if (cat instanceof ShotgunCat) {
+                        int attacks = 3; 
+                        int ratsCount = attackableRats.size();
+                        for (int i = 0; i < ratsCount && attacks > 0; i++) {
+                            Rat targetRat = attackableRats.get(i);
+                            int attacksOnThisRat = Math.min(attacks, 3 - i); 
+                            for (int j = 0; j < attacksOnThisRat; j++) {
+                                if (targetRat != null) {
+                                    targetRat.takeDamage(cat.getStrength());
+                                    attacks--; 
+                                }
                             }
                         }
-                        
                     }
                     if (attackableRats.getFirst().isKilled()) {
                         money += 1000; 
@@ -153,38 +160,34 @@ public class SkadedyrModel implements ISkadedyrModel {
                     }
                 }
             }
+        }
     }
+
+    public void transaction() {
+        int priceForBasicCat = 1000;
+        int priceForFreezeCat = 2000;
+        int priceForShotgunCat = 3000;
+
+        if (priceForBasicCat <= money) { //og katta er kjøpt
+            money -= priceForBasicCat;
+        }
+        else if (priceForFreezeCat <= money) { //og katta er kjøpt
+            money -= priceForFreezeCat;
+        }
+        else if (priceForShotgunCat <= money) { //og katta er kjøpt
+            money -= priceForShotgunCat;
+        }
     }
+
+
     public void newCat(int mouseX, int mouseY) {
-        Cat catTest = new BasicCat();
-        catTest.setPos(mouseX, mouseY);
-        addCat(catTest);
-        System.out.println(mouseX + ", " + mouseY);
+        Cat gangsta = new ShotgunCat();
+        Cat catTest = new freezeCat();
+        Cat meow = new BasicCat();
+        gangsta.setPos(mouseX, mouseY);
+        addCat(gangsta);
     }
 
 }
 
 
-// else if(true){ //om katten er en freeze katt
-//     if(cat.withinRange(testRat)){
-//         testRat.freeze();
-//         if (testRat.isKilled()) {
-//             money += 1000; 
-//             points += 100; 
-//         }
-//         //må unfreeze etter x sekunder
-//     }
-// }
-
-// else if(true){ //om katten er en shotgun katt
-//     if(cat.withinRange(testRat)){
-//         LinkedList<Rat> attackableRats = attackMap.get(cat);
-//         if (attackableRats != null && !attackableRats.isEmpty()) { 
-//             attackableRats.getFirst().takeDamage(cat.getStrength());
-//             if (attackableRats.getFirst().isKilled()) {
-//                 money += 1000; 
-//                 points += 100; 
-//             }
-//     }
-// }
-//}

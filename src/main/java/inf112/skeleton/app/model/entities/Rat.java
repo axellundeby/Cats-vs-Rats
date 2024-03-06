@@ -18,6 +18,7 @@ public class Rat implements IEntity {
     private float secs;
     private int timeAlive;
     private Cat cat;
+    private boolean isFrozen;
 
     
 
@@ -205,6 +206,10 @@ public class Rat implements IEntity {
     }
 
     public int freeze() {
+        isFrozen = true;
         return speed/2;
+    }
+    public boolean isFrozen() {
+        return isFrozen;
     }
 }
