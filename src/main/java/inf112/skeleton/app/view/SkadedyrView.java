@@ -92,7 +92,7 @@ public class SkadedyrView {
 	public void drawRats(){
 		for (Rat rat : model.getRats()) {
             Rectangle ratRect = rat.getRectangle();
-            batch.draw(rat.getTexture(), ratRect.x, ratRect.y, ratRect.width, ratRect.height);
+			batch.draw(rat.getTexture(), ratRect.x, ratRect.y, ratRect.width, ratRect.height);
         }
 	}
 
