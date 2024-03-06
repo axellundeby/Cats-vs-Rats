@@ -117,7 +117,7 @@ public class SkadedyrController  {
 
         if (Gdx.input.isKeyPressed(Input.Keys.U)){
             System.out.println("Key 'U' pressed");
-            model.update();
+            model.spawnRats();
         }
         
         if (Gdx.input.isTouched()) { // check for mouse click
