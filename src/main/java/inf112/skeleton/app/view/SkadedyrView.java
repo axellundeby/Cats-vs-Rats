@@ -85,9 +85,6 @@ public class SkadedyrView {
 		gsm.render(batch);
 	}
 		
-
-		
-		
 	
 
 	public void resize(int width, int height) {

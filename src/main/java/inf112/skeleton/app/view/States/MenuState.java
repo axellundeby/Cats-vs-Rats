@@ -22,6 +22,7 @@ public class MenuState extends State{
     private BitmapFont titleFont;
     private BitmapFont textFont;
 
+
     public MenuState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
         if (model == null) {
@@ -68,6 +69,7 @@ public class MenuState extends State{
     //sb.draw(playButton, playButton.getWidth() / 2, playButton.getHeight() / 2);
     titleFont.draw(sb, "Press SPACE to play", 300, 300);
     textFont.draw(sb, "Return Of the Rats", 300, 500);
+
 
 
     // End drawing

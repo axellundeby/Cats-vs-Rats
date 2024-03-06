@@ -30,8 +30,10 @@ public class PlayState extends State{
 
     @Override
     public void handleInput() {
-		if(Gdx.input.isKeyJustPressed(Keys.ENTER)){
-           System.out.println("Mjau");
+		if(Gdx.input.isKeyPressed(Keys.ESCAPE)){
+			gsm.set(new MenuState(gsm, model));
+           dispose();
+          
        }
         
     }
@@ -43,7 +45,7 @@ public class PlayState extends State{
 
     @Override
     public void render(SpriteBatch sb) {
-		System.out.println("Rendering PlayState");
+		
 		 // Clear the screen
 		 Gdx.gl.glClearColor(0, 1, 0, 1);
 		 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -85,8 +87,8 @@ public class PlayState extends State{
 
     @Override
     public void dispose() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'dispose'");
+		
+		
     }
 
 
