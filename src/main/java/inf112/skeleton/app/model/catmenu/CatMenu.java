@@ -3,7 +3,10 @@ package inf112.skeleton.app.model.catmenu;
 import java.util.HashMap;
 import java.util.Set;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
 import inf112.skeleton.app.model.entities.AngryCat;
@@ -35,13 +38,29 @@ public class CatMenu {
         return menuRect;
     }
 
+    public void draw(SpriteBatch batch) {
+        int i = 0;
+        for (Texture sprite : getTextures()) {
+            batch.draw(sprite, getX() + 10 + i * 30, 10 + i * 30, 200, 200);
+            i++;
+        }
+    }
+
+    public void draw(ShapeRenderer shapeRenderer) {
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.WHITE);
+        shapeRenderer.rect(getX(), getY(), getW(), getH());
+        shapeRenderer.end();
+    }
+
     public Rectangle getCatsMap(Texture tex) {
         return availableCatsMap.get(tex);
     }
 
-    public Set<Texture> getTextures(){
+    public Set<Texture> getTextures() {
         return availableCatsList;
     }
+
     public float getX() {
         return menuRect.x;
     }
