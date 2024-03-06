@@ -21,6 +21,11 @@ public class SkadedyrController  {
     boolean speedUp = false; 
     private float intervalSeconds = (float) 0.05; // interval in seconds between executions of the task
     private Task currentClockTickTask = null;
+    private float spawnTimer = 0;
+    private int ratSpawnDelay = 5;
+    private boolean gameRunning = true;
+    private Rat rat;
+
 
     public SkadedyrController(SkadedyrModel model, SkadedyrView view){
         this.model = model;
@@ -30,6 +35,9 @@ public class SkadedyrController  {
     public void startTimer() {
         // Schedule a task to be executed every n milliseconds
         float delay = 0; // delay before the task is first executed
+
+       
+
 
         if (currentClockTickTask != null) {
             currentClockTickTask.cancel();
@@ -45,6 +53,8 @@ public class SkadedyrController  {
         return new Task() {
             @Override
             public void run() {
+
+               
             // Check if 'P' is pressed and keyPHandled is false
             if (Gdx.input.isKeyPressed(Input.Keys.P) && !keyPHandled) {
                 pausedGame = !pausedGame;
@@ -71,6 +81,7 @@ public class SkadedyrController  {
                 return; // Skip game logic if paused
             } 
 
+
             GameLogic();
     
             }
@@ -86,6 +97,22 @@ public class SkadedyrController  {
         model.moveRats();
         model.attackRat();
         model.attackRatsForEachCat();
+
+
+        spawnTimer += 0.05;
+        if(spawnTimer > ratSpawnDelay && model.getRatsSpawned() < model.getRatLimitPerLevel()){ 
+            model.spawnRats();
+            spawnTimer = 0;
+        }
+
+        //aner ikke om dette fungerer, men rotter skal være fryst i 5 sekunder
+        // if(rat.isFrozen()){
+        //     rat.freezeTimer += 0.05;
+        //     if(rat.freezeTimer > 5){
+        //         rat.isFrozen = false;
+        //         rat.freezeTimer = 0;
+        //     }
+        // }
         
 
         if (Gdx.input.isKeyPressed(Input.Keys.U)){
