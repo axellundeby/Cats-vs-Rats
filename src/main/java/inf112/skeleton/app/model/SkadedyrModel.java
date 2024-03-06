@@ -52,6 +52,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         }
     }
 
+
    
 
     public void uselessfunction(Rectangle spriteRect, Rectangle screenRect) { // for å beholde koden
