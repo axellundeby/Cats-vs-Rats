@@ -127,39 +127,36 @@ public class SkadedyrModel implements ISkadedyrModel {
     public void attackRat() {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackRatsForEachCat();
         for (Cat cat : cats) {
-            if (true) { // om katten er en basic katt
-                LinkedList<Rat> attackableRats = attackMap.get(cat);
-                if (attackableRats != null && !attackableRats.isEmpty()) { 
-                    if (cat instanceof BasicCat) {
-                        attackableRats.getFirst().takeDamage(cat.getStrength());
+            LinkedList<Rat> attackableRats = attackMap.get(cat);
+            if (attackableRats != null && !attackableRats.isEmpty()) { 
+                if (cat instanceof BasicCat) {
+                    attackableRats.getFirst().takeDamage(cat.getStrength());
+                }
+                if (cat instanceof freezeCat) {
+                    for (Rat rat : attackableRats) {
+                        rat.freeze();
+                        //må unfreeze etter x sekunder
                     }
-                    if (cat instanceof freezeCat) {
-                        for (Rat rat : attackableRats) {
-                            rat.freeze();
-                            System.out.println("Rat is frozen");
-                            //må unfreeze etter x sekunder
-                        }
-                    }
-                    else if (cat instanceof ShotgunCat) {
-                        int attacks = 3; 
-                        int ratsCount = attackableRats.size();
-                        for (int i = 0; i < ratsCount && attacks > 0; i++) {
-                            Rat targetRat = attackableRats.get(i);
-                            int attacksOnThisRat = Math.min(attacks, 3 - i); 
-                            for (int j = 0; j < attacksOnThisRat; j++) {
-                                if (targetRat != null) {
-                                    targetRat.takeDamage(cat.getStrength());
-                                    attacks--; 
-                                }
+                }
+                else if (cat instanceof ShotgunCat) {
+                    int attacks = 3; 
+                    int ratsCount = attackableRats.size();
+                    for (int i = 0; i < ratsCount && attacks > 0; i++) {
+                        Rat targetRat = attackableRats.get(i);
+                        int attacksOnThisRat = Math.min(attacks, 3 - i); 
+                        for (int j = 0; j < attacksOnThisRat; j++) {
+                            if (targetRat != null) {
+                                targetRat.takeDamage(cat.getStrength());
+                                attacks--; 
                             }
                         }
                     }
-                    if (attackableRats.getFirst().isKilled()) {
-                        money += 1000; 
-                        points += 100; 
-                    }
                 }
-            }
+                if (attackableRats.getFirst().isKilled()) {
+                    money += 1000; 
+                    points += 100; 
+                }
+        }
         }
     }
 
@@ -178,7 +175,6 @@ public class SkadedyrModel implements ISkadedyrModel {
             money -= priceForShotgunCat;
         }
     }
-
 
     public void newCat(int mouseX, int mouseY) {
         Cat gangsta = new ShotgunCat();
