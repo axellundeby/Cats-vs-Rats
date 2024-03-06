@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.model.Path;
 
 public class Rat implements IEntity {
-    private final int speed;
+    private int speed;
     private Vector2 pos;
     private int health;
     private Path path;
@@ -17,6 +17,8 @@ public class Rat implements IEntity {
     private Rectangle spriteRect;
     private float secs;
     private int timeAlive;
+    private Cat cat;
+    
 
     public Rat(int health, int speed, Texture spriteImage) {
         this.health = health;
@@ -25,8 +27,8 @@ public class Rat implements IEntity {
         int halfsize = 25;
         // Initialiserer posisjonen til rotta ved å bruke Vector2 direkte
         this.pos = new Vector2(-10, 430); // Alle rottene spawner ovenfor brettet
-
-        this.spriteRect = new Rectangle(pos.x - halfsize, pos.y - halfsize, halfsize * 2, halfsize * 2);
+        this.cat = new BasicCat();
+        this.spriteRect = new Rectangle(pos.x - halfsize, pos.y + halfsize, halfsize * 2, halfsize * 2);
         this.timeAlive = 0;
         this.secs = 0;
     }
@@ -38,11 +40,12 @@ public class Rat implements IEntity {
         }
     }
 
-    private enum Direction {
+    public enum Direction {
         UP,
         DOWNS,
         RIGHT,
-        LEFT;
+        LEFT,
+        OUT;
     }
 
     public void addTime() {
@@ -50,7 +53,7 @@ public class Rat implements IEntity {
         this.secs += 0.05;
     }
 
-    private Direction getDirection() {
+    public Direction getDirection() {
 /*         System.out.println(secs); 
 
         if (timeAlive < 80)
@@ -113,10 +116,10 @@ public class Rat implements IEntity {
         else if (secs < 85)
             return Direction.LEFT;
         
-        else if (secs < 87)
+        else if (secs < 90)
             return Direction.UP;
 
-        throw new Error("Error in Rat movement: Nowhere to go");
+        return Direction.OUT;
     }
 
     @Override
@@ -142,6 +145,9 @@ public class Rat implements IEntity {
             case LEFT:
                 pos.x -= speed;
                 break;
+            case OUT:
+                // liv -1
+            break;
             default:
                 throw new Error("Error in class Rat");
         }
@@ -149,6 +155,8 @@ public class Rat implements IEntity {
         spriteRect.x = pos.x;
         spriteRect.y = pos.y;
     }
+
+  
 
     public Texture getTexture() {
         return spriteImage;
@@ -168,7 +176,9 @@ public class Rat implements IEntity {
 
     @Override
     public void killed() {
-        // removes fra spillet og pop animasjon
+        pos.x = -100;
+        pos.y = -100;
+        speed = 0;
     }
 
     @Override
