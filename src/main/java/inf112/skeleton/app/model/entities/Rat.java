@@ -18,7 +18,7 @@ public class Rat implements IEntity {
     private Texture texture;
     private float secs;
     private int timeAlive;
-    private Cat cat;
+    
     private boolean isFrozen;
     public ImageSwapper currentState = ImageSwapper.ALIVE;
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
@@ -29,7 +29,7 @@ public class Rat implements IEntity {
         this.texture = texture;
         int halfsize = 25;
         this.pos = new Vector2(-10, 430);
-        this.cat = new BasicCat();
+       
         this.spriteRect = new Rectangle(pos.x - halfsize, pos.y + halfsize, halfsize * 2, halfsize * 2);
         this.timeAlive = 0;
         this.secs = 0;

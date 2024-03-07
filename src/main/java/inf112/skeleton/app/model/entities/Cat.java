@@ -36,6 +36,9 @@ public class Cat {
             target.takeDamage(strength);
     }
     
+    public void setPos(Vector2 pos){
+        setPos((int) pos.x, (int) pos.y);
+    }
     public void setPos(int x, int y){
         pos.x = x;
         pos.y = y;
