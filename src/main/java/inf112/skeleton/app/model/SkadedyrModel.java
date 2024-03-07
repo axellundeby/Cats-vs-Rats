@@ -88,6 +88,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     public void everyRatDead() {
         if (aliveRats.isEmpty()) {
             level++;
+            //pause
             //runden er over 
             //nextRound();
         }
@@ -139,6 +140,7 @@ public class SkadedyrModel implements ISkadedyrModel {
                         //må unfreeze etter x sekunder
                     }
                 }
+                //blir litt feil siden alle ikke er i range på likt
                 else if (cat instanceof ShotgunCat) {
                     int attacks = 3; 
                     int ratsCount = attackableRats.size();
@@ -148,6 +150,7 @@ public class SkadedyrModel implements ISkadedyrModel {
                         for (int j = 0; j < attacksOnThisRat; j++) {
                             if (targetRat != null) {
                                 targetRat.takeDamage(cat.getStrength());
+                                targetRat.freeze();
                                 attacks--; 
                             }
                         }
@@ -181,8 +184,8 @@ public class SkadedyrModel implements ISkadedyrModel {
         Cat gangsta = new ShotgunCat();
         Cat froze = new freezeCat();
         Cat meow = new BasicCat();
-        gangsta.setPos(mouseX, mouseY);
-        addCat(gangsta);
+        meow.setPos(mouseX, mouseY);
+        addCat(meow);
     }
 
 }
