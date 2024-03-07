@@ -1,10 +1,160 @@
 # Rapport – innlevering 2
-**Team:** *Teamnavn* – *medlemmer*...
+
+#### Team: Skadedyrkontrollørene_inc (Gruppe 1)
+
+- Jonathan Christensen 
+- Axel Lundeby 
+- Theodor Nissen-Meyer 
+- Jacob Foss 
+
+# Prosjektrapport
+
+## Referater fra Standup-møter
+
+
+### Referat 19.02.24
+Første standup siden første innlevering, samt start på sprint - alle var tilstede.
+
+- **Hva sitter vi igjen med av inntrykk?**
+    - Fortsatt usikkerhet rundt libGDX, men fornøyd med at vi har kommet i gang. Vi føler at det viktigste til nå var å prøve seg litt frem, og sette seg inn i det ukjente så godt som mulig. Vi vet at jobben som skal gjøres er stor, men vi må prøve å bygge sten for sten.
+
+- **Hva er veien videre?**
+    - Vi har satt noen krav til MVP, så dette blir prioritet frem mot innlevering 8. mars. Vi fordeler oppgaver, og man jobber i egne branches i git. Samt har vi lyst til å prøve par-programmering på noen punkter for å sjekke ut hvordan dette fungerer. Vi vet ikke hva som blir vanskeligst å jobbe med fremover, men håper på å ha en viss forståelse av hva som er mest utfordrende i løpet av første halvdel av sprinten. Fordeling av oppgaver frem mot MVP er som følger: 
+
+        - **Basis Spillområde:**
+            - En sti for rottebevegelse fra start til slutt - Theodor/Jonathan
+            - Enkel bakgrunnsgrafikk for kattutplassering - Theodor
+
+        - **Katt- og Rotte-Enheter:**
+            - Katt-Enheter: Minst to oppgraderbare kattetyper (f.eks., korthårs- og langhårskatter) - Axel/Theodor
+            - Rotte-Enheter: Minst én rotte som følger stien mot et mål - Jonathan
+
+        - **Enkel Spillopplevelse:**
+            - Funksjoner for å starte, akselerere, pause, og restarte spillet. - Jonathan/Jacob
+            - Penger opptjent per drept rotte for kjøp av flere katter - Axel
+            - Livstelling for spillerens gjenværende liv. -Jacob/Axel
+
+        - **Grunnleggende Brukergrensesnitt (UI):**
+            - Enkel meny for spillstart - Jacob
+            - Skjermdisplay for poeng og spillerliv - Axel/Jacob
+            - Kjøpsmeny for flere katter Theodor
+
+
+### Referat 26.02.24
+Andre standup siden første innlevering - Alle var tilstede.
+
+- **Hva har blitt gjort siden forrige møte?**
+    - Vi har mer forståelse for hva som må til for å oppnå det produktet vi vil. Startet på MVP-en, et par punkter har kommet på plass, men mange oppgaver er ikke ferdigstilte. Omtrent 3/4 av punktene er igangsatt. Innsett at batch, texture og render er utfordringer, og at dette kan by på problemer.
+
+- **Hva skal vi gjøre til neste møte?**
+    - Fortsette å jobbe mot MVP. Prøve å finne ut hvordan vi skal løse det med animasjoner (kart, rotter, katter etc). Kan hende vi må outsource dette. Vi får høre med folk vi kjenner om de er villige til å hjelpe oss. Skal prøve å få skrevet tester, men er ikke første prioritet.
+
+#### Dagens status på MVP:
+
+- **Basis Spillområde:**
+    - En sti for rottebevegelse fra start til slutt - Theodor/Jonathan - Ferdig
+    - Enkel bakgrunnsgrafikk for kattutplassering - Theodor - Ferdig
+
+- **Katt- og Rotte-Enheter:**
+    - Katt-Enheter: Minst to oppgraderbare kattetyper (f.eks., korthårs- og langhårskatter) - Axel/Theodor
+    - Rotte-Enheter: Minst én rotte som følger stien mot et mål - Jonathan
+
+- **Enkel Spillopplevelse:**
+    - Funksjoner for å starte, akselerere, pause, og restarte spillet. - Jonathan/Jacob
+    - Penger opptjent per drept rotte for kjøp av flere katter - Axel
+    - Livstelling for spillerens gjenværende liv. -Jacob/Axel
+
+- **Grunnleggende Brukergrensesnitt (UI):**
+    - Enkel meny for spillstart - Jacob
+    - Skjermdisplay for poeng og spillerliv - Axel/Jacob
+    - Kjøpsmeny for flere katter Theodor
+
+### Referat 04.03.24
+**Tredje standup siden første innlevering, og avslutning av første sprint - Alle var tilstede**
+
+#### Hva har vi gjort siden forrige møte?
+- Fortsatt arbeidet på MVP, som nå er omtrent 90% fullført. Par-programmering har vist seg å være effektivt.
+- Utfordringer med batch, render, og texture har blitt adressert og vi har nå en god forståelse for disse.
+- Spesielt fokus på menyutvikling for å forhindre at spillet kjører i bakgrunnen mens menyen er aktiv.
+- Har funnet hjelp til animasjoner, men dette blir ikke implementert i MVP.
+- Tester er under utvikling, målet er å inkludere dem innen 08.03.24, selv om de kanskje blir lagt i en egen branch.
+
+#### Hva skal vi gjøre til neste møte?
+- Målet er å fullføre MVP før 07.03.24 for å være klar for innlevering den 08.03.24.
+- Rydde opp i Git, inkludert planlegging for mulige merge-conflicts.
+- Utvikle en enkel meny og gjøre liv/score synlig på skjermen.
+- Jobbe med implementering av oppgraderbare katter.
+- Oppdatere README med den nye funksjonaliteten.
+
+#### Dagens status på MVP:
+- **Basis Spillområde:**
+    - En sti for rottebevegelse og enkel bakgrunnsgrafikk for utplassering av katter - Ferdig
+
+- **Katt- og Rotte-Enheter:**
+    - Katt-Enheter: Delvis ferdig. Utfordringer med valg mellom forskjellige katter pga. menyintegrering.
+    - Rotte-Enheter: Ferdig.
+
+- **Enkel Spillopplevelse:**
+    - Funksjoner for å starte, akselerere, pause, og restarte spillet, samt penger opptjent per drept rotte og livstelling - Ferdig.
+
+- **Grunnleggende Brukergrensesnitt (UI):**
+    - Enkel meny for spillstart, skjermdisplay for poeng og spillerliv - Ferdig.
+    - Kjøpsmeny for flere katter: Delvis ferdig, utfordringer med GUI/Texture/Render.
+
+
+### Referat 07.03.24
+**Team-møte om hvordan vi ligger an før innlevering**
+
+Vi gikk gjennom hva som må til for å få levert prosjektet i morgen. Dette inkluderer:
+
+- **Prosjektrapport:** Den er ferdig og dekker alle nødvendige aspekter av prosjektet.
+- **Krav og spesifikasjon:** Disse dokumentene er også ferdige og klare til innlevering.
+- **Produkt-og-kode punktet til oblig 2:** Arbeidet er fullført, og det er opprettet en egen branch for dette. Planen er å pushe dette i morgen.
+
+Under møtet ble vi enige om at:
+- **Test-branchen ikke merges med main:** Selv om testene ikke er ferdige, har vi besluttet å ikke merge test-branchen med main for denne innleveringen. Vi blir enige om å fikse tester til neste gang og inkludere dette i prosjektrapporten, noe som understreker viktigheten av testing og videre planer for prosjektet.
+- **Spørsmål til Tobias:** Vi har et par spørsmål som Tobias trenger å adressere. Detaljer rundt disse spørsmålene er ikke spesifisert, men det antydes at de er viktige for den videre prosessen.
+
+Dette møtet var avgjørende for å sikre at alt er på plass før den kommende fristen, og for å klarlegge planer for hva som gjenstår å gjøre etter innleveringen.
+
+## Prosjektrapport
+
+
+### Teamroller og Dynamikk
+
+Vårt team har etablert klare roller som fungerer bra, og det har ikke vært nødvendig å foreta endringer i disse rollene gjennom prosjektet. En oversikt over rollene og deres ansvar er som følger:
+
+- **Lead Developer (Theodor):** Har det overordnede ansvaret for kodebasen, innsikt i prosjektets tekniske aspekter, og bistår andre utviklere ved behov. Denne rollen krever en person med solid forståelse for koding og evnen til å holde oversikt over prosjektets fremdrift teknisk sett.
+
+- **Developer:** Alle teammedlemmer har denne rollen og bidrar med utviklingen av programvaren. Samarbeid og støtte mellom medlemmene er nøkkelen til suksess.
+
+- **Git Ansvarlig (Jonathan):** Spesialisert i bruk av Git, denne rollen innebærer å opprettholde repoet, sikre at det er oppdatert, og sette regler for bruk (som "ikke lov å pushe til main"). Jonathan er kontaktpunktet for spørsmål eller problemer relatert til Git.
+
+- **Grafikk (Axel):** Ansvarlig for å sikre at spillets grafikk stemmer overens med de ønskede visuelle målene. Axel har oppgaven med å integrere og justere grafikk slik at den passer med spillets design og funksjonalitet.
+
+- **Testansvarlig:** Fokuserer på utvikling og implementering av tester for å sikre at koden fungerer som forventet. Denne rollen innebærer også å sikre at all dokumentasjon for testene er skrevet på en forståelig måte.
+
+### Gruppedynamikk
+
+Gruppedynamikken er god, og det har ikke vært noen problemer som har krevd løsning. Vi kommuniserer kontinuerlig og holder hverandre oppdatert om prosjektets status, hovedsakelig fordi vi tilbringer mye tid sammen på lesesalen. Dette har ført til at de ukentlige standup-møtene kanskje ikke føles like nødvendige, men de tjener fortsatt en viktig funksjon for å oppsummere og planlegge for kommende uke. Bruken av et kanban-board har også bidratt positivt til å holde oversikt over arbeidsflyt og fremgang.
+
+### Forbedringspunkter
+
+Selv om prosjektet generelt har gått bra, ser vi noen områder for forbedring, spesielt teknisk:
+
+- **Automatiske GUI-tester og Unit-tester:** Vi anerkjenner behovet for å styrke vår testing, spesielt for GUI og gjennom unit-tester. Planen er å diskutere dette nærmere med gruppelederen for å finne en vei fremover.
+
+- **Tester for Spillmetoder og GUI:** Vi ser verdien i å implementere tester som kan kjøre underveis i utviklingsprosessen for å sikre at alt fungerer som det skal.
+
+I sum bidrar alle teammedlemmene jevnt til kodebasen, og vi føler ikke at det er noen skjevfordeling av arbeidet. Dette, sammen med våre forbedringsplaner, gir et godt grunnlag for videre suksess i prosjektet.
+
+
+
 
 # Oppdatering på Prosjektstatus: Prioriterte Krav og Fremdrift
 
 ## Status på MVP
-I lys av vårt pågående arbeid mot å utvikle og forbedre vårt spill, ønsker vi å gi en oppdatering på status for prioriterte krav, hvor langt vi har kommet i utviklingsprosessen, og de stegene vi har tatt siden vår siste oppdatering. Vår innsats har vært sentrert rundt utviklingen av brukerhistorier og realiseringen av Minimum Viable Product (MVP). MVPen har ikke blitt endret siden vi skrev den. Vi er nå nær ved å fullføre MVP, og her presenterer vi en detaljert gjennomgang av vår progresjon.
+Her er en redgjørelse av statusen for prioriterte krav, hvor langt vi har kommet i utviklingsprosessen, og de stegene vi har tatt siden vår siste oppdatering. Vår innsats har vært sentrert rundt utviklingen av brukerhistorier og realiseringen av Minimum Viable Product (MVP). MVPen har ikke blitt endret siden vi skrev den. Vi er nå nær ved å fullføre MVP, og her presenterer vi en detaljert gjennomgang av vår progresjon.
 
 ### Utførte Arbeid på MVPen siden siste Oppdatering
 
@@ -35,9 +185,9 @@ I lys av vårt pågående arbeid mot å utvikle og forbedre vårt spill, ønsker
 - En kjøpsmeny for anskaffelse av flere katter er fortsatt under utvikling.
 
 ### Fremtidige Prioriteter og Fokusområder
-Med et klart blikk på å fullføre MVP-en, vil vårt neste skritt være å ferdigstille kjøpsmenyen for katter og implementere oppgraderingsmuligheter for kattene. Videre ønsker vi å gjøre spillet mer tilgjengelig og brukervennlig ved å innføre interaktive knapper som opereres med musen. Dette inkluderer endringer i funksjoner for å starte, akselerere, pause, og navigere spillmenyer.
+Hovedfokuset våret ligger nå på å MVP-en, derfor vil vårt neste skritt være å ferdigstille kjøpsmenyen for katter og implementere oppgraderingsmuligheter for kattene. Videre ønsker vi å gjøre spillet mer tilgjengelig og brukervennlig ved å innføre interaktive knapper som opereres med musen. Dette inkluderer endringer i funksjoner for å starte, akselerere, pause, og navigere spillmenyer.
 
-For å styrke vår testing og kvalitetssikring, er det også planlagt utvikling av ytterligere tester. I tillegg vil introduksjonen av en "Rat Factory"-klasse, designet for å generere rotter i bølger basert på spillerens nivå, være et sentralt fokus.
+For å forbedre testingen og kvalitetssikring, er det også planlagt utvikling av ytterligere tester. I tillegg vil introduksjonen av en "Rat Factory"-klasse, designet for å generere rotter i bølger basert på spillerens nivå, være et sentralt fokus.
 
 ## Brukerhistorier for krav vi jobber med/skal begynne på snarest
 
