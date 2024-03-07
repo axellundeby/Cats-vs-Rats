@@ -4,7 +4,7 @@
 # Oppdatering på Prosjektstatus: Prioriterte Krav og Fremdrift
 
 ## Status på MVP
-I lys av vårt pågående arbeid mot å utvikle og forbedre vårt spill, ønsker vi å gi en oppdatering på status for prioriterte krav, hvor langt vi har kommet i utviklingsprosessen, og de stegene vi har tatt siden vår siste oppdatering. Vår innsats har vært sentrert rundt utviklingen av brukerhistorier og realiseringen av Minimum Viable Product (MVP). Vi er nå nær ved å fullføre MVP, og her presenterer vi en detaljert gjennomgang av vår progresjon.
+I lys av vårt pågående arbeid mot å utvikle og forbedre vårt spill, ønsker vi å gi en oppdatering på status for prioriterte krav, hvor langt vi har kommet i utviklingsprosessen, og de stegene vi har tatt siden vår siste oppdatering. Vår innsats har vært sentrert rundt utviklingen av brukerhistorier og realiseringen av Minimum Viable Product (MVP). MVPen har ikke blitt endret siden vi skrev den. Vi er nå nær ved å fullføre MVP, og her presenterer vi en detaljert gjennomgang av vår progresjon.
 
 ### Utførte Arbeid på MVPen siden siste Oppdatering
 
@@ -125,6 +125,12 @@ Som en spiller ønsker jeg å bruke musen for å interagere med spillets brukerg
 - Tilpasse spillets kontroller til å støtte mus-interaksjon fullt ut, inkludert valg og plassering av katter, samt navigasjon gjennom spillets meny.
 
 Ved å følge disse brukerhistoriene og implementere de tilhørende akseptansekriteriene og arbeidsoppgavene, sikter vi mot å forbedre spillopplevelsen ved å gjøre den mer tilgjengelig, engasjerende og utfordrende for spilleren.
+
+## Prioritering av oppgavene i synkende rekkefølge
+ - CatMenu 
+ - Katter som kan oppgraderes.
+ - Rottebølger
+ - Knapper som kan trykkes på med mus
 
 
 ## Oversikt over Kjente Bugs
