@@ -92,8 +92,64 @@ Som en spiller ønsker jeg å kunne oppgradere mine katter slik at deres rekkevi
 **Arbeidsoppgaver for Kostnadshåndtering:**
 - Knytte mynter opptjent for å sjekke om man har råd til hver oppgradering, om man ikke har råd skal man få en melding om at man ikke har råd.
 
-## Vi skal starte på:
+## Funksjoner vi skal starte på:
 - Knapper som kan trykkes på med mus.
 - Rottebølger
 
-### Brukerhistorie for Rotte
+### Brukerhistorie for Rottebølger:
+Som spiller ønsker jeg bølger av angripende rotter, slik at spillet blir mer utfordrende for meg gjennom progressiv økning i vanskelighetsgrad.
+
+**Akseptansekriterier:**
+
+- **Definering av Bølger:** Hver bølge skal bestå av et forhåndsdefinert antall rotter, hvor antallet øker eller sammensetningen endres i påfølgende bølger for å gradvis øke vanskelighetsgraden.
+
+**Arbeidsoppgaver for Definering av Bølger:**
+- Design av Bølgestruktur: Utarbeid en grunnleggende struktur for hver bølge, inkludert antall rotter og typen rotter (for eksempel, standard, rask, pansret) som skal inngå.
+- Opprettelse av Bølgekonfigurasjoner: Definer spesifikke konfigurasjoner for hver bølge, inkludert det eksakte antallet og sammensetningen av rotter. Dette kan variere fra enkle til mer komplekse kombinasjoner etter hvert som spillet skrider frem.
+
+- **Pause mellom Bølger:** Spillet skal settes på pause mellom hver bølge som gir spilleren tid til å forberede forsvar gjennom å plassere eller oppgradere katter.
+
+**Arbeidsoppgaver for Pause mellom Bølger:**
+- Koble når alle rotter er døde metoden til at spillet går i pause. Når spiller går i play modus skal ny bølge komme med flere rotter.
+
+### Brukerhistorie for Knapper som kan trykkes på med mus:
+Som en spiller ønsker jeg å bruke musen for å interagere med spillets brukergrensesnitt, slik at jeg enkelt kan styre spillet uten å være avhengig av tastaturet.
+
+**Akseptansekriterier:**
+- Spillet skal tilby mus-klikkbare knapper for alle viktige funksjoner som start, pause, akselerer, og navigering i menyen.
+- Brukergrensesnittet skal være intuitivt og tilrettelegge for enkel navigering og interaksjon med musen.
+
+**Arbeidsoppgaver for Knapper som kan trykkes på med mus:**
+- Implementere interaktive knapper i spillets grensesnitt for alle primære funksjoner.
+- Sikre at knappene gir tilstrekkelig visuell feedback når de er interagert med, for å indikere aktivitet.
+- Tilpasse spillets kontroller til å støtte mus-interaksjon fullt ut, inkludert valg og plassering av katter, samt navigasjon gjennom spillets meny.
+
+Ved å følge disse brukerhistoriene og implementere de tilhørende akseptansekriteriene og arbeidsoppgavene, sikter vi mot å forbedre spillopplevelsen ved å gjøre den mer tilgjengelig, engasjerende og utfordrende for spilleren.
+
+
+## Oversikt over Kjente Bugs
+
+Vi står overfor to hovedproblemer i vårt spillutviklingsprosjekt som påvirker spillopplevelsen og programmets stabilitet. Disse feilene er detaljert nedenfor, sammen med en innledende vurdering av potensielle løsninger.
+
+### 1. Feil i Angrepslogikken til "Shotgun Cat"
+
+**Problemstilling:**
+- "Shotgun Cat", en enhet designet for å angripe flere mål samtidig, fungerer ikke som forventet. Den korrekte logikken skal tillate variabelt antall angrep basert på antallet mål innenfor rekkevidde:
+  - **Tre eller flere mål**: Hvert mål angripes én gang.
+  - **To mål**: Én mål angripes to ganger, og den andre én gang.
+  - **Ett mål**: Det enkelte målet angripes tre ganger.
+- Feilen manifesterer seg ved at "Shotgun Cat" angriper alle rotter innenfor rekkevidde tre ganger, uavhengig av antallet tilgjengelige mål.
+
+**Potensiell løsning:**
+- Implementering av justerbar skuddrate (fire rate) for "Shotgun Cat" forventes å korrigere denne feilen.
+
+### 2. Krasj ved Rotters Utmarsj fra Spilleområdet
+
+**Problemstilling:**
+- Spillet krasjer når rotter beveger seg ut av det definerte spillområdet, noe som indikerer en svakhet i den nåværende implementasjonen av rottens bevegelseslogikk.
+
+**Potensiell løsning:**
+- Vurdering av implementering av en mer avansert bevegelsesmekanisme ved hjelp av splines for å tillate en mer kontrollert og visuelt tiltalende bevegelse av rotter gjennom spilleområdet. Dette er forventet å redusere risikoen for krasj relatert til deres bevegelse utenfor kartgrensene.
+
+
+
