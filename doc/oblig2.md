@@ -309,3 +309,31 @@ Vi står overfor to hovedproblemer i vårt spillutviklingsprosjekt som påvirker
 
 
 
+# Produkt og kode
+
+## Oppdateringer siden sist
+
+Vi har gjort følgende forbedringer og tillegg til spillet:
+
+- **Sti for Rotter:**
+    - Rotter har nå en definert sti de følger gjennom hele brettet.
+
+- **Kattetyper:**
+    - Tre forskjellige kattetyper har blitt implementert, hver med unik funksjonalitet. For øyeblikket krever valg av kattetype endringer i koden, men dette planlegges forenklet gjennom et brukergrensesnitt.
+        - En enkel katt som angriper én og én rotte innenfor sin radius.
+        - En katt som kan angripe opptil tre rotter samtidig, men med litt mindre radius og tregere avfyringshastighet.
+        - En katt som midlertidig fryser rotter på stien, med planer om å implementere en effekt som reduserer rottens hastighet.
+
+- **Rottegenerering:**
+    - Rotter opprettes og sendes ut på sin ferd med jevne mellomrom.
+
+- **Tastaturkontroller:**
+    - Spillet kan nå kontrolleres med tastaturet for å starte (Mellomrom), akselerere (S), pause (P) og restarte (R) spillet.
+
+- **Poeng og Penger:**
+    - Ved å utslette rotter opptjenes det poeng og penger, som vises til høyre på skjermen i spillets meny.
+
+- **Startmeny:**
+    - Spillet introduserer nå en enkel, retro-stil startmeny for en bedre brukeropplevelse.
+
+![image](https://user-images.githubusercontent.com/78849164/110234073-3e3e3e00-7f3e-11eb-8e3e-3e3e3e3e3e3e.png)
