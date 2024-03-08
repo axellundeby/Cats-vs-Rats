@@ -112,8 +112,8 @@ Vi gikk gjennom hva som må til for å få levert prosjektet i morgen. Dette ink
 - **Produkt-og-kode punktet til oblig 2:** Arbeidet er fullført, og det er opprettet en egen branch for dette. Planen er å pushe dette i morgen.
 
 Under møtet ble vi enige om at:
-- **Test-branchen ikke merges med main:** Selv om testene ikke er ferdige, har vi besluttet å ikke merge test-branchen med main for denne innleveringen. Vi blir enige om å fikse tester til neste gang og inkludere dette i prosjektrapporten, noe som understreker viktigheten av testing og videre planer for prosjektet.
-- **Spørsmål til Tobias:** Vi har et par spørsmål som Tobias trenger å adressere. Detaljer rundt disse spørsmålene er ikke spesifisert, men det antydes at de er viktige for den videre prosessen.
+- **Test-branchen ikke merges med main:** Testene er ikke ferdige, men påbegynt til en viss grad, og vi har besluttet å ikke merge test-branchen med main for denne innleveringen. Vi blir enige om å fikse tester til neste gang og inkludere dette i prosjektrapporten, noe som understreker viktigheten av testing og videre planer for prosjektet.
+- **Spørsmål til Tobias:** Vi har et par spørsmål som Tobias trenger å adressere. Dette omhandler spesielt tester. 
 
 Dette møtet var avgjørende for å sikre at alt er på plass før den kommende fristen, og for å klarlegge planer for hva som gjenstår å gjøre etter innleveringen.
 
