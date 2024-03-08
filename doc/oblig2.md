@@ -308,7 +308,6 @@ Vi står overfor to hovedproblemer i vårt spillutviklingsprosjekt som påvirker
 - Vurdering av implementering av en mer avansert bevegelsesmekanisme ved hjelp av splines for å tillate en mer kontrollert og visuelt tiltalende bevegelse av rotter gjennom spilleområdet. Dette er forventet å redusere risikoen for krasj relatert til deres bevegelse utenfor kartgrensene.
 
 
-
 # Produkt og kode
 
 ## Oppdateringer siden sist
