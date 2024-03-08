@@ -336,4 +336,5 @@ Vi har gjort følgende forbedringer og tillegg til spillet:
 - **Startmeny:**
     - Spillet introduserer nå en enkel, retro-stil startmeny for en bedre brukeropplevelse.
 
-![image](https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Kant_foto.jpg/800px-Kant_foto.jpg)
+## Klassediagram
+![Klassediagram](/src/main/resources/klassediagram.png)
