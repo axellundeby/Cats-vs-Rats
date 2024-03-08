@@ -336,4 +336,4 @@ Vi har gjort følgende forbedringer og tillegg til spillet:
 - **Startmeny:**
     - Spillet introduserer nå en enkel, retro-stil startmeny for en bedre brukeropplevelse.
 
-![image](https://user-images.githubusercontent.com/78849164/110234073-3e3e3e00-7f3e-11eb-8e3e-3e3e3e3e3e3e.png)
+![image](https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Kant_foto.jpg/800px-Kant_foto.jpg)
