@@ -1,10 +1,9 @@
 package inf112.skeleton.app.model;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
-import inf112.skeleton.app.model.entities.Cat;
-import inf112.skeleton.app.model.entities.Rat;
+import inf112.skeleton.app.model.entities.cat.Cat;
+import inf112.skeleton.app.model.entities.rat.Rat;
 
 public interface ISkadedyrModel {
     /**

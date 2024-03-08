@@ -1,10 +1,10 @@
-package inf112.skeleton.app.model.entities;
+package inf112.skeleton.app.model.entities.cat;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import inf112.skeleton.app.model.entities.rat.Rat;
 
 public class Cat {
 
@@ -65,24 +65,19 @@ public class Cat {
         return rangeCircle;
     }
     
-    public String name() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'name'");
-    }
 
     public int getStrength() {
         return strength;
     }
 
-    public Coordinate getPosition() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getLocation'");
+    public Vector2 getPosition() {
+        return pos;
     }
 
     @Override
     public String toString() {
         return
-            "Cat " + name() + " at position: " + pos + " with strength " + strength + " and range " + range;
-    }
+            "Cat at position: " + pos + " with strength " + strength + " and range " + range;
     
+    }
 }

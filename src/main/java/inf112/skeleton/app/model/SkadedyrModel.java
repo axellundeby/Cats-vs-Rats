@@ -3,13 +3,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
-import inf112.skeleton.app.model.entities.BasicCat;
-import inf112.skeleton.app.model.entities.BasicRat;
-import inf112.skeleton.app.model.entities.Cat;
-import inf112.skeleton.app.model.entities.Rat;
-import inf112.skeleton.app.model.entities.ShotgunCat;
-import inf112.skeleton.app.model.entities.freezeCat;
-import inf112.skeleton.app.model.entities.Rat.Direction;
+
+import inf112.skeleton.app.model.entities.cat.BasicCat;
+import inf112.skeleton.app.model.entities.cat.Cat;
+import inf112.skeleton.app.model.entities.cat.ShotgunCat;
+import inf112.skeleton.app.model.entities.cat.freezeCat;
+import inf112.skeleton.app.model.entities.rat.BasicRat;
+import inf112.skeleton.app.model.entities.rat.Rat;
+import inf112.skeleton.app.model.entities.rat.Rat.Direction;
 
 public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Cat> cats;
@@ -93,9 +94,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         }
     }
 
-    // public void nextRound(){
-    //     ratLimitPerLevel * 1.2;
-    // }
+
 
     public int getLives() {
         for (Rat rat : aliveRats) {

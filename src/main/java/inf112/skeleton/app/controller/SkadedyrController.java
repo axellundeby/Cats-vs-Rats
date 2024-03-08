@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Timer.Task;
 
 import inf112.skeleton.app.main.SkadedyrMain;
 import inf112.skeleton.app.model.SkadedyrModel;
-import inf112.skeleton.app.model.entities.Rat;
+import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.SkadedyrView;
 
 public class SkadedyrController  {
@@ -24,7 +24,6 @@ public class SkadedyrController  {
     private float spawnTimer = 0;
     private int ratSpawnDelay = 5;
     private boolean gameRunning = true;
-    private Rat rat;
 
 
     public SkadedyrController(SkadedyrModel model, SkadedyrView view){
@@ -105,14 +104,7 @@ public class SkadedyrController  {
             spawnTimer = 0;
         }
 
-        //aner ikke om dette fungerer, men rotter skal være fryst i 5 sekunder
-        // if(rat.isFrozen()){
-        //     rat.freezeTimer += 0.05;
-        //     if(rat.freezeTimer > 5){
-        //         rat.isFrozen = false;
-        //         rat.freezeTimer = 0;
-        //     }
-        // }
+
         
 
         if (Gdx.input.isKeyPressed(Input.Keys.U)){

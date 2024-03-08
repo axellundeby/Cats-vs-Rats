@@ -1,22 +1,16 @@
 package inf112.skeleton.app.view;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.ScreenUtils;
 
 import inf112.skeleton.app.model.SkadedyrModel;
-import inf112.skeleton.app.model.catmenu.CatMenu;
-import inf112.skeleton.app.model.entities.Cat;
-import inf112.skeleton.app.model.entities.Rat;
+import inf112.skeleton.app.model.entities.cat.Cat;
+import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.States.GameStateManager;
 import inf112.skeleton.app.view.States.MenuState;
 
@@ -62,64 +56,18 @@ public class SkadedyrView {
     }
 
     public float getScreenWidth() {
-		return screenRect.width;
-	}
+        return screenRect.width;
+    }
 
-	public float getScreenHeight() {
-		return screenRect.height;
-	}
+    public float getScreenHeight() {
+        return screenRect.height;
+    }
 
-	
-	public void render() {
-		System.out.println("Rendering in MainView");
-		gsm.update(Gdx.graphics.getDeltaTime());
-		gsm.render(batch);
-	}
-
-	// public void draw() {
-	// 	ScreenUtils.clear(Color.GREEN);
-	
-	// 	batch.begin();
-	// 	batch.draw(mapTexture, 0, 0); 
-	// 	batch.end();
-	
-	// 	Gdx.gl.glEnable(GL20.GL_BLEND);
-	// 	Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-	
-	// 	shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-	// 	for (Cat cat : model.getCats()) {
-	// 		Circle range = cat.getRangeCircle();
-	// 		shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
-	// 		shapeRenderer.circle(range.x, range.y, range.radius);
-	// 	}
-	// 	shapeRenderer.end();
-	
-	// 	Gdx.gl.glDisable(GL20.GL_BLEND);
-	
-	// 	batch.begin();
-	// 	font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 10);
-	// 	font.draw(batch, "Dine liv: " + model.getLives(), 1000, 760);
-	// 	font.draw(batch, "Dine penger: " + model.getMoney(), 1000, 840);
-	// 	font.draw(batch, "Din Score: " + model.getPoints(), 1000, 800);
-	// 	font.draw(batch, "Level: " + model.getLevel(), 1000, 720);
-	// 	drawCats();
-	// 	drawRats();
-	// 	batch.end();
-	// }
-
-	// public void drawCats(){
-	// 	for (Cat cat : model.getCats()) {
-    //         Rectangle catRect = cat.getRectangle();
-    //         batch.draw(cat.getTexture(), catRect.x, catRect.y, catRect.width, catRect.height);
-    //     }
-	// }
-
-	// public void drawRats(){
-	// 	for (Rat rat : model.getRats()) {
-    //         Rectangle ratRect = rat.getRectangle();
-	// 		batch.draw(rat.getTexture(), ratRect.x, ratRect.y, ratRect.width, ratRect.height);
-    //     }
-	// }
+    public void render() {
+        System.out.println("Rendering in MainView");
+        gsm.update(Gdx.graphics.getDeltaTime());
+        gsm.render(batch);
+    }
 
     public void resize(int width, int height) {
         screenRect.width = width;
