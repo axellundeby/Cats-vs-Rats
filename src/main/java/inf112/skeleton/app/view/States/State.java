@@ -1,7 +1,6 @@
 package inf112.skeleton.app.view.States;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
@@ -23,5 +22,5 @@ public abstract class State {
     public abstract void render(SpriteBatch sb);
 
     public abstract void dispose();
-    
+
 }

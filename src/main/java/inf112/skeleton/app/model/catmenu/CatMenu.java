@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
-import inf112.skeleton.app.model.entities.AngryCat;
-import inf112.skeleton.app.model.entities.BasicCat;
+import inf112.skeleton.app.model.entities.cat.AngryCat;
+import inf112.skeleton.app.model.entities.cat.BasicCat;
 import inf112.skeleton.app.view.SkadedyrView;
 
 public class CatMenu {

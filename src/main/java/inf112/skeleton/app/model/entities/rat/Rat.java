@@ -1,10 +1,13 @@
-package inf112.skeleton.app.model.entities;
+package inf112.skeleton.app.model.entities.rat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+
+import inf112.skeleton.app.model.entities.IEntity;
+
 import java.util.EnumMap;
 
 public class Rat implements IEntity {

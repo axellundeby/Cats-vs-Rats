@@ -1,4 +1,4 @@
-package inf112.skeleton.app.model.entities;
+package inf112.skeleton.app.model.entities.rat;
 
 public class FastRat extends Rat {
     public FastRat() {
