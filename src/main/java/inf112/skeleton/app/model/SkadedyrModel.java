@@ -42,7 +42,6 @@ public class SkadedyrModel implements ISkadedyrModel {
         moveRats();
         attackRat();
         attackQueueForEachCat();
-        upDateTexture();
         //unfreezeRats();
 
         spawnTimer += 0.05;
@@ -161,9 +160,11 @@ public class SkadedyrModel implements ISkadedyrModel {
     public void attackRat() {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
         for (Cat cat : cats) {
+            cat.updateAttackTimer(Gdx.graphics.getDeltaTime());
             LinkedList<Rat> attackableRats = attackMap.get(cat);
-            if (attackableRats != null && !attackableRats.isEmpty()) {
+            if (cat.canAttack() && attackableRats != null && !attackableRats.isEmpty()) {
                 cat.attack(attackableRats);
+                cat.resetAttackTimer();
                 if (attackableRats.getFirst().isKilled()) {
                     money += 1000;
                     points += 100;
@@ -171,20 +172,7 @@ public class SkadedyrModel implements ISkadedyrModel {
             }
         }
     }
-
-    public void upDateTexture(){
-        for (Cat cat : cats) {
-            for (Rat rat : aliveRats) {
-                if (cat.withinRange(rat)) {
-                    cat.swapImage(Cat.PictureSwapper.ATTACK);
-                }
-                else {
-                    cat.swapImage(Cat.PictureSwapper.DEFAULT);
-                }
-            }
-        }
-    }
-
+    
     private void unfreezeRats() {
         for (Rat rat : aliveRats) {
             if (rat.isFrozen()) {

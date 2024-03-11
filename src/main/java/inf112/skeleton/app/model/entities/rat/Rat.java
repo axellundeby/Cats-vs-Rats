@@ -172,16 +172,15 @@ public abstract class Rat implements IEntity {
         return pos;
     }
 
-    public int freeze() {
+    public void freeze() {
         isFrozen = true;
         //speed = speed / 2;
         swapImage(ImageSwapper.FROZEN);
-        return speed;
     }
 
     public void unfreeze() {
         isFrozen = false;
-        speed = speed * 2; 
+        //speed = speed * 2; 
         swapImage(ImageSwapper.ALIVE);
     }
 

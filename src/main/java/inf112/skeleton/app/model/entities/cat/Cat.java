@@ -25,13 +25,18 @@ public abstract class Cat {
     private int halfSize;
     private EnumMap<PictureSwapper, Texture> textures = new EnumMap<>(PictureSwapper.class);
     public PictureSwapper currentState = PictureSwapper.DEFAULT;
+    private float fireRate; 
+    private float attackTimer;
 
-    public Cat(int strength, float range, Texture defualtImage, Texture attackImage) {
+
+    public Cat(int strength, float range, Texture defualtImage, Texture attackImage, float fireRate) {
         this.strength = strength;
         this.range = range;
         this.defualtImage = defualtImage;
         this.pos = new Vector2();
         this.size = 60;
+        this.fireRate = fireRate; 
+        this.attackTimer = 0;
 
         this.halfSize = size / 2;
 
@@ -55,6 +60,21 @@ public abstract class Cat {
         ATTACK
     }
 
+    public void updateAttackTimer(float deltaTime) {
+        if (attackTimer > 0) {
+            attackTimer -= deltaTime;
+        }
+    }
+    
+    public boolean canAttack() {
+        return attackTimer <= 0;
+    }
+    
+    public void resetAttackTimer() {
+        attackTimer = fireRate;
+    }
+
+    //withInRangeClapped
     public boolean withinRange(Rat target) {
         Rectangle ratRect = target.getRectangle();
         return Intersector.overlaps(rangeCircle, ratRect);

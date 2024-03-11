@@ -10,7 +10,7 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 public class ShotgunCat extends Cat {
 
     public ShotgunCat() {
-        super(20, 50, new Texture(Gdx.files.internal("hagleKatt.png")), new Texture(Gdx.files.internal("Cat2.png")));
+        super(20, 50, new Texture(Gdx.files.internal("hagleKatt.png")), new Texture(Gdx.files.internal("Cat2.png")), 3.0f);
     }
 
     @Override
@@ -23,6 +23,7 @@ public class ShotgunCat extends Cat {
             for (int j = 0; j < attacksOnThisRat; j++) {
                 if (targetRat != null) {
                     targetRat.takeDamage(getStrength());
+                    swapImage(PictureSwapper.ATTACK);
                     attacks--;
                 }
             }

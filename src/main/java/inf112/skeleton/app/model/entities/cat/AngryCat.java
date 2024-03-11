@@ -12,7 +12,7 @@ public class AngryCat extends Cat {
     public static Texture texture = new Texture(Gdx.files.internal("angryCat.png"));
 
     public AngryCat() {
-        super(5, 150, texture, new Texture(Gdx.files.internal("Cat2.png")));
+        super(5, 150, texture, new Texture(Gdx.files.internal("Cat2.png")), 300.0f);
     }
 
     @Override

@@ -10,7 +10,7 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 public class FreezeCat extends Cat{
 
     public FreezeCat() {
-        super(1, 100, new Texture(Gdx.files.internal("freezeCat.png")), new Texture(Gdx.files.internal("Cat2.png")));
+        super(1, 100, new Texture(Gdx.files.internal("freezeCat.png")), new Texture(Gdx.files.internal("Cat2.png")), 5f);
     }
 
     @Override
@@ -18,6 +18,7 @@ public class FreezeCat extends Cat{
         for (Rat rat : rats) {
             rat.freeze();
         }
+        swapImage(PictureSwapper.ATTACK);
     }
     
 }
