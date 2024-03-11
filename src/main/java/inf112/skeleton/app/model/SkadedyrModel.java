@@ -41,6 +41,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         moveRats();
         attackRat();
         attackRatsForEachCat();
+        upDateTexture();
 
         spawnTimer += 0.05;
         if (spawnTimer > ratSpawnDelay && getRatsSpawned() < getRatLimitPerLevel()) {
@@ -161,15 +162,22 @@ public class SkadedyrModel implements ISkadedyrModel {
             LinkedList<Rat> attackableRats = attackMap.get(cat);
             if (attackableRats != null && !attackableRats.isEmpty()) {
                 cat.attack(attackableRats);
-                //dette virker feil/tungvint
-                cat.swapImage(Cat.PictureSwapper.ATTACK);
-                if (!cat.withinRange(attackableRats.getFirst())) {
-                    cat.swapImage(Cat.PictureSwapper.DEFAULT);
-                }
-                //
                 if (attackableRats.getFirst().isKilled()) {
                     money += 1000;
                     points += 100;
+                }
+            }
+        }
+    }
+
+    public void upDateTexture(){
+        for (Cat cat : cats) {
+            for (Rat rat : aliveRats) {
+                if (cat.withinRange(rat)) {
+                    cat.swapImage(Cat.PictureSwapper.ATTACK);
+                }
+                else {
+                    cat.swapImage(Cat.PictureSwapper.DEFAULT);
                 }
             }
         }
