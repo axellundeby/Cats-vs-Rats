@@ -96,6 +96,7 @@ public class SkadedyrController  {
         model.moveRats();
         model.attackRat();
         model.attackRatsForEachCat();
+        //model.getLives();
 
 
         spawnTimer += 0.05;

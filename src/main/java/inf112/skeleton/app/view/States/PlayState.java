@@ -33,9 +33,9 @@ public class PlayState extends State {
     @Override
     public void handleInput() {
         if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-            // gsm.set(new MenuState(gsm, model));
-            // dispose();
-            SkadedyrMain.main(null);
+            gsm.set(new GameOverState(gsm));
+            //dispose();
+            //SkadedyrMain.main(null);
 
         }
 

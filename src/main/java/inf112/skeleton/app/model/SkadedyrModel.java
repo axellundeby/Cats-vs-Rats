@@ -1,4 +1,5 @@
 package inf112.skeleton.app.model;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -11,6 +12,8 @@ import inf112.skeleton.app.model.entities.cat.freezeCat;
 import inf112.skeleton.app.model.entities.rat.BasicRat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
+import inf112.skeleton.app.view.States.GameOverState;
+import inf112.skeleton.app.view.States.GameStateManager;
 
 public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Cat> cats;
@@ -22,10 +25,12 @@ public class SkadedyrModel implements ISkadedyrModel {
     private int ratsSpawned;
     private int ratLimitPerLevel = 10;
     private Rat testRat;
+    private GameStateManager gsm;
 
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
         this.aliveRats = new ArrayList<>();
+        this.gsm = new GameStateManager();
     }
 
     @Override
@@ -56,7 +61,9 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     public void gameOver() {
-        Gdx.app.exit(); //jacob skjerm
+        gsm.set(new GameOverState(gsm));
+
+        // Gdx.app.exit(); //jacob skjerm
     }
 
     public int getRatLimitPerLevel() {
@@ -67,15 +74,15 @@ public class SkadedyrModel implements ISkadedyrModel {
         return ratsSpawned;
     }
 
-    public int getMoney(){
+    public int getMoney() {
         return money;
     }
 
-    public int getLevel(){
+    public int getLevel() {
         return level;
     }
 
-    public int getPoints(){
+    public int getPoints() {
         return points;
     }
 
@@ -85,18 +92,17 @@ public class SkadedyrModel implements ISkadedyrModel {
         ratsSpawned++;
     }
 
-    //hvor kalle på denne?
+    // hvor kalle på denne?
     public void everyRatDead() {
         if (aliveRats.isEmpty()) {
             level++;
-            //runden er over 
-            //nextRound();
+            // runden er over
+            // nextRound();
         }
     }
 
-
-
     public int getLives() {
+
         for (Rat rat : aliveRats) {
             if (rat.getDirection() == Direction.OUT) {
                 aliveRats.remove(rat);
@@ -104,7 +110,9 @@ public class SkadedyrModel implements ISkadedyrModel {
             }
         }
         if (lives <= 0) {
-           gameOver();
+            lives = 0;
+            gameOver();
+
         }
         return lives;
     }
@@ -122,13 +130,13 @@ public class SkadedyrModel implements ISkadedyrModel {
         }
         return attackMap;
     }
-    
+
     public void attackRat() {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackRatsForEachCat();
         for (Cat cat : cats) {
             if (true) { // om katten er en basic katt
                 LinkedList<Rat> attackableRats = attackMap.get(cat);
-                if (attackableRats != null && !attackableRats.isEmpty()) { 
+                if (attackableRats != null && !attackableRats.isEmpty()) {
                     if (cat instanceof BasicCat) {
                         attackableRats.getFirst().takeDamage(cat.getStrength());
                     }
@@ -136,26 +144,25 @@ public class SkadedyrModel implements ISkadedyrModel {
                         for (Rat rat : attackableRats) {
                             rat.freeze();
                             System.out.println("Rat is frozen");
-                            //må unfreeze etter x sekunder
+                            // må unfreeze etter x sekunder
                         }
-                    }
-                    else if (cat instanceof ShotgunCat) {
-                        int attacks = 3; 
+                    } else if (cat instanceof ShotgunCat) {
+                        int attacks = 3;
                         int ratsCount = attackableRats.size();
                         for (int i = 0; i < ratsCount && attacks > 0; i++) {
                             Rat targetRat = attackableRats.get(i);
-                            int attacksOnThisRat = Math.min(attacks, 3 - i); 
+                            int attacksOnThisRat = Math.min(attacks, 3 - i);
                             for (int j = 0; j < attacksOnThisRat; j++) {
                                 if (targetRat != null) {
                                     targetRat.takeDamage(cat.getStrength());
-                                    attacks--; 
+                                    attacks--;
                                 }
                             }
                         }
                     }
                     if (attackableRats.getFirst().isKilled()) {
-                        money += 1000; 
-                        points += 100; 
+                        money += 1000;
+                        points += 100;
                     }
                 }
             }
@@ -167,17 +174,14 @@ public class SkadedyrModel implements ISkadedyrModel {
         int priceForFreezeCat = 2000;
         int priceForShotgunCat = 3000;
 
-        if (priceForBasicCat <= money) { //og katta er kjøpt
+        if (priceForBasicCat <= money) { // og katta er kjøpt
             money -= priceForBasicCat;
-        }
-        else if (priceForFreezeCat <= money) { //og katta er kjøpt
+        } else if (priceForFreezeCat <= money) { // og katta er kjøpt
             money -= priceForFreezeCat;
-        }
-        else if (priceForShotgunCat <= money) { //og katta er kjøpt
+        } else if (priceForShotgunCat <= money) { // og katta er kjøpt
             money -= priceForShotgunCat;
         }
     }
-
 
     public void newCat(int mouseX, int mouseY) {
         Cat gangsta = new ShotgunCat();
@@ -188,5 +192,3 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
 }
-
-
