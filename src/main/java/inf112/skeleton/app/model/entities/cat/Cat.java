@@ -23,7 +23,7 @@ public abstract class Cat {
     private int size;
     private int halfSize;
     private EnumMap<PictureSwapper, Texture> textures = new EnumMap<>(PictureSwapper.class);
-    public PictureSwapper currentState = PictureSwapper.ATTACK;
+    public PictureSwapper currentState = PictureSwapper.DEFAULT;
 
     public Cat(int strength, float range, Texture defualtImage, Texture attackImage) {
         this.strength = strength;
