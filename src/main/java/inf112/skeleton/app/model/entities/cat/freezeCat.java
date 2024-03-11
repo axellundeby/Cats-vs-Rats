@@ -1,12 +1,25 @@
 package inf112.skeleton.app.model.entities.cat;
 
+import java.util.LinkedList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
-public class freezeCat extends Cat{
+import inf112.skeleton.app.model.entities.rat.Rat;
 
-    public freezeCat() {
+public class FreezeCat extends Cat{
+
+    public FreezeCat() {
         super(1, 100, new Texture(Gdx.files.internal("freezeCat.png")));
+    }
+
+    @Override
+    public void attack(LinkedList<Rat> rats) {
+        for (Rat rat : rats) {
+            rat.freeze();
+            System.out.println("Rat is frozen");
+            //må unfreeze etter x sekunder
+        }
     }
     
 }
