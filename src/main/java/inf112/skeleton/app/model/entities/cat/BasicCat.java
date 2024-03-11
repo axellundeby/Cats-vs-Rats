@@ -1,7 +1,11 @@
 package inf112.skeleton.app.model.entities.cat;
 
+import java.util.LinkedList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+
+import inf112.skeleton.app.model.entities.rat.Rat;
 
 public class BasicCat extends Cat {
 
@@ -11,5 +15,9 @@ public class BasicCat extends Cat {
         super(1, 100, texture);
 
     }
-    
+
+    @Override
+    public void attack(LinkedList<Rat> rats) {
+        rats.getFirst().takeDamage(getStrength());
+    }
 }
