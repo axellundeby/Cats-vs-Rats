@@ -10,7 +10,7 @@ import inf112.skeleton.app.model.entities.IEntity;
 
 import java.util.EnumMap;
 
-public class Rat implements IEntity {
+public abstract class Rat implements IEntity {
     private int speed;
     private Vector2 pos;
     private int health;
