@@ -17,7 +17,7 @@ public class BasicCat extends Cat {
 
     @Override
     public void attack(LinkedList<Rat> rats) {
-        if (!rats.isEmpty() && canAttack()) {
+        if (canAttack()) {
             triggerAttackImage();
             rats.getFirst().takeDamage(getStrength());
             swapImage(PictureSwapper.ATTACK);

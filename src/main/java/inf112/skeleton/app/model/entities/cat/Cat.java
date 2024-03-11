@@ -10,15 +10,12 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.model.entities.rat.Rat;
-import inf112.skeleton.app.model.entities.rat.Rat.ImageSwapper;
 
 public abstract class Cat {
 
     private int strength;
     private float range;
     private Vector2 pos;
-    private Texture defualtImage;
-    //private Texture attackImage;
     private Rectangle spriteRect;
     private Circle rangeCircle;
     private int size;
@@ -28,13 +25,12 @@ public abstract class Cat {
     private float fireRate; 
     private float attackTimer;
     private float attackImageTimer = 0; 
-    private final float attackImageDuration = 1.0f; 
+    private final float attackImageDuration = 0.5f; 
 
 
     public Cat(int strength, float range, Texture defualtImage, Texture attackImage, float fireRate) {
         this.strength = strength;
         this.range = range;
-        this.defualtImage = defualtImage;
         this.pos = new Vector2();
         this.size = 60;
         this.fireRate = fireRate; 
