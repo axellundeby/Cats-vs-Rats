@@ -25,9 +25,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private int ratLimitPerLevel = 10;
     private Rat testRat;
     private float spawnTimer = 0;
-    private float freezeTimer = 0;
     private int ratSpawnDelay = 5;
-    private int ratFreezeDelay = 5;
 
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
@@ -35,6 +33,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     public void clockTick() {
+        float deltaTime = Gdx.graphics.getDeltaTime();
         // System.out.println(intervalSeconds);
         // This code will be executed every n seconds
         int mouseX = Gdx.input.getX();
@@ -42,20 +41,14 @@ public class SkadedyrModel implements ISkadedyrModel {
         // model.mousePos();
         moveRats();
         attackRat();
-        attackRatsForEachCat();
+        attackQueueForEachCat();
         upDateTexture();
-        unfreezeRats();
+        //unfreezeRats();
 
         spawnTimer += 0.05;
         if (spawnTimer > ratSpawnDelay && getRatsSpawned() < getRatLimitPerLevel()) {
             spawnRats();
             spawnTimer = 0;
-        }
-
-        freezeTimer += 0.05;
-        if (spawnTimer > ratFreezeDelay) {
-            unfreezeRats();
-            freezeTimer = 0;
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.U)) {
@@ -151,7 +144,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         return lives;
     }
 
-    public HashMap<Cat, LinkedList<Rat>> attackRatsForEachCat() {
+    public HashMap<Cat, LinkedList<Rat>> attackQueueForEachCat() {
         HashMap<Cat, LinkedList<Rat>> attackMap = new HashMap<>();
         for (Cat cat : cats) {
             LinkedList<Rat> attackableRats = new LinkedList<>();
@@ -166,7 +159,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     public void attackRat() {
-        HashMap<Cat, LinkedList<Rat>> attackMap = attackRatsForEachCat();
+        HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
         for (Cat cat : cats) {
             LinkedList<Rat> attackableRats = attackMap.get(cat);
             if (attackableRats != null && !attackableRats.isEmpty()) {
@@ -220,8 +213,8 @@ public class SkadedyrModel implements ISkadedyrModel {
         Cat gangsta = new ShotgunCat();
         Cat froze = new FreezeCat();
         Cat meow = new BasicCat();
-        froze.setPos(mouseX, mouseY);
-        addCat(froze);
+        meow.setPos(mouseX, mouseY);
+        addCat(meow);
     }
 
 }

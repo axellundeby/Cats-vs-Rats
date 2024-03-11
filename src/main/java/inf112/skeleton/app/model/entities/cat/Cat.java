@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.model.entities.rat.Rat;
@@ -55,8 +56,8 @@ public abstract class Cat {
     }
 
     public boolean withinRange(Rat target) {
-        Vector2 ratPos = target.getPosition();
-        return rangeCircle.contains(ratPos);
+        Rectangle ratRect = target.getRectangle();
+        return Intersector.overlaps(rangeCircle, ratRect);
     }
 
     public void swapImage(PictureSwapper image) {
