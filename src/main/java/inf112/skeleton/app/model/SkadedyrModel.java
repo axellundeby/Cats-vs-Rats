@@ -162,6 +162,7 @@ public class SkadedyrModel implements ISkadedyrModel {
             LinkedList<Rat> attackableRats = attackMap.get(cat);
             if (attackableRats != null && !attackableRats.isEmpty()) {
                 cat.attack(attackableRats);
+                cat.swapImage(Cat.PictureSwapper.ATTACK);
                 
                 if (attackableRats.getFirst().isKilled()) {
                     money += 1000;
