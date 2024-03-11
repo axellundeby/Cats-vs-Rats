@@ -25,7 +25,9 @@ public class SkadedyrModel implements ISkadedyrModel {
     private int ratLimitPerLevel = 10;
     private Rat testRat;
     private float spawnTimer = 0;
+    private float freezeTimer = 0;
     private int ratSpawnDelay = 5;
+    private int ratFreezeDelay = 5;
 
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
@@ -42,11 +44,18 @@ public class SkadedyrModel implements ISkadedyrModel {
         attackRat();
         attackRatsForEachCat();
         upDateTexture();
+        unfreezeRats();
 
         spawnTimer += 0.05;
         if (spawnTimer > ratSpawnDelay && getRatsSpawned() < getRatLimitPerLevel()) {
             spawnRats();
             spawnTimer = 0;
+        }
+
+        freezeTimer += 0.05;
+        if (spawnTimer > ratFreezeDelay) {
+            unfreezeRats();
+            freezeTimer = 0;
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.U)) {
@@ -179,6 +188,14 @@ public class SkadedyrModel implements ISkadedyrModel {
                 else {
                     cat.swapImage(Cat.PictureSwapper.DEFAULT);
                 }
+            }
+        }
+    }
+
+    private void unfreezeRats() {
+        for (Rat rat : aliveRats) {
+            if (rat.isFrozen()) {
+                rat.unfreeze();
             }
         }
     }
