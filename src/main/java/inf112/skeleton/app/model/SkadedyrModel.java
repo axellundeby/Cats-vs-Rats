@@ -158,11 +158,15 @@ public class SkadedyrModel implements ISkadedyrModel {
     public void attackRat() {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackRatsForEachCat();
         for (Cat cat : cats) {
-
             LinkedList<Rat> attackableRats = attackMap.get(cat);
             if (attackableRats != null && !attackableRats.isEmpty()) {
-                cat.swapImage(Cat.PictureSwapper.ATTACK);
                 cat.attack(attackableRats);
+                //dette virker feil/tungvint
+                cat.swapImage(Cat.PictureSwapper.ATTACK);
+                if (!cat.withinRange(attackableRats.getFirst())) {
+                    cat.swapImage(Cat.PictureSwapper.DEFAULT);
+                }
+                //
                 if (attackableRats.getFirst().isKilled()) {
                     money += 1000;
                     points += 100;
