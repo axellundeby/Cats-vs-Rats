@@ -64,7 +64,7 @@ public class SkadedyrView {
     }
 
     public void render() {
-        System.out.println("Rendering in MainView");
+        
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.render(batch);
     }

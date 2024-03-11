@@ -13,6 +13,8 @@ import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.rat.BasicRat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
+import inf112.skeleton.app.view.States.GameOverState;
+import inf112.skeleton.app.view.States.GameStateManager;
 
 public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Cat> cats;
@@ -30,6 +32,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
         this.aliveRats = new ArrayList<>();
+        this.gsm = new GameStateManager();
     }
 
     public void clockTick() {
@@ -129,6 +132,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     public int getLives() {
+
         for (Rat rat : aliveRats) {
             if (rat.getDirection() == Direction.OUT) {
                 aliveRats.remove(rat);

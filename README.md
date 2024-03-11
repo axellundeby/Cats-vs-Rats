@@ -17,7 +17,7 @@ Spillet krasjer når rotter beveger seg ut av det definerte spillområdet.
 Spillet lagger når nye rotter spawner ved hjelp av "u", og når man trykker for å plassere katter.
 Kattene kan plasseres på stien
 En katt kan spawne i venstrehjørnet når man plasserer en katt
-Som påpekt under *Produkt og kode* i oblig2.md har vi flere katter som vi har implementert (som for øyeblikket krever endring i koden for å få bruke), men når vi prøver disse skjer det flere feil. Blant annet at man får ny katt når man restarter spillet. Noen katter fordeler ikke skaden de kan påføre rottene slik vi vil. 
+Som påpekt under *Produkt og kode* i oblig2.md har vi flere katter som vi har implementert (som for øyeblikket krever endring i koden for å få bruke), men når vi prøver disse skjer det flere feil. Blant annet at man får ny katt når man restarter spillet. Noen kxatter fordeler ikke skaden de kan påføre rottene slik vi vil. 
 
 ### Kjøring
 * Kompileres med `mvn package`.

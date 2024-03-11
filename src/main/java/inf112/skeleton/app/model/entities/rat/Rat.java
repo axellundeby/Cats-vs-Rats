@@ -90,7 +90,8 @@ public abstract class Rat implements IEntity {
         else if (secs < 78) category = 12;
         else if (secs < 85) category = 13;
         else if (secs < 87) category = 14;
-        else throw new Error("Error in Rat movement: Nowhere to go");
+        else category = 15;
+        //else throw new Error("Error in Rat movement: Nowhere to go");
     
         switch (category) {
             case 1:
@@ -112,7 +113,7 @@ public abstract class Rat implements IEntity {
             case 13:
                 return Direction.LEFT;
             default:
-                throw new AssertionError("Unexpected value: " + category);
+               return Direction.OUT;
         }
     }
     
