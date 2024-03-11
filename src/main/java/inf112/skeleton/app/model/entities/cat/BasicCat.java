@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 import inf112.skeleton.app.model.entities.rat.Rat;
-import inf112.skeleton.app.model.entities.rat.Rat.ImageSwapper;
 
 public class BasicCat extends Cat {
 
@@ -18,7 +17,11 @@ public class BasicCat extends Cat {
 
     @Override
     public void attack(LinkedList<Rat> rats) {
-        rats.getFirst().takeDamage(getStrength());
-        swapImage(PictureSwapper.ATTACK);
+        if (!rats.isEmpty() && canAttack()) {
+            triggerAttackImage();
+            rats.getFirst().takeDamage(getStrength());
+            swapImage(PictureSwapper.ATTACK);
+            resetAttackTimer();
+        }
     }
 }

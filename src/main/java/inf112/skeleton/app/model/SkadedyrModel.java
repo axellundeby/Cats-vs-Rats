@@ -34,6 +34,10 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     public void clockTick() {
         float deltaTime = Gdx.graphics.getDeltaTime();
+
+        for (Cat cat : cats) {
+            cat.updateAnimation(deltaTime);
+        }
         // System.out.println(intervalSeconds);
         // This code will be executed every n seconds
         int mouseX = Gdx.input.getX();

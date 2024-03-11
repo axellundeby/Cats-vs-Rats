@@ -15,18 +15,15 @@ public class ShotgunCat extends Cat {
 
     @Override
     public void attack(LinkedList<Rat> rats) {
-        int attacks = 3;
-        int ratsCount = rats.size();
-        for (int i = 0; i < ratsCount && attacks > 0; i++) {
-            Rat targetRat = rats.get(i);
-            int attacksOnThisRat = Math.min(attacks, 3 - i);
-            for (int j = 0; j < attacksOnThisRat; j++) {
-                if (targetRat != null) {
-                    targetRat.takeDamage(getStrength());
-                    swapImage(PictureSwapper.ATTACK);
-                    attacks--;
-                }
+        if (!rats.isEmpty() && canAttack()) {
+            int attacks = 3;
+            for (int i = 0; i < rats.size() && attacks > 0; i++) {
+                Rat targetRat = rats.get(i);
+                targetRat.takeDamage(getStrength());
+                attacks--;
             }
+            triggerAttackImage();
+            resetAttackTimer();
         }
     }
 }

@@ -18,7 +18,7 @@ public abstract class Cat {
     private float range;
     private Vector2 pos;
     private Texture defualtImage;
-    private Texture attackImage;
+    //private Texture attackImage;
     private Rectangle spriteRect;
     private Circle rangeCircle;
     private int size;
@@ -27,6 +27,8 @@ public abstract class Cat {
     public PictureSwapper currentState = PictureSwapper.DEFAULT;
     private float fireRate; 
     private float attackTimer;
+    private float attackImageTimer = 0; 
+    private final float attackImageDuration = 1.0f; 
 
 
     public Cat(int strength, float range, Texture defualtImage, Texture attackImage, float fireRate) {
@@ -53,6 +55,21 @@ public abstract class Cat {
         pos.y = y;
         this.spriteRect = new Rectangle(pos.x - halfSize, pos.y - halfSize, size, size);
         this.rangeCircle = new Circle(pos, range);
+    }
+
+    public void triggerAttackImage() {
+        swapImage(PictureSwapper.ATTACK);
+        attackImageTimer = attackImageDuration;
+    }
+
+    public void updateAnimation(float deltaTime) {
+        if (attackImageTimer > 0) {
+            attackImageTimer -= deltaTime;
+            if (attackImageTimer <= 0) {
+                swapImage(PictureSwapper.DEFAULT);
+            }
+        }
+        updateAttackTimer(deltaTime);
     }
 
     public enum PictureSwapper{
