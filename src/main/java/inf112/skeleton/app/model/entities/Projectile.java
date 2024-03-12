@@ -28,7 +28,6 @@ public class Projectile {
         int height = texture.getHeight();
         return new Rectangle(x, y, width, height);
     }
-    //the claw has to point towards the rat
 
     public void update(float dt, Rat rat, Cat cat) {
         Vector2 direction = new Vector2(rat.getPosition().x - cat.getPosition().x, rat.getPosition().y - cat.getPosition().y);
@@ -36,6 +35,10 @@ public class Projectile {
         velocity = unitDirection.scl(speed * dt);
         position.add(velocity);
         
+    }
+
+    public boolean ratIsHit(Rat rat) {
+        return getRectangle().overlaps(rat.getRectangle());
     }
 
     public void pointImageAtRat(Rat rat, Cat cat) {

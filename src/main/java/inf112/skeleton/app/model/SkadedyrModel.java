@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import java.util.Iterator;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
 import inf112.skeleton.app.model.entities.cat.Cat;
@@ -183,8 +182,8 @@ public class SkadedyrModel implements ISkadedyrModel {
         for (Cat cat : cats) {
             cat.updateAttackTimer(Gdx.graphics.getDeltaTime());
             LinkedList<Rat> attackableRats = attackMap.get(cat);
-            if (cat.canAttack() && attackableRats != null && !attackableRats.isEmpty()) {
-                projectiles.add(cat.shootAt(attackableRats.getFirst()));
+            if (cat.canAttack() && !attackableRats.isEmpty()) {
+                projectiles.add(cat.shootAt(attackableRats.getFirst()));//denne må endres, prosejktilet skal avhenge av kattetypen, er bare basic cat som skal skyte på kunn første
                 cat.attack(attackableRats);
                 cat.resetAttackTimer();
                 if (attackableRats.getFirst().isKilled()) {
