@@ -35,6 +35,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     public void clockTick() {
         float deltaTime = Gdx.graphics.getDeltaTime();
 
+        //chat melder at denne skal være der frames oppdateres
         for (Cat cat : cats) {
             cat.updateAnimation(deltaTime);
         }
@@ -46,6 +47,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         moveRats();
         attackRat();
         attackQueueForEachCat();
+        rotater();
         //unfreezeRats();
 
         spawnTimer += 0.05;
@@ -131,6 +133,17 @@ public class SkadedyrModel implements ISkadedyrModel {
             level++;
             // runden er over
             // nextRound();
+        }
+    }
+
+    public void rotater(){
+        HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
+        for (Cat cat : cats) {
+            LinkedList<Rat> attackableRats = attackMap.get(cat);
+            if (!attackableRats.isEmpty()) { 
+                Rat firstRat = attackableRats.getFirst();
+                cat.rotateImage(firstRat);
+            }
         }
     }
 

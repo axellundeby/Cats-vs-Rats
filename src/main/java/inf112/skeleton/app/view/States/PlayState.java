@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
@@ -70,14 +71,9 @@ public class PlayState extends State {
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
         batch.begin();
-        for (Cat cat : model.getCats()) {
-            Rectangle catRect = cat.getRectangle();
-            batch.draw(cat.getTexture(), catRect.x, catRect.y, catRect.width, catRect.height);
-        }
-        for (Rat rat : model.getRats()) {
-            Rectangle ratRect = rat.getRectangle();
-            batch.draw(rat.getTexture(), ratRect.x, ratRect.y, ratRect.width, ratRect.height);
-        }
+        drawCats(batch);
+        drawRats(batch);
+        
         font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 10);
         font.draw(batch, "Dine liv: " + model.getLives(), 1000, 760);
         font.draw(batch, "Dine penger: " + model.getMoney(), 1000, 840);
@@ -91,8 +87,8 @@ public class PlayState extends State {
 
     public void drawCats(SpriteBatch batch) {
         for (Cat cat : model.getCats()) {
-            Rectangle catRect = cat.getRectangle();
-            batch.draw(cat.getTexture(), catRect.x, catRect.y, catRect.width, catRect.height);
+            Sprite catSprite = cat.getSprite();
+            batch.draw(cat.getTexture(), catSprite.getX(), catSprite.getY(), catSprite.getWidth(), catSprite.getHeight());
         }
     }
 
