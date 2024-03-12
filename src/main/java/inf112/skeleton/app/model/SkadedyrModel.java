@@ -196,8 +196,15 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     public void updateProjectiles(float dt) {
-        for (Projectile projectile : projectiles) {
-            projectile.update(dt);
+        HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
+        for (Cat cat : cats) {
+            LinkedList<Rat> attackableRats = attackMap.get(cat);
+            if (!attackableRats.isEmpty()) {
+                for (Projectile projectile : projectiles) {
+                    projectile.update(dt,attackableRats.getFirst(),cat);
+                    projectile.pointImageAtRat(attackableRats.getFirst(),cat);
+                }
+            }
         }
     }
 
