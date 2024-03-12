@@ -12,7 +12,7 @@ public class BasicCat extends Cat {
     public static Texture texture = new Texture(Gdx.files.internal("cat.png"));
 
     public BasicCat() {
-        super(1, 100, texture, new Texture(Gdx.files.internal("Cat2.png")), 1.0f);
+        super(10, 100, texture, new Texture(Gdx.files.internal("Cat2.png")), 1.0f);
     }
 
     @Override

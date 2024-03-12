@@ -15,7 +15,7 @@ public class ShotgunCat extends Cat {
 
     @Override
     public void attack(LinkedList<Rat> rats) {
-        if (!rats.isEmpty() && canAttack()) {
+        if (canAttack()) {
             int attacks = 3;
             for (int i = 0; i < rats.size() && attacks > 0; i++) {
                 Rat targetRat = rats.get(i);
