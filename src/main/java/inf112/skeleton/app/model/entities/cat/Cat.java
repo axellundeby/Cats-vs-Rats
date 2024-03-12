@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+
+import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.rat.Rat;
 
 public abstract class Cat {
@@ -49,6 +51,11 @@ public abstract class Cat {
         pos.y = y;
         this.sprite.setPosition(pos.x - halfSize, pos.y - halfSize);
         this.rangeCircle = new Circle(pos, range);
+    }
+
+    public Projectile shootAt(Rat target) {
+        Vector2 direction = new Vector2(target.getPosition().x - this.pos.x, target.getPosition().y - this.pos.y);
+        return new Projectile(new Vector2(this.pos), direction, 300,  new Texture("claw.png"));
     }
 
     public void rotateImage(Rat target){

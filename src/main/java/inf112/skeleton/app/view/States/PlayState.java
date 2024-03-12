@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import inf112.skeleton.app.main.SkadedyrMain;
 import inf112.skeleton.app.model.SkadedyrModel;
+import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.SkadedyrView;
@@ -81,10 +82,18 @@ public class PlayState extends State {
         font.draw(batch, "Level: " + model.getLevel(), 1000, 720);
         drawCats(batch);
         drawRats(batch);
+        drawProjectiles(batch);
         batch.end();
 
     }
-    
+
+    public void drawProjectiles(SpriteBatch batch) {
+    for (Projectile projectile : model.getProjectiles()) {
+        Rectangle projectileRect = projectile.getRectangle();
+        batch.draw(projectile.getTexture(), projectileRect.x, projectileRect.y, projectileRect.width, projectileRect.height);
+    }
+}
+
     public void drawCats(SpriteBatch batch) {
         for (Cat cat : model.getCats()) {
             Sprite catSprite = cat.getSprite();

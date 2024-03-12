@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-
+import java.util.Iterator;
+import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.cat.ShotgunCat;
@@ -26,6 +27,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private Rat testRat;
     private float spawnTimer = 0;
     private int ratSpawnDelay = 5;
+    private ArrayList<Projectile> projectiles = new ArrayList<>();
 
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
@@ -48,6 +50,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         attackRat();
         attackQueueForEachCat();
         rotater();
+        updateProjectiles();
         //unfreezeRats();
 
         spawnTimer += 0.05;
@@ -180,6 +183,7 @@ public class SkadedyrModel implements ISkadedyrModel {
             cat.updateAttackTimer(Gdx.graphics.getDeltaTime());
             LinkedList<Rat> attackableRats = attackMap.get(cat);
             if (cat.canAttack() && attackableRats != null && !attackableRats.isEmpty()) {
+                projectiles.add(cat.shootAt(attackableRats.getFirst()));
                 cat.attack(attackableRats);
                 cat.resetAttackTimer();
                 if (attackableRats.getFirst().isKilled()) {
@@ -189,6 +193,25 @@ public class SkadedyrModel implements ISkadedyrModel {
             }
         }
     }
+
+    public void updateProjectiles() {
+        Iterator<Projectile> projectileIterator = projectiles.iterator();
+        while (projectileIterator.hasNext()) {
+            Projectile projectile = projectileIterator.next();
+            projectile.move();
+            for (Rat rat : aliveRats) {
+                if (rat.getRectangle().contains(projectile.getPosition())) {
+                    projectileIterator.remove();
+                    break;
+                }
+            }
+        }
+    }
+
+    public ArrayList<Projectile> getProjectiles() {
+        return projectiles;
+    }
+    
     
     private void unfreezeRats() {
         for (Rat rat : aliveRats) {
@@ -218,8 +241,8 @@ public class SkadedyrModel implements ISkadedyrModel {
         Cat gangsta = new ShotgunCat();
         Cat froze = new FreezeCat();
         Cat meow = new BasicCat();
-        froze.setPos(mouseX, mouseY);
-        addCat(froze);
+        meow.setPos(mouseX, mouseY);
+        addCat(meow);
     }
 
 }
