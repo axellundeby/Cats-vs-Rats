@@ -13,7 +13,7 @@ import inf112.skeleton.app.view.SkadedyrView;
 public class SkadedyrController {
 
     private final SkadedyrModel model;
-    private final SkadedyrView view;
+   // private final SkadedyrView view;
     private boolean pausedGame = true;
     private boolean keyPHandled = false;
     private boolean keySHandled = false;
@@ -23,9 +23,9 @@ public class SkadedyrController {
     private Task currentClockTickTask = null;
     private boolean gameRunning = true;
 
-    public SkadedyrController(SkadedyrModel model, SkadedyrView view) {
+    public SkadedyrController(SkadedyrModel model) {
         this.model = model;
-        this.view = view;
+       // this.view = view;
     }
 
     public void startTimer() {
@@ -80,14 +80,13 @@ public class SkadedyrController {
     }
 
     public void updateClockTick() {
-        System.out.println(intervalSeconds);
         if (intervalSeconds == (float) 0.05) {
             intervalSeconds = (float) 0.0025;
 
         } else {
             intervalSeconds = (float) 0.05;
         }
-        System.out.println(intervalSeconds);
+
     }
 
 }

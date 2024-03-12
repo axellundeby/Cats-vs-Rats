@@ -88,11 +88,13 @@ public class PlayState extends State {
     }
 
     public void drawProjectiles(SpriteBatch batch) {
-    for (Projectile projectile : model.getProjectiles()) {
-        Rectangle projectileRect = projectile.getRectangle();
-        batch.draw(projectile.getTexture(), projectileRect.x, projectileRect.y, projectileRect.width, projectileRect.height);
+        for (Projectile projectile : model.getProjectiles()) {
+            Rectangle projectileRect = projectile.getRectangle();
+            float width = projectileRect.width / 15; 
+            float height = projectileRect.height / 15;
+            batch.draw(projectile.getTexture(), projectileRect.x, projectileRect.y, width, height);
+        }
     }
-}
 
     public void drawCats(SpriteBatch batch) {
         for (Cat cat : model.getCats()) {

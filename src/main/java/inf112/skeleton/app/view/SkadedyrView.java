@@ -37,7 +37,6 @@ public class SkadedyrView {
         font.setColor(Color.RED);
         gsm = new GameStateManager();
         gsm.set(new MenuState(gsm, model));
-        System.out.println("View created");
         mapTexture = new Texture(Gdx.files.internal("map.png")); // Load once in create
         Gdx.graphics.setForegroundFPS(60);
     }
@@ -64,7 +63,6 @@ public class SkadedyrView {
     }
 
     public void render() {
-        System.out.println("Rendering in MainView");
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.render(batch);
     }

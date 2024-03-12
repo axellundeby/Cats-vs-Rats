@@ -50,7 +50,8 @@ public class SkadedyrModel implements ISkadedyrModel {
         attackRat();
         attackQueueForEachCat();
         rotater();
-        updateProjectiles();
+        updateProjectiles(deltaTime);
+
         //unfreezeRats();
 
         spawnTimer += 0.05;
@@ -194,17 +195,9 @@ public class SkadedyrModel implements ISkadedyrModel {
         }
     }
 
-    public void updateProjectiles() {
-        Iterator<Projectile> projectileIterator = projectiles.iterator();
-        while (projectileIterator.hasNext()) {
-            Projectile projectile = projectileIterator.next();
-            projectile.move();
-            for (Rat rat : aliveRats) {
-                if (rat.getRectangle().contains(projectile.getPosition())) {
-                    projectileIterator.remove();
-                    break;
-                }
-            }
+    public void updateProjectiles(float dt) {
+        for (Projectile projectile : projectiles) {
+            projectile.update(dt);
         }
     }
 
