@@ -73,7 +73,7 @@ public class PlayState extends State {
         batch.begin();
         drawCats(batch);
         drawRats(batch);
-        
+
         font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 10);
         font.draw(batch, "Dine liv: " + model.getLives(), 1000, 760);
         font.draw(batch, "Dine penger: " + model.getMoney(), 1000, 840);
@@ -84,11 +84,11 @@ public class PlayState extends State {
         batch.end();
 
     }
-
+    
     public void drawCats(SpriteBatch batch) {
         for (Cat cat : model.getCats()) {
             Sprite catSprite = cat.getSprite();
-            batch.draw(cat.getTexture(), catSprite.getX(), catSprite.getY(), catSprite.getWidth(), catSprite.getHeight());
+            catSprite.draw(batch);
         }
     }
 

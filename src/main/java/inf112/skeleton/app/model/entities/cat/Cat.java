@@ -56,6 +56,7 @@ public abstract class Cat {
         float dy = target.getPosition().y - this.pos.y;
         float angleInRadians = (float) Math.atan2(dy, dx);
         float angleInDegrees = (float) Math.toDegrees(angleInRadians) - 90;
+        this.sprite.setOriginCenter();
         this.sprite.setRotation(angleInDegrees);
     }
 
