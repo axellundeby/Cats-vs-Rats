@@ -151,10 +151,14 @@ public abstract class Rat implements IEntity {
 
     @Override
     public void killed() {
+        swapImage(ImageSwapper.DEAD);
+        speed = 0;
+        moveRatOutOfMap();
+    }
+
+    private void moveRatOutOfMap() {
         pos.x = -100;
         pos.y = -100;
-        speed = 0;
-        swapImage(ImageSwapper.DEAD);
     }
 
     @Override

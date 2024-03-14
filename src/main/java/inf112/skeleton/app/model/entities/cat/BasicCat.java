@@ -9,7 +9,7 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 
 public class BasicCat extends Cat {
     public BasicCat() {
-        super(10, 100, new Texture(Gdx.files.internal("cat.png")), new Texture(Gdx.files.internal("Cat2.png")), 1.0f);
+        super(10, 100, new Texture(Gdx.files.internal("cat.png")), new Texture(Gdx.files.internal("SinnaKatt.png")), 1.0f);
     }
 
     @Override
@@ -17,7 +17,7 @@ public class BasicCat extends Cat {
         if (canAttack()) {
             triggerAttackImage();
             rats.getFirst().takeDamage(getStrength());
-            swapImage(PictureSwapper.ATTACK);
+            //swapImage(PictureSwapper.ATTACK);
             resetAttackTimer();
         }
     }
