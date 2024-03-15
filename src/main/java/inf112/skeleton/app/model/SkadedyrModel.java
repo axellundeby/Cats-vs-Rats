@@ -138,7 +138,9 @@ public class SkadedyrModel implements ISkadedyrModel {
             // nextRound();
         }
     }
-
+    /**
+     * Rotates the cats to face the rats they are attacking
+     */
     public void rotater(){
         HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
         for (Cat cat : cats) {
@@ -150,6 +152,10 @@ public class SkadedyrModel implements ISkadedyrModel {
         }
     }
 
+    /**
+     * Returns the amount of lives the player has left
+     * @return lives
+     */
     public int getLives() {
         for (Rat rat : aliveRats) {
             if (rat.getDirection() == Direction.OUT) {
@@ -162,6 +168,11 @@ public class SkadedyrModel implements ISkadedyrModel {
         }
         return lives;
     }
+
+    /**
+     * Returns a hashmap with cats as keys and a linkedlist of rats as values
+     * @return
+     */
 
     public HashMap<Cat, LinkedList<Rat>> attackQueueForEachCat() {
         HashMap<Cat, LinkedList<Rat>> attackMap = new HashMap<>();
@@ -177,6 +188,10 @@ public class SkadedyrModel implements ISkadedyrModel {
         return attackMap;
     }
 
+
+    /**
+     * Attacks the rats
+     */
     public void attackRat() {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
         for (Cat cat : cats) {
@@ -193,7 +208,10 @@ public class SkadedyrModel implements ISkadedyrModel {
             }
         }
     }
-
+    /**
+     * Updates the projectiles
+     * @param dt
+     */
     public void updateProjectiles(float dt) {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
         for (Cat cat : cats) {

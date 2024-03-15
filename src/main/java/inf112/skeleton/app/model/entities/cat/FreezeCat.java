@@ -14,10 +14,10 @@ public class FreezeCat extends Cat {
     @Override
     public void attack(LinkedList<Rat> rats) {
         if (canAttack()) {
+            triggerAttackImage(); 
             for (Rat rat : rats) {
                 rat.freeze(); 
             }
-            triggerAttackImage(); 
             resetAttackTimer(); 
         }
     }    

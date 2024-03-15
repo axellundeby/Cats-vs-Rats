@@ -17,7 +17,6 @@ public class BasicCat extends Cat {
         if (canAttack()) {
             triggerAttackImage();
             rats.getFirst().takeDamage(getStrength());
-            //swapImage(PictureSwapper.ATTACK);
             resetAttackTimer();
         }
     }
