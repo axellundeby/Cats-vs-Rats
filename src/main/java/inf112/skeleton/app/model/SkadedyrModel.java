@@ -50,6 +50,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         attackQueueForEachCat();
         rotater();
         updateProjectiles(deltaTime);
+        transaction();
 
         //unfreezeRats();
 
@@ -198,14 +199,22 @@ public class SkadedyrModel implements ISkadedyrModel {
                 
                 projectiles.addAll(cat.attack(attackableRats));
                 cat.resetAttackTimer();
-                
-                if (attackableRats.getFirst().isKilled()) {
-                    money += 1000;
-                    points += 100;
+            }
+        }
+    }
+
+
+    public void transaction() {
+        if (!aliveRats.isEmpty()) {
+            for (Rat rat : aliveRats) {
+                if (rat.isKilled()) {
+                    money += rat.getBounty();
+                    points += rat.getPoints();
                 }
             }
         }
     }
+
     /**
      * Updates the projectiles
      * @param dt
@@ -236,28 +245,13 @@ public class SkadedyrModel implements ISkadedyrModel {
         }
     }
 
-    
-
-    public void transaction() {
-        int priceForBasicCat = 1000;
-        int priceForFreezeCat = 2000;
-        int priceForShotgunCat = 3000;
-
-        if (priceForBasicCat <= money) { // og katta er kjøpt
-            money -= priceForBasicCat;
-        } else if (priceForFreezeCat <= money) { // og katta er kjøpt
-            money -= priceForFreezeCat;
-        } else if (priceForShotgunCat <= money) { // og katta er kjøpt
-            money -= priceForShotgunCat;
-        }
-    }
 
     public void newCat(int mouseX, int mouseY) {
         Cat gangsta = new ShotgunCat();
         Cat froze = new FreezeCat();
         Cat meow = new BasicCat();
-        froze.setPos(mouseX, mouseY);
-        addCat(froze);
+        meow.setPos(mouseX, mouseY);
+        addCat(meow);
     }
 
 }
