@@ -49,7 +49,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         attackRat();
         attackQueueForEachCat();
         rotater();
-        updateProjectiles(deltaTime);
+        //updateProjectiles(deltaTime);
 
         //unfreezeRats();
 
@@ -198,7 +198,7 @@ public class SkadedyrModel implements ISkadedyrModel {
             cat.updateAttackTimer(Gdx.graphics.getDeltaTime());
             LinkedList<Rat> attackableRats = attackMap.get(cat);
             if (cat.canAttack() && !attackableRats.isEmpty()) {
-                projectiles.add(cat.shootAt(attackableRats.getFirst()));//denne må endres, prosejktilet skal avhenge av kattetypen, er bare basic cat som skal skyte på kunn første
+                //projectiles.add(cat.shootAt(attackableRats.getFirst()));//denne må endres, prosejktilet skal avhenge av kattetypen, er bare basic cat som skal skyte på kunn første
                 cat.attack(attackableRats);
                 cat.resetAttackTimer();
                 if (attackableRats.getFirst().isKilled()) {

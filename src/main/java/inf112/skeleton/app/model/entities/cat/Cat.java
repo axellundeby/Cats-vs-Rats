@@ -76,7 +76,7 @@ public abstract class Cat {
         if (attackImageTimer > 0) {
             attackImageTimer -= deltaTime;
             if (attackImageTimer <= 0) {
-                swapImage(PictureSwapper.DEFAULT);
+                swapImage(PictureSwapper.DEFAULT); 
             }
         }
         updateAttackTimer(deltaTime);
@@ -108,7 +108,8 @@ public abstract class Cat {
     }
 
     public void swapImage(PictureSwapper image) {
-        currentState = image; 
+        currentState = image;
+        sprite.setTexture(textures.get(currentState)); 
     }
 
     public Texture getTexture() {
