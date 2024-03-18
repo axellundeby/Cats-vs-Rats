@@ -98,8 +98,7 @@ public abstract class Cat {
     public void resetAttackTimer() {
         attackTimer = fireRate;
     }
-
-    //withInRangeClapped
+    
     public boolean withinRange(Rat target) {
         Rectangle ratRect = target.getRectangle();
         return Intersector.overlaps(rangeCircle, ratRect);

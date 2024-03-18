@@ -189,9 +189,6 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
 
-    /**
-     * L at d er getFirst, tror alle må ha en shootAt metode
-     */
     public void attackRat() {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
         for (Cat cat : cats) {
@@ -200,7 +197,6 @@ public class SkadedyrModel implements ISkadedyrModel {
             if (cat.canAttack() && !attackableRats.isEmpty()) {
                 
                 projectiles.addAll(cat.attack(attackableRats));
-                //cat.attack(attackableRats);
                 cat.resetAttackTimer();
                 
                 if (attackableRats.getFirst().isKilled()) {
@@ -260,8 +256,8 @@ public class SkadedyrModel implements ISkadedyrModel {
         Cat gangsta = new ShotgunCat();
         Cat froze = new FreezeCat();
         Cat meow = new BasicCat();
-        meow.setPos(mouseX, mouseY);
-        addCat(meow);
+        froze.setPos(mouseX, mouseY);
+        addCat(froze);
     }
 
 }
