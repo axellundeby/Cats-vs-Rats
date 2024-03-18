@@ -16,7 +16,7 @@ public class SkadedyrGame implements ApplicationListener{
     public SkadedyrGame(){
         this.model  = new SkadedyrModel();
         this.view = new SkadedyrView(model);
-        this.controller = new SkadedyrController(model, view);
+        this.controller = new SkadedyrController(model);
 
     }
 

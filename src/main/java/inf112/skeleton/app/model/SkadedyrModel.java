@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-
+import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.cat.ShotgunCat;
@@ -26,6 +26,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private Rat testRat;
     private float spawnTimer = 0;
     private int ratSpawnDelay = 5;
+    private ArrayList<Projectile> projectiles = new ArrayList<>();
 
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
@@ -33,6 +34,12 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     public void clockTick() {
+        float deltaTime = Gdx.graphics.getDeltaTime();
+
+        //chat melder at denne skal være der frames oppdateres
+        for (Cat cat : cats) {
+            cat.updateAnimation(deltaTime);
+        }
         // System.out.println(intervalSeconds);
         // This code will be executed every n seconds
         int mouseX = Gdx.input.getX();
@@ -40,7 +47,11 @@ public class SkadedyrModel implements ISkadedyrModel {
         // model.mousePos();
         moveRats();
         attackRat();
-        attackRatsForEachCat();
+        attackQueueForEachCat();
+        rotater();
+        updateProjectiles(deltaTime);
+
+        //unfreezeRats();
 
         spawnTimer += 0.05;
         if (spawnTimer > ratSpawnDelay && getRatsSpawned() < getRatLimitPerLevel()) {
@@ -127,7 +138,24 @@ public class SkadedyrModel implements ISkadedyrModel {
             // nextRound();
         }
     }
+    /**
+     * Rotates the cats to face the rats they are attacking
+     */
+    public void rotater(){
+        HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
+        for (Cat cat : cats) {
+            LinkedList<Rat> attackableRats = attackMap.get(cat);
+            if (!attackableRats.isEmpty()) { 
+                Rat firstRat = attackableRats.getFirst();
+                cat.rotateImage(firstRat);
+            }
+        }
+    }
 
+    /**
+     * Returns the amount of lives the player has left
+     * @return lives
+     */
     public int getLives() {
         for (Rat rat : aliveRats) {
             if (rat.getDirection() == Direction.OUT) {
@@ -141,7 +169,12 @@ public class SkadedyrModel implements ISkadedyrModel {
         return lives;
     }
 
-    public HashMap<Cat, LinkedList<Rat>> attackRatsForEachCat() {
+    /**
+     * Returns a hashmap with cats as keys and a linkedlist of rats as values
+     * @return
+     */
+
+    public HashMap<Cat, LinkedList<Rat>> attackQueueForEachCat() {
         HashMap<Cat, LinkedList<Rat>> attackMap = new HashMap<>();
         for (Cat cat : cats) {
             LinkedList<Rat> attackableRats = new LinkedList<>();
@@ -155,18 +188,50 @@ public class SkadedyrModel implements ISkadedyrModel {
         return attackMap;
     }
 
-    public void attackRat() {
-        HashMap<Cat, LinkedList<Rat>> attackMap = attackRatsForEachCat();
-        for (Cat cat : cats) {
 
+    public void attackRat() {
+        HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
+        for (Cat cat : cats) {
+            cat.updateAttackTimer(Gdx.graphics.getDeltaTime());
             LinkedList<Rat> attackableRats = attackMap.get(cat);
-            if (attackableRats != null && !attackableRats.isEmpty()) {
-                cat.attack(attackableRats);
+            if (cat.canAttack() && !attackableRats.isEmpty()) {
+                
+                projectiles.addAll(cat.attack(attackableRats));
+                cat.resetAttackTimer();
                 
                 if (attackableRats.getFirst().isKilled()) {
                     money += 1000;
                     points += 100;
                 }
+            }
+        }
+    }
+    /**
+     * Updates the projectiles
+     * @param dt
+     */
+    public void updateProjectiles(float dt) {
+        HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
+        for (Cat cat : cats) {
+            LinkedList<Rat> attackableRats = attackMap.get(cat);
+            if (!attackableRats.isEmpty()) {
+                for (Projectile projectile : projectiles) {
+                    projectile.update(dt,attackableRats.getFirst(),cat);
+                    projectile.pointImageAtRat(attackableRats.getFirst(),cat);
+                }
+            }
+        }
+    }
+
+    public ArrayList<Projectile> getProjectiles() {
+        return projectiles;
+    }
+    
+    
+    private void unfreezeRats() {
+        for (Rat rat : aliveRats) {
+            if (rat.isFrozen()) {
+                rat.unfreeze();
             }
         }
     }

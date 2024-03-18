@@ -1,11 +1,15 @@
 package inf112.skeleton.app.model.entities.cat;
-
+import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.LinkedList;
-
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+
+import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.rat.Rat;
 
 public abstract class Cat {
@@ -13,46 +17,104 @@ public abstract class Cat {
     private int strength;
     private float range;
     private Vector2 pos;
-    private Texture spriteImage;
-    private Rectangle spriteRect;
     private Circle rangeCircle;
     private int size;
     private int halfSize;
+    private EnumMap<PictureSwapper, Texture> textures = new EnumMap<>(PictureSwapper.class);
+    public PictureSwapper currentState = PictureSwapper.DEFAULT;
+    private float fireRate; 
+    private float attackTimer;
+    private float attackImageTimer = 0; 
+    private final float attackImageDuration = 0.5f; 
+     private Sprite sprite;
 
-    public Cat(int strength, float range, Texture spriteImage) {
+
+     public Cat(int strength, float range, Texture defaultImage, Texture attackImage, float fireRate) {
         this.strength = strength;
         this.range = range;
-        this.spriteImage = spriteImage;
         this.pos = new Vector2();
         this.size = 60;
-
+        this.fireRate = fireRate; 
+        this.attackTimer = 0;
         this.halfSize = size / 2;
-
-        this.spriteRect = new Rectangle(pos.x - halfSize, pos.y - halfSize, size, size);
+        this.sprite = new Sprite(defaultImage);
+        this.sprite.setSize(size, size);
+        this.sprite.setPosition(pos.x - halfSize, pos.y - halfSize);
         this.rangeCircle = new Circle(pos, range);
+    
+        textures.put(PictureSwapper.DEFAULT, defaultImage);
+        textures.put(PictureSwapper.ATTACK, attackImage);
     }
-    public abstract void attack(LinkedList<Rat> rats);
+    public abstract ArrayList<Projectile> attack(LinkedList<Rat> rats);
 
     public void setPos(int x, int y) {
         pos.x = x;
         pos.y = y;
-        this.spriteRect = new Rectangle(pos.x - halfSize, pos.y - halfSize, size, size);
+        this.sprite.setPosition(pos.x - halfSize, pos.y - halfSize);
         this.rangeCircle = new Circle(pos, range);
-
     }
 
+    public abstract Projectile shootAt(LinkedList<Rat> targets);
+      
+    public void rotateImage(Rat target){
+        float dx = target.getPosition().x - this.pos.x;
+        float dy = target.getPosition().y - this.pos.y;
+        float angleInRadians = (float) Math.atan2(dy, dx);
+        float angleInDegrees = (float) Math.toDegrees(angleInRadians) - 90;
+        this.sprite.setOriginCenter();
+        this.sprite.setRotation(angleInDegrees);
+    }
+
+    public void triggerAttackImage() {
+        swapImage(PictureSwapper.ATTACK);
+        attackImageTimer = attackImageDuration;
+    }
+
+    public void updateAnimation(float deltaTime) {
+        if (attackImageTimer > 0) {
+            attackImageTimer -= deltaTime;
+            if (attackImageTimer <= 0) {
+                swapImage(PictureSwapper.DEFAULT); 
+            }
+        }
+        updateAttackTimer(deltaTime);
+    }
+
+    public enum PictureSwapper{
+        DEFAULT,
+        ATTACK
+    }
+
+    public void updateAttackTimer(float deltaTime) {
+        if (attackTimer > 0) {
+            attackTimer -= deltaTime;
+        }
+    }
+    
+    public boolean canAttack() {
+        return attackTimer <= 0;
+    }
+    
+    public void resetAttackTimer() {
+        attackTimer = fireRate;
+    }
     
     public boolean withinRange(Rat target) {
-        Vector2 ratPos = target.getPosition();
-        return rangeCircle.contains(ratPos);
+        Rectangle ratRect = target.getRectangle();
+        return Intersector.overlaps(rangeCircle, ratRect);
+    }
+
+    public void swapImage(PictureSwapper image) {
+        currentState = image;
+        sprite.setTexture(textures.get(currentState)); 
     }
 
     public Texture getTexture() {
-        return spriteImage;
+        return textures.get(currentState); 
     }
 
-    public Rectangle getRectangle() {
-        return spriteRect;
+    public Sprite getSprite() {
+        return sprite;
     }
 
     public Circle getRangeCircle() {
