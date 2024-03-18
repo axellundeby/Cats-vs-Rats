@@ -1,4 +1,5 @@
 package inf112.skeleton.app.model.entities.cat;
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.LinkedList;
 import com.badlogic.gdx.graphics.Texture;
@@ -44,7 +45,7 @@ public abstract class Cat {
         textures.put(PictureSwapper.DEFAULT, defaultImage);
         textures.put(PictureSwapper.ATTACK, attackImage);
     }
-    public abstract void attack(LinkedList<Rat> rats);
+    public abstract ArrayList<Projectile> attack(LinkedList<Rat> rats);
 
     public void setPos(int x, int y) {
         pos.x = x;
@@ -53,11 +54,8 @@ public abstract class Cat {
         this.rangeCircle = new Circle(pos, range);
     }
 
-    public Projectile shootAt(Rat target) {
-        Vector2 direction = new Vector2(target.getPosition().x - this.pos.x, target.getPosition().y - this.pos.y);
-        return new Projectile(new Vector2(this.pos), direction, 300,  new Texture("claw.png"));
-    }
-
+    public abstract Projectile shootAt(LinkedList<Rat> targets);
+      
     public void rotateImage(Rat target){
         float dx = target.getPosition().x - this.pos.x;
         float dy = target.getPosition().y - this.pos.y;
