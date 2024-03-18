@@ -12,15 +12,15 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 
 public class BasicCat extends Cat {
     public BasicCat() {
-        super(10, 100, new Texture(Gdx.files.internal("cat.png")), new Texture(Gdx.files.internal("angryCat.png")), 1.0f);
+        super(10, 100, new Texture(Gdx.files.internal("cat.png")), new Texture(Gdx.files.internal("angryCat.png")), 10.0f);
     }
 
     @Override
     public ArrayList<Projectile> attack(LinkedList<Rat> rats) {
         ArrayList<Projectile> projectileList = new ArrayList<>();
         if (canAttack()) {
-            projectileList.add(shootAt(rats));
             triggerAttackImage();
+            projectileList.add(shootAt(rats));
             rats.getFirst().takeDamage(getStrength());
             resetAttackTimer();
         }

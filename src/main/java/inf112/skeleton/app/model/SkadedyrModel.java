@@ -198,9 +198,11 @@ public class SkadedyrModel implements ISkadedyrModel {
             cat.updateAttackTimer(Gdx.graphics.getDeltaTime());
             LinkedList<Rat> attackableRats = attackMap.get(cat);
             if (cat.canAttack() && !attackableRats.isEmpty()) {
+                
                 projectiles.addAll(cat.attack(attackableRats));
-                cat.attack(attackableRats);
+                //cat.attack(attackableRats);
                 cat.resetAttackTimer();
+                
                 if (attackableRats.getFirst().isKilled()) {
                     money += 1000;
                     points += 100;
