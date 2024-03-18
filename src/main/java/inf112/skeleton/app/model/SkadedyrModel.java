@@ -50,7 +50,6 @@ public class SkadedyrModel implements ISkadedyrModel {
         attackQueueForEachCat();
         rotater();
         updateProjectiles(deltaTime);
-        transaction();
 
         //unfreezeRats();
 
@@ -196,23 +195,21 @@ public class SkadedyrModel implements ISkadedyrModel {
             cat.updateAttackTimer(Gdx.graphics.getDeltaTime());
             LinkedList<Rat> attackableRats = attackMap.get(cat);
             if (cat.canAttack() && !attackableRats.isEmpty()) {
-                
                 projectiles.addAll(cat.attack(attackableRats));
                 cat.resetAttackTimer();
             }
-        }
-    }
-
-
-    public void transaction() {
-        if (!aliveRats.isEmpty()) {
-            for (Rat rat : aliveRats) {
+            for (Rat rat : attackableRats) {
                 if (rat.isKilled()) {
                     money += rat.getBounty();
                     points += rat.getPoints();
                 }
             }
         }
+    }
+
+
+    public void transaction() {
+      
     }
 
     /**

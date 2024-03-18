@@ -12,7 +12,7 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 
 public class BasicCat extends Cat {
     public BasicCat() {
-        super(10, 100, new Texture(Gdx.files.internal("cat.png")), new Texture(Gdx.files.internal("angryCat.png")), 10.0f);
+        super(70, 100, new Texture(Gdx.files.internal("cat.png")), new Texture(Gdx.files.internal("angryCat.png")), 10.0f);
     }
 
     @Override
