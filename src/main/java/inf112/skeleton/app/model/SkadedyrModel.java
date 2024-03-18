@@ -195,7 +195,6 @@ public class SkadedyrModel implements ISkadedyrModel {
             cat.updateAttackTimer(Gdx.graphics.getDeltaTime());
             LinkedList<Rat> attackableRats = attackMap.get(cat);
             if (cat.canAttack() && !attackableRats.isEmpty()) {
-                
                 projectiles.addAll(cat.attack(attackableRats));
                 cat.resetAttackTimer();
                 
@@ -206,11 +205,9 @@ public class SkadedyrModel implements ISkadedyrModel {
             }
         }
     }
-    /**
-     * Updates the projectiles
-     * @param dt
-     */
-    public void updateProjectiles(float dt) {
+
+    
+    private void updateProjectiles(float dt) {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
         for (Cat cat : cats) {
             LinkedList<Rat> attackableRats = attackMap.get(cat);
@@ -236,20 +233,8 @@ public class SkadedyrModel implements ISkadedyrModel {
         }
     }
 
-    
-
     public void transaction() {
-        int priceForBasicCat = 1000;
-        int priceForFreezeCat = 2000;
-        int priceForShotgunCat = 3000;
-
-        if (priceForBasicCat <= money) { // og katta er kjøpt
-            money -= priceForBasicCat;
-        } else if (priceForFreezeCat <= money) { // og katta er kjøpt
-            money -= priceForFreezeCat;
-        } else if (priceForShotgunCat <= money) { // og katta er kjøpt
-            money -= priceForShotgunCat;
-        }
+      
     }
 
     public void newCat(int mouseX, int mouseY) {
