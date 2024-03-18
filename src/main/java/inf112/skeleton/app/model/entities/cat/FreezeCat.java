@@ -12,7 +12,7 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 public class FreezeCat extends Cat {
 
     public FreezeCat() {
-        super(1, 500, new Texture(Gdx.files.internal("freezeCat.png")), new Texture(Gdx.files.internal("angryCat.png")), 20.0f);
+        super(1, 100, new Texture(Gdx.files.internal("freezeCat.png")), new Texture(Gdx.files.internal("angryCat.png")), 20.0f);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class FreezeCat extends Cat {
     public Projectile shootAt(LinkedList<Rat> targets) {
         for (Rat target : targets) {
             Vector2 direction = new Vector2(target.getPosition().x - getPosition().x, target.getPosition().y - getPosition().y);
-            return new Projectile(new Vector2(this.getPosition()), direction, 300,  new Texture("snowProjectile.png"));
+            return new Projectile(new Vector2(this.getPosition()), direction, 100,  new Texture("snowProjectile.png"));
         }
         return null;
     }    
