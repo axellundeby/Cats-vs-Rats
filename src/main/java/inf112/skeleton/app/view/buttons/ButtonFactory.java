@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -31,4 +33,20 @@ public class ButtonFactory {
 
         return new TextButton(text, style);
     }
+
+    public static ImageButton createImageButton(String upImagePath, String downImagePath) {
+        // Create the drawables for the up and down states
+        Drawable upDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(upImagePath)));
+        Drawable downDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(downImagePath)));
+
+        // Create and set up the style for the ImageButton
+        ImageButtonStyle style = new ImageButtonStyle();
+        style.up = upDrawable; // Set the image to be used when the button is not pressed
+        style.down = downDrawable; // Set the image to be used when the button is pressed
+
+        // Create the ImageButton with the specified style
+        return new ImageButton(style);
+    }
+
+
 }

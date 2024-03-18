@@ -7,8 +7,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
+
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import inf112.skeleton.app.main.SkadedyrMain;
@@ -16,17 +21,40 @@ import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.SkadedyrView;
+import inf112.skeleton.app.view.buttons.ButtonFactory;
 
 public class PlayState extends State {
     private ShapeRenderer shapeRenderer;
     private SkadedyrModel model;
     private BitmapFont font;
+    private Stage stage;
+    private ImageButton pauseButton;
+    private boolean paused;
 
     protected PlayState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
         this.model = model;
         this.shapeRenderer = new ShapeRenderer();
         this.font = new BitmapFont();
+        this.stage = new Stage();
+        //boolean paused = false;
+
+        pauseButton = ButtonFactory.createImageButton("pauseUP.png", "buttonDown.png");
+        pauseButton.setSize(100, 100);
+        pauseButton.setPosition((stage.getWidth() - pauseButton.getWidth()) / 2,
+                (stage.getHeight() + 100 - pauseButton.getHeight()) / 2);
+        //pauseButton.setShapeType();
+        pauseButton.setOrigin(pauseButton.getWidth() / 2, pauseButton.getHeight() / 2);
+
+        pauseButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                pausedGame();
+            }
+        });
+
+        stage.addActor(pauseButton);
+        Gdx.input.setInputProcessor(stage);
 
     }
 
@@ -38,12 +66,21 @@ public class PlayState extends State {
             SkadedyrMain.main(null);
 
         }
+        if (!paused) {
+            model.clockTick();
+        }
 
+    }
+
+    public void pausedGame() {
+        this.paused = !paused;
     }
 
     @Override
     public void update(float dt) {
-        handleInput();
+        if (!paused) {
+            handleInput();
+        }
     }
 
     @Override
@@ -87,6 +124,9 @@ public class PlayState extends State {
         drawRats(batch);
         batch.end();
 
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
+
     }
 
     public void drawCats(SpriteBatch batch) {
@@ -105,6 +145,7 @@ public class PlayState extends State {
 
     @Override
     public void dispose() {
+        stage.dispose();
         shapeRenderer.dispose();
         font.dispose();
 

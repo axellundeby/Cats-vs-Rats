@@ -17,12 +17,14 @@ public class GameStateManager {
             currentState.update(dt);
         }
     }
+    public State getCurrentState() {
+        return currentState;
+    }
 
-    
 
     public void render(SpriteBatch sb) {
         if (currentState != null) {
-            System.out.println("Rendering GameStateManager, state = " + currentState);
+           
             currentState.render(sb);
         }
     }

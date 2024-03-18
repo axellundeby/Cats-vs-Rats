@@ -115,12 +115,14 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import inf112.skeleton.app.controller.SkadedyrController;
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.view.buttons.ButtonFactory;
 
@@ -132,6 +134,7 @@ public class MenuState extends State {
     private Stage stage;
     private Button playButton;
     private BitmapFont font;
+    private SkadedyrController controller;
 
     public MenuState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
@@ -140,6 +143,7 @@ public class MenuState extends State {
         titleFont.getData().setScale(3);
         textFont = new BitmapFont();
         textFont.getData().setScale(5);
+        this.controller = controller;
 
         // stage = new Stage(new ScreenViewport());
         // Gdx.input.setInputProcessor(stage);
@@ -188,7 +192,7 @@ public class MenuState extends State {
 
         font = new BitmapFont(); // Don't forget to dispose of this later!
         Color upColor = Color.BLACK;
-        Color downColor = Color.RED;
+        Color downColor = Color.GREEN;
         Color fontColor = Color.WHITE;
 
         TextButton playButton = ButtonFactory.createTextButton("Play", upColor, downColor, fontColor, font);
@@ -201,6 +205,19 @@ public class MenuState extends State {
                 gsm.set(new PlayState(gsm, model));
             }
         });
+
+        ImageButton playImageButton = ButtonFactory.createImageButton("buttonUp.png", "buttonDown.png");
+        playImageButton.setPosition((stage.getWidth() - playImageButton.getWidth()) / 2, (stage.getHeight() - playImageButton.getHeight()) / 2);
+        playImageButton.setSize(200, 50);
+        playImageButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                
+                gsm.set(new PlayState(gsm, model));
+            }
+        });
+
+        stage.addActor(playImageButton);
 
         stage.addActor(playButton);
     }
@@ -217,7 +234,7 @@ public class MenuState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
-        System.out.println("Rendering Menu");
+   
 
         // Clear the screen and set a color
         Gdx.gl.glClearColor(0, 0, 1, 1);

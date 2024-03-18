@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
+import inf112.skeleton.app.controller.SkadedyrController;
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
@@ -24,9 +25,12 @@ public class SkadedyrView {
 
     private ShapeRenderer shapeRenderer;
     public static Texture mapTexture; // Hold the texture to avoid reloading it every frame
+   
 
     public SkadedyrView(SkadedyrModel model) {
         this.model = model;
+        
+
     }
 
     public void create() {
@@ -64,7 +68,7 @@ public class SkadedyrView {
     }
 
     public void render() {
-        System.out.println("Rendering in MainView");
+       
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.render(batch);
     }
