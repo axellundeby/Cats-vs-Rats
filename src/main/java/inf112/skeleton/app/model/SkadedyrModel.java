@@ -48,25 +48,37 @@ public class SkadedyrModel implements ISkadedyrModel {
         attackRat();
         rotater();
         updateProjectiles(deltaTime);
-        roundOver(deltaTime);
+        if(isRoundOver()){
+            roundOver(deltaTime);
+            nextWaveText();
+        }
         aliveRats = ratFactory.updateRatFactory(deltaTime,level); 
     }
 
-    //dette må sjekkes for konstant
     private void roundOver(float deltaTime) {
+        if (isRoundOver()) {
+            nextWaveText();
+            level++;
+            ratFactory.updateRatFactory(deltaTime, level);
+            isPaused = true;
+        }
+    }
+    
+    private boolean isRoundOver() {
         int killedRats = 0;
         for (Rat rat : aliveRats) {
             if (rat.isKilled() || rat.isOut()) {
                 killedRats++;
             }
             if (killedRats == ratFactory.calculateRatsForRound(level)) {
-                level++;
-                ratFactory.updateRatFactory(deltaTime, level);
-                isPaused = true;
-                nextWave();
+                return true;
             }
-            
         }
+        return false;
+    }
+
+    public String nextWaveText() {
+        return "Round over. Game is paused. UnPause to continue.";
     }
     
 
@@ -85,17 +97,6 @@ public class SkadedyrModel implements ISkadedyrModel {
             newCat(mouseX, 842 - mouseY);
         }
         if (Gdx.input.isTouched()){catMenu.selector(mouse);}
-    }
-    
-
-    //feil her ja, vil heller ha if round over
-    public String nextWave() {
-        if (aliveRats.isEmpty() && !isPaused) {
-            //isPaused = true;
-            //level++;
-            return "Round over. Game is paused. Press 'P' to continue.";
-        }
-        return "";
     }
 
     @Override
