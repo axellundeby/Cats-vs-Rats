@@ -69,9 +69,12 @@ public class SkadedyrModel implements ISkadedyrModel {
             spawnRats();
         }
 
-        if (Gdx.input.isTouched()) { // check for mouse click
+        if (Gdx.input.isTouched() && !catMenu.getMenuRectangle().contains(mouse)) { // check for mouse click not in catMenu
             newCat(mouseX, 842 - mouseY);
 
+        }
+        else if (Gdx.input.isTouched()){
+            catMenu.selector(mouse);
         }
 
         for (Rat rat : getRats()) {

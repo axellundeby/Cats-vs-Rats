@@ -58,7 +58,6 @@ public class PlayState extends State {
         ScreenUtils.clear(Color.GREEN);
 
         batch.begin();
-        // catMenu.draw(batch);
         batch.draw(SkadedyrView.mapTexture, 0, 0); // Use the preloaded texture
         batch.end();
 
