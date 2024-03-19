@@ -1,5 +1,6 @@
 package inf112.skeleton.app.view.buttons;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,33 +21,22 @@ public class ButtonFactory {
         pixmap.fill();
         Texture texture = new Texture(pixmap); // Don't forget to dispose of the Pixmap!
         pixmap.dispose();
-        
+
         return new TextureRegionDrawable(new TextureRegion(texture));
     }
 
-    public static TextButton createTextButton(String text, Color upColor, Color downColor, Color fontColor, BitmapFont font) {
-        TextButtonStyle style = new TextButtonStyle();
-        style.up = createDrawableFromColor(upColor, 200, 50);
-        style.down = createDrawableFromColor(downColor, 200, 50);
-        style.font = font;
-        style.fontColor = fontColor;
-
-        return new TextButton(text, style);
-    }
-
+    // In ButtonFactory.java
     public static ImageButton createImageButton(String upImagePath, String downImagePath) {
-        // Create the drawables for the up and down states
-        Drawable upDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(upImagePath)));
-        Drawable downDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(downImagePath)));
+        Drawable upDrawable = new TextureRegionDrawable(
+                new TextureRegion(new Texture(Gdx.files.internal(upImagePath))));
+        Drawable downDrawable = new TextureRegionDrawable(
+                new TextureRegion(new Texture(Gdx.files.internal(downImagePath))));
 
-        // Create and set up the style for the ImageButton
         ImageButtonStyle style = new ImageButtonStyle();
-        style.up = upDrawable; // Set the image to be used when the button is not pressed
-        style.down = downDrawable; // Set the image to be used when the button is pressed
+        style.up = upDrawable;
+        style.down = downDrawable;
 
-        // Create the ImageButton with the specified style
         return new ImageButton(style);
     }
-
 
 }

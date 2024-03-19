@@ -39,6 +39,7 @@ public class SkadedyrGame implements ApplicationListener{
 
     @Override
     public void pause() {
+        
 
     }
 

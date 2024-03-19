@@ -29,6 +29,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private Rat testRat;
     private float spawnTimer = 0;
     private int ratSpawnDelay = 5;
+    private boolean isPaused = true;
     
 
     public SkadedyrModel() {
@@ -70,6 +71,14 @@ public class SkadedyrModel implements ISkadedyrModel {
     @Override
     public void addCat(Cat cat) {
         cats.add(cat);
+    }
+
+    public void setPause() {
+        isPaused = !isPaused;
+    }
+
+    public boolean isPaused() {
+        return isPaused;
     }
 
     @Override

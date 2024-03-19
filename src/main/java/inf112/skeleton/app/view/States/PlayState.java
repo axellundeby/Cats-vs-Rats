@@ -4,19 +4,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
-
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import inf112.skeleton.app.main.SkadedyrMain;
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
@@ -29,7 +30,6 @@ public class PlayState extends State {
     private BitmapFont font;
     private Stage stage;
     private ImageButton pauseButton;
-    private boolean paused;
 
     protected PlayState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
@@ -37,48 +37,51 @@ public class PlayState extends State {
         this.shapeRenderer = new ShapeRenderer();
         this.font = new BitmapFont();
         this.stage = new Stage();
-        //boolean paused = false;
 
-        pauseButton = ButtonFactory.createImageButton("pauseUP.png", "buttonDown.png");
+        setupPauseButton();
+
+        Gdx.input.setInputProcessor(stage);
+    }
+
+    private void setupPauseButton() {
+        pauseButton = ButtonFactory.createImageButton("pauseUp.png", "playUp.png");
         pauseButton.setSize(100, 100);
-        pauseButton.setPosition((stage.getWidth() - pauseButton.getWidth()) / 2,
-                (stage.getHeight() + 100 - pauseButton.getHeight()) / 2);
-        //pauseButton.setShapeType();
-        pauseButton.setOrigin(pauseButton.getWidth() / 2, pauseButton.getHeight() / 2);
+        pauseButton.setPosition(1000, 200);
 
         pauseButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                pausedGame();
+                model.setPause(); // Use the model's method to toggle pause state
+                updatePauseButton(); // Update the button's appearance based on the new pause state
             }
         });
 
         stage.addActor(pauseButton);
-        Gdx.input.setInputProcessor(stage);
+        updatePauseButton(); // Ensure the button's appearance is correct at start
+    }
+
+    private void updatePauseButton() {
+        Drawable newDrawable;
+        if (model.isPaused()) {
+            newDrawable = new TextureRegionDrawable(new TextureRegion(new Texture("playUp.png")));
+        } else {
+            newDrawable = new TextureRegionDrawable(new TextureRegion(new Texture("pauseUp.png")));
+        }
+        pauseButton.getStyle().up = newDrawable;
 
     }
 
     @Override
     public void handleInput() {
         if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-            // gsm.set(new MenuState(gsm, model));
-            // dispose();
-            SkadedyrMain.main(null);
-
+            GameStateManager.set(new MenuState(gsm, model));
         }
-        if (!paused) {
-            model.clockTick();
-        }
-
-    }
-
-    public void pausedGame() {
-        this.paused = !paused;
     }
 
     @Override
     public void update(float dt) {
-        if (!paused) {
+
+        if (!model.isPaused()) {
             handleInput();
         }
     }
