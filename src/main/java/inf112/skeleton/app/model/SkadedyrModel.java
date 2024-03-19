@@ -16,6 +16,9 @@ import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.rat.BasicRat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
+import inf112.skeleton.app.view.SkadedyrView;
+import inf112.skeleton.app.view.States.GameOverState;
+import inf112.skeleton.app.view.States.GameStateManager;
 
 public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Cat> cats;
@@ -29,6 +32,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private Rat testRat;
     private float spawnTimer = 0;
     private int ratSpawnDelay = 5;
+    private boolean isPaused = true;
     private ArrayList<Projectile> projectiles;
     private CatMenu catMenu;
 
@@ -88,6 +92,14 @@ public class SkadedyrModel implements ISkadedyrModel {
         cats.add(cat);
     }
 
+    public void setPause() {
+        isPaused = !isPaused;
+    }
+
+    public boolean isPaused() {
+        return isPaused;
+    }
+
     @Override
     public void addRat(Rat rat) {
         aliveRats.add(rat);
@@ -104,14 +116,16 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     @Override
-    public void moveRats() {
+    public void moveRats() {        
         for (Rat rat : aliveRats) {
             rat.move();
         }
     }
 
     public void gameOver() {
-        Gdx.app.exit(); // jacob skjerm
+        GameStateManager.set(new GameOverState(null));
+
+        //Gdx.app.exit(); // jacob skjerm
     }
 
     public int getRatLimitPerLevel() {
