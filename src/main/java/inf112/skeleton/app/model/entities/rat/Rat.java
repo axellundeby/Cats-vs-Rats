@@ -200,6 +200,15 @@ public abstract class Rat implements IEntity {
         return health <= 0;
     }
 
+    public boolean isOut(){
+        if (this.getDirection()==Direction.OUT){
+            return true;
+        }
+        return false;
+    }
+
+
+
     @Override
     public int getHealth() {
         return health;

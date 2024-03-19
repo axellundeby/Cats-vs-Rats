@@ -25,10 +25,8 @@ public class SkadedyrModel implements ISkadedyrModel {
     private int ratsSpawned;
     private boolean isPaused = true;
 
-
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
-        this.aliveRats = new ArrayList<>();
     }
 
     public void clockTick() {
@@ -39,7 +37,25 @@ public class SkadedyrModel implements ISkadedyrModel {
         attackRat();
         rotater();
         updateProjectiles(deltaTime);
-        ratFactory.updateRatFactory(deltaTime);
+        roundOver(deltaTime);
+        aliveRats = ratFactory.updateRatFactory(deltaTime,level); 
+    }
+
+    //dette må sjekkes for konstant
+    private void roundOver(float deltaTime) {
+        int killedRats = 0;
+        for (Rat rat : aliveRats) {
+            if (rat.isKilled() || rat.isOut()) {
+                killedRats++;
+            }
+            if (killedRats == ratFactory.calculateRatsForRound(level)) {
+                level++;
+                ratFactory.updateRatFactory(deltaTime, level);
+                isPaused = true;
+                nextWave();
+            }
+            
+        }
     }
     
 
@@ -59,7 +75,6 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
     public void setPause() {
         isPaused = !isPaused;
-        System.out.println("Game is paused: " + isPaused);
     }
 
     public boolean isPaused() {
@@ -70,7 +85,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     public String nextWave() {
         if (aliveRats.isEmpty() && !isPaused) {
             //isPaused = true;
-            level++;
+            //level++;
             return "Round over. Game is paused. Press 'P' to continue.";
         }
         return "";
@@ -238,5 +253,4 @@ public class SkadedyrModel implements ISkadedyrModel {
         meow.setPos(mouseX, mouseY);
         addCat(meow);
     }
-
 }
