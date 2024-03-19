@@ -31,7 +31,8 @@ public class PlayState extends State {
         this.model = model;
         this.shapeRenderer = new ShapeRenderer();
         this.font = new BitmapFont();
-        this.catMenu = new CatMenu(model);
+        this.catMenu = model.getBuyMenu();
+        catMenu.init();
 
     }
 

@@ -10,9 +10,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
-import inf112.skeleton.app.model.SkadedyrModel;
-import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.view.SkadedyrView;
 
 public class CatMenu {
@@ -22,20 +21,24 @@ public class CatMenu {
     private Rectangle menuRect = new Rectangle();
     private static final int CATDIM = 150;
     private static final int MARGIN = 30;
+    private Sprite selected;
     // private SkadedyrView skadedyrView;
 
-    public CatMenu(SkadedyrModel model) {
+    public CatMenu() {
         // this.skadedyrView = skadedyrView;
         menuRect.x = 832;
         menuRect.y = 0;
         menuRect.width = SkadedyrView.screenRect.x - 800;
         menuRect.height = SkadedyrView.screenRect.y;
         this.availableCatsList = new ArrayList<>();
+
+    }
+    public void init(){
+        availableCatsList.add(new Sprite(new Texture(Gdx.files.internal("cat.png"))));
         availableCatsList.add(new Sprite(new Texture(Gdx.files.internal("angryCat.png"))));
         availableCatsList.add(new Sprite(new Texture(Gdx.files.internal("freezeCat.png"))));
-        availableCatsList.add(new Sprite(new Texture(Gdx.files.internal("cat.png"))));
         availableCatsList.add(new Sprite(new Texture(Gdx.files.internal("hagleKatt.png"))));
-
+        selected = availableCatsList.get(0);
     }
 
     public Rectangle getMenuRectangle() {
@@ -53,10 +56,19 @@ public class CatMenu {
     public void draw(ShapeRenderer shapeRenderer) {
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.rect(getX(), getY(), getW(), getH());
+        shapeRenderer.circle(selected.getX(), selected.getY(), CATDIM);
+    }
+    
+
+    public Sprite getSprite(int index) {
+        return availableCatsList.get(index);
     }
 
-    public Rectangle getCatsMap(Texture tex) {
-        return availableCatsMap.get(tex);
+    public void selector(Vector2 pos){
+        for (Sprite sprite : availableCatsList) {
+            if (sprite.getBoundingRectangle().contains(pos))
+                selected = sprite;
+        }
     }
 
     private float getX() {
