@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import inf112.skeleton.app.main.SkadedyrMain;
 import inf112.skeleton.app.model.SkadedyrModel;
+import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
@@ -23,12 +24,15 @@ public class PlayState extends State {
     private ShapeRenderer shapeRenderer;
     private SkadedyrModel model;
     private BitmapFont font;
+    private CatMenu catMenu;
 
     protected PlayState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
         this.model = model;
         this.shapeRenderer = new ShapeRenderer();
         this.font = new BitmapFont();
+        this.catMenu = model.getBuyMenu();
+        catMenu.init();
 
     }
 
@@ -54,7 +58,6 @@ public class PlayState extends State {
         ScreenUtils.clear(Color.GREEN);
 
         batch.begin();
-        // catMenu.draw(batch);
         batch.draw(SkadedyrView.mapTexture, 0, 0); // Use the preloaded texture
         batch.end();
 
@@ -68,6 +71,8 @@ public class PlayState extends State {
             shapeRenderer.circle(range.x, range.y, range.radius);
         }
         shapeRenderer.end();
+
+        drawCatMenu(batch);
 
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
@@ -94,6 +99,16 @@ public class PlayState extends State {
             float height = projectileRect.height / 15;
             batch.draw(projectile.getTexture(), projectileRect.x, projectileRect.y, width, height);
         }
+    }
+
+    private void drawCatMenu(SpriteBatch batch){
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        catMenu.draw(shapeRenderer);
+        shapeRenderer.end();
+
+        batch.begin();
+        catMenu.draw(batch);
+        batch.end();
     }
 
     public void drawCats(SpriteBatch batch) {

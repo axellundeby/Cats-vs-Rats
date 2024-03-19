@@ -20,7 +20,7 @@ public class GameStateManager {
 
     public void render(SpriteBatch sb) {
         if (currentState != null) {
-            System.out.println("Rendering GameStateManager, state = " + currentState);
+            // System.out.println("Rendering GameStateManager, state = " + currentState);
             currentState.render(sb);
         }
     }

@@ -26,7 +26,7 @@ public abstract class Cat {
     private float attackTimer;
     private float attackImageTimer = 0; 
     private final float attackImageDuration = 0.5f; 
-     private Sprite sprite;
+    private Sprite sprite;
 
 
      public Cat(int strength, float range, Texture defaultImage, Texture attackImage, float fireRate) {
@@ -63,6 +63,10 @@ public abstract class Cat {
         float angleInDegrees = (float) Math.toDegrees(angleInRadians) - 90;
         this.sprite.setOriginCenter();
         this.sprite.setRotation(angleInDegrees);
+    }
+
+    public void setSize(int size){
+        this.size = size;
     }
 
     public void triggerAttackImage() {

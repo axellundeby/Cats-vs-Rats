@@ -17,8 +17,8 @@ public class AngryCat extends Cat {
 
     @Override
     public ArrayList<Projectile> attack(LinkedList<Rat> rats) {
-        return null;
         // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'attack' in AngryCat");
     }
 
     @Override

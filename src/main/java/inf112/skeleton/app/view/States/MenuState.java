@@ -49,7 +49,7 @@ public class MenuState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
-        System.out.println("Rendering Menu");
+        // System.out.println("Rendering Menu");
 
         Gdx.gl.glClearColor(0, 0, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
