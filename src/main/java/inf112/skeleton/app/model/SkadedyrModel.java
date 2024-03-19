@@ -15,18 +15,19 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
 
 public class SkadedyrModel implements ISkadedyrModel {
-    private ArrayList<Cat> cats;
-    private ArrayList<Rat> aliveRats;
+    private ArrayList<Cat> cats = new ArrayList<>();
+    private ArrayList<Rat> aliveRats = new ArrayList<>();
+    private ArrayList<Projectile> projectiles = new ArrayList<>();
     private int lives = 5;
     private int money = 3000;
     private int points = 0;
     private int level = 0;
     private int ratsSpawned;
-    private int ratLimitPerLevel = 10;
     private Rat testRat;
     private float spawnTimer = 0;
-    private int ratSpawnDelay = 5;
-    private ArrayList<Projectile> projectiles = new ArrayList<>();
+    private static final int RAT_LIMIT_PER_LEVEL = 10;
+    private static final int RAT_SPAWN_DELAY = 5; 
+
 
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
@@ -35,43 +36,50 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     public void clockTick() {
         float deltaTime = Gdx.graphics.getDeltaTime();
+        updateCatAnimations(deltaTime);
+        handleUserInput();
+        moveRats(); 
+        attackRat();
+        rotater();
+        updateProjectiles(deltaTime);
+        spawnRatsWithDelay();
+    }
+    
 
-        //chat melder at denne skal være der frames oppdateres
+    private void updateCatAnimations(float deltaTime) {
         for (Cat cat : cats) {
             cat.updateAnimation(deltaTime);
         }
-        // System.out.println(intervalSeconds);
-        // This code will be executed every n seconds
+    }
+
+    private void handleUserInput() {
         int mouseX = Gdx.input.getX();
         int mouseY = Gdx.input.getY();
-        // model.mousePos();
-        moveRats();
-        attackRat();
-        attackQueueForEachCat();
-        rotater();
-        updateProjectiles(deltaTime);
-
-        //unfreezeRats();
-
-        spawnTimer += 0.05;
-        if (spawnTimer > ratSpawnDelay && getRatsSpawned() < getRatLimitPerLevel()) {
-            spawnRats();
-            spawnTimer = 0;
+        
+        if (Gdx.input.isTouched()) {
+            newCat(mouseX, 842 - mouseY);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.U)) {
             spawnRats();
         }
+    }
 
-        if (Gdx.input.isTouched()) { // check for mouse click
-            newCat(mouseX, 842 - mouseY);
-
-        }
-
-        for (Rat rat : getRats()) {
-            rat.addTime();
+    private void spawnRatsWithDelay() {
+        spawnTimer += 0.05;
+        if (spawnTimer > RAT_SPAWN_DELAY && ratsSpawned < RAT_LIMIT_PER_LEVEL) {
+            spawnRats();
+            spawnTimer = 0;
         }
     }
+
+    @Override
+    public void moveRats() {
+        for (Rat rat : aliveRats) {
+            rat.move();
+        }
+    }
+  
 
     @Override
     public void addCat(Cat cat) {
@@ -93,19 +101,13 @@ public class SkadedyrModel implements ISkadedyrModel {
         return aliveRats;
     }
 
-    @Override
-    public void moveRats() {
-        for (Rat rat : aliveRats) {
-            rat.move();
-        }
-    }
 
     public void gameOver() {
         Gdx.app.exit(); // jacob skjerm
     }
 
-    public int getRatLimitPerLevel() {
-        return ratLimitPerLevel;
+    public int getRAT_LIMIT_PER_LEVEL() {
+        return RAT_LIMIT_PER_LEVEL;
     }
 
     public int getRatsSpawned() {
