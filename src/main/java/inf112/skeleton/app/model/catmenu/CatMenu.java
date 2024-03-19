@@ -41,7 +41,7 @@ public class CatMenu {
     }
     public void init(){
         availableCatsList.add(new BasicCat());
-        availableCatsList.add(new AngryCat());
+        // availableCatsList.add(new AngryCat());
         availableCatsList.add(new FreezeCat());
         availableCatsList.add(new ShotgunCat());
 

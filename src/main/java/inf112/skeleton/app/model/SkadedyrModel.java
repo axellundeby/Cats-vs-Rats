@@ -29,13 +29,14 @@ public class SkadedyrModel implements ISkadedyrModel {
     private Rat testRat;
     private float spawnTimer = 0;
     private int ratSpawnDelay = 5;
-    private ArrayList<Projectile> projectiles = new ArrayList<>();
+    private ArrayList<Projectile> projectiles;
     private CatMenu catMenu;
 
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
         this.aliveRats = new ArrayList<>();
         this.catMenu = new CatMenu();
+        this.projectiles = new ArrayList<>();
     }
 
     public void clockTick() {
@@ -69,11 +70,11 @@ public class SkadedyrModel implements ISkadedyrModel {
             spawnRats();
         }
 
-        if (Gdx.input.isTouched() && !catMenu.getMenuRectangle().contains(mouse)) { // check for mouse click not in catMenu
+        if (Gdx.input.isTouched() && mouseX < 832) { // check for mouse click not in catMenu
             newCat(mouseX, 842 - mouseY);
 
         }
-        else if (Gdx.input.isTouched()){
+        if (Gdx.input.isTouched()){
             catMenu.selector(mouse);
         }
 
@@ -249,7 +250,20 @@ public class SkadedyrModel implements ISkadedyrModel {
     public void newCat(int mouseX, int mouseY) {
         // Cat cat = new ShotgunCat();
         // Cat cat = new BasicCat();
-        Cat cat = new FreezeCat();
+        // Cat cat = new FreezeCat();
+        Cat cat = catMenu.getSelectedCat();
+
+        if (cat instanceof BasicCat){
+            cat = new BasicCat();
+        }
+        else if (cat instanceof ShotgunCat){
+            cat = new ShotgunCat();
+        }
+        else if (cat instanceof FreezeCat){
+            cat = new FreezeCat();
+        }
+
+    
         cat.setPos(mouseX, mouseY);
         addCat(cat);
     }
