@@ -3,7 +3,12 @@ package inf112.skeleton.app.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Vector;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
+
+import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
 import inf112.skeleton.app.model.entities.cat.Cat;
@@ -11,6 +16,7 @@ import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
+import inf112.skeleton.app.view.States.GameStateManager;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
 
 
@@ -25,11 +31,15 @@ public class SkadedyrModel implements ISkadedyrModel {
     private int level = 0;
     private int ratsSpawned;
     private boolean isPaused = true;
+    private CatMenu catMenu;
+
 
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
+        this.catMenu = new CatMenu();
 
-
+    }
+    
     public void clockTick() {
         float deltaTime = Gdx.graphics.getDeltaTime();
         updateCatAnimations(deltaTime);
@@ -69,18 +79,14 @@ public class SkadedyrModel implements ISkadedyrModel {
     private void handleUserInput() {
         int mouseX = Gdx.input.getX();
         int mouseY = Gdx.input.getY();
+        Vector2 mouse = new Vector2(mouseX, 842-mouseY);
         
-        if (Gdx.input.isTouched()) {
+        if (Gdx.input.isTouched() && mouseX < 832) {
             newCat(mouseX, 842 - mouseY);
         }
+        if (Gdx.input.isTouched()){catMenu.selector(mouse);}
     }
-    public void setPause() {
-        isPaused = !isPaused;
-    }
-
-    public boolean isPaused() {
-        return isPaused;
-    }
+    
 
     //feil her ja, vil heller ha if round over
     public String nextWave() {
@@ -129,11 +135,11 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
 
-    public void gameOver() {
-        GameStateManager.set(new GameOverState(null));
+    // public void gameOver() {
+    //     GameStateManager.set(new GameOverState(null));
 
-        //Gdx.app.exit(); // jacob skjerm
-    }
+    //     //Gdx.app.exit(); // jacob skjerm
+    // }
 
     public int getRatsSpawned() {
         return ratsSpawned;
@@ -178,7 +184,7 @@ public class SkadedyrModel implements ISkadedyrModel {
             }
         }
         if (lives <= 0) {
-            gameOver();
+           // gameOver();
         }
         return lives;
     }
@@ -253,11 +259,39 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
 
+    // public void newCat(int mouseX, int mouseY) {
+    //     Cat gangsta = new ShotgunCat();
+    //     Cat froze = new FreezeCat();
+    //     Cat meow = new BasicCat();
+    //     meow.setPos(mouseX, mouseY);
+    //     addCat(meow);
+    // }
     public void newCat(int mouseX, int mouseY) {
-        Cat gangsta = new ShotgunCat();
-        Cat froze = new FreezeCat();
-        Cat meow = new BasicCat();
-        meow.setPos(mouseX, mouseY);
-        addCat(meow);
+        // Cat cat = new ShotgunCat();
+        // Cat cat = new BasicCat();
+        // Cat cat = new FreezeCat();
+        Cat cat = catMenu.getSelectedCat();
+
+        if (cat instanceof BasicCat){
+            cat = new BasicCat();
+        }
+        else if (cat instanceof ShotgunCat){
+            cat = new ShotgunCat();
+        }
+        else if (cat instanceof FreezeCat){
+            cat = new FreezeCat();
+        }
+
+    
+        cat.setPos(mouseX, mouseY);
+        addCat(cat);
+    }
+
+
+
+    public CatMenu getBuyMenu() {
+        return catMenu;
     }
 }
+
+
