@@ -31,7 +31,7 @@ public class PlayState extends State {
         this.model = model;
         this.shapeRenderer = new ShapeRenderer();
         this.font = new BitmapFont();
-        this.catMenu = new CatMenu(null);
+        this.catMenu = new CatMenu(model);
 
     }
 
@@ -72,6 +72,8 @@ public class PlayState extends State {
         }
         shapeRenderer.end();
 
+        drawCatMenu(batch);
+
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
         batch.begin();
@@ -97,6 +99,16 @@ public class PlayState extends State {
             float height = projectileRect.height / 15;
             batch.draw(projectile.getTexture(), projectileRect.x, projectileRect.y, width, height);
         }
+    }
+
+    private void drawCatMenu(SpriteBatch batch){
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        catMenu.draw(shapeRenderer);
+        shapeRenderer.end();
+
+        batch.begin();
+        catMenu.draw(batch);
+        batch.end();
     }
 
     public void drawCats(SpriteBatch batch) {

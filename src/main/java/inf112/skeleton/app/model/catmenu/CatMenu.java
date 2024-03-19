@@ -3,8 +3,10 @@ package inf112.skeleton.app.model.catmenu;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -16,8 +18,10 @@ import inf112.skeleton.app.view.SkadedyrView;
 public class CatMenu {
 
     private HashMap<Texture, Rectangle> availableCatsMap;
-    private ArrayList<Cat> availableCatsList;
+    private ArrayList<Sprite> availableCatsList;
     private Rectangle menuRect = new Rectangle();
+    private static final int CATDIM = 150;
+    private static final int MARGIN = 30;
     // private SkadedyrView skadedyrView;
 
     public CatMenu(SkadedyrModel model) {
@@ -26,7 +30,11 @@ public class CatMenu {
         menuRect.y = 0;
         menuRect.width = SkadedyrView.screenRect.x - 800;
         menuRect.height = SkadedyrView.screenRect.y;
-        availableCatsList = model.getCats();
+        this.availableCatsList = new ArrayList<>();
+        availableCatsList.add(new Sprite(new Texture(Gdx.files.internal("angryCat.png"))));
+        availableCatsList.add(new Sprite(new Texture(Gdx.files.internal("freezeCat.png"))));
+        availableCatsList.add(new Sprite(new Texture(Gdx.files.internal("cat.png"))));
+        availableCatsList.add(new Sprite(new Texture(Gdx.files.internal("hagleKatt.png"))));
 
     }
 
@@ -36,17 +44,15 @@ public class CatMenu {
 
     public void draw(SpriteBatch batch) {
         int i = 0;
-        for (Cat sprite : availableCatsList) {
-            batch.draw(sprite.getSprite(), getX() + 10 + i * 30, 10 + i * 30, 200, 200);
+        for (Sprite sprite : availableCatsList) {
+            batch.draw(sprite, getX() + MARGIN, MARGIN + i * CATDIM, CATDIM, CATDIM);
             i++;
         }
     }
 
     public void draw(ShapeRenderer shapeRenderer) {
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.rect(getX(), getY(), getW(), getH());
-        shapeRenderer.end();
     }
 
     public Rectangle getCatsMap(Texture tex) {

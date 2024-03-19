@@ -20,7 +20,7 @@ public class SkadedyrView {
     private SpriteBatch batch;
     private BitmapFont font;
     // private Sound bellSound;
-    private static Rectangle screenRect = new Rectangle();
+    public static Rectangle screenRect = new Rectangle();
     private final SkadedyrModel model;
     private GameStateManager gsm;
 
@@ -71,7 +71,6 @@ public class SkadedyrView {
     public void render() {
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.render(batch);
-        System.out.println(screenRect.width);
     }
 
     public void resize(int width, int height) {
