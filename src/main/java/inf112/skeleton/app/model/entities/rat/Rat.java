@@ -5,9 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 
 import inf112.skeleton.app.model.entities.IEntity;
+import inf112.skeleton.app.model.entities.Projectile;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 
 public abstract class Rat implements IEntity {
@@ -16,15 +19,17 @@ public abstract class Rat implements IEntity {
     private int health;
     private Rectangle spriteRect;
     private float secs;
+    private Integer bounty;
 
 
     private boolean isFrozen;
     public ImageSwapper currentState = ImageSwapper.ALIVE;
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
 
-    public Rat(int health, int speed, Texture texture) {
+    public Rat(int health, int speed, Texture texture, Integer bounty) {
         this.health = health;
         this.speed = speed;
+        this.bounty = bounty;
         int halfsize = 25;
         this.pos = new Vector2(-10, 430);
 
@@ -41,6 +46,24 @@ public abstract class Rat implements IEntity {
         DEAD;
     }
 
+    public boolean isHitByProjectile(ArrayList<Projectile> projectiles) {
+        for (Projectile rect : projectiles) {
+           if (rect.getRectangle().overlaps(spriteRect)) {
+                return true;
+           }
+        }
+        return false;
+    }
+
+    public Projectile getHitByProjectile(ArrayList<Projectile> projectiles) {
+        for (Projectile projectile : projectiles) {
+           if (projectile.getRectangle().overlaps(spriteRect)) {
+                return projectile;
+           }
+        }
+        return null;
+    }
+
     public void swapImage(ImageSwapper image) {
         currentState = image; 
     }
@@ -53,6 +76,7 @@ public abstract class Rat implements IEntity {
         return spriteRect;
     }
 
+    //må kanskje endre denne, hvis et prosjektil treffer en rotte, så skal den ta skade. Er det berde.
     public void takeDamage(int damage) {
         health -= damage;
         if (isKilled()) {
@@ -152,10 +176,14 @@ public abstract class Rat implements IEntity {
 
     @Override
     public void killed() {
+        swapImage(ImageSwapper.DEAD);
+        speed = 0;
+        moveRatOutOfMap();
+    }
+
+    private void moveRatOutOfMap() {
         pos.x = -100;
         pos.y = -100;
-        speed = 0;
-        swapImage(ImageSwapper.DEAD);
     }
 
     @Override
@@ -173,11 +201,18 @@ public abstract class Rat implements IEntity {
         return pos;
     }
 
-    public int freeze() {
+    public void freeze() {
         isFrozen = true;
+        //speed = speed / 2;
         swapImage(ImageSwapper.FROZEN);
-        return speed/2;
     }
+
+    public void unfreeze() {
+        isFrozen = false;
+        //speed = speed * 2; 
+        swapImage(ImageSwapper.ALIVE);
+    }
+
     public boolean isFrozen() {
         return isFrozen;
     }

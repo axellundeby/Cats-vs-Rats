@@ -1,5 +1,7 @@
 package inf112.skeleton.app.view;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,7 +21,7 @@ public class SkadedyrView {
     private SpriteBatch batch;
     private BitmapFont font;
     // private Sound bellSound;
-    private Rectangle screenRect = new Rectangle();
+    public static Rectangle screenRect = new Rectangle();
     private final SkadedyrModel model;
     private GameStateManager gsm;
 
@@ -41,7 +43,6 @@ public class SkadedyrView {
         font.setColor(Color.RED);
         gsm = new GameStateManager();
         gsm.set(new MenuState(gsm, model));
-        System.out.println("View created");
         mapTexture = new Texture(Gdx.files.internal("map.png")); // Load once in create
         Gdx.graphics.setForegroundFPS(60);
     }
@@ -67,8 +68,11 @@ public class SkadedyrView {
         return screenRect.height;
     }
 
+    public ArrayList<Cat> getCats(){
+        return model.getCats();
+    }
+
     public void render() {
-       
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.render(batch);
     }

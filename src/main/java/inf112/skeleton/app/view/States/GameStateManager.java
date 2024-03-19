@@ -24,7 +24,6 @@ public class GameStateManager {
 
     public void render(SpriteBatch sb) {
         if (currentState != null) {
-           
             currentState.render(sb);
         }
     }

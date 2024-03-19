@@ -14,7 +14,7 @@ public class SkadedyrController {
 
     private final SkadedyrModel model;
    // private final SkadedyrView view;
-
+    private boolean pausedGame = true;
     private boolean keyPHandled = false;
     private boolean keySHandled = false;
     private boolean keyRHandled = false;
