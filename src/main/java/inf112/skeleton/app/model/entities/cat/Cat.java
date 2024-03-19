@@ -27,7 +27,7 @@ public abstract class Cat {
     private float attackImageTimer = 0; 
     private final float attackImageDuration = 0.5f; 
     private Sprite sprite;
-
+    private float currentRotationAngle = 0; 
 
      public Cat(int strength, float range, Texture defaultImage, Texture attackImage, float fireRate) {
         this.strength = strength;
@@ -56,13 +56,19 @@ public abstract class Cat {
 
     public abstract Projectile shootAt(LinkedList<Rat> targets);
       
-    public void rotateImage(Rat target){
+
+    //rotate er bugga
+    public void rotateImage(Rat target) {
         float dx = target.getPosition().x - this.pos.x;
         float dy = target.getPosition().y - this.pos.y;
         float angleInRadians = (float) Math.atan2(dy, dx);
-        float angleInDegrees = (float) Math.toDegrees(angleInRadians) - 90;
+        currentRotationAngle = (float) Math.toDegrees(angleInRadians) - 90;
         this.sprite.setOriginCenter();
-        this.sprite.setRotation(angleInDegrees);
+        this.sprite.setRotation(currentRotationAngle);
+    }
+
+    public float getRotationAngle() {
+        return currentRotationAngle;
     }
 
     public void setSize(int size){
@@ -110,8 +116,13 @@ public abstract class Cat {
 
     public void swapImage(PictureSwapper image) {
         currentState = image;
-        sprite.setTexture(textures.get(currentState)); 
+        Texture newTexture = textures.get(currentState);
+        sprite.setTexture(newTexture);
+        sprite.setOriginCenter();
+        sprite.setRotation(getRotationAngle());
     }
+    
+    
 
     public Texture getTexture() {
         return textures.get(currentState); 
