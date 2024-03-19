@@ -29,7 +29,6 @@ public abstract class Cat {
     private Sprite sprite;
     private float currentRotationAngle = 0; 
 
-
      public Cat(int strength, float range, Texture defaultImage, Texture attackImage, float fireRate) {
         this.strength = strength;
         this.range = range;
@@ -70,6 +69,10 @@ public abstract class Cat {
 
     public float getRotationAngle() {
         return currentRotationAngle;
+    }
+
+    public void setSize(int size){
+        this.size = size;
     }
 
     public void triggerAttackImage() {

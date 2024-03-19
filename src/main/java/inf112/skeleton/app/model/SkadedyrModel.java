@@ -13,6 +13,7 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
 
+
 public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Cat> cats = new ArrayList<>();
     private ArrayList<Rat> aliveRats = new ArrayList<>();
@@ -27,7 +28,7 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
-    }
+
 
     public void clockTick() {
         float deltaTime = Gdx.graphics.getDeltaTime();
@@ -104,6 +105,14 @@ public class SkadedyrModel implements ISkadedyrModel {
         cats.add(cat);
     }
 
+    public void setPause() {
+        isPaused = !isPaused;
+    }
+
+    public boolean isPaused() {
+        return isPaused;
+    }
+
     @Override
     public void addRat(Rat rat) {
         aliveRats.add(rat);
@@ -121,7 +130,9 @@ public class SkadedyrModel implements ISkadedyrModel {
 
 
     public void gameOver() {
-        Gdx.app.exit(); // jacob skjerm
+        GameStateManager.set(new GameOverState(null));
+
+        //Gdx.app.exit(); // jacob skjerm
     }
 
     public int getRatsSpawned() {
@@ -214,12 +225,8 @@ public class SkadedyrModel implements ISkadedyrModel {
     public void transaction() {
       
     }
-
-    /**
-     * Updates the projectiles
-     * @param dt
-     */
-    public void updateProjectiles(float dt) {
+    
+    private void updateProjectiles(float dt) {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
         for (Cat cat : cats) {
             LinkedList<Rat> attackableRats = attackMap.get(cat);

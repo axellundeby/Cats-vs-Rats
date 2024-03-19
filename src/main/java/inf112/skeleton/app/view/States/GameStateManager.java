@@ -3,9 +3,9 @@ package inf112.skeleton.app.view.States;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameStateManager {
-    private State currentState;
+    private static State currentState;
 
-    public void set(State newState) {
+    public static void set(State newState) {
         if (currentState != null) {
             currentState.dispose();
         }
@@ -17,6 +17,10 @@ public class GameStateManager {
             currentState.update(dt);
         }
     }
+    public State getCurrentState() {
+        return currentState;
+    }
+
 
     public void render(SpriteBatch sb) {
         if (currentState != null) {
