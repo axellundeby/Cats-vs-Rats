@@ -46,7 +46,7 @@ public class PlayState extends State {
     private void setupPauseButton() {
         pauseButton = ButtonFactory.createImageButton("pauseUp.png", "playUp.png");
         pauseButton.setSize(100, 100);
-        pauseButton.setPosition(1000, 200);
+        pauseButton.setPosition(1000, 700);
 
         pauseButton.addListener(new ClickListener() {
             @Override
