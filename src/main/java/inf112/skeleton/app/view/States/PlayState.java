@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import inf112.skeleton.app.main.SkadedyrMain;
 import inf112.skeleton.app.model.SkadedyrModel;
+import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
@@ -23,12 +24,14 @@ public class PlayState extends State {
     private ShapeRenderer shapeRenderer;
     private SkadedyrModel model;
     private BitmapFont font;
+    private CatMenu catMenu;
 
     protected PlayState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
         this.model = model;
         this.shapeRenderer = new ShapeRenderer();
         this.font = new BitmapFont();
+        this.catMenu = new CatMenu(null);
 
     }
 

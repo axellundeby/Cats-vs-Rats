@@ -1,5 +1,7 @@
 package inf112.skeleton.app.view;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,7 +20,7 @@ public class SkadedyrView {
     private SpriteBatch batch;
     private BitmapFont font;
     // private Sound bellSound;
-    private Rectangle screenRect = new Rectangle();
+    private static Rectangle screenRect = new Rectangle();
     private final SkadedyrModel model;
     private GameStateManager gsm;
 
@@ -62,9 +64,14 @@ public class SkadedyrView {
         return screenRect.height;
     }
 
+    public ArrayList<Cat> getCats(){
+        return model.getCats();
+    }
+
     public void render() {
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.render(batch);
+        System.out.println(screenRect.width);
     }
 
     public void resize(int width, int height) {

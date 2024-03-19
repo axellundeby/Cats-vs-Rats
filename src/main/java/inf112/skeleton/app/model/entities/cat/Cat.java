@@ -26,7 +26,7 @@ public abstract class Cat {
     private float attackTimer;
     private float attackImageTimer = 0; 
     private final float attackImageDuration = 0.5f; 
-     private Sprite sprite;
+    private Sprite sprite;
 
 
      public Cat(int strength, float range, Texture defaultImage, Texture attackImage, float fireRate) {
