@@ -18,9 +18,6 @@ public class MenuState extends State {
 
     public MenuState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
-        if (model == null) {
-            System.out.println("Model is null");
-        }
         // playButton = new Texture("image.png");
         this.model = model;
         titleFont = new BitmapFont();
@@ -33,7 +30,6 @@ public class MenuState extends State {
     @Override
     public void handleInput() {
         if (Gdx.input.isKeyPressed(Keys.SPACE)) {
-            System.out.println("Enter key pressed");
             gsm.set(new PlayState(gsm, model));
             dispose();
         }
@@ -49,7 +45,6 @@ public class MenuState extends State {
 
     @Override
     public void render(SpriteBatch sb) {
-        System.out.println("Rendering Menu");
 
         Gdx.gl.glClearColor(0, 0, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

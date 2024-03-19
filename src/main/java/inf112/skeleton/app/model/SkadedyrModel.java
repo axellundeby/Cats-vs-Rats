@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
-import inf112.skeleton.app.model.entities.rat.BasicRat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
@@ -25,10 +23,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private int points = 0;
     private int level = 0;
     private int ratsSpawned;
-    private Rat testRat;
-    private float spawnTimer = 0;
-    private boolean isPaused = false;
-    private static final int RAT_SPAWN_DELAY = 5; 
+    private boolean isPaused = true;
 
 
     public SkadedyrModel() {
@@ -44,7 +39,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         attackRat();
         rotater();
         updateProjectiles(deltaTime);
-        spawnRatsWithDelay();
+        ratFactory.updateRatFactory(deltaTime);
     }
     
 
@@ -61,43 +56,21 @@ public class SkadedyrModel implements ISkadedyrModel {
         if (Gdx.input.isTouched()) {
             newCat(mouseX, 842 - mouseY);
         }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.U)) {
-            spawnRats();
-        }
     }
-
-    private void spawnRatsWithDelay() {
-        spawnTimer += 0.05;
-        if (spawnTimer > RAT_SPAWN_DELAY && ratsSpawned < ratFactory.calculateBalloonsForRound(1)) {
-            spawnRats();
-            spawnTimer = 0;
-        }
-    }
-
-    public void spawnRats() {
-        this.testRat = new BasicRat();
-        addRat(testRat);
-        ratsSpawned++;
-    }
-
-    public void nextWave() {
-        level++;
-        ratsSpawned = 0;
-    }
-
     public void setPause() {
         isPaused = !isPaused;
+        System.out.println("Game is paused: " + isPaused);
     }
 
     public boolean isPaused() {
         return isPaused;
     }
 
-    public String everyRatDead() {
+    //feil her ja, vil heller ha if round over
+    public String nextWave() {
         if (aliveRats.isEmpty() && !isPaused) {
-            isPaused = true;
-            nextWave();
+            //isPaused = true;
+            level++;
             return "Round over. Game is paused. Press 'P' to continue.";
         }
         return "";

@@ -80,7 +80,7 @@ public class PlayState extends State {
         font.draw(batch, "Dine penger: " + model.getMoney(), 1000, 840);
         font.draw(batch, "Din Score: " + model.getPoints(), 1000, 800);
         font.draw(batch, "Level: " + model.getLevel(), 1000, 720);
-        font.draw(batch, "" + model.everyRatDead(), 1000, 620);
+        font.draw(batch, "" + model.nextWave(), 850, 620);
         drawCats(batch);
         drawRats(batch);
         drawProjectiles(batch);

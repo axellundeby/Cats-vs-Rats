@@ -14,7 +14,7 @@ public class SkadedyrController {
 
     private final SkadedyrModel model;
    // private final SkadedyrView view;
-    private boolean pausedGame = true;
+
     private boolean keyPHandled = false;
     private boolean keySHandled = false;
     private boolean keyRHandled = false;
@@ -22,6 +22,7 @@ public class SkadedyrController {
     private float intervalSeconds = (float) 0.05; // interval in seconds between executions of the task
     private Task currentClockTickTask = null;
     private boolean gameRunning = true;
+   
 
     public SkadedyrController(SkadedyrModel model) {
         this.model = model;
@@ -56,11 +57,10 @@ public class SkadedyrController {
                 if (!Gdx.input.isKeyPressed(Input.Keys.P)) {
                     keyPHandled = false; // Allow toggling again once the key is released
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.S) && !keySHandled && !pausedGame) {
+                if (Gdx.input.isKeyPressed(Input.Keys.S) && !keySHandled && !model.isPaused()) {
                     updateClockTick();
                     startTimer();
                     keySHandled = true;
-                    System.out.println(keySHandled);
                 }
                 if (!Gdx.input.isKeyPressed(Input.Keys.S)) {
                     keySHandled = false; // Allow toggling again once the key is released
