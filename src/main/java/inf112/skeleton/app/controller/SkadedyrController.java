@@ -49,7 +49,7 @@ public class SkadedyrController {
 
                 // Check if 'P' is pressed and keyPHandled is false
                 if (Gdx.input.isKeyPressed(Input.Keys.P) && !keyPHandled) {
-                    pausedGame = !pausedGame;
+                    model.setPause();
                     keyPHandled = true; // Prevent further toggling until key is released
 
                 }
@@ -69,7 +69,7 @@ public class SkadedyrController {
                     SkadedyrMain.main(null);
                 }
 
-                if (pausedGame) {
+                if (model.isPaused()) {
                     return; // Skip game logic if paused
                 }
 

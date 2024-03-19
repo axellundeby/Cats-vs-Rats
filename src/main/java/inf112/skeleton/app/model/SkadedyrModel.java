@@ -13,11 +13,13 @@ import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.rat.BasicRat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
+import inf112.skeleton.app.model.entities.rat.RatFactory;
 
 public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Cat> cats = new ArrayList<>();
     private ArrayList<Rat> aliveRats = new ArrayList<>();
     private ArrayList<Projectile> projectiles = new ArrayList<>();
+    private RatFactory ratFactory = new RatFactory();
     private int lives = 5;
     private int money = 3000;
     private int points = 0;
@@ -25,7 +27,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private int ratsSpawned;
     private Rat testRat;
     private float spawnTimer = 0;
-    private static final int RAT_LIMIT_PER_LEVEL = 10;
+    private boolean isPaused = false;
     private static final int RAT_SPAWN_DELAY = 5; 
 
 
@@ -67,10 +69,38 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     private void spawnRatsWithDelay() {
         spawnTimer += 0.05;
-        if (spawnTimer > RAT_SPAWN_DELAY && ratsSpawned < RAT_LIMIT_PER_LEVEL) {
+        if (spawnTimer > RAT_SPAWN_DELAY && ratsSpawned < ratFactory.calculateBalloonsForRound(1)) {
             spawnRats();
             spawnTimer = 0;
         }
+    }
+
+    public void spawnRats() {
+        this.testRat = new BasicRat();
+        addRat(testRat);
+        ratsSpawned++;
+    }
+
+    public void nextWave() {
+        level++;
+        ratsSpawned = 0;
+    }
+
+    public void setPause() {
+        isPaused = !isPaused;
+    }
+
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    public String everyRatDead() {
+        if (aliveRats.isEmpty() && !isPaused) {
+            isPaused = true;
+            nextWave();
+            return "Round over. Game is paused. Press 'P' to continue.";
+        }
+        return "";
     }
 
     @Override
@@ -106,10 +136,6 @@ public class SkadedyrModel implements ISkadedyrModel {
         Gdx.app.exit(); // jacob skjerm
     }
 
-    public int getRAT_LIMIT_PER_LEVEL() {
-        return RAT_LIMIT_PER_LEVEL;
-    }
-
     public int getRatsSpawned() {
         return ratsSpawned;
     }
@@ -126,20 +152,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         return points;
     }
 
-    public void spawnRats() {
-        this.testRat = new BasicRat();
-        addRat(testRat);
-        ratsSpawned++;
-    }
 
-    // hvor kalle på denne?
-    public void everyRatDead() {
-        if (aliveRats.isEmpty()) {
-            level++;
-            // runden er over
-            // nextRound();
-        }
-    }
     /**
      * Rotates the cats to face the rats they are attacking
      */
