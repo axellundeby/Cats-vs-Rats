@@ -3,11 +3,8 @@ package inf112.skeleton.app.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Vector;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
@@ -16,7 +13,6 @@ import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
-import inf112.skeleton.app.view.States.GameStateManager;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
 
 
@@ -32,6 +28,9 @@ public class SkadedyrModel implements ISkadedyrModel {
     private int ratsSpawned;
     private boolean isPaused = true;
     private CatMenu catMenu;
+    private float roundOverDelay = 0f;
+    private final float DELAY_DURATION = 1f; 
+
 
 
     public SkadedyrModel() {
@@ -48,11 +47,20 @@ public class SkadedyrModel implements ISkadedyrModel {
         attackRat();
         rotater();
         updateProjectiles(deltaTime);
-        if(isRoundOver()){
-            roundOver(deltaTime);
-            nextWaveText();
-        }
+        roundHandler(deltaTime);
         aliveRats = ratFactory.updateRatFactory(deltaTime,level); 
+    }
+
+    private void roundHandler(float deltaTime){
+        if(isRoundOver()){
+            roundOverDelay += deltaTime;
+            if(roundOverDelay >= DELAY_DURATION){
+                roundOver(deltaTime);
+                roundOverDelay = 0f; 
+            }
+        } else {
+            roundOverDelay = 0f;
+        }
     }
 
     private void roundOver(float deltaTime) {
@@ -64,7 +72,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         }
     }
     
-    private boolean isRoundOver() {
+    public boolean isRoundOver() {
         int killedRats = 0;
         for (Rat rat : aliveRats) {
             if (rat.isKilled() || rat.isOut()) {
@@ -77,8 +85,12 @@ public class SkadedyrModel implements ISkadedyrModel {
         return false;
     }
 
-    public String nextWaveText() {
-        return "Round over. Game is paused. UnPause to continue.";
+    //theo
+    public String nextWaveText() {//Kanskje også animasjon?
+        //if (isRoundOver()) {
+            return "Round over. Press P to continue.";
+        //}
+        //return "";
     }
     
 
@@ -221,6 +233,7 @@ public class SkadedyrModel implements ISkadedyrModel {
             }
             for (Rat rat : attackableRats) {
                 if (rat.isKilled()) {
+                    //hvorfor får man så mye?
                     money += rat.getBounty();
                     points += rat.getPoints();
                 }

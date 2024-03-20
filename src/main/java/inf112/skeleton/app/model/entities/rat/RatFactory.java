@@ -22,6 +22,6 @@ public class RatFactory {
     }
 
     public int calculateRatsForRound(int round) {
-        return 10 + (round * 5);
+        return 1 + (round * 5);
     }
 }
