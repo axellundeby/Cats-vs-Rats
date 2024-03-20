@@ -32,7 +32,9 @@ public class SkadedyrModel implements ISkadedyrModel {
     private boolean isPaused = true;
     private CatMenu catMenu;
     private float roundOverDelay = 0f;
+    private float coinDelay = 0f;
     private final float DELAY_DURATION = 0.5f; 
+    private final float VISABLE_COIN_DURATION = 1f; 
     
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
@@ -55,24 +57,29 @@ public class SkadedyrModel implements ISkadedyrModel {
             }
         }
         roundHandler(deltaTime);
-        removeDeadOrExitedRats();
+        removeDeadOrExitedRats(deltaTime);
     }
 
-    private void removeDeadOrExitedRats() {
+    private void removeDeadOrExitedRats(float deltaTime) {
         Iterator<Rat> iterator = aliveRats.iterator();
         while (iterator.hasNext()) {
             Rat rat = iterator.next();
             if (rat.isKilled() || rat.isOut()) {
                 if (!rat.isrewardClaimed()) {
                     if (rat.isKilled()) {
+                        rat.killedAnimation();
                         money += rat.getBounty();
                         points += rat.getPoints();
                         rat.rewardClaimed();
+                        coinDelay += deltaTime;
                     } else if (rat.getDirection() == Direction.OUT) {
                         lives--;
                     }
                 }
-                iterator.remove();
+                //if (coinDelay >= VISABLE_COIN_DURATION) {
+                    iterator.remove();
+                    coinDelay = 0f;
+                //}
             }
         }
     }

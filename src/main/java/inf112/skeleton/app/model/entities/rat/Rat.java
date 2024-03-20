@@ -5,11 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
-
 import inf112.skeleton.app.model.entities.IEntity;
 import inf112.skeleton.app.model.entities.Projectile;
-
 import java.util.ArrayList;
 import java.util.EnumMap;
 
@@ -102,9 +99,6 @@ public abstract class Rat implements IEntity {
     //må kanskje endre denne, hvis et prosjektil treffer en rotte, så skal den ta skade. Er det berde.
     public void takeDamage(int damage) {
         health -= damage;
-        if (isKilled()) {
-            killed();
-        }
     }
 
     public enum Direction {
@@ -195,19 +189,10 @@ public abstract class Rat implements IEntity {
     public void render(SpriteBatch batch) {
     }
 
-
-
     @Override
-    public void killed() {
-        swapImage(ImageSwapper.DEAD);
+    public void killedAnimation() {
         speed = 0;
-        //moveRatOutOfMap();
-        
-    }
-
-    private void moveRatOutOfMap() {
-        pos.x = -100;
-        pos.y = -100;
+        swapImage(ImageSwapper.DEAD);
     }
 
     @Override

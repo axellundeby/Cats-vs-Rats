@@ -18,7 +18,7 @@ public interface IEntity {
 
     
     /** Metode for å håndtere hva som skjer når en rotte blir drept */ 
-    void killed();
+    void killedAnimation();
 
     /**
      * Sjekker om rotten er fanget eller ikke.
