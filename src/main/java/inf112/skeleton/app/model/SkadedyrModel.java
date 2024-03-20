@@ -22,7 +22,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Projectile> projectiles = new ArrayList<>();
     private RatFactory ratFactory = new RatFactory();
     private int lives = 5;
-    private int money = 3000;
+    private int money = 1000;
     private int points = 0;
     private int level = 0;
     private int ratsSpawned;
@@ -240,11 +240,6 @@ public class SkadedyrModel implements ISkadedyrModel {
             }
         }
     }
-
-
-    public void transaction() {
-      
-    }
     
     private void updateProjectiles(float dt) {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
@@ -272,36 +267,27 @@ public class SkadedyrModel implements ISkadedyrModel {
         }
     }
 
+    public void transaction() {
+      
+    }
 
-    // public void newCat(int mouseX, int mouseY) {
-    //     Cat gangsta = new ShotgunCat();
-    //     Cat froze = new FreezeCat();
-    //     Cat meow = new BasicCat();
-    //     meow.setPos(mouseX, mouseY);
-    //     addCat(meow);
-    // }
     public void newCat(int mouseX, int mouseY) {
-        // Cat cat = new ShotgunCat();
-        // Cat cat = new BasicCat();
-        // Cat cat = new FreezeCat();
         Cat cat = catMenu.getSelectedCat();
-
         if (cat instanceof BasicCat){
             cat = new BasicCat();
+            money -= cat.getCost();
         }
         else if (cat instanceof ShotgunCat){
             cat = new ShotgunCat();
+            money -= cat.getCost();
         }
         else if (cat instanceof FreezeCat){
             cat = new FreezeCat();
+            money -= cat.getCost();
         }
-
-    
         cat.setPos(mouseX, mouseY);
         addCat(cat);
     }
-
-
 
     public CatMenu getBuyMenu() {
         return catMenu;

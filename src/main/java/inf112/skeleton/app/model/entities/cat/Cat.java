@@ -28,8 +28,9 @@ public abstract class Cat {
     private final float attackImageDuration = 0.5f; 
     private Sprite sprite;
     private float currentRotationAngle = 0; 
+    private int cost;
 
-     public Cat(int strength, float range, Texture defaultImage, Texture attackImage, float fireRate) {
+     public Cat(int strength, float range, Texture defaultImage, Texture attackImage, float fireRate, int cost) {
         this.strength = strength;
         this.range = range;
         this.pos = new Vector2();
@@ -41,6 +42,7 @@ public abstract class Cat {
         this.sprite.setSize(size, size);
         this.sprite.setPosition(pos.x - halfSize, pos.y - halfSize);
         this.rangeCircle = new Circle(pos, range);
+        this.cost = cost;
     
         textures.put(PictureSwapper.DEFAULT, defaultImage);
         textures.put(PictureSwapper.ATTACK, attackImage);
@@ -142,6 +144,10 @@ public abstract class Cat {
 
     public Vector2 getPosition() {
         return pos;
+    }
+
+    public int getCost() {
+        return cost;
     }
 
     @Override
