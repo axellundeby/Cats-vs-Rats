@@ -19,7 +19,7 @@ public class SkadedyrController {
     private boolean keySHandled = false;
     private boolean keyRHandled = false;
     boolean speedUp = false;
-    private float intervalSeconds = (float) 0.05; // interval in seconds between executions of the task
+    //private float intervalSeconds; // = (float) 0.05; // interval in seconds between executions of the task
     private Task currentClockTickTask = null;
     private boolean gameRunning = true;
    
@@ -38,7 +38,7 @@ public class SkadedyrController {
         }
 
         currentClockTickTask = clockTick();
-        Timer.schedule(currentClockTickTask, delay, intervalSeconds);
+        Timer.schedule(currentClockTickTask, delay, model.getSpeed());
         // Timer.schedule(clockTick(), delay, intervalSeconds);
     }
 
@@ -57,11 +57,13 @@ public class SkadedyrController {
                 if (!Gdx.input.isKeyPressed(Input.Keys.P)) {
                     keyPHandled = false; // Allow toggling again once the key is released
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.S) && !keySHandled && !model.isPaused()) {
-                    updateClockTick();
+               // if (Gdx.input.isKeyPressed(Input.Keys.S) && !keySHandled && !model.isPaused()   ) {
+                    //updateClockTick();
+                    System.out.println("Controller speed" + model.getSpeed());
+                   // model.setSpeed();
                     startTimer();
                     keySHandled = true;
-                }
+               // }
                 if (!Gdx.input.isKeyPressed(Input.Keys.S)) {
                     keySHandled = false; // Allow toggling again once the key is released
                 }
@@ -79,14 +81,14 @@ public class SkadedyrController {
         };
     }
 
-    public void updateClockTick() {
-        if (intervalSeconds == (float) 0.05) {
-            intervalSeconds = (float) 0.0025;
+    // public void updateClockTick() {
+    //     if (intervalSeconds == (float) 0.05) {
+    //         intervalSeconds = (float) 0.0025;
 
-        } else {
-            intervalSeconds = (float) 0.05;
-        }
+    //     } else {
+    //         intervalSeconds = (float) 0.05;
+    //     }
 
-    }
+    // }
 
 }

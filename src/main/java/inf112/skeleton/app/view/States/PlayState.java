@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import inf112.skeleton.app.controller.SkadedyrController;
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
@@ -46,6 +47,8 @@ public class PlayState extends State {
         this.stage = new Stage();
 
         setupPauseButton();
+        setupSpeedButton();
+
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -53,7 +56,7 @@ public class PlayState extends State {
     private void setupPauseButton() {
         pauseButton = ButtonFactory.createImageButton("pauseUp.png", "playUp.png");
         pauseButton.setSize(100, 100);
-        pauseButton.setPosition(1000, 200);
+        pauseButton.setPosition(1000, 700);
 
         pauseButton.addListener(new ClickListener() {
             @Override
@@ -65,6 +68,24 @@ public class PlayState extends State {
 
         stage.addActor(pauseButton);
         updatePauseButton(); // Ensure the button's appearance is correct at start
+    }
+
+    private void setupSpeedButton(){
+        ImageButton speedButton = ButtonFactory.createImageButton("speedUp.png", "speedDown.png");
+        speedButton.setSize(100, 100);
+        speedButton.setPosition(1000, 500);
+
+        speedButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                model.setSpeed();
+            }
+        });
+
+        stage.addActor(speedButton);
+        //updateSpeedButton(); // Ensure the button's appearance is correct at start
+
+
     }
 
     private void updatePauseButton() {
