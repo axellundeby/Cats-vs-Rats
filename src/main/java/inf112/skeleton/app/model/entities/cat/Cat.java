@@ -80,6 +80,7 @@ public abstract class Cat {
         this.sprite.setRotation(currentRotationAngle);
     }
     
+    
     public void setRotationToward(Rat target){
         if(target != null){
             float dx = target.getPosition().x - this.pos.x;
@@ -90,8 +91,6 @@ public abstract class Cat {
         }
     }
     
-    
-
     public void setSize(int size){
         this.size = size;
     }

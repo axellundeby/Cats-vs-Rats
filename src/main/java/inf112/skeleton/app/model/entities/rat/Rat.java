@@ -191,7 +191,8 @@ public abstract class Rat implements IEntity {
     public void killed() {
         swapImage(ImageSwapper.DEAD);
         speed = 0;
-        moveRatOutOfMap();
+        //moveRatOutOfMap();
+        
     }
 
     private void moveRatOutOfMap() {

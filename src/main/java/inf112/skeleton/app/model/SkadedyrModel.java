@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.SortedIntList.Iterator;
+
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
@@ -15,6 +17,8 @@ import inf112.skeleton.app.model.entities.rat.BasicRat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
+import java.util.List;
+
 
 
 public class SkadedyrModel implements ISkadedyrModel {
@@ -35,6 +39,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
         this.catMenu = new CatMenu();
+        this.aliveRats = new ArrayList<>();
     }
     
     public void clockTick() {
@@ -46,8 +51,32 @@ public class SkadedyrModel implements ISkadedyrModel {
         rotater();
         //updateProjectiles(deltaTime);
         roundHandler(deltaTime);
-        aliveRats = ratFactory.updateRatFactory(deltaTime,level); 
+        List<Rat> newRats = ratFactory.updateRatFactory(deltaTime, level);
+        for (Rat newRat : newRats) {
+            if (!aliveRats.contains(newRat)) {
+                aliveRats.add(newRat);
+            }
+        }
+        removeDeadOrExitedRats();
     }
+
+    private void removeDeadOrExitedRats() {
+        java.util.Iterator<Rat> iterator = aliveRats.iterator(); 
+        while (iterator.hasNext()) {
+            Rat rat = iterator.next();
+            if (rat.isKilled() || rat.isOut()) {
+                iterator.remove(); 
+                if (rat.isKilled()) {
+                    money += rat.getBounty();
+                    points += rat.getPoints();
+                } else if (rat.getDirection() == Direction.OUT) {
+                    lives--;
+                }
+            }
+        }
+    }
+    
+    
 
     private void roundHandler(float deltaTime){
         if(isRoundOver()){
@@ -190,12 +219,6 @@ public class SkadedyrModel implements ISkadedyrModel {
      * @return lives
      */
     public int getLives() {
-        for (Rat rat : aliveRats) {
-            if (rat.getDirection() == Direction.OUT) {
-                aliveRats.remove(rat);
-                return lives--;
-            }
-        }
         if (lives <= 0) {
            // gameOver();
         }
@@ -230,13 +253,6 @@ public class SkadedyrModel implements ISkadedyrModel {
             if (cat.canAttack() && !attackableRats.isEmpty()) {
                 projectiles.addAll(cat.attack(attackableRats));
                 cat.resetAttackTimer();
-            }
-            for (Rat rat : attackableRats) {
-                if (rat.isKilled()) {
-                    //hvorfor får man så mye?
-                    money += rat.getBounty();
-                    points += rat.getPoints();
-                }
             }
         }
     }
