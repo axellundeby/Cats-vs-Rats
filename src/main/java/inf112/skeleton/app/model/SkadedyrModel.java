@@ -126,6 +126,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     public void setSpeed() {
+    if(!isPaused){
         if (intervalSeconds == (float) 0.05) {
             intervalSeconds = (float) 0.0025;
             System.out.println("Speed up:" + intervalSeconds);
@@ -133,6 +134,7 @@ public class SkadedyrModel implements ISkadedyrModel {
             intervalSeconds = (float) 0.05;
             System.out.println("Normal speed:" + intervalSeconds);
         }
+    }
     }
 
 

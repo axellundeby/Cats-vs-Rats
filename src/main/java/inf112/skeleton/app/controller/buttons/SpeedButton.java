@@ -23,10 +23,11 @@ public class SpeedButton extends Buttons {
                 model.setSpeed();
             }
         });
+
     }
 
     @Override
     public void updateButtonAppearance() {
-        
+
     }
 }
