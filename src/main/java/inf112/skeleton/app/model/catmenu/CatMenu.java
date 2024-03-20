@@ -52,12 +52,20 @@ public class CatMenu {
             Rectangle crt = catsMap.get(cat);
             batch.draw(cat.getTexture(), crt.x, crt.y, crt.width, crt.height);
             if (playerMoney < cat.getCost()) {
-                //make the coinSackTexture half the size of the cat immage and place it in the middle of the cat
-                batch.draw(coinSackTexture, crt.x + MARGIN, crt.y + MARGIN, crt.width - MARGIN, crt.height - MARGIN);
+                float halfWidth = crt.width / 2;
+                float halfHeight = crt.height / 2;
+                float centerX = crt.x + halfWidth / 2;
+                float centerY = crt.y + halfHeight / 2;
+                batch.draw(coinSackTexture, centerX, centerY, halfWidth, halfHeight);
             }
         }
     }
-    
+
+    public void draw(ShapeRenderer shapeRenderer) {
+        shapeRenderer.setColor(Color.WHITE);
+        Vector2 center = catsMap.get(selected).getCenter(new Vector2());
+        shapeRenderer.circle(center.x, center.y, CATDIM/2);
+    }
     
     public void selector(Vector2 pos){
         for (Cat cat : availableCatsList) {

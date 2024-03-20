@@ -159,11 +159,17 @@ public class PlayState extends State {
     }
 
     private void drawCatMenu(SpriteBatch batch){
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);  
+        catMenu.draw(shapeRenderer);
+        shapeRenderer.end();
+
         int playerMoney = model.getMoney();
         batch.begin();
         catMenu.draw(batch, playerMoney);
         batch.end();
     }
+
+
     
     public void drawCats(SpriteBatch batch) {
         for (Cat cat : model.getCats()) {
