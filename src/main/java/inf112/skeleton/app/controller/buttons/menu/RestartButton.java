@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import inf112.skeleton.app.controller.buttons.ButtonFactory;
 import inf112.skeleton.app.controller.buttons.Buttons;
-import inf112.skeleton.app.main.SkadedyrMain;
+
 import inf112.skeleton.app.model.SkadedyrModel;
 
 public class RestartButton  extends Buttons {

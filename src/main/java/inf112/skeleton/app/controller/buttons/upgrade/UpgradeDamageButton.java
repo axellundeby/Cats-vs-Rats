@@ -15,7 +15,7 @@ public class UpgradeDamageButton extends Buttons {
 
     private int clicked;
 
-    private Cat cat;
+    
 
     public UpgradeDamageButton(SkadedyrModel model, Stage stage) {
         super(model, stage);
