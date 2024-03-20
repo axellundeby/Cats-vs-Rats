@@ -32,6 +32,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private int level = 0;
     private int ratsSpawned;
     private boolean isPaused = true;
+    private boolean roundOver = false;
     private float intervalSeconds = (float) 0.05;
     private CatMenu catMenu;
     private float roundOverDelay = 0f;
@@ -88,45 +89,43 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
     
     private void roundHandler(float deltaTime){
-        if(isRoundOver()){
-            roundOverDelay += deltaTime;
-            if(roundOverDelay >= DELAY_DURATION){
+        isRoundOver();
+        if(roundOver){
+            //roundOverDelay += deltaTime;
+            //if(roundOverDelay >= DELAY_DURATION){
                 roundOver(deltaTime);
-                roundOverDelay = 0f; 
+                //roundOverDelay = 0f; 
             }
-        } else {
-            roundOverDelay = 0f;
-        }
+        //} else {
+         //   roundOverDelay = 0f;
+       // }
     }
 
     private void roundOver(float deltaTime) {
-        if (isRoundOver()) {
-            nextWaveText();
             level++;
             ratFactory.updateRatFactory(deltaTime, level);
-            isPaused = true;
-        }
+            setPause();
     }
     
-    public boolean isRoundOver() {
+    public void isRoundOver() {
         int killedRats = 0;
         for (Rat rat : aliveRats) {
             if (rat.isKilled() || rat.isOut()) {
                 killedRats++;
             }
             if (killedRats == ratFactory.calculateRatsForRound(level)) {
-                return true;
+                 roundOver = true;
+                 break;
             }
+            roundOver = false;
         }
-        return false;
     }
 
-    //theo
-    public String nextWaveText() {//Kanskje også animasjon?
-        //if (isRoundOver()) {
+    public String nextWaveText() {
+        if (roundOver) {
             return "Round over. Press P to continue.";
-        //}
-        //return "";
+        }
+        else return "";
     }
     
 

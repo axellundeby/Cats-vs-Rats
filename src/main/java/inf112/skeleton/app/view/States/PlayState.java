@@ -118,9 +118,7 @@ public class PlayState extends State {
         font.draw(batch, "Dine penger: " + model.getMoney(), 1000, 840);
         font.draw(batch, "Din Score: " + model.getPoints(), 1000, 800);
         font.draw(batch, "Level: " + model.getLevel(), 1000, 720);
-        if (model.isRoundOver()) {
-            font.draw(batch, "" + model.nextWaveText(), 850, 600);
-        }
+        font.draw(batch, model.nextWaveText(), 900, 600);
     }
 
     public void drawProjectiles(SpriteBatch batch) {

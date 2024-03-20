@@ -99,6 +99,7 @@ public abstract class Cat {
             currentRotationAngle = (float) Math.toDegrees(angleInRadians) - 90;
             this.lastTargetPosition = target.getPosition();
         }
+        }
 
 
     public void cirleUppdater(){
