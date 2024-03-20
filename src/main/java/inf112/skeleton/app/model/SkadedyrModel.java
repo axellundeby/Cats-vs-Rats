@@ -2,9 +2,8 @@ package inf112.skeleton.app.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Vector;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
@@ -17,8 +16,9 @@ import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
-import inf112.skeleton.app.view.States.GameStateManager;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
+import java.util.List;
+
 
 
 public class SkadedyrModel implements ISkadedyrModel {
@@ -27,19 +27,22 @@ public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Projectile> projectiles = new ArrayList<>();
     private RatFactory ratFactory = new RatFactory();
     private int lives = 5;
-    private int money = 3000;
+    private int money = 1000;
     private int points = 0;
     private int level = 0;
     private int ratsSpawned;
     private boolean isPaused = true;
     private float intervalSeconds = (float) 0.05;
     private CatMenu catMenu;
-
-
+    private float roundOverDelay = 0f;
+    private float coinDelay = 0f;
+    private final float DELAY_DURATION = 0.5f; 
+    private final float VISABLE_COIN_DURATION = 1f; 
+    
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
         this.catMenu = new CatMenu();
-
+        this.aliveRats = new ArrayList<>();
     }
     
     public void clockTick() {
@@ -49,26 +52,81 @@ public class SkadedyrModel implements ISkadedyrModel {
         moveRats(); 
         attackRat();
         rotater();
-        updateProjectiles(deltaTime);
-        roundOver(deltaTime);
-        aliveRats = ratFactory.updateRatFactory(deltaTime,level); 
+        //updateProjectiles(deltaTime);
+        List<Rat> newRats = ratFactory.updateRatFactory(deltaTime, level);
+        for (Rat newRat : newRats) {
+            if (!aliveRats.contains(newRat)) {
+                aliveRats.add(newRat);
+            }
+        }
+        roundHandler(deltaTime);
+        removeDeadOrExitedRats(deltaTime);
     }
 
-    //dette må sjekkes for konstant
+    private void removeDeadOrExitedRats(float deltaTime) {
+        Iterator<Rat> iterator = aliveRats.iterator();
+        while (iterator.hasNext()) {
+            Rat rat = iterator.next();
+            if (rat.isKilled() || rat.isOut()) {
+                if (!rat.isrewardClaimed()) {
+                    if (rat.isKilled()) {
+                        rat.killedAnimation();
+                        money += rat.getBounty();
+                        points += rat.getPoints();
+                        rat.rewardClaimed();
+                        coinDelay += deltaTime;
+                    } else if (rat.getDirection() == Direction.OUT) {
+                        lives--;
+                    }
+                }
+                //if (coinDelay >= VISABLE_COIN_DURATION) {
+                    iterator.remove();
+                    coinDelay = 0f;
+                //}
+            }
+        }
+    }
+    
+    private void roundHandler(float deltaTime){
+        if(isRoundOver()){
+            roundOverDelay += deltaTime;
+            if(roundOverDelay >= DELAY_DURATION){
+                roundOver(deltaTime);
+                roundOverDelay = 0f; 
+            }
+        } else {
+            roundOverDelay = 0f;
+        }
+    }
+
     private void roundOver(float deltaTime) {
+        if (isRoundOver()) {
+            nextWaveText();
+            level++;
+            ratFactory.updateRatFactory(deltaTime, level);
+            isPaused = true;
+        }
+    }
+    
+    public boolean isRoundOver() {
         int killedRats = 0;
         for (Rat rat : aliveRats) {
             if (rat.isKilled() || rat.isOut()) {
                 killedRats++;
             }
             if (killedRats == ratFactory.calculateRatsForRound(level)) {
-                level++;
-                ratFactory.updateRatFactory(deltaTime, level);
-                isPaused = true;
-                nextWave();
+                return true;
             }
-            
         }
+        return false;
+    }
+
+    //theo
+    public String nextWaveText() {//Kanskje også animasjon?
+        //if (isRoundOver()) {
+            return "Round over. Press P to continue.";
+        //}
+        //return "";
     }
     
 
@@ -86,18 +144,9 @@ public class SkadedyrModel implements ISkadedyrModel {
         if (Gdx.input.isTouched() && mouseX < 832) {
             newCat(mouseX, 842 - mouseY);
         }
-        if (Gdx.input.isTouched()){catMenu.selector(mouse);}
-    }
-    
-
-    //feil her ja, vil heller ha if round over
-    public String nextWave() {
-        if (aliveRats.isEmpty() && !isPaused) {
-            //isPaused = true;
-            //level++;
-            return "Round over. Game is paused. Press 'P' to continue.";
+        if (Gdx.input.isTouched()){
+            catMenu.selector(mouse);
         }
-        return "";
     }
 
     @Override
@@ -193,31 +242,25 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
 
-    /**
-     * Rotates the cats to face the rats they are attacking
-     */
-    public void rotater(){
+    public void rotater() {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
         for (Cat cat : cats) {
             LinkedList<Rat> attackableRats = attackMap.get(cat);
-            if (!attackableRats.isEmpty()) { 
+            if (!attackableRats.isEmpty()) {
                 Rat firstRat = attackableRats.getFirst();
-                cat.rotateImage(firstRat);
-            }
+                cat.setRotationToward(firstRat);
+            } 
+            cat.rotateImage();
         }
     }
+    
+    
 
     /**
      * Returns the amount of lives the player has left
      * @return lives
      */
     public int getLives() {
-        for (Rat rat : aliveRats) {
-            if (rat.getDirection() == Direction.OUT) {
-                aliveRats.remove(rat);
-                return lives--;
-            }
-        }
         if (lives <= 0) {
            // gameOver();
         }
@@ -253,18 +296,7 @@ public class SkadedyrModel implements ISkadedyrModel {
                 projectiles.addAll(cat.attack(attackableRats));
                 cat.resetAttackTimer();
             }
-            for (Rat rat : attackableRats) {
-                if (rat.isKilled()) {
-                    money += rat.getBounty();
-                    points += rat.getPoints();
-                }
-            }
         }
-    }
-
-
-    public void transaction() {
-      
     }
     
     private void updateProjectiles(float dt) {
@@ -293,36 +325,23 @@ public class SkadedyrModel implements ISkadedyrModel {
         }
     }
 
-
-    // public void newCat(int mouseX, int mouseY) {
-    //     Cat gangsta = new ShotgunCat();
-    //     Cat froze = new FreezeCat();
-    //     Cat meow = new BasicCat();
-    //     meow.setPos(mouseX, mouseY);
-    //     addCat(meow);
-    // }
     public void newCat(int mouseX, int mouseY) {
-        // Cat cat = new ShotgunCat();
-        // Cat cat = new BasicCat();
-        // Cat cat = new FreezeCat();
         Cat cat = catMenu.getSelectedCat();
-
         if (cat instanceof BasicCat){
             cat = new BasicCat();
+            money -= cat.getCost();
         }
         else if (cat instanceof ShotgunCat){
             cat = new ShotgunCat();
+            money -= cat.getCost();
         }
         else if (cat instanceof FreezeCat){
             cat = new FreezeCat();
+            money -= cat.getCost();
         }
-
-    
         cat.setPos(mouseX, mouseY);
         addCat(cat);
     }
-
-
 
     public CatMenu getBuyMenu() {
         return catMenu;

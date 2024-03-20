@@ -41,6 +41,7 @@ public class PlayState extends State {
         this.model = model;
         this.shapeRenderer = new ShapeRenderer();
         this.font = new BitmapFont();
+        font.setColor(Color.BLACK);
         this.catMenu = model.getBuyMenu();
         catMenu.init();
         this.stage = new Stage();
@@ -77,7 +78,7 @@ public class PlayState extends State {
         ScreenUtils.clear(Color.GREEN);
 
         batch.begin();
-        batch.draw(SkadedyrView.mapTexture, 0, 0); // Use the preloaded texture
+        batch.draw(SkadedyrView.mapTexture, 0, 0); 
         batch.end();
 
         Gdx.gl.glEnable(GL20.GL_BLEND);
@@ -98,21 +99,28 @@ public class PlayState extends State {
         batch.begin();
         drawCats(batch);
         drawRats(batch);
-
-        font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 10);
-        font.draw(batch, "Dine liv: " + model.getLives(), 1000, 760);
-        font.draw(batch, "Dine penger: " + model.getMoney(), 1000, 840);
-        font.draw(batch, "Din Score: " + model.getPoints(), 1000, 800);
-        font.draw(batch, "Level: " + model.getLevel(), 1000, 720);
-        font.draw(batch, "" + model.nextWave(), 850, 620);
-        drawCats(batch);
-        drawRats(batch);
         drawProjectiles(batch);
+        batch.end();
+
+        // Draw game status continuously
+        batch.begin();
+        drawGameStatus(batch);
         batch.end();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
+    }
+
+    private void drawGameStatus(SpriteBatch batch) {
+        font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 10);
+        font.draw(batch, "Dine liv: " + model.getLives(), 1000, 760);
+        font.draw(batch, "Dine penger: " + model.getMoney(), 1000, 840);
+        font.draw(batch, "Din Score: " + model.getPoints(), 1000, 800);
+        font.draw(batch, "Level: " + model.getLevel(), 1000, 720);
+        if (model.isRoundOver()) {
+            font.draw(batch, "" + model.nextWaveText(), 850, 600);
+        }
     }
 
     public void drawProjectiles(SpriteBatch batch) {
@@ -124,16 +132,21 @@ public class PlayState extends State {
         }
     }
 
+
     private void drawCatMenu(SpriteBatch batch) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
         catMenu.draw(shapeRenderer);
         shapeRenderer.end();
 
+        int playerMoney = model.getMoney();
         batch.begin();
-        catMenu.draw(batch);
+        catMenu.draw(batch, playerMoney);
         batch.end();
     }
 
+
+    
     public void drawCats(SpriteBatch batch) {
         for (Cat cat : model.getCats()) {
             Sprite catSprite = cat.getSprite();
