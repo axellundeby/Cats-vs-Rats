@@ -30,13 +30,10 @@ public class SkadedyrModel implements ISkadedyrModel {
     private CatMenu catMenu;
     private float roundOverDelay = 0f;
     private final float DELAY_DURATION = 1f; 
-
-
-
+    
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
         this.catMenu = new CatMenu();
-
     }
     
     public void clockTick() {
@@ -108,7 +105,9 @@ public class SkadedyrModel implements ISkadedyrModel {
         if (Gdx.input.isTouched() && mouseX < 832) {
             newCat(mouseX, 842 - mouseY);
         }
-        if (Gdx.input.isTouched()){catMenu.selector(mouse);}
+        if (Gdx.input.isTouched()){
+            catMenu.selector(mouse);
+        }
     }
 
     @Override
@@ -265,10 +264,6 @@ public class SkadedyrModel implements ISkadedyrModel {
                 rat.unfreeze();
             }
         }
-    }
-
-    public void transaction() {
-      
     }
 
     public void newCat(int mouseX, int mouseY) {

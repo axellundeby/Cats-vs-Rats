@@ -24,16 +24,17 @@ public class CatMenu {
     private static final int CATDIM = 150;
     private static final int MARGIN = 30;
     private Cat selected;
-    private Texture coinSackTexture = new Texture(Gdx.files.internal("noMoney.png"));
+    private Texture coinSackTexture;
 
 
     public CatMenu() {
         this.catsMap = new HashMap<>();
         this.availableCatsList = new ArrayList<>();
-        init();
-    }
 
+    }
+    
     public void init(){
+        this.coinSackTexture = new Texture(Gdx.files.internal("noMoney.png"));
         availableCatsList.add(new BasicCat());
         availableCatsList.add(new FreezeCat());
         availableCatsList.add(new ShotgunCat());
@@ -51,10 +52,8 @@ public class CatMenu {
             Rectangle crt = catsMap.get(cat);
             batch.draw(cat.getTexture(), crt.x, crt.y, crt.width, crt.height);
             if (playerMoney < cat.getCost()) {
-                float sackX = crt.x + (crt.width - coinSackTexture.getWidth()) / 2; 
-                float sackY = crt.y + (crt.height - coinSackTexture.getHeight()) / 2;
-                
-                batch.draw(coinSackTexture, sackX, sackY);
+                //make the coinSackTexture half the size of the cat immage and place it in the middle of the cat
+                batch.draw(coinSackTexture, crt.x + MARGIN, crt.y + MARGIN, crt.width - MARGIN, crt.height - MARGIN);
             }
         }
     }
@@ -62,7 +61,7 @@ public class CatMenu {
     
     public void selector(Vector2 pos){
         for (Cat cat : availableCatsList) {
-            if (catsMap.get(cat).contains(pos.x, pos.y))
+            if (catsMap.get(cat).contains(pos))
                 selected = cat;
         }
     }
