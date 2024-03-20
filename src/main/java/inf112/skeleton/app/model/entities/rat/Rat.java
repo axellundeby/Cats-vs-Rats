@@ -21,7 +21,7 @@ public abstract class Rat implements IEntity {
     private float secs;
     private Integer bounty;
     private Integer points;
-
+    private boolean rewardClaimed = false;
 
 
     private boolean isFrozen;
@@ -44,6 +44,16 @@ public abstract class Rat implements IEntity {
         textures.put(ImageSwapper.FROZEN, new Texture(Gdx.files.internal("snow.png")));
         textures.put(ImageSwapper.DEAD, new Texture(Gdx.files.internal("coin.png")));
     }
+
+    public boolean isrewardClaimed() {
+        return rewardClaimed;
+    }
+
+    public void rewardClaimed() {
+        this.rewardClaimed = true;
+    }
+
+   
 
     public enum ImageSwapper {
         ALIVE,
@@ -74,7 +84,7 @@ public abstract class Rat implements IEntity {
     }
 
     public int getPoints() {
-        return bounty;
+        return points;
     }
 
     public void swapImage(ImageSwapper image) {

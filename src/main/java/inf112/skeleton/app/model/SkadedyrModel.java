@@ -2,18 +2,16 @@ package inf112.skeleton.app.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.SortedIntList.Iterator;
-
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
-import inf112.skeleton.app.model.entities.rat.BasicRat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
@@ -50,34 +48,35 @@ public class SkadedyrModel implements ISkadedyrModel {
         attackRat();
         rotater();
         //updateProjectiles(deltaTime);
-        roundHandler(deltaTime);
         List<Rat> newRats = ratFactory.updateRatFactory(deltaTime, level);
         for (Rat newRat : newRats) {
             if (!aliveRats.contains(newRat)) {
                 aliveRats.add(newRat);
             }
         }
+        roundHandler(deltaTime);
         removeDeadOrExitedRats();
     }
 
     private void removeDeadOrExitedRats() {
-        java.util.Iterator<Rat> iterator = aliveRats.iterator(); 
+        Iterator<Rat> iterator = aliveRats.iterator();
         while (iterator.hasNext()) {
             Rat rat = iterator.next();
             if (rat.isKilled() || rat.isOut()) {
-                iterator.remove(); 
-                if (rat.isKilled()) {
-                    money += rat.getBounty();
-                    points += rat.getPoints();
-                } else if (rat.getDirection() == Direction.OUT) {
-                    lives--;
+                if (!rat.isrewardClaimed()) {
+                    if (rat.isKilled()) {
+                        money += rat.getBounty();
+                        points += rat.getPoints();
+                        rat.rewardClaimed();
+                    } else if (rat.getDirection() == Direction.OUT) {
+                        lives--;
+                    }
                 }
+                iterator.remove();
             }
         }
     }
     
-    
-
     private void roundHandler(float deltaTime){
         if(isRoundOver()){
             roundOverDelay += deltaTime;
