@@ -8,6 +8,7 @@ import java.util.Vector;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
+import inf112.skeleton.app.main.SkadedyrMain;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
@@ -121,7 +122,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     public float getSpeed(){
-        System.out.println("Speed: " + intervalSeconds);
+
        return intervalSeconds;
     }
 
@@ -129,13 +130,27 @@ public class SkadedyrModel implements ISkadedyrModel {
     if(!isPaused){
         if (intervalSeconds == (float) 0.05) {
             intervalSeconds = (float) 0.0025;
-            System.out.println("Speed up:" + intervalSeconds);
+     
         } else {
             intervalSeconds = (float) 0.05;
-            System.out.println("Normal speed:" + intervalSeconds);
+           
         }
     }
     }
+
+    public void restart() {
+        if(isPaused){
+            SkadedyrMain.main(null);
+        }
+    }
+
+    public void exit() {
+        if(isPaused){
+            System.exit(0);
+        }
+    }
+
+    
 
 
 

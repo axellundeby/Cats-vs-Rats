@@ -59,7 +59,7 @@ public class SkadedyrController {
                 }
                // if (Gdx.input.isKeyPressed(Input.Keys.S) && !keySHandled && !model.isPaused()   ) {
                     //updateClockTick();
-                    System.out.println("Controller speed" + model.getSpeed());
+                    
                    // model.setSpeed();
                     startTimer();
                     keySHandled = true;

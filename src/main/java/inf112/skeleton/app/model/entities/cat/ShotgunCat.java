@@ -35,4 +35,21 @@ public class ShotgunCat extends Cat {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'shootAt'");
     }
+
+    @Override
+    public void upgradeDamage() {
+       this.strength *= 1.25;
+
+    }
+
+    @Override
+    public void upgradeRange() {
+        this.range *= 1.25;
+        this.cirleUppdater();
+    }
+
+    @Override
+    public void upgradeFireRate() {
+        this.fireRate *= 0.75;
+    }
 }

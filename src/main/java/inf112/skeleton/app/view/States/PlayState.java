@@ -15,8 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import inf112.skeleton.app.controller.SkadedyrController;
-import inf112.skeleton.app.controller.buttons.PauseButton;
-import inf112.skeleton.app.controller.buttons.SpeedButton;
+import inf112.skeleton.app.controller.buttons.menu.ExitButton;
+import inf112.skeleton.app.controller.buttons.menu.PauseButton;
+import inf112.skeleton.app.controller.buttons.menu.RestartButton;
+import inf112.skeleton.app.controller.buttons.menu.SpeedButton;
+import inf112.skeleton.app.controller.buttons.upgrade.UpgradeDamageButton;
+import inf112.skeleton.app.controller.buttons.upgrade.UpgradeFireRateButton;
+import inf112.skeleton.app.controller.buttons.upgrade.UpgradeRangeButton;
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
@@ -42,6 +47,11 @@ public class PlayState extends State {
         // this.buttons = new Buttons(model, stage);
         new PauseButton(model, stage);
         new SpeedButton(model, stage);
+        new RestartButton(model, stage);
+        new ExitButton(model, stage);
+        new UpgradeRangeButton(model, stage);
+        new UpgradeDamageButton(model, stage);
+        new UpgradeFireRateButton(model, stage);
 
         Gdx.input.setInputProcessor(stage);
     }
