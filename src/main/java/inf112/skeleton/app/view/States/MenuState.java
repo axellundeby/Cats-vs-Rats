@@ -7,16 +7,19 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+
+import inf112.skeleton.app.controller.buttons.ButtonFactory;
 import inf112.skeleton.app.model.SkadedyrModel;
-import inf112.skeleton.app.view.buttons.ButtonFactory;
 
 public class MenuState extends State {
     private SkadedyrModel model;
     private Stage stage;
+    
 
     public MenuState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
         this.model = model;
+        
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         setupPlayButtons();

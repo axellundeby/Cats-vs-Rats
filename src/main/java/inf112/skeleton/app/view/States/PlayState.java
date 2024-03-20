@@ -1,41 +1,35 @@
 package inf112.skeleton.app.view.States;
 
 import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import inf112.skeleton.app.controller.SkadedyrController;
+import inf112.skeleton.app.controller.buttons.PauseButton;
+import inf112.skeleton.app.controller.buttons.SpeedButton;
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.SkadedyrView;
-import inf112.skeleton.app.view.buttons.ButtonFactory;
 
 public class PlayState extends State {
     private ShapeRenderer shapeRenderer;
     private SkadedyrModel model;
     private BitmapFont font;
     private Stage stage;
-    private ImageButton pauseButton;
     private CatMenu catMenu;
-
 
     protected PlayState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
@@ -45,59 +39,11 @@ public class PlayState extends State {
         this.catMenu = model.getBuyMenu();
         catMenu.init();
         this.stage = new Stage();
-
-        setupPauseButton();
-        setupSpeedButton();
-
+        // this.buttons = new Buttons(model, stage);
+        new PauseButton(model, stage);
+        new SpeedButton(model, stage);
 
         Gdx.input.setInputProcessor(stage);
-    }
-
-    private void setupPauseButton() {
-        pauseButton = ButtonFactory.createImageButton("pauseUp.png", "playUp.png");
-        pauseButton.setSize(100, 100);
-        pauseButton.setPosition(1000, 700);
-
-        pauseButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                model.setPause(); // Use the model's method to toggle pause state
-                updatePauseButton(); // Update the button's appearance based on the new pause state
-            }
-        });
-
-        stage.addActor(pauseButton);
-        updatePauseButton(); // Ensure the button's appearance is correct at start
-    }
-
-    private void setupSpeedButton(){
-        ImageButton speedButton = ButtonFactory.createImageButton("speedUp.png", "speedDown.png");
-        speedButton.setSize(100, 100);
-        speedButton.setPosition(1000, 500);
-
-        speedButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                model.setSpeed();
-            }
-        });
-
-        stage.addActor(speedButton);
-        //updateSpeedButton(); // Ensure the button's appearance is correct at start
-
-
-    }
-
-    private void updatePauseButton() {
-        Drawable newDrawable;
-        if (model.isPaused()) {
-            newDrawable = new TextureRegionDrawable(new TextureRegion(new Texture("playUp.png")));
-        } else {
-            newDrawable = new TextureRegionDrawable(new TextureRegion(new Texture("pauseUp.png")));
-        }
-        pauseButton.getStyle().up = newDrawable;
-
-
     }
 
     @Override
@@ -162,13 +108,13 @@ public class PlayState extends State {
     public void drawProjectiles(SpriteBatch batch) {
         for (Projectile projectile : model.getProjectiles()) {
             Rectangle projectileRect = projectile.getRectangle();
-            float width = projectileRect.width / 15; 
+            float width = projectileRect.width / 15;
             float height = projectileRect.height / 15;
             batch.draw(projectile.getTexture(), projectileRect.x, projectileRect.y, width, height);
         }
     }
 
-    private void drawCatMenu(SpriteBatch batch){
+    private void drawCatMenu(SpriteBatch batch) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         catMenu.draw(shapeRenderer);
         shapeRenderer.end();
