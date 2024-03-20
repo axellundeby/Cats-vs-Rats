@@ -31,6 +31,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private int level = 0;
     private int ratsSpawned;
     private boolean isPaused = true;
+    private float intervalSeconds = (float) 0.05;
     private CatMenu catMenu;
 
 
@@ -118,6 +119,23 @@ public class SkadedyrModel implements ISkadedyrModel {
     public boolean isPaused() {
         return isPaused;
     }
+
+    public float getSpeed(){
+        System.out.println("Speed: " + intervalSeconds);
+       return intervalSeconds;
+    }
+
+    public void setSpeed() {
+        if (intervalSeconds == (float) 0.05) {
+            intervalSeconds = (float) 0.0025;
+            System.out.println("Speed up:" + intervalSeconds);
+        } else {
+            intervalSeconds = (float) 0.05;
+            System.out.println("Normal speed:" + intervalSeconds);
+        }
+    }
+
+
 
     @Override
     public void addRat(Rat rat) {

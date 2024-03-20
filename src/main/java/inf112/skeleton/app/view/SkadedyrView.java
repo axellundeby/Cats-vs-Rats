@@ -27,10 +27,12 @@ public class SkadedyrView {
 
     private ShapeRenderer shapeRenderer;
     public static Texture mapTexture; // Hold the texture to avoid reloading it every frame
+    
    
 
     public SkadedyrView(SkadedyrModel model) {
         this.model = model;
+     
         
 
     }
@@ -42,7 +44,7 @@ public class SkadedyrView {
         font = new BitmapFont();
         font.setColor(Color.RED);
         gsm = new GameStateManager();
-        gsm.set(new MenuState(gsm, model));
+        GameStateManager.set(new MenuState(gsm, model));
         mapTexture = new Texture(Gdx.files.internal("map.png")); // Load once in create
         Gdx.graphics.setForegroundFPS(60);
     }

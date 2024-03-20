@@ -1,3 +1,4 @@
+package inf112.skeleton.app.controller.buttons;
 // package inf112.skeleton.app.view.buttons;
 
 // import inf112.skeleton.app.controller.SkadedyrController;
