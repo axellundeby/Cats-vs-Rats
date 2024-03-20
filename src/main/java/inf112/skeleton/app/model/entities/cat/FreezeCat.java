@@ -39,5 +39,22 @@ public class FreezeCat extends Cat {
             return new Projectile(new Vector2(this.getPosition()), direction, 100,  new Texture("snowProjectile.png"));
         }
         return null;
-    }    
+    }
+
+    @Override
+    public void upgradeDamage() {
+       this.strength *= 1.25;
+
+    }
+
+    @Override
+    public void upgradeRange() {
+        this.range *= 1.25;
+        this.cirleUppdater();
+    }
+
+    @Override
+    public void upgradeFireRate() {
+        this.fireRate *= 0.75;
+    }
 }

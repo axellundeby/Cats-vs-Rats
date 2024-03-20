@@ -35,10 +35,29 @@ public class ShotgunCat extends Cat {
 
     @Override
     public Projectile shootAt(LinkedList<Rat> targets) {
+
        for (Rat target : targets) {
             Vector2 direction = new Vector2(target.getPosition().x - getPosition().x, target.getPosition().y - getPosition().y);
             return new Projectile(new Vector2(this.getPosition()), direction, 100,  new Texture("claw.png"));
         }
-        return null;
-    }  
+        return null;  
+    }
+
+    @Override
+    public void upgradeDamage() {
+       this.strength *= 1.25;
+
+    }
+
+    @Override
+    public void upgradeRange() {
+        this.range *= 1.25;
+        this.cirleUppdater();
+    }
+
+    @Override
+    public void upgradeFireRate() {
+        this.fireRate *= 0.75;
+    }
+
 }

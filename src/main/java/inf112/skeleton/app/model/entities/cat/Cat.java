@@ -14,15 +14,15 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 
 public abstract class Cat {
 
-    private int strength;
-    private float range;
+    protected int strength;
+    protected float range;
     private Vector2 pos;
     private Circle rangeCircle;
     private int size;
     private int halfSize;
     private EnumMap<PictureSwapper, Texture> textures = new EnumMap<>(PictureSwapper.class);
     public PictureSwapper currentState = PictureSwapper.DEFAULT;
-    private float fireRate; 
+    protected float fireRate; 
     private float attackTimer;
     private float attackImageTimer = 0; 
     private final float attackImageDuration = 0.5f; 
@@ -50,6 +50,16 @@ public abstract class Cat {
         textures.put(PictureSwapper.ATTACK, attackImage);
     }
     public abstract ArrayList<Projectile> attack(LinkedList<Rat> rats);
+
+    public abstract void upgradeDamage();
+    public abstract void upgradeRange();
+
+    public abstract void upgradeFireRate();
+
+    public int getRange(){
+        return (int) range;
+    }
+    
 
     public void setPos(int x, int y) {
         pos.x = x;
@@ -79,7 +89,7 @@ public abstract class Cat {
         this.sprite.setOriginCenter();
         this.sprite.setRotation(currentRotationAngle);
     }
-    
+
     
     public void setRotationToward(Rat target){
         if(target != null){
@@ -89,6 +99,14 @@ public abstract class Cat {
             currentRotationAngle = (float) Math.toDegrees(angleInRadians) - 90;
             this.lastTargetPosition = target.getPosition();
         }
+
+
+    public void cirleUppdater(){
+        this.rangeCircle = new Circle(pos, range);
+    }
+
+    public float getRotationAngle() {
+        return currentRotationAngle;
     }
     
     public void setSize(int size){

@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+
+import inf112.skeleton.app.main.SkadedyrMain;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
@@ -30,6 +32,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private int level = 0;
     private int ratsSpawned;
     private boolean isPaused = true;
+    private float intervalSeconds = (float) 0.05;
     private CatMenu catMenu;
     private float roundOverDelay = 0f;
     private float coinDelay = 0f;
@@ -166,6 +169,39 @@ public class SkadedyrModel implements ISkadedyrModel {
     public boolean isPaused() {
         return isPaused;
     }
+
+    public float getSpeed(){
+
+       return intervalSeconds;
+    }
+
+    public void setSpeed() {
+    if(!isPaused){
+        if (intervalSeconds == (float) 0.05) {
+            intervalSeconds = (float) 0.0025;
+     
+        } else {
+            intervalSeconds = (float) 0.05;
+           
+        }
+    }
+    }
+
+    public void restart() {
+        if(isPaused){
+            SkadedyrMain.main(null);
+        }
+    }
+
+    public void exit() {
+        if(isPaused){
+            System.exit(0);
+        }
+    }
+
+    
+
+
 
     @Override
     public void addRat(Rat rat) {

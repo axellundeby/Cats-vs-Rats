@@ -32,4 +32,21 @@ public class BasicCat extends Cat {
         Vector2 direction = new Vector2(targets.getFirst().getPosition().x - getPosition().x, targets.getFirst().getPosition().y - getPosition().y);
         return new Projectile(new Vector2(this.getPosition()), direction, 300,  new Texture("claw.png"));
     }
+
+    @Override
+    public void upgradeDamage() {
+       this.strength *= 1.25;
+
+    }
+
+    @Override
+    public void upgradeRange() {
+        this.range *= 1.25;
+        this.cirleUppdater();
+    }
+
+    @Override
+    public void upgradeFireRate() {
+        this.fireRate *= 0.75;
+    }
 }
