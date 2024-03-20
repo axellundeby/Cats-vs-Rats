@@ -27,8 +27,9 @@ public abstract class Cat {
     private float attackImageTimer = 0; 
     private final float attackImageDuration = 0.5f; 
     private Sprite sprite;
-    private float currentRotationAngle = 0; 
+    private float currentRotationAngle ; 
     private int cost;
+    private Vector2 lastTargetPosition = null; 
 
      public Cat(int strength, float range, Texture defaultImage, Texture attackImage, float fireRate, int cost) {
         this.strength = strength;
@@ -43,6 +44,7 @@ public abstract class Cat {
         this.sprite.setPosition(pos.x - halfSize, pos.y - halfSize);
         this.rangeCircle = new Circle(pos, range);
         this.cost = cost;
+        this.currentRotationAngle = 0;
     
         textures.put(PictureSwapper.DEFAULT, defaultImage);
         textures.put(PictureSwapper.ATTACK, attackImage);
@@ -58,20 +60,37 @@ public abstract class Cat {
 
     public abstract Projectile shootAt(LinkedList<Rat> targets);
       
+    public Vector2 getLastTargetPosition() {
+        return lastTargetPosition;
+    }
+    
+    public void setLastTargetPosition(Vector2 lastTargetPosition) {
+        this.lastTargetPosition = lastTargetPosition;
+    }
 
     //rotate er bugga
-    public void rotateImage(Rat target) {
-        float dx = target.getPosition().x - this.pos.x;
-        float dy = target.getPosition().y - this.pos.y;
-        float angleInRadians = (float) Math.atan2(dy, dx);
-        currentRotationAngle = (float) Math.toDegrees(angleInRadians) - 90;
+    public void rotateImage() {
+        if (lastTargetPosition != null) {
+            float dx = lastTargetPosition.x - this.pos.x;
+            float dy = lastTargetPosition.y - this.pos.y;
+            float angleInRadians = (float) Math.atan2(dy, dx);
+            currentRotationAngle = (float) Math.toDegrees(angleInRadians) - 90;
+        }
         this.sprite.setOriginCenter();
         this.sprite.setRotation(currentRotationAngle);
     }
-
-    public float getRotationAngle() {
-        return currentRotationAngle;
+    
+    public void setRotationToward(Rat target){
+        if(target != null){
+            float dx = target.getPosition().x - this.pos.x;
+            float dy = target.getPosition().y - this.pos.y;
+            float angleInRadians = (float) Math.atan2(dy, dx);
+            currentRotationAngle = (float) Math.toDegrees(angleInRadians) - 90;
+            this.lastTargetPosition = target.getPosition();
+        }
     }
+    
+    
 
     public void setSize(int size){
         this.size = size;
@@ -121,7 +140,6 @@ public abstract class Cat {
         Texture newTexture = textures.get(currentState);
         sprite.setTexture(newTexture);
         sprite.setOriginCenter();
-        sprite.setRotation(getRotationAngle());
     }
     
     

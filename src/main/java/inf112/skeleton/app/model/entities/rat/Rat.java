@@ -210,6 +210,9 @@ public abstract class Rat implements IEntity {
         }
         return false;
     }
+    public void setPosition(Vector2 pos) {
+        this.pos = pos;
+    }
 
 
 

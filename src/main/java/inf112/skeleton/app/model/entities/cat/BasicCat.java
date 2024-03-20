@@ -20,7 +20,7 @@ public class BasicCat extends Cat {
         ArrayList<Projectile> projectileList = new ArrayList<>();
         if (canAttack()) {
             triggerAttackImage();
-            projectileList.add(shootAt(rats));
+            //projectileList.add(shootAt(rats));
             rats.getFirst().takeDamage(getStrength());
             resetAttackTimer();
         }

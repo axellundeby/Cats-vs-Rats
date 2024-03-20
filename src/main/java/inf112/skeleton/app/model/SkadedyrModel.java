@@ -11,6 +11,7 @@ import inf112.skeleton.app.model.entities.cat.BasicCat;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
+import inf112.skeleton.app.model.entities.rat.BasicRat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
@@ -29,7 +30,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private boolean isPaused = true;
     private CatMenu catMenu;
     private float roundOverDelay = 0f;
-    private final float DELAY_DURATION = 1f; 
+    private final float DELAY_DURATION = 0.5f; 
     
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
@@ -43,7 +44,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         moveRats(); 
         attackRat();
         rotater();
-        updateProjectiles(deltaTime);
+        //updateProjectiles(deltaTime);
         roundHandler(deltaTime);
         aliveRats = ratFactory.updateRatFactory(deltaTime,level); 
     }
@@ -170,19 +171,19 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
 
-    /**
-     * Rotates the cats to face the rats they are attacking
-     */
-    public void rotater(){
+    public void rotater() {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
         for (Cat cat : cats) {
             LinkedList<Rat> attackableRats = attackMap.get(cat);
-            if (!attackableRats.isEmpty()) { 
+            if (!attackableRats.isEmpty()) {
                 Rat firstRat = attackableRats.getFirst();
-                cat.rotateImage(firstRat);
-            }
+                cat.setRotationToward(firstRat);
+            } 
+            cat.rotateImage();
         }
     }
+    
+    
 
     /**
      * Returns the amount of lives the player has left
