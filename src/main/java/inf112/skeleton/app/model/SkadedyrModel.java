@@ -37,8 +37,8 @@ public class SkadedyrModel implements ISkadedyrModel {
     private CatMenu catMenu;
     private float roundOverDelay = 0f;
     private float coinDelay = 0f;
-    private final float DELAY_DURATION = 0.5f; 
-    private final float VISABLE_COIN_DURATION = 1f; 
+    private final float DELAY_DURATION = 1f; 
+    private final float VISABLE_COIN_DURATION = 0.001f; 
     
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
@@ -80,10 +80,10 @@ public class SkadedyrModel implements ISkadedyrModel {
                         lives--;
                     }
                 }
-                //if (coinDelay >= VISABLE_COIN_DURATION) {
-                    iterator.remove();
-                    coinDelay = 0f;
-                //}
+                // if (coinDelay >= VISABLE_COIN_DURATION) {
+                iterator.remove();
+                coinDelay = 0f;
+                // }
             }
         }
     }
@@ -91,20 +91,23 @@ public class SkadedyrModel implements ISkadedyrModel {
     private void roundHandler(float deltaTime){
         isRoundOver();
         if(roundOver){
-            //roundOverDelay += deltaTime;
-            //if(roundOverDelay >= DELAY_DURATION){
+            roundOverDelay += deltaTime;
+            if(roundOverDelay >= DELAY_DURATION){
                 roundOver(deltaTime);
-                //roundOverDelay = 0f; 
+                roundOverDelay = 0f; 
             }
-        //} else {
-         //   roundOverDelay = 0f;
-       // }
+        } else {
+           roundOverDelay = 0f;
+       }
     }
 
     private void roundOver(float deltaTime) {
-            level++;
-            ratFactory.updateRatFactory(deltaTime, level);
-            setPause();
+        level++;
+        ratFactory.updateRatFactory(deltaTime, level);
+        setPause();
+        for (Cat cat : cats) {
+            cat.resetAttackTimer();
+        }
     }
     
     public void isRoundOver() {
@@ -197,10 +200,6 @@ public class SkadedyrModel implements ISkadedyrModel {
             System.exit(0);
         }
     }
-
-    
-
-
 
     @Override
     public void addRat(Rat rat) {
