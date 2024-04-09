@@ -47,6 +47,7 @@ public class CatMenu {
         selected = availableCatsList.get(0);
     }
 
+    
     public void draw(SpriteBatch batch, int playerMoney) {
         for (Cat cat : availableCatsList) {
             Rectangle crt = catsMap.get(cat);

@@ -14,11 +14,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import inf112.skeleton.app.controller.SkadedyrController;
 import inf112.skeleton.app.controller.buttons.menu.ExitButton;
 import inf112.skeleton.app.controller.buttons.menu.PauseButton;
 import inf112.skeleton.app.controller.buttons.menu.RestartButton;
 import inf112.skeleton.app.controller.buttons.menu.SpeedButton;
+
 import inf112.skeleton.app.controller.buttons.upgrade.UpgradeDamageButton;
 import inf112.skeleton.app.controller.buttons.upgrade.UpgradeFireRateButton;
 import inf112.skeleton.app.controller.buttons.upgrade.UpgradeRangeButton;
@@ -35,6 +35,12 @@ public class PlayState extends State {
     private BitmapFont font;
     private Stage stage;
     private CatMenu catMenu;
+    private UpgradeFireRateButton upgradeFireRateButton;
+    private UpgradeRangeButton upgradeRangeButton;
+    private UpgradeDamageButton upgradeDamageButton;
+    private PauseButton pauseButton;
+
+
 
     protected PlayState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
@@ -45,14 +51,18 @@ public class PlayState extends State {
         this.catMenu = model.getBuyMenu();
         catMenu.init();
         this.stage = new Stage();
-        // this.buttons = new Buttons(model, stage);
-        new PauseButton(model, stage);
+        
+        //new PauseButton(model, stage);
         new SpeedButton(model, stage);
         new RestartButton(model, stage);
         new ExitButton(model, stage);
-        new UpgradeRangeButton(model, stage);
-        new UpgradeDamageButton(model, stage);
-        new UpgradeFireRateButton(model, stage);
+        pauseButton = new PauseButton(model, stage);
+       
+        
+        upgradeFireRateButton = new UpgradeFireRateButton(model, stage);
+        upgradeRangeButton = new UpgradeRangeButton(model, stage);
+        upgradeDamageButton = new UpgradeDamageButton(model, stage);
+        
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -74,8 +84,14 @@ public class PlayState extends State {
 
     @Override
     public void render(SpriteBatch batch) {
-
+        
         ScreenUtils.clear(Color.GREEN);
+        pauseButton.updateButtonAppearance();
+        upgradeFireRateButton.updateButtonAppearance();
+        upgradeRangeButton.updateButtonAppearance();
+        upgradeDamageButton.updateButtonAppearance();
+
+
 
         batch.begin();
         batch.draw(SkadedyrView.mapTexture, 0, 0); 
@@ -109,6 +125,7 @@ public class PlayState extends State {
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+       
 
     }
 
@@ -142,8 +159,6 @@ public class PlayState extends State {
         catMenu.draw(batch, playerMoney);
         batch.end();
     }
-
-
     
     public void drawCats(SpriteBatch batch) {
         for (Cat cat : model.getCats()) {

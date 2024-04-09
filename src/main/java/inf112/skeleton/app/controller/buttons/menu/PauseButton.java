@@ -34,12 +34,10 @@ public class PauseButton extends Buttons {
 
     @Override
     public void updateButtonAppearance() {
-        // button.getStyle().up = model.isPaused() 
-        //     ? new TextureRegionDrawable(new TextureRegion(new Texture("playUp.png")))
-        //     : new TextureRegionDrawable(new TextureRegion(new Texture("pauseUp.png")));
         if(model.isPaused()){
             button.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("playUp.png")));
         } else {
+            
             button.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("pauseUp.png")));
         }
     }
