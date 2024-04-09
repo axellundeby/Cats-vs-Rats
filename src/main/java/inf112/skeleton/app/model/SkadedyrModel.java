@@ -34,7 +34,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private CatMenu catMenu;
     private float roundOverDelay = 0f;
     private final float DELAY_DURATION = 1f; 
-    private final float COIN_DURATION = 0.5f; 
+    private final float COIN_DURATION = 1f; 
     private boolean roundOver = false;
     private boolean writeText = false;
     private boolean speedUp = false;
@@ -51,11 +51,12 @@ public class SkadedyrModel implements ISkadedyrModel {
         handleUserInput();
         moveRats();
         attackRat();
-        rotater();
+        catRotater();
         // updateProjectiles(deltaTime);
         List<Rat> newRats = ratFactory.updateRatFactory(deltaTime, level);
         for (Rat newRat : newRats) {
             newRat.addTime();
+            newRat.rotateImage();
             if (!aliveRats.contains(newRat)) {
                 aliveRats.add(newRat);
             }
@@ -130,7 +131,7 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     }
 
-    public String nextWaveText() {//skal egt vente
+    public String nextWaveText() {
         if (writeText) {
             return "Round over. Press unPause to continue.";
         }
@@ -260,7 +261,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
 
-    private void rotater() {
+    private void catRotater() {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
         for (Cat cat : cats) {
             LinkedList<Rat> attackableRats = attackMap.get(cat);

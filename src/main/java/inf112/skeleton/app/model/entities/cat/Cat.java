@@ -113,7 +113,6 @@ public abstract class Cat {
         this.lastTargetPosition = lastTargetPosition;
     }
 
-    // rotate er bugga
      /**
      * Rotates the cat's image to face its last target.
      * The image is rotated such that it is always facing the direction of the last target.
