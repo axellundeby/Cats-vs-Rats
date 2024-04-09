@@ -12,42 +12,53 @@ import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.entities.cat.Cat;
 
 public class UpgradeFireRateButton extends Buttons {
-    private int clicked;
+    private static final String normalTexture= "firerate.png";
+    private static final String noMoneyTexture = "noMoney.png";
+    private static final String usedUpTexture= "Cat2.png";
+    private static final String clickTexture= "coin.png";
+
+    private int cost = 600;
+    private int clicked = 0;
+
     public UpgradeFireRateButton(SkadedyrModel model, Stage stage) {
         super(model, stage);
     }
 
     @Override
     protected void setupButton() {
-        button = ButtonFactory.createImageButton("firerate.png", "coin.png");
+        button = ButtonFactory.createImageButton(normalTexture, clickTexture);
         button.setSize(100, 100);
         button.setPosition(1050, 100);
-
+        
         button.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                if (clicked < 3) {
+                if (model.getMoney() >= cost && clicked < 3) {
+                    model.setMoney(model.getMoney() - cost); 
                     for (Cat cat : model.getCats()) {
-                        cat.upgradeFireRate();
-                   }
+                        cat.upgradeFireRate(); 
+                    }
                     clicked++;
                 }
-                else {
-                   updateButtonAppearance();
-                }
+                updateButtonAppearance();
             }
         });
-
     }
+
+
 
     @Override
     public void updateButtonAppearance() {
-        button.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("freezeCat.png")));
-        button.getStyle().down = new TextureRegionDrawable(new TextureRegion(new Texture("freezeCat.png")));
-
-
+        TextureRegionDrawable appearance;
+        if (clicked >= 3) {
+            appearance = new TextureRegionDrawable(new TextureRegion(new Texture(usedUpTexture)));
+        } else if (model.getMoney() < cost) {
+            appearance = new TextureRegionDrawable(new TextureRegion(new Texture(noMoneyTexture)));
+        } else {
+            appearance = new TextureRegionDrawable(new TextureRegion(new Texture(normalTexture)));
+        }
         
-
+        button.getStyle().up = appearance;
+        button.getStyle().down = new TextureRegionDrawable(new TextureRegion(new Texture(clickTexture))); 
     }
-    
 }

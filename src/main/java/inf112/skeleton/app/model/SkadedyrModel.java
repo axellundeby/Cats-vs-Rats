@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
+import inf112.skeleton.app.controller.buttons.upgrade.UpgradeFireRateButton;
 import inf112.skeleton.app.main.SkadedyrMain;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
@@ -17,9 +18,10 @@ import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
+import inf112.skeleton.app.controller.EventBus;
+import inf112.skeleton.app.controller.buttons.upgrade.*;
 import java.util.List;
-
-
+import java.util.function.Consumer;
 
 public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Cat> cats = new ArrayList<>();
@@ -32,7 +34,6 @@ public class SkadedyrModel implements ISkadedyrModel {
     private int level = 0;
     private int ratsSpawned;
     private boolean isPaused = true;
-    private boolean roundOver = false;
     private float intervalSeconds = (float) 0.05;
     private CatMenu catMenu;
     private float roundOverDelay = 0f;
@@ -45,15 +46,15 @@ public class SkadedyrModel implements ISkadedyrModel {
         this.catMenu = new CatMenu();
         this.aliveRats = new ArrayList<>();
     }
-    
+
     public void clockTick() {
         float deltaTime = Gdx.graphics.getDeltaTime();
         updateCatAnimations(deltaTime);
         handleUserInput();
-        moveRats(); 
+        moveRats();
         attackRat();
         rotater();
-        //updateProjectiles(deltaTime);
+        // updateProjectiles(deltaTime);
         List<Rat> newRats = ratFactory.updateRatFactory(deltaTime, level);
         for (Rat newRat : newRats) {
             if (!aliveRats.contains(newRat)) {
@@ -109,28 +110,27 @@ public class SkadedyrModel implements ISkadedyrModel {
             cat.resetAttackTimer();
         }
     }
-    
-    public void isRoundOver() {
+
+    public boolean isRoundOver() {
         int killedRats = 0;
         for (Rat rat : aliveRats) {
             if (rat.isKilled() || rat.isOut()) {
                 killedRats++;
             }
             if (killedRats == ratFactory.calculateRatsForRound(level)) {
-                 roundOver = true;
-                 break;
+                return true;
             }
-            roundOver = false;
         }
+        return false;
     }
 
-    public String nextWaveText() {
-        if (roundOver) {
-            return "Round over. Press P to continue.";
-        }
-        else return "";
+    // theo
+    public String nextWaveText() {// Kanskje også animasjon?
+        // if (isRoundOver()) {
+        return "Round over. Press P to continue.";
+        // }
+        // return "";
     }
-    
 
     private void updateCatAnimations(float deltaTime) {
         for (Cat cat : cats) {
@@ -141,12 +141,12 @@ public class SkadedyrModel implements ISkadedyrModel {
     private void handleUserInput() {
         int mouseX = Gdx.input.getX();
         int mouseY = Gdx.input.getY();
-        Vector2 mouse = new Vector2(mouseX, 842-mouseY);
-        
+        Vector2 mouse = new Vector2(mouseX, 842 - mouseY);
+
         if (Gdx.input.isTouched() && mouseX < 832) {
             newCat(mouseX, 842 - mouseY);
         }
-        if (Gdx.input.isTouched()){
+        if (Gdx.input.isTouched()) {
             catMenu.selector(mouse);
         }
     }
@@ -157,7 +157,6 @@ public class SkadedyrModel implements ISkadedyrModel {
             rat.move();
         }
     }
-  
 
     @Override
     public void addCat(Cat cat) {
@@ -172,31 +171,31 @@ public class SkadedyrModel implements ISkadedyrModel {
         return isPaused;
     }
 
-    public float getSpeed(){
+    public float getSpeed() {
 
-       return intervalSeconds;
+        return intervalSeconds;
     }
 
     public void setSpeed() {
-    if(!isPaused){
-        if (intervalSeconds == (float) 0.05) {
-            intervalSeconds = (float) 0.0025;
-     
-        } else {
-            intervalSeconds = (float) 0.05;
-           
+        if (!isPaused) {
+            if (intervalSeconds == (float) 0.05) {
+                intervalSeconds = (float) 0.0025;
+
+            } else {
+                intervalSeconds = (float) 0.05;
+
+            }
         }
-    }
     }
 
     public void restart() {
-        if(isPaused){
+        if (isPaused) {
             SkadedyrMain.main(null);
         }
     }
 
     public void exit() {
-        if(isPaused){
+        if (isPaused) {
             System.exit(0);
         }
     }
@@ -216,13 +215,6 @@ public class SkadedyrModel implements ISkadedyrModel {
         return aliveRats;
     }
 
-
-    // public void gameOver() {
-    //     GameStateManager.set(new GameOverState(null));
-
-    //     //Gdx.app.exit(); // jacob skjerm
-    // }
-
     public int getRatsSpawned() {
         return ratsSpawned;
     }
@@ -230,6 +222,16 @@ public class SkadedyrModel implements ISkadedyrModel {
     public int getMoney() {
         return money;
     }
+    
+
+    public void setMoney(int money) {
+        this.money = money;
+        //EventBus.publish("moneyChanged", this.money);
+       
+     
+    }
+
+   
 
     public int getLevel() {
         return level;
@@ -239,7 +241,6 @@ public class SkadedyrModel implements ISkadedyrModel {
         return points;
     }
 
-
     public void rotater() {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
         for (Cat cat : cats) {
@@ -247,26 +248,26 @@ public class SkadedyrModel implements ISkadedyrModel {
             if (!attackableRats.isEmpty()) {
                 Rat firstRat = attackableRats.getFirst();
                 cat.setRotationToward(firstRat);
-            } 
+            }
             cat.rotateImage();
         }
     }
-    
-    
 
     /**
      * Returns the amount of lives the player has left
+     * 
      * @return lives
      */
     public int getLives() {
         if (lives <= 0) {
-           // gameOver();
+            // gameOver();
         }
         return lives;
     }
 
     /**
      * Returns a hashmap with cats as keys and a linkedlist of rats as values
+     * 
      * @return
      */
 
@@ -284,7 +285,6 @@ public class SkadedyrModel implements ISkadedyrModel {
         return attackMap;
     }
 
-
     public void attackRat() {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
         for (Cat cat : cats) {
@@ -296,15 +296,15 @@ public class SkadedyrModel implements ISkadedyrModel {
             }
         }
     }
-    
+
     private void updateProjectiles(float dt) {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
         for (Cat cat : cats) {
             LinkedList<Rat> attackableRats = attackMap.get(cat);
             if (!attackableRats.isEmpty()) {
                 for (Projectile projectile : projectiles) {
-                    projectile.update(dt,attackableRats.getFirst(),cat);
-                    projectile.pointImageAtRat(attackableRats.getFirst(),cat);
+                    projectile.update(dt, attackableRats.getFirst(), cat);
+                    projectile.pointImageAtRat(attackableRats.getFirst(), cat);
                 }
             }
         }
@@ -313,8 +313,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     public ArrayList<Projectile> getProjectiles() {
         return projectiles;
     }
-    
-    
+
     private void unfreezeRats() {
         for (Rat rat : aliveRats) {
             if (rat.isFrozen()) {
@@ -325,15 +324,13 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     public void newCat(int mouseX, int mouseY) {
         Cat cat = catMenu.getSelectedCat();
-        if (cat instanceof BasicCat){
+        if (cat instanceof BasicCat) {
             cat = new BasicCat();
             money -= cat.getCost();
-        }
-        else if (cat instanceof ShotgunCat){
+        } else if (cat instanceof ShotgunCat) {
             cat = new ShotgunCat();
             money -= cat.getCost();
-        }
-        else if (cat instanceof FreezeCat){
+        } else if (cat instanceof FreezeCat) {
             cat = new FreezeCat();
             money -= cat.getCost();
         }
@@ -345,5 +342,3 @@ public class SkadedyrModel implements ISkadedyrModel {
         return catMenu;
     }
 }
-
-

@@ -40,12 +40,12 @@ public class SkadedyrGame implements ApplicationListener{
 
     @Override
     public void pause() {
-        
-
+        model.setPause();
     }
 
     @Override
     public void resume() {
+        model.setPause();
 
     }
 
