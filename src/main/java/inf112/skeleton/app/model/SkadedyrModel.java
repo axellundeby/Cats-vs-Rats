@@ -111,19 +111,22 @@ public class SkadedyrModel implements ISkadedyrModel {
             cat.resetAttackTimer();
         }
     }
-
-    public boolean isRoundOver() {
+    
+    public void isRoundOver() {
         int killedRats = 0;
         for (Rat rat : aliveRats) {
             if (rat.isKilled() || rat.isOut()) {
                 killedRats++;
             }
             if (killedRats == ratFactory.calculateRatsForRound(level)) {
-                return true;
+                 roundOver = true;
+                 break;
             }
+            roundOver = false;
         }
-        return false;
+
     }
+
 
     // theo
     public String nextWaveText() {// Kanskje også animasjon?
