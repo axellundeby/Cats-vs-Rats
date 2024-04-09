@@ -75,7 +75,6 @@ public class SkadedyrView {
     }
 
     public void render() {
-        gsm.update(Gdx.graphics.getDeltaTime());
         gsm.render(batch);
     }
 

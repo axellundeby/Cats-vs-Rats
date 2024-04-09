@@ -16,7 +16,7 @@ import inf112.skeleton.app.view.SkadedyrView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class CatMenu {
+public class CatMenu implements ICatMenu{
 
     private HashMap<Cat, Rectangle> catsMap;
     private ArrayList<Cat> availableCatsList;
@@ -33,6 +33,7 @@ public class CatMenu {
 
     }
     
+    @Override
     public void init(){
         this.coinSackTexture = new Texture(Gdx.files.internal("noMoney.png"));
         availableCatsList.add(new BasicCat());
@@ -48,6 +49,7 @@ public class CatMenu {
     }
 
     
+    @Override
     public void draw(SpriteBatch batch, int playerMoney) {
         for (Cat cat : availableCatsList) {
             Rectangle crt = catsMap.get(cat);
@@ -62,12 +64,14 @@ public class CatMenu {
         }
     }
 
+    @Override
     public void draw(ShapeRenderer shapeRenderer) {
         shapeRenderer.setColor(Color.WHITE);
         Vector2 center = catsMap.get(selected).getCenter(new Vector2());
         shapeRenderer.circle(center.x, center.y, CATDIM/2);
     }
     
+    @Override
     public void selector(Vector2 pos){
         for (Cat cat : availableCatsList) {
             if (catsMap.get(cat).contains(pos))
@@ -75,15 +79,18 @@ public class CatMenu {
         }
     }
 
+    @Override
     public Cat getSelectedCat(){
         return selected;
     }
 
-    private float getX() {
+    @Override
+    public float getX() {
         return menuRect.x;
     }
 
-    private float getY() {
+    @Override
+    public float getY() {
         return menuRect.y;
     }
 }

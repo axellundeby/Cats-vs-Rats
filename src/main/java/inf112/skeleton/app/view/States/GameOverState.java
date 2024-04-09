@@ -30,18 +30,8 @@ public class GameOverState extends State {
 
     }
 
-    @Override
-    public void handleInput() {
-        if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.SPACE)) {
-            SkadedyrMain.main(null);
-        }
-    }
+    
 
-    @Override
-    public void update(float dt) {
-        handleInput();
-
-    }
 
     @Override
     public void render(SpriteBatch sb) {

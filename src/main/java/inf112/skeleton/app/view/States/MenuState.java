@@ -39,15 +39,12 @@ public class MenuState extends State {
         stage.addActor(playImageButton);
     }
 
-    @Override
-    public void handleInput() {
+    
 
-    }
-
-    @Override
-    public void update(float dt) {
-        handleInput();
-    }
+    // @Override
+    // public void update(float dt) {
+       
+    // }
 
     @Override
     public void render(SpriteBatch sb) {
