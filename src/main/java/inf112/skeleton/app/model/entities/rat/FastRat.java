@@ -5,6 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class FastRat extends Rat {
     public FastRat() {
-        super(50, 4, new Texture(Gdx.files.internal("fast_rat.png")), 300, 2);
+        super(50, 4, new Texture(Gdx.files.internal("coin.png")), 300, 2);
     }
 }
