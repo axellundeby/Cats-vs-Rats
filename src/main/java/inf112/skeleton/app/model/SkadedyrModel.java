@@ -40,6 +40,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private float coinDelay = 0f;
     private final float DELAY_DURATION = 1f; 
     private final float VISABLE_COIN_DURATION = 0.001f; 
+    private boolean roundOver = false;
     
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
