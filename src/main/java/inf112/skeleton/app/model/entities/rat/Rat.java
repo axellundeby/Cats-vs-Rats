@@ -20,6 +20,7 @@ public abstract class Rat implements IEntity {
     private Integer bounty;
     private Integer points;
     private boolean rewardClaimed = false;
+    private boolean exited = false;
     public float coinVisibleTime = 0f;
     private Sprite sprite;
 
@@ -56,10 +57,25 @@ public abstract class Rat implements IEntity {
     }
 
     /**
+     * Checks if the rat has exited the game.
+     * @return true if the rat has exited the game, false otherwise.
+     */
+    public boolean isExited() {
+        return exited;
+    }
+
+    /**
      * Marks the reward as claimed.
      */
     public void rewardClaimed() {
         this.rewardClaimed = true;
+    }
+
+    /**
+     * Marks the rat as exited.
+     */
+    public void exit() {
+        this.exited = true;
     }
 
     private enum ImageSwapper {
@@ -236,15 +252,16 @@ public abstract class Rat implements IEntity {
         }
     }
 
+    //Skal vi ha med dette egentlig, ser bedre når ny rotte?
     private float getRotationAngle() {
         Direction dir = getDirection();
         switch (dir) {
             case UP:
                 return 90;
             case DOWN:
-                return -90;
-            case LEFT:
                 return 180;
+            case LEFT:
+                return -90;
             case RIGHT:
                 return 0;
             case OUT:
