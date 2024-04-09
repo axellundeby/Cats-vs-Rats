@@ -41,6 +41,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private final float DELAY_DURATION = 1f; 
     private final float VISABLE_COIN_DURATION = 0.001f; 
     private boolean roundOver = false;
+    private boolean writeText = false;
     
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
@@ -100,12 +101,15 @@ public class SkadedyrModel implements ISkadedyrModel {
             }
         } else {
            roundOverDelay = 0f;
+           writeText = false;
        }
     }
 
     private void roundOver(float deltaTime) {
         level++;
         ratFactory.updateRatFactory(deltaTime, level);
+        writeText = true;
+        nextWaveText();
         setPause();
         for (Cat cat : cats) {
             cat.resetAttackTimer();
@@ -127,13 +131,11 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     }
 
-
-    // theo
-    public String nextWaveText() {// Kanskje også animasjon?
-        // if (isRoundOver()) {
-        return "Round over. Press P to continue.";
-        // }
-        // return "";
+    public String nextWaveText() {//skal egt vente
+        if (writeText) {
+            return "Round over. Press unPause to continue.";
+        }
+        return "";
     }
 
     private void updateCatAnimations(float deltaTime) {
