@@ -110,7 +110,7 @@ public class PlayState extends State {
         font.draw(batch, model.nextWaveText(), 900, 600);
     }
 
-    public void drawProjectiles(SpriteBatch batch) {
+    private void drawProjectiles(SpriteBatch batch) {
         for (Projectile projectile : model.getProjectiles()) {
             Rectangle projectileRect = projectile.getRectangle();
             float width = projectileRect.width / 15;
@@ -131,14 +131,14 @@ public class PlayState extends State {
         batch.end();
     }
 
-    public void drawCats(SpriteBatch batch) {
+    private void drawCats(SpriteBatch batch) {
         for (Cat cat : model.getCats()) {
             Sprite catSprite = cat.getSprite();
             catSprite.draw(batch);
         }
     }
 
-    public void drawRats(SpriteBatch batch) {
+    private void drawRats(SpriteBatch batch) {
         for (Rat rat : model.getRats()) {
             Rectangle ratRect = rat.getRectangle();
             batch.draw(rat.getTexture(), ratRect.x, ratRect.y, ratRect.width, ratRect.height);

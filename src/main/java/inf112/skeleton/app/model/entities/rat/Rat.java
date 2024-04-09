@@ -20,11 +20,9 @@ public abstract class Rat implements IEntity {
     private Integer points;
     private boolean rewardClaimed = false;
 
-
     private boolean isFrozen;
     public ImageSwapper currentState = ImageSwapper.ALIVE;
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
-
 
     public Rat(int health, int speed, Texture texture, Integer bounty, Integer points) {
         this.health = health;
@@ -42,65 +40,118 @@ public abstract class Rat implements IEntity {
         textures.put(ImageSwapper.DEAD, new Texture(Gdx.files.internal("coin.png")));
     }
 
+    /**
+     * Checks if the reward has been claimed.
+     * 
+     * @return true if the reward has been claimed, false otherwise.
+     */
     public boolean isrewardClaimed() {
         return rewardClaimed;
     }
 
+    /**
+     * Marks the reward as claimed.
+     */
     public void rewardClaimed() {
         this.rewardClaimed = true;
     }
 
-   
-
-    public enum ImageSwapper {
+    private enum ImageSwapper {
         ALIVE,
         FROZEN,
         DEAD;
     }
 
+    /**
+     * Checks if the rat is hit by any of the given projectiles.
+     * 
+     * @param projectiles The list of projectiles to check.
+     * @return true if the rat is hit by any projectile, false otherwise.
+     */
     public boolean isHitByProjectile(ArrayList<Projectile> projectiles) {
         for (Projectile rect : projectiles) {
-           if (rect.getRectangle().overlaps(spriteRect)) {
+            if (rect.getRectangle().overlaps(spriteRect)) {
                 return true;
-           }
+            }
         }
         return false;
     }
 
+    /**
+     * Returns the projectile that hits the rat.
+     * 
+     * @param projectiles The list of projectiles to check.
+     * @return The projectile that hits the rat, or null if no projectile hits the
+     *         rat.
+     */
     public Projectile getHitByProjectile(ArrayList<Projectile> projectiles) {
         for (Projectile projectile : projectiles) {
-           if (projectile.getRectangle().overlaps(spriteRect)) {
+            if (projectile.getRectangle().overlaps(spriteRect)) {
                 return projectile;
-           }
+            }
         }
         return null;
     }
 
+    /**
+     * Returns the bounty of the rat.
+     * 
+     * @return The bounty of the rat.
+     */
     public int getBounty() {
         return bounty;
     }
 
+    /**
+     * Returns the points of the rat.
+     * 
+     * @return The points of the rat.
+     */
     public int getPoints() {
         return points;
     }
 
+    /**
+     * Swaps the image of the rat to the given image.
+     * 
+     * @param image The new image of the rat.
+     */
     public void swapImage(ImageSwapper image) {
-        currentState = image; 
+        currentState = image;
     }
 
+    /**
+     * Returns the current texture of the rat.
+     * 
+     * @return The current texture of the rat.
+     */
     public Texture getTexture() {
-        return textures.get(currentState); 
+        return textures.get(currentState);
     }
 
+    /**
+     * Returns the rectangle representing the rat.
+     * 
+     * @return The rectangle representing the rat.
+     */
     public Rectangle getRectangle() {
         return spriteRect;
     }
 
-    //må kanskje endre denne, hvis et prosjektil treffer en rotte, så skal den ta skade. Er det berde.
+    // må kanskje endre denne, hvis et prosjektil treffer en rotte, så skal den ta
+    // skade. Er det berde.
+    /**
+     * Reduces the health of the rat by the given damage.
+     * 
+     * @param damage The amount of damage to inflict on the rat.
+     */
     public void takeDamage(int damage) {
         health -= damage;
     }
 
+    /**
+     * Enum representing the possible directions of the rat.
+     */
     public enum Direction {
         UP,
         DOWN,
@@ -109,31 +160,53 @@ public abstract class Rat implements IEntity {
         OUT;
     }
 
+    /**
+     * Adds time to the rat's internal timer.
+     */
     public void addTime() {
         this.secs += 0.05;
-        
+
     }
 
+    /**
+     * Returns the current direction of the rat.
+     * 
+     * @return The current direction of the rat.
+     */
     public Direction getDirection() {
 
         int category;
-        if (secs < 4) category = 1;
-        else if (secs < 9) category = 2;
-        else if (secs < 14) category = 3;
-        else if (secs < 24) category = 4;
-        else if (secs < 31) category = 5;
-        else if (secs < 35) category = 6;
-        else if (secs < 51) category = 7;
-        else if (secs < 57) category = 8;
-        else if (secs < 62) category = 9;
-        else if (secs < 67) category = 10;
-        else if (secs < 72.5) category = 11;
-        else if (secs < 78) category = 12;
-        else if (secs < 85) category = 13;
-        else if (secs < 87) category = 14;
-        else return Direction.OUT;
-        
-    
+        if (secs < 4)
+            category = 1;
+        else if (secs < 9)
+            category = 2;
+        else if (secs < 14)
+            category = 3;
+        else if (secs < 24)
+            category = 4;
+        else if (secs < 31)
+            category = 5;
+        else if (secs < 35)
+            category = 6;
+        else if (secs < 51)
+            category = 7;
+        else if (secs < 57)
+            category = 8;
+        else if (secs < 62)
+            category = 9;
+        else if (secs < 67)
+            category = 10;
+        else if (secs < 72.5)
+            category = 11;
+        else if (secs < 78)
+            category = 12;
+        else if (secs < 85)
+            category = 13;
+        else if (secs < 87)
+            category = 14;
+        else
+            return Direction.OUT;
+
         switch (category) {
             case 1:
             case 3:
@@ -157,7 +230,6 @@ public abstract class Rat implements IEntity {
                 throw new AssertionError("Unexpected value: " + category);
         }
     }
-    
 
     @Override
     public void move() {
@@ -176,7 +248,7 @@ public abstract class Rat implements IEntity {
                 break;
             case OUT:
                 // liv -1
-            break;
+                break;
             default:
                 throw new Error("Error in class Rat");
         }
@@ -184,7 +256,7 @@ public abstract class Rat implements IEntity {
         spriteRect.x = pos.x;
         spriteRect.y = pos.y;
     }
-    
+
     @Override
     public void render(SpriteBatch batch) {
     }
@@ -200,17 +272,26 @@ public abstract class Rat implements IEntity {
         return health <= 0;
     }
 
-    public boolean isOut(){
-        if (this.getDirection()==Direction.OUT){
+    /**
+     * Checks if the rat is out.
+     * 
+     * @return true if the rat is out, false otherwise.
+     */
+    public boolean isOut() {
+        if (this.getDirection() == Direction.OUT) {
             return true;
         }
         return false;
     }
+
+    /**
+     * Sets the position of the rat.
+     * 
+     * @param pos The new position of the rat.
+     */
     public void setPosition(Vector2 pos) {
         this.pos = pos;
     }
-
-
 
     @Override
     public int getHealth() {
@@ -222,18 +303,29 @@ public abstract class Rat implements IEntity {
         return pos;
     }
 
+    /**
+     * Freezes the rat.
+     */
     public void freeze() {
         isFrozen = true;
-        //speed = speed / 2;
+        // speed = speed / 2;
         swapImage(ImageSwapper.FROZEN);
     }
 
+    /**
+     * Unfreezes the rat.
+     */
     public void unfreeze() {
         isFrozen = false;
-        //speed = speed * 2; 
+        // speed = speed * 2;
         swapImage(ImageSwapper.ALIVE);
     }
 
+    /**
+     * Checks if the rat is frozen.
+     * 
+     * @return true if the rat is frozen, false otherwise.
+     */
     public boolean isFrozen() {
         return isFrozen;
     }

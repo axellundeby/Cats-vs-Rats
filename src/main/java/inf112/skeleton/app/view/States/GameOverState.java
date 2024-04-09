@@ -9,9 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
-import inf112.skeleton.app.main.SkadedyrMain;
-import inf112.skeleton.app.model.SkadedyrModel;
-
 public class GameOverState extends State {
 
     private BitmapFont titleFont;
@@ -30,9 +27,6 @@ public class GameOverState extends State {
 
     }
 
-    
-
-
     @Override
     public void render(SpriteBatch sb) {
         Gdx.gl.glEnable(GL20.GL_BLEND);
@@ -42,7 +36,6 @@ public class GameOverState extends State {
         shapeRenderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
-        
         sb.begin();
         GlyphLayout layout = new GlyphLayout(titleFont, "GAME OVER"); // Get the width/height of the text
         float x = (Gdx.graphics.getWidth() - layout.width) / 2; // Calculate the x position
