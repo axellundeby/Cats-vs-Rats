@@ -16,7 +16,6 @@ import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.math.Vector2;
 
-
 import inf112.skeleton.app.main.SkadedyrGame;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
 import inf112.skeleton.app.model.entities.cat.Cat;
@@ -26,119 +25,120 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 
 public class ModelTest {
     static SkadedyrModel model;
+
     @BeforeAll
-	static void setUpBeforeAll() {
+    static void setUpBeforeAll() {
         HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();
         ApplicationListener listener = new ApplicationListener() {
 
             @Override
-			public void create() {
-                // TODO Auto-generated method stub
-				
-			}
+            public void create() {
+            }
 
-			@Override
-			public void resize(int width, int height) {
-				// TODO Auto-generated method stub
-				
-			}
+            @Override
+            public void resize(int width, int height) {
+            }
 
-			@Override
-			public void render() {
-				// TODO Auto-generated method stub
-				
-			}
+            @Override
+            public void render() {
+            }
 
-			@Override
-			public void pause() {
-				// TODO Auto-generated method stub
-				
-			}
+            @Override
+            public void pause() {
+            }
 
-			@Override
-			public void resume() {
-				// TODO Auto-generated method stub
-				
-			}
+            @Override
+            public void resume() {
+            }
 
-			@Override
-			public void dispose() {
-				// TODO Auto-generated method stub
-				
-			}};
+            @Override
+            public void dispose() {
+            }
+        };
         new HeadlessApplication(listener, config);
 
-        }
-    
-
-        @BeforeEach
-        void beforeEach() {
-            // Initialize your model here if necessary
-            model = new SkadedyrModel();
-            
-            // Mocking the Gdx static class if necessary
-            // Mockito cannot directly mock static methods without the Mockito-inline extension,
-            // but you can use interfaces or wrapper classes as a workaround.
-        }
-        @Test
-        public void testAddCat(){
-            Cat cat = mock(BasicCat.class);
-            assertTrue(model.getCats().isEmpty());
-            model.addCat(cat);
-            assertTrue(model.getCats().size() == 1);
-
-        }
-        @Test
-        public void attackQueueTest1(){
-            // Mock creation
-            Cat cat1 = mock(BasicCat.class);
-            Cat cat2 = mock(FreezeCat.class);
-            
-            // Define mock behavior
-            when(cat1.getPosition()).thenReturn(new Vector2(50, 0));
-            when(cat2.getPosition()).thenReturn(new Vector2(60, 0));
-            
-            model.addCat(cat1);
-            model.addCat(cat2);
-            
-            Rat rat1 = mock(BasicRat.class); 
-            Rat rat2 = mock(BasicRat.class); 
-
-            model.addRat(rat1);
-            model.addRat(rat2);
-
-            rat1.setPosition(new Vector2(45, 0));
-            rat2.setPosition(new Vector2(58, 0));
-            
-            HashMap<Cat, LinkedList<Rat>> attackMap = model.attackQueueForEachCat();
-            for (Cat cat : model.getCats()) {
-
-            }
-            // Assertions and verifications
-            // Verify the interaction or the state after performing actions
-            // For example, verify if a method was called on the mock
-            // verify(cat1).setPosition(any(Vector2.class));
-            // Assert conditions based on your logic
-        }
-        
-
-    // @Test
-    public void attackQueueTest2(){
-        //Cat cat1 = new BasicCat();
-        Cat cat1 = new BasicCat();
-        cat1.setPos(50, 0);
-        Cat cat2 = new FreezeCat();
-        cat2.setPos(60, 0);
-        model.addCat(cat1);
-        model.addCat(cat2);
-        Rat rat1 = new BasicRat();
-        Rat rat2 = new BasicRat();
-        // rat 1 is closer to cat 1 and rat 2 is closer to cat 2
-        rat1.setPosition(new Vector2(45, 0));
-        rat2.setPosition(new Vector2(58, 0));
-        HashMap<Cat, LinkedList<Rat>> attackMap = model.attackQueueForEachCat();
-        for (Cat cat : model.getCats()) {
-            System.out.println(cat.toString());
-        }
     }
+
+    @BeforeEach
+    void beforeEach() {
+        model = new SkadedyrModel();
+    }
+
+    @Test
+    public void testAddCat() {
+        Cat cat = mock(BasicCat.class);
+        assertTrue(model.getCats().isEmpty());
+        model.addCat(cat);
+        assertTrue(model.getCats().size() == 1);
+
+    }
+
+    @Test
+    public void testAddRat() {
+        Rat rat = mock(BasicRat.class);
+        assertTrue(model.getCats().isEmpty());
+        model.addRat(rat);
+        assertTrue(model.getRats().size() == 1);
+
+    }
+
+    @Test
+    public void attackQueueTest1() {
+        // Create and add mocks to model
+        Cat mockCat = mock(BasicCat.class);
+        model.addCat(mockCat);
+
+        Rat mockRat = mock(BasicRat.class);
+        model.addRat(mockRat);
+
+        // When asked if rat is within rangge, return true
+        when(mockCat.withinRange(mockRat)).thenReturn(true);
+
+        HashMap<Cat, LinkedList<Rat>> attackMap = model.attackQueueForEachCat();
+
+        LinkedList<Rat> ratQue = attackMap.get(mockCat);
+
+        int expected = mockRat.hashCode();
+        int actual = ratQue.getFirst().hashCode();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void attackQueueTest2() {
+        // Create mocks
+        Cat mockCat = mock(BasicCat.class);
+
+        model.addCat(mockCat);
+
+        // Mock rats as well
+        Rat rat1 = mock(BasicRat.class);
+        Rat rat2 = mock(BasicRat.class);
+
+        model.addRat(rat1);
+        model.addRat(rat2);
+
+        // When asked if rat is within range, return true
+        // Rat 1 is closer to the cat than rat 2, but both are in range
+        when(mockCat.withinRange(rat1)).thenReturn(true);
+        when(mockCat.withinRange(rat2)).thenReturn(true);
+
+        HashMap<Cat, LinkedList<Rat>> attackMap = model.attackQueueForEachCat();
+
+        LinkedList<Rat> ratQue = attackMap.get(mockCat);
+
+        int expected = rat1.hashCode();
+        int actual = ratQue.getFirst().hashCode();
+        assertEquals(expected, actual);
+
+        expected = rat2.hashCode();
+        actual = ratQue.getLast().hashCode();
+        assertEquals(expected, actual);
+
+    }
+    
+	@CsvSource(value = { "1,1,2", "1,2,3", "2,3,5", "3,5,8", "5,8,13", "8,13,21" })
+	@ParameterizedTest(name = "{0}+{1} == {2}")
+	void addTest(int a, int b, int c) {
+		assertEquals(c, a + b);
+	}
 }
