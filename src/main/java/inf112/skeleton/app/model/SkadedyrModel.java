@@ -38,10 +38,9 @@ public class SkadedyrModel implements ISkadedyrModel {
     private CatMenu catMenu;
     private float roundOverDelay = 0f;
     private float coinDelay = 0f;
-    private final float DELAY_DURATION = 0.5f;
-    private final float VISABLE_COIN_DURATION = 1f;
-    private List<Consumer<Integer>> moneyObservers = new ArrayList<>();
-
+    private final float DELAY_DURATION = 1f; 
+    private final float VISABLE_COIN_DURATION = 0.001f; 
+    
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
         this.catMenu = new CatMenu();
@@ -89,28 +88,26 @@ public class SkadedyrModel implements ISkadedyrModel {
             }
         }
     }
-
-    private void roundHandler(float deltaTime) {
-        if (isRoundOver()) {
+    
+    private void roundHandler(float deltaTime){
+        isRoundOver();
+        if(roundOver){
             roundOverDelay += deltaTime;
-            if (roundOverDelay >= DELAY_DURATION) {
+            if(roundOverDelay >= DELAY_DURATION){
                 roundOver(deltaTime);
-                roundOverDelay = 0f;
+                roundOverDelay = 0f; 
             }
         } else {
-            roundOverDelay = 0f;
-        }
+           roundOverDelay = 0f;
+       }
     }
 
     private void roundOver(float deltaTime) {
-        if (isRoundOver()) {
-            nextWaveText();
-            level++;
-            ratFactory.updateRatFactory(deltaTime, level);
-            isPaused = true;
-            // setPause();
-            // PauseButton.updateButtonAppearance();
-
+        level++;
+        ratFactory.updateRatFactory(deltaTime, level);
+        setPause();
+        for (Cat cat : cats) {
+            cat.resetAttackTimer();
         }
     }
 
