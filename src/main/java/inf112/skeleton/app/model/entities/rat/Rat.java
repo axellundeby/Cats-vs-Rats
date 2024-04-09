@@ -111,7 +111,6 @@ public abstract class Rat implements IEntity {
 
     public void addTime() {
         this.secs += 0.05;
-        
     }
 
     public Direction getDirection() {
