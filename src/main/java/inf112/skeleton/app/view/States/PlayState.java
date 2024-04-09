@@ -3,6 +3,7 @@ package inf112.skeleton.app.view.States;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -35,6 +36,7 @@ public class PlayState extends State {
     private UpgradeRangeButton upgradeRangeButton;
     private UpgradeDamageButton upgradeDamageButton;
     private PauseButton pauseButton;
+    private Texture mapTexture;
 
     protected PlayState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
@@ -45,6 +47,7 @@ public class PlayState extends State {
         this.catMenu = model.getBuyMenu();
         catMenu.init();
         this.stage = new Stage();
+        this.mapTexture = new Texture("angryCat.png");
 
         new SpeedButton(model, stage);
         new RestartButton(model, stage);
@@ -55,20 +58,28 @@ public class PlayState extends State {
         upgradeRangeButton = new UpgradeRangeButton(model, stage);
         upgradeDamageButton = new UpgradeDamageButton(model, stage);
 
+
         Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void render(SpriteBatch batch) {
 
-        ScreenUtils.clear(Color.GREEN);
+        ScreenUtils.clear(Color.DARK_GRAY);
         pauseButton.updateButtonAppearance();
         upgradeFireRateButton.updateButtonAppearance();
         upgradeRangeButton.updateButtonAppearance();
         upgradeDamageButton.updateButtonAppearance();
 
         batch.begin();
-        batch.draw(SkadedyrView.mapTexture, 0, 0);
+
+
+        //batch.draw(SkadedyrView.mapTexture, 0, 0);
+        batch.draw(mapTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        
+
+
         batch.end();
 
         Gdx.gl.glEnable(GL20.GL_BLEND);
