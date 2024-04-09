@@ -14,12 +14,11 @@ import inf112.skeleton.app.model.SkadedyrModel;
 public class MenuState extends State {
     private SkadedyrModel model;
     private Stage stage;
-    
 
     public MenuState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
         this.model = model;
-        
+
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         setupPlayButtons();
@@ -37,16 +36,6 @@ public class MenuState extends State {
         });
 
         stage.addActor(playImageButton);
-    }
-
-    @Override
-    public void handleInput() {
-
-    }
-
-    @Override
-    public void update(float dt) {
-        handleInput();
     }
 
     @Override

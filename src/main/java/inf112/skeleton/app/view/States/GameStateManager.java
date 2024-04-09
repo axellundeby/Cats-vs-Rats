@@ -12,15 +12,9 @@ public class GameStateManager {
         currentState = newState;
     }
 
-    public void update(float dt) {
-        if (currentState != null) {
-            currentState.update(dt);
-        }
-    }
     public State getCurrentState() {
         return currentState;
     }
-
 
     public void render(SpriteBatch sb) {
         if (currentState != null) {
