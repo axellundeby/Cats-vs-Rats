@@ -17,6 +17,7 @@ import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
+import inf112.skeleton.app.model.entities.rat.Rat.ImageSwapper;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
 import inf112.skeleton.app.controller.EventBus;
 import inf112.skeleton.app.controller.buttons.upgrade.*;
@@ -37,9 +38,9 @@ public class SkadedyrModel implements ISkadedyrModel {
     private float intervalSeconds = (float) 0.05;
     private CatMenu catMenu;
     private float roundOverDelay = 0f;
-    private float coinDelay = 0f;
     private final float DELAY_DURATION = 1f; 
-    private final float VISABLE_COIN_DURATION = 0.001f; 
+    private final float COIN_DURATION = 0.5f; 
+    private float coinDelay = 0f;
     private boolean roundOver = false;
     private boolean writeText = false;
     
@@ -71,25 +72,27 @@ public class SkadedyrModel implements ISkadedyrModel {
         Iterator<Rat> iterator = aliveRats.iterator();
         while (iterator.hasNext()) {
             Rat rat = iterator.next();
-            if (rat.isKilled() || rat.isOut()) {
+            if (rat.isKilled()) {
+                rat.updateCoinVisibility(deltaTime); 
                 if (!rat.isrewardClaimed()) {
-                    if (rat.isKilled()) {
-                        rat.killedAnimation();
-                        money += rat.getBounty();
-                        points += rat.getPoints();
-                        rat.rewardClaimed();
-                        coinDelay += deltaTime;
-                    } else if (rat.getDirection() == Direction.OUT) {
-                        lives--;
-                    }
+                    money += rat.getBounty();
+                    points += rat.getPoints();
+                    rat.rewardClaimed();
+                    rat.killedAnimation();
                 }
-                // if (coinDelay >= VISABLE_COIN_DURATION) {
-                iterator.remove();
-                coinDelay = 0f;
-                // }
+                if (rat.coinVisibleTime >= COIN_DURATION) {
+                    iterator.remove();
+                }
+            } else if (rat.getDirection() == Direction.OUT) {
+                if (!rat.isrewardClaimed()) {
+                    lives--;
+                    iterator.remove();
+                }
             }
         }
     }
+    
+    
     
     private void roundHandler(float deltaTime){
         isRoundOver();
@@ -282,7 +285,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         for (Cat cat : cats) {
             LinkedList<Rat> attackableRats = new LinkedList<>();
             for (Rat rat : aliveRats) {
-                if (cat.withinRange(rat)) {
+                if (!rat.isKilled() && cat.withinRange(rat)) { //gir mening
                     attackableRats.addLast(rat);
                 }
             }
