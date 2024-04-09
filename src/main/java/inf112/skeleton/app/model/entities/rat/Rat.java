@@ -19,6 +19,8 @@ public abstract class Rat implements IEntity {
     private Integer bounty;
     private Integer points;
     private boolean rewardClaimed = false;
+    public float coinVisibleTime = 0f;
+
 
 
     private boolean isFrozen;
@@ -49,8 +51,6 @@ public abstract class Rat implements IEntity {
     public void rewardClaimed() {
         this.rewardClaimed = true;
     }
-
-   
 
     public enum ImageSwapper {
         ALIVE,
@@ -161,6 +161,9 @@ public abstract class Rat implements IEntity {
 
     @Override
     public void move() {
+        if(isKilled()){
+            return;
+        }
         switch (getDirection()) {
             case UP:
                 pos.y += speed;
@@ -189,10 +192,18 @@ public abstract class Rat implements IEntity {
     public void render(SpriteBatch batch) {
     }
 
+
     @Override
     public void killedAnimation() {
-        speed = 0;
         swapImage(ImageSwapper.DEAD);
+        health = 0;
+        speed = 0;
+    }
+
+    public void updateCoinVisibility(float deltaTime) {
+        if (isKilled()) {
+            coinVisibleTime += deltaTime;
+        }
     }
 
     @Override

@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-
-import inf112.skeleton.app.controller.buttons.upgrade.UpgradeFireRateButton;
 import inf112.skeleton.app.main.SkadedyrMain;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
@@ -18,10 +16,7 @@ import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
-import inf112.skeleton.app.controller.EventBus;
-import inf112.skeleton.app.controller.buttons.upgrade.*;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Cat> cats = new ArrayList<>();
@@ -37,10 +32,10 @@ public class SkadedyrModel implements ISkadedyrModel {
     private float intervalSeconds = (float) 0.05;
     private CatMenu catMenu;
     private float roundOverDelay = 0f;
-    private float coinDelay = 0f;
     private final float DELAY_DURATION = 1f; 
-    private final float VISABLE_COIN_DURATION = 0.001f; 
+    private final float COIN_DURATION = 0.5f; 
     private boolean roundOver = false;
+    private boolean writeText = false;
     
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
@@ -70,25 +65,27 @@ public class SkadedyrModel implements ISkadedyrModel {
         Iterator<Rat> iterator = aliveRats.iterator();
         while (iterator.hasNext()) {
             Rat rat = iterator.next();
-            if (rat.isKilled() || rat.isOut()) {
+            if (rat.isKilled()) {
+                rat.updateCoinVisibility(deltaTime); 
                 if (!rat.isrewardClaimed()) {
-                    if (rat.isKilled()) {
-                        rat.killedAnimation();
-                        money += rat.getBounty();
-                        points += rat.getPoints();
-                        rat.rewardClaimed();
-                        coinDelay += deltaTime;
-                    } else if (rat.getDirection() == Direction.OUT) {
-                        lives--;
-                    }
+                    money += rat.getBounty();
+                    points += rat.getPoints();
+                    rat.rewardClaimed();
+                    rat.killedAnimation();
                 }
-                // if (coinDelay >= VISABLE_COIN_DURATION) {
-                iterator.remove();
-                coinDelay = 0f;
-                // }
+                if (rat.coinVisibleTime >= COIN_DURATION) {
+                    iterator.remove();
+                }
+            } else if (rat.getDirection() == Direction.OUT) {
+                if (!rat.isrewardClaimed()) {
+                    lives--;
+                    iterator.remove();
+                }
             }
         }
     }
+    
+    
     
     private void roundHandler(float deltaTime){
         isRoundOver();
@@ -100,12 +97,15 @@ public class SkadedyrModel implements ISkadedyrModel {
             }
         } else {
            roundOverDelay = 0f;
+           writeText = false;
        }
     }
 
     private void roundOver(float deltaTime) {
         level++;
         ratFactory.updateRatFactory(deltaTime, level);
+        writeText = true;
+        nextWaveText();
         setPause();
         for (Cat cat : cats) {
             cat.resetAttackTimer();
@@ -127,13 +127,11 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     }
 
-
-    // theo
-    public String nextWaveText() {// Kanskje også animasjon?
-        // if (isRoundOver()) {
-        return "Round over. Press P to continue.";
-        // }
-        // return "";
+    public String nextWaveText() {//skal egt vente
+        if (writeText) {
+            return "Round over. Press unPause to continue.";
+        }
+        return "";
     }
 
     private void updateCatAnimations(float deltaTime) {
@@ -280,7 +278,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         for (Cat cat : cats) {
             LinkedList<Rat> attackableRats = new LinkedList<>();
             for (Rat rat : aliveRats) {
-                if (cat.withinRange(rat)) {
+                if (!rat.isKilled() && cat.withinRange(rat)) { //gir mening
                     attackableRats.addLast(rat);
                 }
             }
