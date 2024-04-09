@@ -25,9 +25,12 @@ public class MenuState extends State {
     }
 
     private void setupPlayButtons() {
-        ImageButton playImageButton = ButtonFactory.createImageButton("buttonUp.png", "buttonDown.png");
-        playImageButton.setPosition((stage.getWidth() - playImageButton.getWidth()) / 2,
-                (stage.getHeight() - playImageButton.getHeight()) / 2 - 100);
+        ImageButton playImageButton = ButtonFactory.createImageButton("buttons_game/Spill_Play.png", "buttons_game/Spill_Play-Down.png");
+        
+        playImageButton.setSize(200, 200);
+        playImageButton.setPosition((stage.getWidth() - playImageButton.getWidth()) / 2, (stage.getHeight() - playImageButton.getHeight()) / 2 - 100);
+
+      
         playImageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
