@@ -47,7 +47,7 @@ public class PlayState extends State {
         this.catMenu = model.getBuyMenu();
         catMenu.init();
         this.stage = new Stage();
-        this.mapTexture = new Texture("angryCat.png");
+        this.mapTexture = new Texture("map.png");
 
         new SpeedButton(model, stage);
         new RestartButton(model, stage);
@@ -75,7 +75,7 @@ public class PlayState extends State {
 
 
         //batch.draw(SkadedyrView.mapTexture, 0, 0);
-        batch.draw(mapTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(mapTexture, 0, 0, Gdx.graphics.getWidth() - 400 , Gdx.graphics.getHeight());
 
         
 
