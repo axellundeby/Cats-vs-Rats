@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-
-import inf112.skeleton.app.controller.buttons.upgrade.UpgradeFireRateButton;
 import inf112.skeleton.app.main.SkadedyrMain;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
@@ -17,12 +15,8 @@ import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
-import inf112.skeleton.app.model.entities.rat.Rat.ImageSwapper;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
-import inf112.skeleton.app.controller.EventBus;
-import inf112.skeleton.app.controller.buttons.upgrade.*;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Cat> cats = new ArrayList<>();
@@ -40,7 +34,6 @@ public class SkadedyrModel implements ISkadedyrModel {
     private float roundOverDelay = 0f;
     private final float DELAY_DURATION = 1f; 
     private final float COIN_DURATION = 0.5f; 
-    private float coinDelay = 0f;
     private boolean roundOver = false;
     private boolean writeText = false;
     
