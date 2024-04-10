@@ -6,6 +6,10 @@ import com.badlogic.gdx.graphics.Texture;
 public class BasicRat extends Rat {
 
     public BasicRat() {
-        super(70, 2, new Texture(Gdx.files.internal("rat1.png")),200,1);
+        super(70, 2, 
+        new Texture(Gdx.files.internal("rat1.png")), 
+        new Texture(Gdx.files.internal("snow.png")),  
+        new Texture(Gdx.files.internal("coin.png")),
+        200,1);
     }
 }

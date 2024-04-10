@@ -26,7 +26,7 @@ public abstract class Rat implements IEntity {
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
 
 
-    public Rat(int health, int speed, Texture texture, Integer bounty, Integer points) {
+    public Rat(int health, int speed, Texture aliveTexture, Texture deadTexture, Texture frozenTexture, Integer bounty, Integer points) {
         this.health = health;
         this.points = points;
         this.bounty = bounty;
@@ -37,9 +37,9 @@ public abstract class Rat implements IEntity {
 
         this.spriteRect = new Rectangle(pos.x - halfsize, pos.y + halfsize, halfsize * 2, halfsize * 2);
         this.secs = 0;
-        textures.put(ImageSwapper.ALIVE, texture);
-        textures.put(ImageSwapper.FROZEN, new Texture(Gdx.files.internal("snow.png")));
-        textures.put(ImageSwapper.DEAD, new Texture(Gdx.files.internal("coin.png")));
+        textures.put(ImageSwapper.ALIVE, aliveTexture);
+        textures.put(ImageSwapper.FROZEN, frozenTexture);
+        textures.put(ImageSwapper.DEAD, deadTexture);
     }
 
     public boolean isrewardClaimed() {
