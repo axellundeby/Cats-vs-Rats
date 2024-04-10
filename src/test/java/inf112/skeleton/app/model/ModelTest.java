@@ -61,18 +61,20 @@ public class ModelTest {
     @Test
     public void testAddCat() {
         Cat cat = mock(BasicCat.class);
-        assertTrue(model.getCats().isEmpty());
+        assertEquals(0, model.getCats().size(), "Initial Cats list is not empty");
         model.addCat(cat);
-        assertTrue(model.getCats().size() == 1);
+        int actual = model.getCats().size();
+        assertEquals(1, actual, "Expected one cat in list, but got " + actual);
 
     }
 
     @Test
     public void testAddRat() {
         Rat rat = mock(BasicRat.class);
-        assertEquals(0, model.getCats().size());
+        assertEquals(0, model.getCats().size(), "Initial Rats list is not empty");
         model.addRat(rat);
-        assertEquals(1, model.getRats().size());
+        int actual = model.getRats().size();
+        assertEquals(1, actual, "Expected one cat in list, but got " + actual);
 
     }
 
@@ -94,7 +96,7 @@ public class ModelTest {
 
         int expected = mockRat.hashCode();
         int actual = ratQue.getFirst().hashCode();
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, "Wrong rat targeted for attack");
     }
 
     @Test
@@ -122,12 +124,11 @@ public class ModelTest {
 
         int expected = rat1.hashCode();
         int actual = ratQue.getFirst().hashCode();
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, "Wrong rat targeted for attack");
 
         expected = rat2.hashCode();
         actual = ratQue.getLast().hashCode();
-        assertEquals(expected, actual);
-
+        assertEquals(expected, actual, "Wrong rat targeted for attack");
     }
 
     @Test
@@ -149,9 +150,9 @@ public class ModelTest {
         HashMap<Cat, LinkedList<Rat>> attackMap = model.attackQueueForEachCat();
 
         // Verify outcomes
-        assertTrue(attackMap.containsKey(mockCat), "Attack map should contain the cat");
+        assertTrue(attackMap.containsKey(mockCat), "Attack is missing cat");
         LinkedList<Rat> assignedRats = attackMap.get(mockCat);
-        assertNotNull(assignedRats, "There should be a list of rats for the cat");
+        assertNotNull(assignedRats, "List of rats missing for the cat");
         assertTrue(assignedRats.contains(ratClose), "The close rat should be in the attack queue");
         assertFalse(assignedRats.contains(ratFar), "The far rat should not be in the attack queue");
     }
