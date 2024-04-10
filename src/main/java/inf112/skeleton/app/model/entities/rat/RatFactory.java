@@ -17,7 +17,7 @@ public class RatFactory {
         spawnTimer += deltaTime;
         if (spawnTimer > RAT_SPAWN_DELAY && ratsSpawned < calculateRatsForRound(level)) {
             spawnTimer = 0; 
-            rats.add(selectRatTypeWithVariation(level));
+            rats.add(ratVariation(level));
             ratsSpawned++;
         }
         return rats;
@@ -27,8 +27,8 @@ public class RatFactory {
         return 1 + (round * 5);
     }
 
-    //en rotte skal kanskje være en annen?
-    private Rat selectRatTypeWithVariation(int level) {
+    //krasjer etter x runder
+    private Rat ratVariation(int level) {
         // Velg en rotte med variasjon innenfor nivået
         int type = random.nextInt(100); // Tilfeldig nummer mellom 0 og 99
 

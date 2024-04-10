@@ -83,7 +83,7 @@ public class SkadedyrModel implements ISkadedyrModel {
             } else if (rat.getDirection() == Direction.OUT) {
                 if (!rat.isrewardClaimed()) {
                     if (!rat.isExited()) {
-                        lives--;
+                        lives = Math.max(0, lives - 1);
                         rat.exit();
                     }
                     iterator.remove();
@@ -91,8 +91,6 @@ public class SkadedyrModel implements ISkadedyrModel {
             }
         }
     }
-    
-    
     
     private void roundHandler(float deltaTime){
         isRoundOver();
