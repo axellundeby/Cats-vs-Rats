@@ -24,3 +24,4 @@ Man kan plassere katter på stien.
 * Krever Java 21 eller senere
 
 ### Credits
+Fabian Christensen - Grafikk
