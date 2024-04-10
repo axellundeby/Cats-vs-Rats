@@ -100,7 +100,7 @@ public class CatTest {
     }
 
     @CsvSource(value = {"0,0,10,true", "100,0,74,false", "0,49,50,true", "-10,0,10,true", "-36,-36,10,false"})
-    @ParameterizedTest(name = "Testing if Rat at {0}, {1} is within range {2} of Cat: {3}")
+    @ParameterizedTest(name = "Rat at {0}, {1} is within range {2} of Cat: {3}")
     public void rangeTest(int labRatX, int labRatY, int catRange, boolean inRange){
         Rat labRat = new LabRat(1, 1, dependency, 1, 1);
         labRat.setPosition(new Vector2(labRatX, labRatY));
@@ -108,13 +108,6 @@ public class CatTest {
     
         Cat customRangeCat = new LabCat(1, catRange, dependency, dependency, 1, 0);
         customRangeCat.circleUpdater();
-
-        System.out.println("Cat position: " + customRangeCat.getPosition());
-        System.out.println("Rat position: " + labRat.getPosition());
-
-        // Debugging outputs
-        System.out.println("Cat Range Circle: " + customRangeCat.getRangeCircle());
-        System.out.println("Rat Rectangle: " + labRat.getRectangle());
     
         assertEquals(inRange, customRangeCat.withinRange(labRat), "Range test failed");
     }
