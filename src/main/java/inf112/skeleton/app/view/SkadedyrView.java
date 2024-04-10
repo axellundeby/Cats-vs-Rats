@@ -32,9 +32,6 @@ public class SkadedyrView {
 
     public SkadedyrView(SkadedyrModel model) {
         this.model = model;
-     
-        
-
     }
 
     public void create() {
@@ -45,7 +42,7 @@ public class SkadedyrView {
         font.setColor(Color.RED);
         gsm = new GameStateManager();
         GameStateManager.set(new MenuState(gsm, model));
-        mapTexture = new Texture(Gdx.files.internal("map.png")); // Load once in create
+       
         Gdx.graphics.setForegroundFPS(60);
     }
 

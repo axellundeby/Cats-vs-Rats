@@ -37,6 +37,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private final float COIN_DURATION = 0.5f; 
     private boolean roundOver = false;
     private boolean writeText = false;
+    private boolean speedUp = false;
     
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
@@ -178,15 +179,22 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
     @Override
     public float getSpeed() {
-
         return intervalSeconds;
+    }
+
+
+    public boolean isSpeedUp() {
+        return speedUp;
     }
 
     @Override
     public void setSpeed() {
         if (!isPaused) {
+            speedUp = !speedUp;
+
             if (intervalSeconds == (float) 0.05) {
                 intervalSeconds = (float) 0.0025;
+                
 
             } else {
                 intervalSeconds = (float) 0.05;
