@@ -25,4 +25,3 @@ Som påpekt under *Produkt og kode* i oblig2.md har vi flere katter som vi har i
 * Krever Java 21 eller senere
 
 ### Credits
-
