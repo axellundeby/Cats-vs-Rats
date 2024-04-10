@@ -23,9 +23,6 @@ public abstract class Rat implements IEntity {
     private boolean exited = false;
     public float coinVisibleTime = 0f;
     private Sprite sprite;
-    private int halfSize;
-
-
     private boolean isFrozen;
     public ImageSwapper currentState = ImageSwapper.ALIVE;
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
