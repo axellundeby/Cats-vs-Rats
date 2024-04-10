@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
-import inf112.skeleton.app.main.SkadedyrMain;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
@@ -205,9 +204,23 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     @Override
     public void restart() {
-        if (isPaused) {
-            SkadedyrMain.main(null);
-        }
+        // if (isPaused) {
+            wipe();
+
+        
+    }
+
+    private void wipe() {
+            cats.clear();
+            aliveRats.clear();
+            projectiles.clear();
+            lives = 5;
+            money = 1000;
+            points = 0;
+            level = 0;
+            ratsSpawned = 0;
+            isPaused = true;
+        
     }
 
     @Override
@@ -245,7 +258,6 @@ public class SkadedyrModel implements ISkadedyrModel {
     @Override
     public void setMoney(int money) {
         this.money = money;
-       
        
     }
    

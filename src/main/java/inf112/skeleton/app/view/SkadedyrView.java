@@ -49,7 +49,7 @@ public class SkadedyrView {
     public void dispose() {
         batch.dispose();
         font.dispose();
-        mapTexture.dispose(); // Dispose the map texture
+        
         for (Cat cat : model.getCats()) {
             cat.getTexture().dispose();
         }
