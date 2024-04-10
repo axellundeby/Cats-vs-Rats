@@ -23,20 +23,20 @@ public abstract class Rat implements IEntity {
     private boolean exited = false;
     public float coinVisibleTime = 0f;
     private Sprite sprite;
+    private int halfSize;
 
 
     private boolean isFrozen;
     public ImageSwapper currentState = ImageSwapper.ALIVE;
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
 
-    public Rat(int health, int speed, Texture texture, Integer bounty, Integer points, Texture frozenTexture) {
+    public Rat(int health, int speed, Texture texture, Integer bounty, Integer points, Texture frozenTexture, int halfsize) {
         this.health = health;
         this.speed = speed;
         this.points = points;
         this.bounty = bounty;
         this.pos = new Vector2(-10, 430);
         this.sprite = new Sprite(texture);
-        int halfsize = 40;
         this.sprite.setSize(halfsize * 2, halfsize * 2);
         this.sprite.setPosition(pos.x - halfsize, pos.y - halfsize);
         this.secs = 0;
