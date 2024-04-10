@@ -24,7 +24,7 @@ import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
-import inf112.skeleton.app.view.SkadedyrView;
+
 
 public class PlayState extends State {
     private ShapeRenderer shapeRenderer;
@@ -71,16 +71,7 @@ public class PlayState extends State {
         upgradeRangeButton.updateButtonAppearance();
         upgradeDamageButton.updateButtonAppearance();
 
-        batch.begin();
-
-
-        //batch.draw(SkadedyrView.mapTexture, 0, 0);
-        batch.draw(mapTexture, 0, 0, Gdx.graphics.getWidth() - 400 , Gdx.graphics.getHeight());
-
-        
-
-
-        batch.end();
+       
 
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -98,6 +89,7 @@ public class PlayState extends State {
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
         batch.begin();
+        batch.draw(mapTexture, 0, 0, Gdx.graphics.getWidth() -400  , Gdx.graphics.getHeight());
         drawCats(batch);
         drawRats(batch);
         drawProjectiles(batch);
@@ -113,12 +105,14 @@ public class PlayState extends State {
     }
 
     private void drawGameStatus(SpriteBatch batch) {
-        font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 10);
+        font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 50);
         font.draw(batch, "Dine liv: " + model.getLives(), 1000, 760);
         font.draw(batch, "Dine penger: " + model.getMoney(), 1000, 840);
         font.draw(batch, "Din Score: " + model.getPoints(), 1000, 800);
         font.draw(batch, "Level: " + model.getLevel(), 1000, 720);
         font.draw(batch, model.nextWaveText(), 900, 600);
+        font.setColor(Color.WHITE);
+        
     }
 
     private void drawProjectiles(SpriteBatch batch) {

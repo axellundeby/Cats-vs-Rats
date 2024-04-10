@@ -23,6 +23,8 @@ public class PauseButton extends Buttons {
         button.setSize(100, 100);
         button.setPosition(850, 500);
 
+        
+
         button.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
