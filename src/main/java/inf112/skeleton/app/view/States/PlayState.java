@@ -145,8 +145,8 @@ public class PlayState extends State {
 
     private void drawRats(SpriteBatch batch) {
         for (Rat rat : model.getRats()) {
-            Rectangle ratRect = rat.getRectangle();
-            batch.draw(rat.getTexture(), ratRect.x, ratRect.y, ratRect.width, ratRect.height);
+            Sprite catSprite = rat.getSprite();
+            catSprite.draw(batch);
         }
     }
 

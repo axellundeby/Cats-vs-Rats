@@ -34,7 +34,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private CatMenu catMenu;
     private float roundOverDelay = 0f;
     private final float DELAY_DURATION = 1f; 
-    private final float COIN_DURATION = 0.5f; 
+    private final float COIN_DURATION = 1f; 
     private boolean roundOver = false;
     private boolean writeText = false;
     private boolean speedUp = false;
@@ -51,11 +51,12 @@ public class SkadedyrModel implements ISkadedyrModel {
         handleUserInput();
         moveRats();
         attackRat();
-        rotater();
+        catRotater();
         // updateProjectiles(deltaTime);
         List<Rat> newRats = ratFactory.updateRatFactory(deltaTime, level);
         for (Rat newRat : newRats) {
             newRat.addTime();
+            newRat.rotateImage();
             if (!aliveRats.contains(newRat)) {
                 aliveRats.add(newRat);
             }
@@ -81,14 +82,15 @@ public class SkadedyrModel implements ISkadedyrModel {
                 }
             } else if (rat.getDirection() == Direction.OUT) {
                 if (!rat.isrewardClaimed()) {
-                    lives--;
+                    if (!rat.isExited()) {
+                        lives = Math.max(0, lives - 1);
+                        rat.exit();
+                    }
                     iterator.remove();
                 }
             }
         }
     }
-    
-    
     
     private void roundHandler(float deltaTime){
         isRoundOver();
@@ -130,7 +132,7 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     }
 
-    public String nextWaveText() {//skal egt vente
+    public String nextWaveText() {
         if (writeText) {
             return "Round over. Press unPause to continue.";
         }
@@ -260,7 +262,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
 
-    private void rotater() {
+    private void catRotater() {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
         for (Cat cat : cats) {
             LinkedList<Rat> attackableRats = attackMap.get(cat);
@@ -342,18 +344,22 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     private void newCat(int mouseX, int mouseY) {
         Cat cat = catMenu.getSelectedCat();
+        int cost = 0;
         if (cat instanceof BasicCat) {
             cat = new BasicCat();
-            money -= cat.getCost();
+            cost = cat.getCost();
         } else if (cat instanceof ShotgunCat) {
             cat = new ShotgunCat();
-            money -= cat.getCost();
+            cost = cat.getCost();
         } else if (cat instanceof FreezeCat) {
             cat = new FreezeCat();
-            money -= cat.getCost();
+            cost = cat.getCost();
         }
-        cat.setPos(mouseX, mouseY);
-        addCat(cat);
+        if (money >= cost) { 
+            cat.setPos(mouseX, mouseY);
+            addCat(cat);
+            money -= cost;
+        }
     }
 
     @Override

@@ -36,7 +36,7 @@ public abstract class Cat {
         this.strength = strength;
         this.range = range;
         this.pos = new Vector2();
-        this.size = 60;
+        this.size = 100;
         this.fireRate = fireRate;
         this.attackTimer = 0;
         this.halfSize = size / 2;
@@ -113,7 +113,6 @@ public abstract class Cat {
         this.lastTargetPosition = lastTargetPosition;
     }
 
-    // rotate er bugga
      /**
      * Rotates the cat's image to face its last target.
      * The image is rotated such that it is always facing the direction of the last target.
@@ -235,9 +234,10 @@ public abstract class Cat {
      * @return True if the rat is within the cat's range, false otherwise.
      */
     public boolean withinRange(Rat target) {
-        Rectangle ratRect = target.getRectangle();
+        Rectangle ratRect = target.getSprite().getBoundingRectangle();
         return Intersector.overlaps(rangeCircle, ratRect);
     }
+    
 
     /**
      * Swaps the cat's image to the specified state.

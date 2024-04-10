@@ -2,6 +2,7 @@ package inf112.skeleton.app.model.entities.rat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -19,28 +20,29 @@ public abstract class Rat implements IEntity {
     private Integer bounty;
     private Integer points;
     private boolean rewardClaimed = false;
+    private boolean exited = false;
     public float coinVisibleTime = 0f;
-
-
+    private Sprite sprite;
     private boolean isFrozen;
     public ImageSwapper currentState = ImageSwapper.ALIVE;
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
 
-    public Rat(int health, int speed, Texture texture, Integer bounty, Integer points) {
+    public Rat(int health, int speed, Texture texture, Integer bounty, Integer points, Texture frozenTexture, int halfsize) {
         this.health = health;
+        this.speed = speed;
         this.points = points;
         this.bounty = bounty;
-        this.speed = speed;
-        this.bounty = bounty;
-        int halfsize = 25;
         this.pos = new Vector2(-10, 430);
-
-        this.spriteRect = new Rectangle(pos.x - halfsize, pos.y + halfsize, halfsize * 2, halfsize * 2);
+        this.sprite = new Sprite(texture);
+        this.sprite.setSize(halfsize * 2, halfsize * 2);
+        this.sprite.setPosition(pos.x - halfsize, pos.y - halfsize);
         this.secs = 0;
         textures.put(ImageSwapper.ALIVE, texture);
-        textures.put(ImageSwapper.FROZEN, new Texture(Gdx.files.internal("snow.png")));
+        textures.put(ImageSwapper.FROZEN, frozenTexture);
         textures.put(ImageSwapper.DEAD, new Texture(Gdx.files.internal("coin.png")));
+        this.spriteRect = new Rectangle(pos.x - halfsize, pos.y - halfsize, halfsize * 2, halfsize * 2);
     }
+    
 
     /**
      * Checks if the reward has been claimed.
@@ -52,10 +54,25 @@ public abstract class Rat implements IEntity {
     }
 
     /**
+     * Checks if the rat has exited the game.
+     * @return true if the rat has exited the game, false otherwise.
+     */
+    public boolean isExited() {
+        return exited;
+    }
+
+    /**
      * Marks the reward as claimed.
      */
     public void rewardClaimed() {
         this.rewardClaimed = true;
+    }
+
+    /**
+     * Marks the rat as exited.
+     */
+    public void exit() {
+        this.exited = true;
     }
 
     private enum ImageSwapper {
@@ -176,7 +193,6 @@ public abstract class Rat implements IEntity {
      * @return The current direction of the rat.
      */
     public Direction getDirection() {
-
         int category;
         if (secs < 4)
             category = 1;
@@ -233,12 +249,41 @@ public abstract class Rat implements IEntity {
         }
     }
 
+    //Skal vi ha med dette egentlig, ser bedre når ny rotte?
+    private float getRotationAngle() {
+        Direction dir = getDirection();
+        switch (dir) {
+            case UP:
+                return 0;
+            case DOWN:
+                return 180;
+            case LEFT:
+                return 90;
+            case RIGHT:
+                return -90;
+            case OUT:
+                // Assuming no rotation for OUT direction.
+                return 0;
+            default:
+                throw new Error("Unexpected Direction: " + dir);
+        }
+    }
+
+
+    /**
+     * Rotates the rat's image to face its direction.
+     */
+    public void rotateImage() {
+        float angle = getRotationAngle();
+        this.sprite.setOriginCenter();
+        this.sprite.setRotation(angle);
+    }
+    
+
     @Override
     public void move() {
-        if(isKilled()){
-            return;
-        }
-        switch (getDirection()) {
+        Direction dir = getDirection(); 
+        switch (dir) {
             case UP:
                 pos.y += speed;
                 break;
@@ -251,27 +296,28 @@ public abstract class Rat implements IEntity {
             case LEFT:
                 pos.x -= speed;
                 break;
-            case OUT:
-                // liv -1
-                break;
             default:
-                throw new Error("Error in class Rat");
+                break;
         }
-
-        spriteRect.x = pos.x;
-        spriteRect.y = pos.y;
+    
+        this.sprite.setPosition(pos.x, pos.y);
+        rotateImage(); 
     }
+
+    public Sprite getSprite() {
+        return sprite;
+    }
+    
 
     @Override
     public void render(SpriteBatch batch) {
     }
 
-
-    @Override
     public void killedAnimation() {
         swapImage(ImageSwapper.DEAD);
         health = 0;
         speed = 0;
+        this.sprite.setTexture(getTexture());
     }
 
     public void updateCoinVisibility(float deltaTime) {
@@ -321,8 +367,8 @@ public abstract class Rat implements IEntity {
      */
     public void freeze() {
         isFrozen = true;
-        // speed = speed / 2;
         swapImage(ImageSwapper.FROZEN);
+        this.sprite.setTexture(getTexture());
     }
 
     /**
@@ -330,8 +376,8 @@ public abstract class Rat implements IEntity {
      */
     public void unfreeze() {
         isFrozen = false;
-        // speed = speed * 2;
         swapImage(ImageSwapper.ALIVE);
+        this.sprite.setTexture(getTexture());
     }
 
     /**
