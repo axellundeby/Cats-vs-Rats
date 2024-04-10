@@ -21,6 +21,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 import inf112.skeleton.app.model.SkadedyrModel;
+import inf112.skeleton.app.model.entities.rat.LabRat;
+import inf112.skeleton.app.model.entities.rat.Rat;
 
 public class CatTest {
     static SkadedyrModel model;
@@ -69,11 +71,7 @@ public class CatTest {
         model = new SkadedyrModel();
         cat = new LabCat(10, 10f, dependency, dependency, 1f, 0);
     }
-    @CsvSource(value = { "1,1,2", "1,2,3", "2,3,5", "3,5,8", "5,8,13", "8,13,21" })
-	@ParameterizedTest(name = "{0}+{1} == {2}")
-	void addTest(int a, int b, int c) {
-		assertEquals(c, a + b);
-	}
+
 
     @CsvSource(value = { "10;10;10.0,10.0", "5;15;5.0,15.0", "-1;-1;-1.0,-1.0" }, delimiter = ';')
     @ParameterizedTest(name = "x = {0}, y = {1} gives [{2}]")
@@ -85,6 +83,41 @@ public class CatTest {
         assertEquals(posSet.toString(), "(" + vector + ")", "Set position does not match expected value");
     }
     
+    @CsvSource(value = {"0,10,0.0", "10,0,-90.0", "10,10,-45.0", "-438,20,87.385574"})
+    @ParameterizedTest(name = "[{0}, {1}] == {2}°")
+    public void catRotationCalculationTest(int labRatX, int labRatY, float expectedAngle){
+        // Create a LabRat for testing and set parameterized position
+        Rat labRat = new LabRat(1, 1, dependency, 1, 1);
+        labRat.setPosition(new Vector2(labRatX, labRatY));
+
+        // Calculate rotation
+        cat.setRotationToward(labRat);
+        float newAngle = cat.getRotationAngle();
+
+        assertEquals(expectedAngle, newAngle, "Angle calculation error");
+
+
+    }
+
+    @CsvSource(value = {"0,0,10,true", "100,0,74,false", "0,49,50,true", "-10,0,10,true", "-36,-36,10,false"})
+    @ParameterizedTest(name = "Testing if Rat at {0}, {1} is within range {2} of Cat: {3}")
+    public void rangeTest(int labRatX, int labRatY, int catRange, boolean inRange){
+        Rat labRat = new LabRat(1, 1, dependency, 1, 1);
+        labRat.setPosition(new Vector2(labRatX, labRatY));
+        labRat.rectangleUpdater();
+    
+        Cat customRangeCat = new LabCat(1, catRange, dependency, dependency, 1, 0);
+        customRangeCat.circleUpdater();
+
+        System.out.println("Cat position: " + customRangeCat.getPosition());
+        System.out.println("Rat position: " + labRat.getPosition());
+
+        // Debugging outputs
+        System.out.println("Cat Range Circle: " + customRangeCat.getRangeCircle());
+        System.out.println("Rat Rectangle: " + labRat.getRectangle());
+    
+        assertEquals(inRange, customRangeCat.withinRange(labRat), "Range test failed");
+    }
     
 
 
