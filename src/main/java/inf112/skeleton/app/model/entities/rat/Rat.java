@@ -19,12 +19,13 @@ public abstract class Rat implements IEntity {
     private Integer bounty;
     private Integer points;
     private boolean rewardClaimed = false;
-
-
+    
+    
     private boolean isFrozen;
     public ImageSwapper currentState = ImageSwapper.ALIVE;
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
-
+    int halfsize = 25;
+    
 
     public Rat(int health, int speed, Texture aliveTexture, Texture deadTexture, Texture frozenTexture, Integer bounty, Integer points) {
         this.health = health;
@@ -32,7 +33,6 @@ public abstract class Rat implements IEntity {
         this.bounty = bounty;
         this.speed = speed;
         this.bounty = bounty;
-        int halfsize = 25;
         this.pos = new Vector2(-10, 430);
 
         this.spriteRect = new Rectangle(pos.x - halfsize, pos.y + halfsize, halfsize * 2, halfsize * 2);
@@ -50,7 +50,11 @@ public abstract class Rat implements IEntity {
         this.rewardClaimed = true;
     }
 
-   
+    public void rectangleUpdater(){
+        spriteRect.x = pos.x - halfsize;
+        spriteRect.y = pos.y - halfsize;
+        
+    }
 
     public enum ImageSwapper {
         ALIVE,
