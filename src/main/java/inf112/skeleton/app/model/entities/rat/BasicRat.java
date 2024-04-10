@@ -4,9 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 public class BasicRat extends Rat {
-    Texture texture = new Texture(Gdx.files.internal("rat1.png"));
+    Texture defaultTexture = new Texture(Gdx.files.internal("Spill_Rotte1.png"));
+    Texture freezeTexture = new Texture(Gdx.files.internal("Spill_Rotte1_freezed.png"));
     public BasicRat() {
-       super(70, 2, new Texture(Gdx.files.internal("rat1.png")),200,1);
-        //super(health, 2, texture, bounty, points); 
+       super(70, 2, new Texture(Gdx.files.internal("Spill_Rotte1.png")),200,1,new Texture(Gdx.files.internal("Spill_Rotte1_freezed.png")));
     }
 }

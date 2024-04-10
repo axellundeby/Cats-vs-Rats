@@ -27,6 +27,7 @@ public class RatFactory {
         return 1 + (round * 5);
     }
 
+    //en rotte skal kanskje være en annen?
     private Rat selectRatTypeWithVariation(int level) {
         // Velg en rotte med variasjon innenfor nivået
         int type = random.nextInt(100); // Tilfeldig nummer mellom 0 og 99
@@ -41,11 +42,7 @@ public class RatFactory {
             if (type < 50) return new BasicRat();
             else if (type < 80) return new FastRat();
             else return new StrongRat();
-        } else {
-            // 40% SpeedRat, 30% StrongRat, 30% BossRat
-            if (type < 40) return new FastRat();
-            else if (type < 70) return new StrongRat();
-            else return new BossRat();
         }
+        return null; 
     }
 }

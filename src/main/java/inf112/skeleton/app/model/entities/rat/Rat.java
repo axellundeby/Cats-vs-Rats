@@ -29,7 +29,7 @@ public abstract class Rat implements IEntity {
     public ImageSwapper currentState = ImageSwapper.ALIVE;
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
 
-    public Rat(int health, int speed, Texture texture, Integer bounty, Integer points) {
+    public Rat(int health, int speed, Texture texture, Integer bounty, Integer points, Texture frozenTexture) {
         this.health = health;
         this.speed = speed;
         this.points = points;
@@ -41,7 +41,7 @@ public abstract class Rat implements IEntity {
         this.sprite.setPosition(pos.x - halfsize, pos.y - halfsize);
         this.secs = 0;
         textures.put(ImageSwapper.ALIVE, texture);
-        textures.put(ImageSwapper.FROZEN, new Texture(Gdx.files.internal("snow.png")));
+        textures.put(ImageSwapper.FROZEN, frozenTexture);
         textures.put(ImageSwapper.DEAD, new Texture(Gdx.files.internal("coin.png")));
         this.spriteRect = new Rectangle(pos.x - halfsize, pos.y - halfsize, halfsize * 2, halfsize * 2);
     }
