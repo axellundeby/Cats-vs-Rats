@@ -47,7 +47,7 @@ public class PlayState extends State {
         this.catMenu = model.getBuyMenu();
         catMenu.init();
         this.stage = new Stage();
-        this.mapTexture = new Texture("Spill_Plattform.jpg");
+        this.mapTexture = new Texture("map/Spill_Plattform.jpg");
 
         new SpeedButton(model, stage);
         new RestartButton(model, stage);

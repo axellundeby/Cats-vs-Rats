@@ -13,7 +13,7 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 public class ShotgunCat extends Cat {
 
     public ShotgunCat() {
-        super(20, 50, new Texture(Gdx.files.internal("hagleKatt.png")), new Texture(Gdx.files.internal("angryCat.png")), 3.0f,500);
+        super(20, 50, new Texture(Gdx.files.internal("cats/Spill_Skytekatt1.png")), new Texture(Gdx.files.internal("angryCat.png")), 3.0f,500);
     }
 
     @Override
