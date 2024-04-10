@@ -64,7 +64,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         removeDeadOrExitedRats(deltaTime);
     }
 
-    private void removeDeadOrExitedRats(float deltaTime) {
+    public void removeDeadOrExitedRats(float deltaTime) {
         Iterator<Rat> iterator = aliveRats.iterator();
         while (iterator.hasNext()) {
             Rat rat = iterator.next();
