@@ -80,12 +80,12 @@ public abstract class Cat {
 
     //rotate er bugga
     public void rotateImage() {
-        if (lastTargetPosition != null) {
-            float dx = lastTargetPosition.x - this.pos.x;
-            float dy = lastTargetPosition.y - this.pos.y;
-            float angleInRadians = (float) Math.atan2(dy, dx);
-            currentRotationAngle = (float) Math.toDegrees(angleInRadians) - 90;
-        }
+        // if (lastTargetPosition != null) {
+        //     float dx = lastTargetPosition.x - this.pos.x;
+        //     float dy = lastTargetPosition.y - this.pos.y;
+        //     float angleInRadians = (float) Math.atan2(dy, dx);
+        //     currentRotationAngle = (float) Math.toDegrees(angleInRadians) - 90;
+        // }
         this.sprite.setOriginCenter();
         this.sprite.setRotation(currentRotationAngle);
     }
@@ -102,7 +102,7 @@ public abstract class Cat {
         }
 
 
-    public void cirleUppdater(){
+    public void circleUpdater(){
         this.rangeCircle = new Circle(pos, range);
     }
 
