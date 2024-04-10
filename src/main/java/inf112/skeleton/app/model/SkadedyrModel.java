@@ -83,7 +83,7 @@ public class SkadedyrModel implements ISkadedyrModel {
             } else if (rat.getDirection() == Direction.OUT) {
                 if (!rat.isrewardClaimed()) {
                     if (!rat.isExited()) {
-                        lives = Math.max(0, lives - 1); 
+                        lives--;
                         rat.exit();
                     }
                     iterator.remove();
