@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.model.entities.IEntity;
@@ -42,6 +43,22 @@ public abstract class Rat implements IEntity {
         textures.put(ImageSwapper.DEAD, new Texture(Gdx.files.internal("coin.png")));
         this.spriteRect = new Rectangle(pos.x - halfsize, pos.y - halfsize, halfsize * 2, halfsize * 2);
     }
+
+
+//     public void createRatsWithSplinePath() {
+//     Vector2[] controlPoints = new Vector2[] {
+//         new Vector2(100, 100),
+//         new Vector2(200, 200),
+//         new Vector2(300, 100),
+//         new Vector2(400, 200),
+//         new Vector2(500, 100)
+//     };
+//     CatmullRomSpline<Vector2> path = new CatmullRomSpline<Vector2>(controlPoints, true);
+
+//     // Anta at du har en måte å generere eller hente rottedata (helse, hastighet, etc.)
+//     Rat newRat = new Rat(health, speed, texture, bounty, points, frozenTexture, halfsize, path);
+//     aliveRats.add(newRat);
+// }
     
 
     /**
