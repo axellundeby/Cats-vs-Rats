@@ -313,12 +313,11 @@ public abstract class Rat implements IEntity {
     public void render(SpriteBatch batch) {
     }
 
-
-    @Override
     public void killedAnimation() {
         swapImage(ImageSwapper.DEAD);
         health = 0;
         speed = 0;
+        this.sprite.setTexture(getTexture());
     }
 
     public void updateCoinVisibility(float deltaTime) {
@@ -368,8 +367,8 @@ public abstract class Rat implements IEntity {
      */
     public void freeze() {
         isFrozen = true;
-        // speed = speed / 2;
         swapImage(ImageSwapper.FROZEN);
+        this.sprite.setTexture(getTexture());
     }
 
     /**
@@ -377,8 +376,8 @@ public abstract class Rat implements IEntity {
      */
     public void unfreeze() {
         isFrozen = false;
-        // speed = speed * 2;
         swapImage(ImageSwapper.ALIVE);
+        this.sprite.setTexture(getTexture());
     }
 
     /**
