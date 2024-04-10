@@ -21,10 +21,8 @@ Som påpekt under *Produkt og kode* i oblig2.md har vi flere katter som vi har i
 
 ### Kjøring
 * Kompileres med `mvn package`.
-* Kjøres med `java -jar target/gdx-app-1.0-SNAPSHOT-fat.jar`
+* Kjøres med `java -jar target/returnOfTheRats-1.0-SNAPSHOT-fat.jar`
 * Krever Java 21 eller senere
 
 ### Credits
-Bilde av rotte: https://pngtree.com/freepng/cute-rat-isolated_13147967.html
-Bilde av map: https://bloons.fandom.com/wiki/Bloons_Tower_Defense_1_Map?file=BTD1_Map.png
-Bilde av froze-cat: https://www.pokemon.com/no/pokedex/vaporeon
+
