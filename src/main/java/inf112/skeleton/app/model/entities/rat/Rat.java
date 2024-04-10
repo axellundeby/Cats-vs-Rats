@@ -36,7 +36,7 @@ public abstract class Rat implements IEntity {
         this.bounty = bounty;
         this.pos = new Vector2(-10, 430);
         this.sprite = new Sprite(texture);
-        int halfsize = 25;
+        int halfsize = 40;
         this.sprite.setSize(halfsize * 2, halfsize * 2);
         this.sprite.setPosition(pos.x - halfsize, pos.y - halfsize);
         this.secs = 0;
@@ -257,13 +257,13 @@ public abstract class Rat implements IEntity {
         Direction dir = getDirection();
         switch (dir) {
             case UP:
-                return 90;
+                return 0;
             case DOWN:
                 return 180;
             case LEFT:
-                return -90;
+                return 90;
             case RIGHT:
-                return 0;
+                return -90;
             case OUT:
                 // Assuming no rotation for OUT direction.
                 return 0;

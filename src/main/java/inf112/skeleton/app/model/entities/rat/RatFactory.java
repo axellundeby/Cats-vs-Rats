@@ -5,7 +5,7 @@ import java.util.Random;
 public class RatFactory {
     private float spawnTimer = 5;
     private int ratsSpawned = 0;
-    private static final int RAT_SPAWN_DELAY = 1; 
+    private static final int RAT_SPAWN_DELAY = 10; 
     private ArrayList<Rat> rats = new ArrayList<Rat>();
     private Random random = new Random();
     
