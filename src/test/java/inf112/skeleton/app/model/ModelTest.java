@@ -167,7 +167,7 @@ public class ModelTest {
         // Thrid scenario where one rat is close to the cat and one is out of range
         Cat mockCat = mock(BasicCat.class);
         Rat ratClose = mock(BasicRat.class),
-                ratFar = mock(BasicRat.class);
+            ratFar = mock(BasicRat.class);
 
         // Check that only the rat within range of the cat is taken into account
         when(mockCat.withinRange(ratClose)).thenReturn(true);

@@ -205,13 +205,12 @@ public abstract class Rat implements IEntity {
     }
 
     public boolean isOut(){
-        if (this.getDirection()==Direction.OUT){
-            return true;
-        }
-        return false;
+        return this.getDirection()==Direction.OUT;
+       
     }
     public void setPosition(Vector2 pos) {
         this.pos = pos;
+        rectangleUpdater();
     }
 
 
