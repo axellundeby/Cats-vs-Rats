@@ -1,8 +1,130 @@
-# Rapport – innlevering 3
-**Team:** *Teamnavn* – *medlemmer*...
+ # Rapport – innlevering 3
+**Team:** 
+* Team: *Skadedyrkontrollørene_inc* (Gruppe 1): 
+    * *Jonathan Christensen - Developer/Git*
+    * *Axel Lundeby - Developer/Grafikk*
+    * *Theodor Nissen-Meyer - Lead Developer*
+    * *Jacob Foss - Developer/Testansvarlig* *Teamnavn* – *medlemmer*...
 
 
-# Oppdatering på prosjektstatus: Prioriterte krav og fremdrift
+## Referat 11.03.24
+
+**Tilstede:** Alle
+
+- Vi er fornøyde med at vi fikk til store deler av MVPen. Fremover blir det å fullføre MVP og fikse funksjonalitet.
+- Vi skal også se på hvordan å lage path på et bedre vis.
+- Må fikse grafikk og lyd.
+- Se på tester, og hvordan disse skal skrives.
+
+## Referat 18.03.24
+
+**Avslutning av andre sprint**  
+
+**Tilstede:** Alle
+
+- **Hva har blitt gjort siden forrige møte?**
+  - Mer funksjonalitet er implementert. Vi får byttet mellom vanlig katt og fryse-katt.
+  - Er i oppstartsfasen av å lage grafikk.
+  - Rottene går ikke på path, skal fikse dette opp mot ny bane (grafikk) - fokuset er ikke her.
+
+- **Hva skal vi gjøre til neste møte?**
+  - Litt problematikk med prosjektilene, de avhenger av hverandres vektor(?).
+  - Matematikken er ikke helt på topp, og vi forstår ikke helt hva som skjer, men vi er på saken.
+  - Det er en rotasjonsbug, som gjør at kattene roterer litt feil. Vi må finne ut av dette.
+
+### Påskeferie 22.03.24-03.04.24
+
+## Referat 08.04.24
+
+**Nærmer oss release candidate**
+
+**Tilstede:** Alle
+
+- **Hva har skjedd siden forrige møte?**
+  - Rotasjonsbugen er løst.
+  - Problemet med prosjektilet er ikke løst.
+
+- **Hva skal vi gjøre til neste møte?**
+  - Se på tilbakemeldingsskjemaet vi har fått fra Oblig 2, og lage en TO DO for å snevre inn hva som mangler for å oppnå full score.
+  - Få inn deler av TO DO i kanban-boardet også.
+  - Vårt fokus skal ligge på testing frem til innlevering.
+  - Vi skal også få dokumentert public-metoder, samt oppdatere pom-filen.
+  - Grafikk er 90% ferdig, men usikkert om det rekker å bli implementert til innlevering.
+
+**TO DO:**
+- **TEAMET**
+  - Beskrivelse av prosjektmetodikk
+  - Project board, issues etc. er oppdatert
+- **Produktleveranse**
+  - pom.xml / build.gradle er oppdatert med korrekt prosjektnavn, main-klassenavn etc.
+- **Kodekvalitet**
+  - Public metoder dokumentert
+- **Testing**
+  - Test coverage, Minimum 75% test coverage
+  - Tester er automatiske, Automatiske tester kan kjøres «hodeløst»
+  - Tester som faktisk kan finne feil
+- **Konkrete krav**
+  - Spillet har forside/hjelpeside
+  - Lyd koblet til hendelse
+  - Objektfabrikker, Objekter som modifiserer oppførsel (powerups, etc.)
+  - Abstrakte objektfabrikker
+
+## Referat 10.04.24
+
+**Nærmer oss release candidate - statusmøte**
+
+**Tilstede:** Alle
+
+- **Hva har skjedd siden forrige møte?**
+  - Kanban-boardet er gjort offentlig, her er linken: [https://trello.com/b/YKJUgETU](https://trello.com/b/YKJUgETU).
+  - POM-filen er oppdatert.
+  - Dokumentasjon er delvis ferdigstilt, Tester er in the making, blir merget til fredag.
+  - Det vi har av grafikk er implementert.
+  - Vi har tatt bort det som er unnagjort fra TO DO.
+
+- **Hva skal vi gjøre til neste møte?**
+  - Bruke kanban for å snevre inn TO Do enda mer.
+  - Sørge for at Readme er oppdatert, og at doc er fullført.
+
+**TO DO:**
+
+- **TEAMET**
+  - Beskrivelse av prosjektmetodikk
+- **Testing**
+  - Test coverage, Minimum 75% test coverage
+  - Tester er automatiske, Automatiske tester kan kjøres «hodeløst»
+  - Tester som faktisk kan finne feil
+- **Konkrete krav**
+  - Spillet har forside/hjelpeside
+  - Lyd koblet til hendelse
+  - Objektfabrikker, Objekter som modifiserer oppførsel (powerups, etc.)
+  - Abstrakte objektfabrikker
+
+## Teamroller og Dynamikk
+
+Vår team fungerer bra slik rollene er satt i dag, og har ikke hatt behov for endringer. Gruppestrukturen er fortsatt som følger:
+
+- **Lead Developer (Theodor):** Har det overordnede ansvaret for kodebasen, innsikt i prosjektets tekniske aspekter, og bistår andre utviklere ved behov.
+- **Developer:** Alle teammedlemmer har denne rollen og bidrar med utviklingen av programvaren.
+- **Git Ansvarlig (Jonathan):** Spesialisert i bruk av Git, denne rollen innebærer å opprettholde repoet, og sikre at det er oppdatert.
+- **Grafikk (Axel):** Ansvarlig for å sikre at spillets grafikk stemmer overens med de ønskede visuelle målene.
+- **Testansvarlig (Jacob):** Fokuserer på utvikling og implementering av tester for å sikre at koden fungerer som forventet.
+
+**Gruppedynamikk:**
+
+Gruppedynamikken er god, og vi har ikke hatt noen problemer innad i teamet som har krevd endring av struktur. Vi kommuniserer kontinuerlig og holder hverandre oppdatert om prosjektets status, hovedsakelig fordi vi tilbringer mye tid sammen på lesesalen. Dette har ført til at de ukentlige standup-møtene ikke føles like nødvendige, men de tjener fortsatt en viktig funksjon for å oppsummere og planlegge for kommende uke. Bruken av et kanban-board har også bidratt positivt til å holde oversikt over arbeidsflyt og fremgang. Spesielt nå opp mot sluttprodukt har det vært enda mer relevant å strukturere oppgaver som må løses ved hjelp av kanban. KanbanBoardet finner man her: https://trello.com/b/YKJUgETU
+
+
+**Forbedringspunkter:**
+
+- **Oppgradering av katter:** I dag er oppdatering litt uoversiktlig. Rette opp i dette, og sørge for en ryddig og forståelig løsning.
+- **Prosjektiler:** Få prosjektil til å fungere slik vi ønsker.
+- **Lyd:** Implementere lyd. Hva slags lyder skal man bruke til de ulike aspektene av spillet. Vi vet at vi vil ha lyd ved katteangrep. 
+
+
+
+
+## Oppdatering på prosjektstatus: Prioriterte krav og fremdrift
 
 ## Introduksjon
 Her er statusen på hvor langt vi har kommet i utviklingsprosessen, og de stegene vi har tatt siden vår siste oppdatering. Vårt fokus har vært sentrert rundt utviklingen av brukerhistorier og Minimum Viable Product (MVP). Vi er nå nær ved å fullføre MVPen, og her presenterer vi en detaljert gjennomgang av vår progresjon. Vi har endret MVPen litt; vi har inkludert at vi må ta med lyd i spillet.
