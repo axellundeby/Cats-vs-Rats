@@ -198,3 +198,41 @@ Som en spiller ønsker jeg at mine katter skal kunne skyte prosjektiler mot angr
 
 ### 2. Feil med Prosjektilmekanikken
 - Vi opplever også bugs med prosjektilene våre. Det virker som alle prosjektilene er avhengig av hverandre.
+
+
+
+
+
+# Produkt og kode
+
+## Oppdateringer siden sist
+
+### Vi har gjort følgende forbedringer og tillegg til spillet siden Oblig 2:
+
+- **POM fil:** Vi har oppdatert POM-filen med korrekt prosjektnavn, main-klassenavn etc.
+- **Testing:** Vi har jobbet med å øke test coverage.
+- **RatFactory:** Vi har opprettet en ratFactory klasse som genererer rotter i bølger basert på spillerens nivå.
+- **Dokumentasjon:** 
+  - Vi har oppdatert README.md
+  - *Kode Dokumentasjon:* Vi har dokumentert public metoder og laget interface til nødvendige klasser.
+- **Knapper:** Alle knapper er nå interaktive og kan brukes basert på hvor mye pengene spilleren har.
+  - *Menyknapper:* Vi har laget interaktive knapper som brukes for å starte, akselerere, pause, og restarte spillet.
+  - *Kjøpsmeny:* Vi har laget en kjøpsmeny for å kjøpe flere katter.
+  - *Oppgraderingsknapper:* Vi har laget oppgraderingsknapper for å oppgradere kattenes range, damage og firerate.
+  - *Startmeny:* Vi har laget en enkel knapp på startmeny for å starte spillet.
+- **Rotter:** 
+  - Rottene roterer nå basert på hvilken retning de går.
+  - Forskjellige rotter har mulighet til å bli spawnet basert på spillerens nivå.
+  - Når du dreper en rotte får du penger og poeng, i tillegg til at en mynt blir synlig på skjermen der rotta døde.
+- **Liv:** Vi har lagt til slik at man ikke kan ha negative liv.
+- **Penger:**
+  - Spilleren kan nå ikke ha negative penger.
+
+- **Map:**
+  - Det er lagt inn et eget nytt map med en annen sti for rotter.
+    - Derfor går ikke rotter på stien til det nye kartet.
+  
+    
+
+## Klassediagram
+![Klassediagram](/src/main/resources/uml_oblig3.png)
