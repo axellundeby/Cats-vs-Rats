@@ -26,7 +26,7 @@ public class SkadedyrView {
     private GameStateManager gsm;
 
     private ShapeRenderer shapeRenderer;
-    public static Texture mapTexture; // Hold the texture to avoid reloading it every frame
+    
     
    
 
@@ -49,7 +49,7 @@ public class SkadedyrView {
     public void dispose() {
         batch.dispose();
         font.dispose();
-        mapTexture.dispose(); // Dispose the map texture
+      
         for (Cat cat : model.getCats()) {
             cat.getTexture().dispose();
         }

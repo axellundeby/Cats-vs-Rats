@@ -388,4 +388,5 @@ public abstract class Rat implements IEntity {
     public boolean isFrozen() {
         return isFrozen;
     }
+   
 }

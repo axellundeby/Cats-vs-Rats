@@ -41,4 +41,6 @@ public class SpeedButton extends Buttons {
             button.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("buttons_game/Spill_FF.png")));
         }
     }
+
+
 }
