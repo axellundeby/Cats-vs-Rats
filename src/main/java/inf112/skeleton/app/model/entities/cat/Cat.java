@@ -32,6 +32,7 @@ public abstract class Cat {
     private int cost;
     private Vector2 lastTargetPosition = null;
 
+
     public Cat(int strength, float range, Texture defaultImage, Texture attackImage, float fireRate, int cost) {
         this.strength = strength;
         this.range = range;
