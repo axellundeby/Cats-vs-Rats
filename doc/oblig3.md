@@ -23,7 +23,7 @@ Her er statusen på hvor langt vi har kommet i utviklingsprosessen, og de stegen
 
 ## Fremtidige prioriteter og fokusområder:
 - Fullføre oppgraderingsmulighetene for hver spesifikk katt.
-- Tester: Utvikling av ytterligere tester for bedre kvalitetssikring.
+- Tester: Utvikling av ytterligere tester for bedre kvalitetssikring..
 - Prosjektiler: Implementering av prosjektiler.
 - Lyd: Innføring av lydeffekter for å forbedre spillopplevelsen.
 
