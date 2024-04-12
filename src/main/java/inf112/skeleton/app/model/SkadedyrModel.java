@@ -39,6 +39,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private boolean writeText = false;
     private boolean speedUp = false;
     
+    
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
         this.catMenu = new CatMenu();
@@ -138,6 +139,10 @@ public class SkadedyrModel implements ISkadedyrModel {
             return "Round over. Press unPause to continue.";
         }
         return "";
+    }
+
+    public boolean isgameWon() {
+        return level == 1;
     }
 
     private void updateCatAnimations(float deltaTime) {

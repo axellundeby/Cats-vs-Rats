@@ -41,6 +41,7 @@ public class PlayState extends State {
     protected PlayState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
         this.model = model;
+       
         this.shapeRenderer = new ShapeRenderer();
         this.font = new BitmapFont();
         font.setColor(Color.BLACK);
@@ -60,10 +61,15 @@ public class PlayState extends State {
 
 
         Gdx.input.setInputProcessor(stage);
+
     }
 
+   
+    
     @Override
     public void render(SpriteBatch batch) {
+
+        
 
         ScreenUtils.clear(Color.DARK_GRAY);
         pauseButton.updateButtonAppearance();
@@ -87,20 +93,22 @@ public class PlayState extends State {
         drawCatMenu(batch);
 
         Gdx.gl.glDisable(GL20.GL_BLEND);
-
+        
         batch.begin();
         batch.draw(mapTexture, 0, 0, Gdx.graphics.getWidth() -400  , Gdx.graphics.getHeight());
         drawCats(batch);
         drawRats(batch);
         drawProjectiles(batch);
-        batch.end();
-
-        batch.begin();
         drawGameStatus(batch);
         batch.end();
-
+        
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+        
+        if(model.isgameWon()){
+            GameStateManager.set(new WinState(gsm));
+        }
+      
 
     }
 
