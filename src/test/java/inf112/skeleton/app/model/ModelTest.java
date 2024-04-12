@@ -11,8 +11,6 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-
 import inf112.skeleton.app.model.entities.cat.BasicCat;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.cat.LabCat;
@@ -76,7 +74,7 @@ public class ModelTest {
 
     @Test
     public void testAddRat() {
-        Rat rat = new LabRat(0, 0, dependency, 1, 1);
+        Rat rat = new LabRat(0, 0, dependency,1,1, dependency,1);
 
         assertEquals(0, model.getCats().size(), "Initial Rats list is not empty");
         model.addRat(rat);
@@ -89,7 +87,7 @@ public class ModelTest {
     public void ratRemovalTest(){
         // Add 10 dead rats to the game
         for (int i = 0; i < 10; i++) {
-            model.addRat(new LabRat(0, 1, dependency, 1, 1));
+            model.addRat(new LabRat(0, 1, dependency,1,1, dependency,1));
         }
         // Test rat list sizes
         assertEquals(10, model.getRats().size());
@@ -101,7 +99,7 @@ public class ModelTest {
     @Test
     public void attackTest(){
         for (int i = 0; i < 10; i++) {
-            model.addRat(new LabRat(1, 1, dependency, 1, 1));
+            model.addRat(new LabRat(1, 1, dependency,1,1, dependency,1));
             model.addCat(new LabCat(10, 10, dependency, dependency, 1, 0));
         }
         

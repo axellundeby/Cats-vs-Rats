@@ -25,12 +25,12 @@ public class Rat implements IRat {
     private Sprite sprite;
     private boolean isFrozen;
     public ImageSwapper currentState = ImageSwapper.ALIVE;
+    private static Texture deadTexture = new Texture(Gdx.files.internal("coin.png"));
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
     int halfsize = 25;
     
 
-    public Rat(int health, int speed, Texture texture, Integer bounty, Integer points, Texture frozenTexture,
-            int halfsize) {
+    public Rat(int health, int speed, Texture texture, Integer bounty, Integer points, Texture frozenTexture, int halfsize) {
         this.health = health;
         this.speed = speed;
         this.points = points;
@@ -42,7 +42,7 @@ public class Rat implements IRat {
         this.secs = 0;
         textures.put(ImageSwapper.ALIVE, texture);
         textures.put(ImageSwapper.FROZEN, frozenTexture);
-        textures.put(ImageSwapper.DEAD, new Texture(Gdx.files.internal("coin.png")));
+        textures.put(ImageSwapper.DEAD, deadTexture);
         this.spriteRect = new Rectangle(pos.x - halfsize, pos.y - halfsize, halfsize * 2, halfsize * 2);
     }
 
@@ -300,6 +300,12 @@ public class Rat implements IRat {
     public void setPosition(Vector2 pos) {
         this.pos = pos;
         rectangleUpdater();
+    }
+
+    public void rectangleUpdater(){
+        spriteRect.x = pos.x - halfsize;
+        spriteRect.y = pos.y - halfsize;
+        
     }
 
     @Override

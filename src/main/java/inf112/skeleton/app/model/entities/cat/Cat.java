@@ -148,7 +148,7 @@ public abstract class Cat {
      * Updates the cat's range circle.
      * The range circle is used to determine which rats are within the cat's attack range.
      */
-    public void cirleUppdater() {
+    public void circleUpdater() {
         this.rangeCircle = new Circle(pos, range);
     }
 
