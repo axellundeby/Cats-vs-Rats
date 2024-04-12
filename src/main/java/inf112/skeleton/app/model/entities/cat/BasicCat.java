@@ -42,7 +42,7 @@ public class BasicCat extends Cat {
     @Override
     public void upgradeRange() {
         this.range *= 1.25;
-        this.cirleUppdater();
+        this.circleUpdater();
     }
 
     @Override

@@ -26,6 +26,8 @@ public class Rat implements IRat {
     private boolean isFrozen;
     public ImageSwapper currentState = ImageSwapper.ALIVE;
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
+    int halfsize = 25;
+    
 
     public Rat(int health, int speed, Texture texture, Integer bounty, Integer points, Texture frozenTexture,
             int halfsize) {
@@ -297,6 +299,7 @@ public class Rat implements IRat {
     @Override
     public void setPosition(Vector2 pos) {
         this.pos = pos;
+        rectangleUpdater();
     }
 
     @Override
