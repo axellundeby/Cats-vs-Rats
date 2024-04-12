@@ -13,7 +13,7 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 public class ShotgunCat extends Cat {
 
     public ShotgunCat() {
-        super(20, 50, new Texture(Gdx.files.internal("cats/Spill_Skytekatt1.png")), new Texture(Gdx.files.internal("angryCat.png")), 3.0f,500);
+        super(20, 50, new Texture(Gdx.files.internal("cats/Spill_Skytekatt1.png")), new Texture(Gdx.files.internal("cats/Spill_Skytekatt2.png")), 3.0f,500);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ShotgunCat extends Cat {
 
        for (Rat target : targets) {
             Vector2 direction = new Vector2(target.getPosition().x - getPosition().x, target.getPosition().y - getPosition().y);
-            return new Projectile(new Vector2(this.getPosition()), direction, 100,  new Texture("claw.png"));
+            return new Projectile(new Vector2(this.getPosition()), direction, 100,  new Texture("b.png"));
         }
         return null;  
     }

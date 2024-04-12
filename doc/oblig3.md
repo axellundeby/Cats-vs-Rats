@@ -4,7 +4,7 @@
     * *Jonathan Christensen - Developer/Git*
     * *Axel Lundeby - Developer/Grafikk*
     * *Theodor Nissen-Meyer - Lead Developer*
-    * *Jacob Foss - Developer/Testansvarlig* *Teamnavn* – *medlemmer*...
+    * *Jacob Foss - Developer/Testansvarlig*
 
 
 ## Referat 11.03.24
@@ -224,6 +224,7 @@ Som en spiller ønsker jeg at mine katter skal kunne skyte prosjektiler mot angr
   - Rottene roterer nå basert på hvilken retning de går.
   - Forskjellige rotter har mulighet til å bli spawnet basert på spillerens nivå.
   - Når du dreper en rotte får du penger og poeng, i tillegg til at en mynt blir synlig på skjermen der rotta døde.
+  - Du får forskjellig poeng basert på hvilken rotte du dreper.
 - **Liv:** Vi har lagt til slik at man ikke kan ha negative liv.
 - **Penger:**
   - Spilleren kan nå ikke ha negative penger.

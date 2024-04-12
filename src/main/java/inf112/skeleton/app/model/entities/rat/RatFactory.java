@@ -23,6 +23,11 @@ public class RatFactory {
         return rats;
     }
 
+    /**
+     * Calculates the number of rats to spawn for a given round
+     * @param round
+     * @return
+     */
     public int calculateRatsForRound(int round) {
         return 1 + (round * 5);
     }

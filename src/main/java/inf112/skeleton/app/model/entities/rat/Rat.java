@@ -4,15 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import inf112.skeleton.app.model.entities.IEntity;
+
 import inf112.skeleton.app.model.entities.Projectile;
 import java.util.ArrayList;
 import java.util.EnumMap;
 
-public abstract class Rat implements IEntity {
+public class Rat implements IRat {
     private int speed;
     private Vector2 pos;
     private int health;
@@ -28,7 +27,8 @@ public abstract class Rat implements IEntity {
     public ImageSwapper currentState = ImageSwapper.ALIVE;
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
 
-    public Rat(int health, int speed, Texture texture, Integer bounty, Integer points, Texture frozenTexture, int halfsize) {
+    public Rat(int health, int speed, Texture texture, Integer bounty, Integer points, Texture frozenTexture,
+            int halfsize) {
         this.health = health;
         this.speed = speed;
         this.points = points;
@@ -44,50 +44,40 @@ public abstract class Rat implements IEntity {
         this.spriteRect = new Rectangle(pos.x - halfsize, pos.y - halfsize, halfsize * 2, halfsize * 2);
     }
 
+    // public void createRatsWithSplinePath() {
+    // Vector2[] controlPoints = new Vector2[] {
+    // new Vector2(100, 100),
+    // new Vector2(200, 200),
+    // new Vector2(300, 100),
+    // new Vector2(400, 200),
+    // new Vector2(500, 100)
+    // };
+    // CatmullRomSpline<Vector2> path = new CatmullRomSpline<Vector2>(controlPoints,
+    // true);
 
-//     public void createRatsWithSplinePath() {
-//     Vector2[] controlPoints = new Vector2[] {
-//         new Vector2(100, 100),
-//         new Vector2(200, 200),
-//         new Vector2(300, 100),
-//         new Vector2(400, 200),
-//         new Vector2(500, 100)
-//     };
-//     CatmullRomSpline<Vector2> path = new CatmullRomSpline<Vector2>(controlPoints, true);
+    // // Anta at du har en måte å generere eller hente rottedata (helse, hastighet,
+    // etc.)
+    // Rat newRat = new Rat(health, speed, texture, bounty, points, frozenTexture,
+    // halfsize, path);
+    // aliveRats.add(newRat);
+    // }
 
-//     // Anta at du har en måte å generere eller hente rottedata (helse, hastighet, etc.)
-//     Rat newRat = new Rat(health, speed, texture, bounty, points, frozenTexture, halfsize, path);
-//     aliveRats.add(newRat);
-// }
-    
-
-    /**
-     * Checks if the reward has been claimed.
-     * 
-     * @return true if the reward has been claimed, false otherwise.
-     */
+    @Override
     public boolean isrewardClaimed() {
         return rewardClaimed;
     }
 
-    /**
-     * Checks if the rat has exited the game.
-     * @return true if the rat has exited the game, false otherwise.
-     */
+    @Override
     public boolean isExited() {
         return exited;
     }
 
-    /**
-     * Marks the reward as claimed.
-     */
+    @Override
     public void rewardClaimed() {
         this.rewardClaimed = true;
     }
 
-    /**
-     * Marks the rat as exited.
-     */
+    @Override
     public void exit() {
         this.exited = true;
     }
@@ -98,12 +88,7 @@ public abstract class Rat implements IEntity {
         DEAD;
     }
 
-    /**
-     * Checks if the rat is hit by any of the given projectiles.
-     * 
-     * @param projectiles The list of projectiles to check.
-     * @return true if the rat is hit by any projectile, false otherwise.
-     */
+    @Override
     public boolean isHitByProjectile(ArrayList<Projectile> projectiles) {
         for (Projectile rect : projectiles) {
             if (rect.getRectangle().overlaps(spriteRect)) {
@@ -113,13 +98,7 @@ public abstract class Rat implements IEntity {
         return false;
     }
 
-    /**
-     * Returns the projectile that hits the rat.
-     * 
-     * @param projectiles The list of projectiles to check.
-     * @return The projectile that hits the rat, or null if no projectile hits the
-     *         rat.
-     */
+    @Override
     public Projectile getHitByProjectile(ArrayList<Projectile> projectiles) {
         for (Projectile projectile : projectiles) {
             if (projectile.getRectangle().overlaps(spriteRect)) {
@@ -129,65 +108,36 @@ public abstract class Rat implements IEntity {
         return null;
     }
 
-    /**
-     * Returns the bounty of the rat.
-     * 
-     * @return The bounty of the rat.
-     */
+    @Override
     public int getBounty() {
         return bounty;
     }
 
-    /**
-     * Returns the points of the rat.
-     * 
-     * @return The points of the rat.
-     */
+    @Override
     public int getPoints() {
         return points;
     }
 
-    /**
-     * Swaps the image of the rat to the given image.
-     * 
-     * @param image The new image of the rat.
-     */
-    public void swapImage(ImageSwapper image) {
+    private void swapImage(ImageSwapper image) {
         currentState = image;
     }
 
-    /**
-     * Returns the current texture of the rat.
-     * 
-     * @return The current texture of the rat.
-     */
+    @Override
     public Texture getTexture() {
         return textures.get(currentState);
     }
 
-    /**
-     * Returns the rectangle representing the rat.
-     * 
-     * @return The rectangle representing the rat.
-     */
+    @Override
     public Rectangle getRectangle() {
         return spriteRect;
     }
 
-    // må kanskje endre denne, hvis et prosjektil treffer en rotte, så skal den ta
-    // skade. Er det berde.
-    /**
-     * Reduces the health of the rat by the given damage.
-     * 
-     * @param damage The amount of damage to inflict on the rat.
-     */
+    @Override
     public void takeDamage(int damage) {
         health -= damage;
     }
 
-    /**
-     * Enum representing the possible directions of the rat.
-     */
+    // fix this using getDirection
     public enum Direction {
         UP,
         DOWN,
@@ -196,19 +146,13 @@ public abstract class Rat implements IEntity {
         OUT;
     }
 
-    /**
-     * Adds time to the rat's internal timer.
-     */
+    @Override
     public void addTime() {
         this.secs += 0.05;
 
     }
 
-    /**
-     * Returns the current direction of the rat.
-     * 
-     * @return The current direction of the rat.
-     */
+    @Override
     public Direction getDirection() {
         int category;
         if (secs < 4)
@@ -266,7 +210,6 @@ public abstract class Rat implements IEntity {
         }
     }
 
-    //Skal vi ha med dette egentlig, ser bedre når ny rotte?
     private float getRotationAngle() {
         Direction dir = getDirection();
         switch (dir) {
@@ -286,20 +229,16 @@ public abstract class Rat implements IEntity {
         }
     }
 
-
-    /**
-     * Rotates the rat's image to face its direction.
-     */
+    @Override
     public void rotateImage() {
         float angle = getRotationAngle();
         this.sprite.setOriginCenter();
         this.sprite.setRotation(angle);
     }
-    
 
     @Override
     public void move() {
-        Direction dir = getDirection(); 
+        Direction dir = getDirection();
         switch (dir) {
             case UP:
                 pos.y += speed;
@@ -316,15 +255,14 @@ public abstract class Rat implements IEntity {
             default:
                 break;
         }
-    
+
         this.sprite.setPosition(pos.x, pos.y);
-        rotateImage(); 
+        rotateImage();
     }
 
     public Sprite getSprite() {
         return sprite;
     }
-    
 
     @Override
     public void render(SpriteBatch batch) {
@@ -348,11 +286,7 @@ public abstract class Rat implements IEntity {
         return health <= 0;
     }
 
-    /**
-     * Checks if the rat is out.
-     * 
-     * @return true if the rat is out, false otherwise.
-     */
+    @Override
     public boolean isOut() {
         if (this.getDirection() == Direction.OUT) {
             return true;
@@ -360,11 +294,7 @@ public abstract class Rat implements IEntity {
         return false;
     }
 
-    /**
-     * Sets the position of the rat.
-     * 
-     * @param pos The new position of the rat.
-     */
+    @Override
     public void setPosition(Vector2 pos) {
         this.pos = pos;
     }
@@ -379,29 +309,21 @@ public abstract class Rat implements IEntity {
         return pos;
     }
 
-    /**
-     * Freezes the rat.
-     */
+    @Override
     public void freeze() {
         isFrozen = true;
         swapImage(ImageSwapper.FROZEN);
         this.sprite.setTexture(getTexture());
     }
 
-    /**
-     * Unfreezes the rat.
-     */
+    @Override
     public void unfreeze() {
         isFrozen = false;
         swapImage(ImageSwapper.ALIVE);
         this.sprite.setTexture(getTexture());
     }
 
-    /**
-     * Checks if the rat is frozen.
-     * 
-     * @return true if the rat is frozen, false otherwise.
-     */
+    @Override
     public boolean isFrozen() {
         return isFrozen;
     }

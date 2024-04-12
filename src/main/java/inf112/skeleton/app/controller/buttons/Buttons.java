@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import inf112.skeleton.app.model.SkadedyrModel;
 
 public abstract class Buttons {
-    protected static SkadedyrModel model;
+    protected  SkadedyrModel model;
     protected Stage stage;
     protected ImageButton button;
 
