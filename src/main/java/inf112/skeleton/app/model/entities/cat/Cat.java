@@ -44,7 +44,7 @@ public abstract class Cat {
         this.sprite = new Sprite(defaultImage);
         this.sprite.setSize(size, size);
         this.sprite.setPosition(pos.x - halfSize, pos.y - halfSize);
-        this.rangeCircle = new Circle(pos, range);
+        circleUpdater();
         this.cost = cost;
         this.currentRotationAngle = 0;
 
@@ -85,7 +85,7 @@ public abstract class Cat {
         pos.x = x;
         pos.y = y;
         this.sprite.setPosition(pos.x - halfSize, pos.y - halfSize);
-        this.rangeCircle = new Circle(pos, range);
+        circleUpdater();
     }
 
     /**

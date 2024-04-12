@@ -25,7 +25,6 @@ import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 
-
 public class PlayState extends State {
     private ShapeRenderer shapeRenderer;
     private SkadedyrModel model;
@@ -58,7 +57,6 @@ public class PlayState extends State {
         upgradeRangeButton = new UpgradeRangeButton(model, stage);
         upgradeDamageButton = new UpgradeDamageButton(model, stage);
 
-
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -71,11 +69,12 @@ public class PlayState extends State {
         upgradeRangeButton.updateButtonAppearance();
         upgradeDamageButton.updateButtonAppearance();
 
-       
-
+        batch.begin();
+        batch.draw(mapTexture, 0, 0, Gdx.graphics.getWidth() - 400, Gdx.graphics.getHeight());
+        batch.end();
+        
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         for (Cat cat : model.getCats()) {
             Circle range = cat.getRangeCircle();
@@ -89,7 +88,6 @@ public class PlayState extends State {
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
         batch.begin();
-        batch.draw(mapTexture, 0, 0, Gdx.graphics.getWidth() -400  , Gdx.graphics.getHeight());
         drawCats(batch);
         drawRats(batch);
         drawProjectiles(batch);
@@ -112,7 +110,7 @@ public class PlayState extends State {
         font.draw(batch, "Level: " + model.getLevel(), 1000, 720);
         font.draw(batch, model.nextWaveText(), 900, 600);
         font.setColor(Color.WHITE);
-        
+
     }
 
     private void drawProjectiles(SpriteBatch batch) {
