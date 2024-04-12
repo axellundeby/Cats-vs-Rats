@@ -25,12 +25,11 @@ public class Rat implements IRat {
     private Sprite sprite;
     private boolean isFrozen;
     public ImageSwapper currentState = ImageSwapper.ALIVE;
-    private static Texture deadTexture = new Texture(Gdx.files.internal("coin.png"));
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
     int halfsize = 25;
     
 
-    public Rat(int health, int speed, Texture texture, Integer bounty, Integer points, Texture frozenTexture, int halfsize) {
+    public Rat(int health, int speed, Texture texture, Integer bounty, Integer points, Texture frozenTexture, int halfsize, Texture deadTexture) {
         this.health = health;
         this.speed = speed;
         this.points = points;
