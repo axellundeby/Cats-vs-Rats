@@ -26,6 +26,7 @@ import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.rat.LabRat;
 import inf112.skeleton.app.model.entities.rat.Rat;
+import inf112.skeleton.app.model.entities.rat.Rat.Direction;
 
 public class RatTest {
     static SkadedyrModel model;
@@ -83,5 +84,37 @@ public class RatTest {
         ArrayList<Projectile> list = new ArrayList<>();
         list.add(testProjectile);
         assertEquals(hits, rat.isHitByProjectile(list));
+    }
+
+    @Test
+    public void notMovedTest(){
+        // Check that Vector2 objects can be compared correctly
+        Vector2 firstpos = new Vector2(rat.getPosition());
+        Vector2 movedPos = new Vector2(rat.getPosition());
+        assertEquals(firstpos, movedPos);
+        assertNotEquals(firstpos, new Vector2());
+    
+    }
+    @Test
+    public void moveTest1(){
+        Vector2 firstpos = new Vector2(rat.getPosition());
+        rat.move();
+        Vector2 movedPos = new Vector2(rat.getPosition());
+        assertNotEquals(firstpos, movedPos);
+    
+    }
+    @CsvSource(value = {"0,0,1,0,0,1", "10,10,10,11,5,1", "0,0,0,-1,20,1", "0,-1,0,0,86,1",
+                        "0,0,"})
+    @ParameterizedTest(name = "Move {2}-{0} x, {3}-{1} y, speed = {5}")
+    public void moveSpeedTest(int oldx, int oldy, int newx, int newy, int secsAlive, int ratSpeed){
+        Rat labRat = new LabRat(1, ratSpeed, dependency, null, null);
+        int ticksAlive = secsAlive * 20;
+        labRat.setPosition(new Vector2(oldx, oldy));
+        for (int i = 0; i < ticksAlive; i++) {
+            labRat.addTime();
+        }
+        labRat.move();
+        Vector2 expected = new Vector2(newx, newy);
+        assertEquals(expected, labRat.getPosition());
     }
 }
