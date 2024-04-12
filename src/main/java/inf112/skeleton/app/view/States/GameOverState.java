@@ -9,19 +9,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
-import inf112.skeleton.app.main.SkadedyrMain;
-import inf112.skeleton.app.model.SkadedyrModel;
-
 public class GameOverState extends State {
 
     private BitmapFont titleFont;
     private BitmapFont textFont;
-    // private SkadedyrModel model;
     private ShapeRenderer shapeRenderer;
 
     public GameOverState(GameStateManager gsm) {
         super(gsm);
-        // this.model = model;
         titleFont = new BitmapFont();
         titleFont.getData().setScale(3);
         textFont = new BitmapFont();
@@ -31,32 +26,18 @@ public class GameOverState extends State {
     }
 
     @Override
-    public void handleInput() {
-        if (Gdx.input.isKeyPressed(com.badlogic.gdx.Input.Keys.SPACE)) {
-            SkadedyrMain.main(null);
-        }
-    }
-
-    @Override
-    public void update(float dt) {
-        handleInput();
-
-    }
-
-    @Override
     public void render(SpriteBatch sb) {
         Gdx.gl.glEnable(GL20.GL_BLEND);
         shapeRenderer.begin(ShapeType.Filled);
-        shapeRenderer.setColor(new Color(0, 0, 0, 0.2f)); // Semi-transparent black
+        shapeRenderer.setColor(new Color(0, 0, 0, 0.2f));
         shapeRenderer.rect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         shapeRenderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
 
-        
         sb.begin();
-        GlyphLayout layout = new GlyphLayout(titleFont, "GAME OVER"); // Get the width/height of the text
-        float x = (Gdx.graphics.getWidth() - layout.width) / 2; // Calculate the x position
-        float y = (Gdx.graphics.getHeight() + layout.height) / 2; // Calculate the y position
+        GlyphLayout layout = new GlyphLayout(titleFont, "GAME OVER");
+        float x = (Gdx.graphics.getWidth() - layout.width) / 2; 
+        float y = (Gdx.graphics.getHeight() + layout.height) / 2; 
         titleFont.draw(sb, layout, x, y);
         sb.end();
     }

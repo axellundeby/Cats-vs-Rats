@@ -2,15 +2,16 @@ package inf112.skeleton.app.model.entities.rat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import inf112.skeleton.app.model.entities.IEntity;
+
 import inf112.skeleton.app.model.entities.Projectile;
 import java.util.ArrayList;
 import java.util.EnumMap;
 
-public abstract class Rat implements IEntity {
+public class Rat implements IRat {
     private int speed;
     private Vector2 pos;
     private int health;
@@ -19,92 +20,126 @@ public abstract class Rat implements IEntity {
     private Integer bounty;
     private Integer points;
     private boolean rewardClaimed = false;
-    
-    
+    private boolean exited = false;
+    public float coinVisibleTime = 0f;
+    private Sprite sprite;
     private boolean isFrozen;
     public ImageSwapper currentState = ImageSwapper.ALIVE;
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
     int halfsize = 25;
     
 
-    public Rat(int health, int speed, Texture aliveTexture, Texture deadTexture, Texture frozenTexture, Integer bounty, Integer points) {
+    public Rat(int health, int speed, Texture texture, Integer bounty, Integer points, Texture frozenTexture,
+            int halfsize) {
         this.health = health;
+        this.speed = speed;
         this.points = points;
         this.bounty = bounty;
-        this.speed = speed;
-        this.bounty = bounty;
         this.pos = new Vector2(-10, 430);
-
-        this.spriteRect = new Rectangle(pos.x - halfsize, pos.y + halfsize, halfsize * 2, halfsize * 2);
+        this.sprite = new Sprite(texture);
+        this.sprite.setSize(halfsize * 2, halfsize * 2);
+        this.sprite.setPosition(pos.x - halfsize, pos.y - halfsize);
         this.secs = 0;
-        textures.put(ImageSwapper.ALIVE, aliveTexture);
+        textures.put(ImageSwapper.ALIVE, texture);
         textures.put(ImageSwapper.FROZEN, frozenTexture);
-        textures.put(ImageSwapper.DEAD, deadTexture);
+        textures.put(ImageSwapper.DEAD, new Texture(Gdx.files.internal("coin.png")));
+        this.spriteRect = new Rectangle(pos.x - halfsize, pos.y - halfsize, halfsize * 2, halfsize * 2);
     }
 
+    // public void createRatsWithSplinePath() {
+    // Vector2[] controlPoints = new Vector2[] {
+    // new Vector2(100, 100),
+    // new Vector2(200, 200),
+    // new Vector2(300, 100),
+    // new Vector2(400, 200),
+    // new Vector2(500, 100)
+    // };
+    // CatmullRomSpline<Vector2> path = new CatmullRomSpline<Vector2>(controlPoints,
+    // true);
+
+    // // Anta at du har en måte å generere eller hente rottedata (helse, hastighet,
+    // etc.)
+    // Rat newRat = new Rat(health, speed, texture, bounty, points, frozenTexture,
+    // halfsize, path);
+    // aliveRats.add(newRat);
+    // }
+
+    @Override
     public boolean isrewardClaimed() {
         return rewardClaimed;
     }
 
+    @Override
+    public boolean isExited() {
+        return exited;
+    }
+
+    @Override
     public void rewardClaimed() {
         this.rewardClaimed = true;
     }
 
-    public void rectangleUpdater(){
-        spriteRect.x = pos.x - halfsize;
-        spriteRect.y = pos.y - halfsize;
-        
+    @Override
+    public void exit() {
+        this.exited = true;
     }
 
-    public enum ImageSwapper {
+    private enum ImageSwapper {
         ALIVE,
         FROZEN,
         DEAD;
     }
 
+    @Override
     public boolean isHitByProjectile(ArrayList<Projectile> projectiles) {
         for (Projectile rect : projectiles) {
-           if (rect.getRectangle().overlaps(spriteRect)) {
+            if (rect.getRectangle().overlaps(spriteRect)) {
                 return true;
-           }
+            }
         }
         return false;
     }
 
+    @Override
     public Projectile getHitByProjectile(ArrayList<Projectile> projectiles) {
         for (Projectile projectile : projectiles) {
-           if (projectile.getRectangle().overlaps(spriteRect)) {
+            if (projectile.getRectangle().overlaps(spriteRect)) {
                 return projectile;
-           }
+            }
         }
         return null;
     }
 
+    @Override
     public int getBounty() {
         return bounty;
     }
 
+    @Override
     public int getPoints() {
         return points;
     }
 
-    public void swapImage(ImageSwapper image) {
-        currentState = image; 
+    private void swapImage(ImageSwapper image) {
+        currentState = image;
     }
 
+    @Override
     public Texture getTexture() {
-        return textures.get(currentState); 
+        return textures.get(currentState);
     }
 
+    @Override
     public Rectangle getRectangle() {
         return spriteRect;
     }
 
-    //må kanskje endre denne, hvis et prosjektil treffer en rotte, så skal den ta skade. Er det berde.
+    @Override
     public void takeDamage(int damage) {
         health -= damage;
     }
 
+    // fix this using getDirection
     public enum Direction {
         UP,
         DOWN,
@@ -113,31 +148,46 @@ public abstract class Rat implements IEntity {
         OUT;
     }
 
+    @Override
     public void addTime() {
         this.secs += 0.05;
-        
+
     }
 
+    @Override
     public Direction getDirection() {
-
         int category;
-        if (secs < 4) category = 1;
-        else if (secs < 9) category = 2;
-        else if (secs < 14) category = 3;
-        else if (secs < 24) category = 4;
-        else if (secs < 31) category = 5;
-        else if (secs < 35) category = 6;
-        else if (secs < 51) category = 7;
-        else if (secs < 57) category = 8;
-        else if (secs < 62) category = 9;
-        else if (secs < 67) category = 10;
-        else if (secs < 72.5) category = 11;
-        else if (secs < 78) category = 12;
-        else if (secs < 85) category = 13;
-        else if (secs < 87) category = 14;
-        else return Direction.OUT;
-        
-    
+        if (secs < 4)
+            category = 1;
+        else if (secs < 9)
+            category = 2;
+        else if (secs < 14)
+            category = 3;
+        else if (secs < 24)
+            category = 4;
+        else if (secs < 31)
+            category = 5;
+        else if (secs < 35)
+            category = 6;
+        else if (secs < 51)
+            category = 7;
+        else if (secs < 57)
+            category = 8;
+        else if (secs < 62)
+            category = 9;
+        else if (secs < 67)
+            category = 10;
+        else if (secs < 72.5)
+            category = 11;
+        else if (secs < 78)
+            category = 12;
+        else if (secs < 85)
+            category = 13;
+        else if (secs < 87)
+            category = 14;
+        else
+            return Direction.OUT;
+
         switch (category) {
             case 1:
             case 3:
@@ -161,11 +211,37 @@ public abstract class Rat implements IEntity {
                 throw new AssertionError("Unexpected value: " + category);
         }
     }
-    
+
+    private float getRotationAngle() {
+        Direction dir = getDirection();
+        switch (dir) {
+            case UP:
+                return 0;
+            case DOWN:
+                return 180;
+            case LEFT:
+                return 90;
+            case RIGHT:
+                return -90;
+            case OUT:
+                // Assuming no rotation for OUT direction.
+                return 0;
+            default:
+                throw new Error("Unexpected Direction: " + dir);
+        }
+    }
+
+    @Override
+    public void rotateImage() {
+        float angle = getRotationAngle();
+        this.sprite.setOriginCenter();
+        this.sprite.setRotation(angle);
+    }
 
     @Override
     public void move() {
-        switch (getDirection()) {
+        Direction dir = getDirection();
+        switch (dir) {
             case UP:
                 pos.y += speed;
                 break;
@@ -178,25 +254,33 @@ public abstract class Rat implements IEntity {
             case LEFT:
                 pos.x -= speed;
                 break;
-            case OUT:
-                // liv -1
-            break;
             default:
-                throw new Error("Error in class Rat");
+                break;
         }
 
-        spriteRect.x = pos.x;
-        spriteRect.y = pos.y;
+        this.sprite.setPosition(pos.x, pos.y);
+        rotateImage();
     }
-    
+
+    public Sprite getSprite() {
+        return sprite;
+    }
+
     @Override
     public void render(SpriteBatch batch) {
     }
 
-    @Override
     public void killedAnimation() {
-        speed = 0;
         swapImage(ImageSwapper.DEAD);
+        health = 0;
+        speed = 0;
+        this.sprite.setTexture(getTexture());
+    }
+
+    public void updateCoinVisibility(float deltaTime) {
+        if (isKilled()) {
+            coinVisibleTime += deltaTime;
+        }
     }
 
     @Override
@@ -204,16 +288,19 @@ public abstract class Rat implements IEntity {
         return health <= 0;
     }
 
-    public boolean isOut(){
-        return this.getDirection()==Direction.OUT;
-       
+    @Override
+    public boolean isOut() {
+        if (this.getDirection() == Direction.OUT) {
+            return true;
+        }
+        return false;
     }
+
+    @Override
     public void setPosition(Vector2 pos) {
         this.pos = pos;
         rectangleUpdater();
     }
-
-
 
     @Override
     public int getHealth() {
@@ -225,18 +312,21 @@ public abstract class Rat implements IEntity {
         return pos;
     }
 
+    @Override
     public void freeze() {
         isFrozen = true;
-        //speed = speed / 2;
         swapImage(ImageSwapper.FROZEN);
+        this.sprite.setTexture(getTexture());
     }
 
+    @Override
     public void unfreeze() {
         isFrozen = false;
-        //speed = speed * 2; 
         swapImage(ImageSwapper.ALIVE);
+        this.sprite.setTexture(getTexture());
     }
 
+    @Override
     public boolean isFrozen() {
         return isFrozen;
     }

@@ -5,6 +5,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class GameStateManager {
     private static State currentState;
 
+    /**
+     * Called when the application window is resized.
+     * Updates the screen rectangle's width and height.
+     * @param width The new width.
+     * @param height The new height.
+     */
     public static void set(State newState) {
         if (currentState != null) {
             currentState.dispose();
@@ -12,25 +18,14 @@ public class GameStateManager {
         currentState = newState;
     }
 
-    public void update(float dt) {
-        if (currentState != null) {
-            currentState.update(dt);
-        }
-    }
-    public State getCurrentState() {
-        return currentState;
-    }
-
-
+     /**
+     * Renders the current game state using the given sprite batch.
+     * If there is no current game state, this method does nothing.
+     * @param sb The sprite batch to use for rendering.
+     */
     public void render(SpriteBatch sb) {
         if (currentState != null) {
             currentState.render(sb);
-        }
-    }
-
-    public void dispose() {
-        if (currentState != null) {
-            currentState.dispose();
         }
     }
 }

@@ -19,9 +19,11 @@ public class PauseButton extends Buttons {
 
     @Override
     protected void setupButton() {
-        button = ButtonFactory.createImageButton("playUp.png", "pauseUp.png");
+        button = ButtonFactory.createImageButton("buttons_game/Spill_Play:Play.png", "buttons_game/Spill_Play:Pause.png");
         button.setSize(100, 100);
         button.setPosition(850, 500);
+
+        
 
         button.addListener(new ClickListener() {
             @Override
@@ -34,13 +36,11 @@ public class PauseButton extends Buttons {
 
     @Override
     public void updateButtonAppearance() {
-        // button.getStyle().up = model.isPaused() 
-        //     ? new TextureRegionDrawable(new TextureRegion(new Texture("playUp.png")))
-        //     : new TextureRegionDrawable(new TextureRegion(new Texture("pauseUp.png")));
         if(model.isPaused()){
-            button.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("playUp.png")));
+            button.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("buttons_game/Spill_Play:Play.png")));
         } else {
-            button.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("pauseUp.png")));
+            
+            button.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("buttons_game/Spill_Play:Pause.png")));
         }
     }
 

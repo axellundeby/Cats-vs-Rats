@@ -15,12 +15,16 @@ public abstract class State {
         mouse = new Vector3();
     }
 
-    public abstract void handleInput();
-
-    public abstract void update(float dt);
-
+    /**
+     * Renders the current state using the provided SpriteBatch.
+     *
+     * @param sb The SpriteBatch object used for drawing.
+     */
     public abstract void render(SpriteBatch sb);
 
+    /**
+     * Cleans up resources used by this state.
+     * This method should be called when a state is no longer needed to free up memory and prevent leaks.
+     */
     public abstract void dispose();
-
 }
