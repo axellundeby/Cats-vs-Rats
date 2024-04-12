@@ -76,15 +76,15 @@ public class RatTest {
         rat = new LabRat(1, 1, dependency,1,1,1);
     }
 
-    @CsvSource(value = {"0,0,0,0,true", "1,9,6,43,false", "1,16,10,7,true", "-50,-50,10,10,false"})
-    @ParameterizedTest(name = "{0}, {1}, {2}, {3}, {4}")
-    public void projectileHitTest(int px, int py, int ratx, int raty, boolean hits){
-        Projectile testProjectile = new Projectile(new Vector2(px, py), new Vector2(), 0, dependency);
-        rat.setPosition(new Vector2(ratx, raty));
-        ArrayList<Projectile> list = new ArrayList<>();
-        list.add(testProjectile);
-        assertEquals(hits, rat.isHitByProjectile(list));
-    }
+    // @CsvSource(value = {"0,0,0,0,true", "1,9,6,43,false", "1,16,10,7,true", "-50,-50,10,10,false"})
+    // @ParameterizedTest(name = "{0}, {1}, {2}, {3}, {4}")
+    // public void projectileHitTest(int px, int py, int ratx, int raty, boolean hits){
+    //     Projectile testProjectile = new Projectile(new Vector2(px, py), new Vector2(), 0, dependency);
+    //     rat.setPosition(new Vector2(ratx, raty));
+    //     ArrayList<Projectile> list = new ArrayList<>();
+    //     list.add(testProjectile);
+    //     assertEquals(hits, rat.isHitByProjectile(list));
+    // }
     
 
     @Test

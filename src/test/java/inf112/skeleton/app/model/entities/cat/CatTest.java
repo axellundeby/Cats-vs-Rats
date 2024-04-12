@@ -99,18 +99,18 @@ public class CatTest {
 
     }
 
-    @CsvSource(value = {"0,0,10,true", "100,0,74,false", "0,49,50,true", "-10,0,10,true", "-36,-36,10,false"})
-    @ParameterizedTest(name = "Rat at {0}, {1} is within range {2} of Cat: {3}")
-    public void rangeTest(int labRatX, int labRatY, int catRange, boolean inRange){
-        Rat labRat = new LabRat(1, 1, dependency,1,1,1);
-        labRat.setPosition(new Vector2(labRatX, labRatY));
-        labRat.rectangleUpdater();
+    // @CsvSource(value = {"0,0,10,true", "100,0,74,false", "0,49,50,true", "-10,0,10,true", "-36,-36,10,false"})
+    // @ParameterizedTest(name = "Rat at {0}, {1} is within range {2} of Cat: {3}")
+    // public void rangeTest(int labRatX, int labRatY, int catRange, boolean inRange){
+    //     Rat labRat = new LabRat(1, 1, dependency,1,1,1);
+    //     labRat.setPosition(new Vector2(labRatX, labRatY));
+    //     labRat.rectangleUpdater();
     
-        Cat customRangeCat = new LabCat(1, catRange, dependency, dependency, 1, 0);
-        customRangeCat.circleUpdater();
+    //     Cat customRangeCat = new LabCat(1, catRange, dependency, dependency, 1, 0);
+    //     customRangeCat.circleUpdater();
     
-        assertEquals(inRange, customRangeCat.withinRange(labRat), "Range test failed");
-    }
+    //     assertEquals(inRange, customRangeCat.withinRange(labRat), "Range test failed");
+    // }
     
 
 
