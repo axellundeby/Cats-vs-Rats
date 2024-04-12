@@ -73,7 +73,7 @@ public class RatTest {
     void beforeEach() {
         MockitoAnnotations.openMocks(this);
         model = new SkadedyrModel();
-        rat = new LabRat(1, 1, dependency,1,1, dependency,1);
+        rat = new LabRat(1, 1, dependency,1,1,1);
     }
 
     @CsvSource(value = {"0,0,0,0,true", "1,9,6,43,false", "1,16,10,7,true", "-50,-50,10,10,false"})
@@ -104,11 +104,10 @@ public class RatTest {
         assertNotEquals(firstpos, movedPos);
     
     }
-    @CsvSource(value = {"0,0,1,0,0,1", "10,10,10,11,5,1", "0,0,0,-1,20,1", "0,-1,0,0,86,1",
-                        "0,0,"})
+    @CsvSource(value = {"0,0,1,0,0,1", "10,10,10,11,5,1", "0,0,0,-1,20,1", "0,-1,0,0,86,1"})
     @ParameterizedTest(name = "Move {2}-{0} x, {3}-{1} y, speed = {5}")
     public void moveSpeedTest(int oldx, int oldy, int newx, int newy, int secsAlive, int ratSpeed){
-        Rat labRat = new LabRat(1, 1, dependency,1,1, dependency,1);
+        Rat labRat = new LabRat(1, 1, dependency,1,1,1);
         int ticksAlive = secsAlive * 20;
         labRat.setPosition(new Vector2(oldx, oldy));
         for (int i = 0; i < ticksAlive; i++) {
