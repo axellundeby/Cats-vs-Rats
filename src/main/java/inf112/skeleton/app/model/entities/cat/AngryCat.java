@@ -43,5 +43,11 @@ public class AngryCat extends Cat {
     public void upgradeFireRate() {
         this.fireRate *= 0.75;
     }
+
+    @Override
+    public void upgradeImage() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'upgradeImage'");
+    }
     
 }

@@ -59,5 +59,4 @@ public class ShotgunCat extends Cat {
     public void upgradeFireRate() {
         this.fireRate *= 0.75;
     }
-
 }

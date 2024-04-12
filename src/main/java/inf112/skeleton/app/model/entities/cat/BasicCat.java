@@ -11,8 +11,9 @@ import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.rat.Rat;
 
 public class BasicCat extends Cat {
+
     public BasicCat() {
-        super(100, 100, new Texture(Gdx.files.internal("cat.png")), new Texture(Gdx.files.internal("angryCat.png")), 50.0f,200);
+        super(100, 100, new Texture(Gdx.files.internal("cats/Spill_Skytekatt1.png")), new Texture(Gdx.files.internal("angryCat.png")), 50.0f,200);
     }
 
     @Override
@@ -49,4 +50,5 @@ public class BasicCat extends Cat {
     public void upgradeFireRate() {
         this.fireRate *= 0.75;
     }
+
 }

@@ -10,10 +10,11 @@ import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.rat.Rat;
 
 public class FreezeCat extends Cat {
-
+    private int upgradeCounter = 0;
+    
     public FreezeCat() {
 
-        super(1, 100, new Texture(Gdx.files.internal("cats/Spill_frysekatt1.png")), new Texture(Gdx.files.internal("cats/Spill_frysekatt2.png")), 50.0f,1000);
+        super(1, 100,  new Texture(Gdx.files.internal("cats/Spill_frysekatt1.png")), new Texture(Gdx.files.internal("cats/Spill_frysekatt2.png")), 50.0f,1000);
     }
 
     @Override
@@ -43,18 +44,21 @@ public class FreezeCat extends Cat {
 
     @Override
     public void upgradeDamage() {
+        upgradeCounter++;
        this.strength *= 1.25;
 
     }
 
     @Override
     public void upgradeRange() {
+        upgradeCounter++;
         this.range *= 1.25;
         this.cirleUppdater();
     }
 
     @Override
     public void upgradeFireRate() {
+        upgradeCounter++;
         this.fireRate *= 0.75;
     }
 }

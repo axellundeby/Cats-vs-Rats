@@ -21,8 +21,8 @@ public abstract class Cat {
     private Circle rangeCircle;
     private int size;
     private int halfSize;
-    private EnumMap<PictureSwapper, Texture> textures = new EnumMap<>(PictureSwapper.class);
-    public PictureSwapper currentState = PictureSwapper.DEFAULT;
+    protected EnumMap<CatPictureSwapper, Texture> textures = new EnumMap<>(CatPictureSwapper.class);
+    public CatPictureSwapper currentState = CatPictureSwapper.DEFAULT;
     protected float fireRate;
     private float attackTimer;
     private float attackImageTimer = 0;
@@ -33,7 +33,7 @@ public abstract class Cat {
     private Vector2 lastTargetPosition = null;
 
 
-    public Cat(int strength, float range, Texture defaultImage, Texture attackImage, float fireRate, int cost) {
+    public Cat(int strength, float range, Texture defaultImage, Texture attackImage,Texture upgrade1,Texture upgrade2 ,float fireRate, int cost) {
         this.strength = strength;
         this.range = range;
         this.pos = new Vector2();
@@ -48,8 +48,10 @@ public abstract class Cat {
         this.cost = cost;
         this.currentRotationAngle = 0;
 
-        textures.put(PictureSwapper.DEFAULT, defaultImage);
-        textures.put(PictureSwapper.ATTACK, attackImage);
+        textures.put(CatPictureSwapper.DEFAULT, defaultImage);
+        textures.put(CatPictureSwapper.ATTACK, attackImage);
+        textures.put(CatPictureSwapper.UPGRADE1, upgrade1);
+        textures.put(CatPictureSwapper.UPGRADE2, upgrade2);
     }
 
     /**
@@ -74,6 +76,7 @@ public abstract class Cat {
      * Upgrades the cat's fire rate.
      */
     public abstract void upgradeFireRate();
+
 
     /**
      * Sets the cat's position.
@@ -174,7 +177,7 @@ public abstract class Cat {
      * Triggers the attack image for the cat.
      */
     public void triggerAttackImage() {
-        swapImage(PictureSwapper.ATTACK);
+        swapImage(CatPictureSwapper.ATTACK);
         attackImageTimer = attackImageDuration;
     }
 
@@ -187,7 +190,7 @@ public abstract class Cat {
         if (attackImageTimer > 0) {
             attackImageTimer -= deltaTime;
             if (attackImageTimer <= 0) {
-                swapImage(PictureSwapper.DEFAULT);
+                swapImage(CatPictureSwapper.DEFAULT);//bytte til riktig oppdaterte bilde
             }
         }
         updateAttackTimer(deltaTime);
@@ -196,9 +199,11 @@ public abstract class Cat {
     /**
      * Enum representing the possible states of the cat's image.
      */
-    public enum PictureSwapper {
+    public enum CatPictureSwapper {
         DEFAULT,
-        ATTACK
+        ATTACK,
+        UPGRADE1,
+        UPGRADE2
     }
 
      /**
@@ -245,7 +250,7 @@ public abstract class Cat {
      *
      * @param image The new state of the cat's image.
      */
-    public void swapImage(PictureSwapper image) {
+    public void swapImage(CatPictureSwapper image) {
         currentState = image;
         Texture newTexture = textures.get(currentState);
         sprite.setTexture(newTexture);

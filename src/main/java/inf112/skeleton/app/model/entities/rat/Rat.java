@@ -25,8 +25,12 @@ public abstract class Rat implements IEntity {
     public float coinVisibleTime = 0f;
     private Sprite sprite;
     private boolean isFrozen;
-    public ImageSwapper currentState = ImageSwapper.ALIVE;
-    private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
+    public RatImageSwapper currentState = RatImageSwapper.ALIVE;
+    private EnumMap<RatImageSwapper, Texture> textures = new EnumMap<>(RatImageSwapper.class);
+
+    private CatmullRomSpline<Vector2> path;
+    private float progress;
+
 
     public Rat(int health, int speed, Texture texture, Integer bounty, Integer points, Texture frozenTexture, int halfsize) {
         this.health = health;
@@ -38,27 +42,42 @@ public abstract class Rat implements IEntity {
         this.sprite.setSize(halfsize * 2, halfsize * 2);
         this.sprite.setPosition(pos.x - halfsize, pos.y - halfsize);
         this.secs = 0;
-        textures.put(ImageSwapper.ALIVE, texture);
-        textures.put(ImageSwapper.FROZEN, frozenTexture);
-        textures.put(ImageSwapper.DEAD, new Texture(Gdx.files.internal("coin.png")));
+        textures.put(RatImageSwapper.ALIVE, texture);
+        textures.put(RatImageSwapper.FROZEN, frozenTexture);
+        textures.put(RatImageSwapper.DEAD, new Texture(Gdx.files.internal("coin.png")));
         this.spriteRect = new Rectangle(pos.x - halfsize, pos.y - halfsize, halfsize * 2, halfsize * 2);
     }
 
+    public void moveAlongPath(float delta) {
+        progress += delta * speed / path.controlPoints.length;
+        if (progress > 1) progress -= 1;
+        path.valueAt(pos, progress);
+        sprite.setPosition(pos.x, pos.y);
+        spriteRect.setPosition(pos.x, pos.y);
+    }
 
-//     public void createRatsWithSplinePath() {
-//     Vector2[] controlPoints = new Vector2[] {
-//         new Vector2(100, 100),
-//         new Vector2(200, 200),
-//         new Vector2(300, 100),
-//         new Vector2(400, 200),
-//         new Vector2(500, 100)
-//     };
-//     CatmullRomSpline<Vector2> path = new CatmullRomSpline<Vector2>(controlPoints, true);
-
-//     // Anta at du har en måte å generere eller hente rottedata (helse, hastighet, etc.)
-//     Rat newRat = new Rat(health, speed, texture, bounty, points, frozenTexture, halfsize, path);
-//     aliveRats.add(newRat);
-// }
+    public void createRatsWithSplinePath() {
+        Vector2[] controlPoints = new Vector2[] {
+                new Vector2(133.0f,155.0f),
+                new Vector2(137.0f,360.0f),
+                new Vector2(64.0f,359.0f),
+                new Vector2(64.0f,359.0f),
+                new Vector2(69.0f,671.0f),
+                new Vector2(291.0f,671.0f),
+                new Vector2(304.0f,159.0f),
+                new Vector2(448.0f,147.0f),
+                new Vector2(453.0f,255.0f),
+                new Vector2(584.0f,272.0f),
+                new Vector2(582.0f,479.0f),
+                new Vector2(449.0f,486.0f),
+                new Vector2(447.0f,654.0f),
+                new Vector2(724.0f,664.0f),
+                new Vector2(724.0f,664.0f),
+                new Vector2(739.0f,182.0f)
+        };
+        this.path = new CatmullRomSpline<>(controlPoints, true);
+        this.progress = 0;
+    }
     
 
     /**
@@ -92,7 +111,7 @@ public abstract class Rat implements IEntity {
         this.exited = true;
     }
 
-    private enum ImageSwapper {
+    private enum RatImageSwapper {
         ALIVE,
         FROZEN,
         DEAD;
@@ -152,7 +171,7 @@ public abstract class Rat implements IEntity {
      * 
      * @param image The new image of the rat.
      */
-    public void swapImage(ImageSwapper image) {
+    public void swapImage(RatImageSwapper image) {
         currentState = image;
     }
 
@@ -331,7 +350,7 @@ public abstract class Rat implements IEntity {
     }
 
     public void killedAnimation() {
-        swapImage(ImageSwapper.DEAD);
+        swapImage(RatImageSwapper.DEAD);
         health = 0;
         speed = 0;
         this.sprite.setTexture(getTexture());
@@ -384,7 +403,7 @@ public abstract class Rat implements IEntity {
      */
     public void freeze() {
         isFrozen = true;
-        swapImage(ImageSwapper.FROZEN);
+        swapImage(RatImageSwapper.FROZEN);
         this.sprite.setTexture(getTexture());
     }
 
@@ -393,7 +412,7 @@ public abstract class Rat implements IEntity {
      */
     public void unfreeze() {
         isFrozen = false;
-        swapImage(ImageSwapper.ALIVE);
+        swapImage(RatImageSwapper.ALIVE);
         this.sprite.setTexture(getTexture());
     }
 
