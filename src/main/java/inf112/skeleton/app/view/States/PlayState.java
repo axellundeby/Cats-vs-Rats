@@ -106,7 +106,7 @@ public class PlayState extends State {
         stage.draw();
         
         if(model.isgameWon()){
-            GameStateManager.set(new WinState(gsm));
+            GameStateManager.set(new WinState(gsm, model));
         }
       
 
