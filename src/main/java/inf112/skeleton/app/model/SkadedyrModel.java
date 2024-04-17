@@ -38,6 +38,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private boolean roundOver = false;
     private boolean writeText = false;
     private boolean speedUp = false;
+    private Cat selectedCat;
     
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
@@ -156,7 +157,21 @@ public class SkadedyrModel implements ISkadedyrModel {
         }
         if (Gdx.input.isTouched()) {
             catMenu.selector(mouse);
+            selectCat(mouse);
         }
+    }
+
+    private void selectCat(Vector2 mouse) {
+        for (Cat cat : cats) {
+            System.out.println(cat.getSelectionCircle());
+            if (cat.getSelectionCircle().contains(mouse))
+                selectedCat = cat;
+                return;
+        }
+        selectedCat = null;
+    }
+    public Cat getSelectedCat(){
+        return selectedCat;
     }
 
     @Override
@@ -356,7 +371,7 @@ public class SkadedyrModel implements ISkadedyrModel {
             cat = new FreezeCat();
             cost = cat.getCost();
         }
-        if (money >= cost) { 
+        if (money >= cost && cat != null) { 
             cat.setPos(mouseX, mouseY);
             addCat(cat);
             money -= cost;
@@ -367,4 +382,6 @@ public class SkadedyrModel implements ISkadedyrModel {
     public CatMenu getBuyMenu() {
         return catMenu;
     }
+
+    
 }

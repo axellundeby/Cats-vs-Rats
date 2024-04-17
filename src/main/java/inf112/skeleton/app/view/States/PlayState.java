@@ -76,11 +76,15 @@ public class PlayState extends State {
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        for (Cat cat : model.getCats()) {
-            Circle range = cat.getRangeCircle();
-            shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
-            shapeRenderer.circle(range.x, range.y, range.radius);
-        }
+        Cat selectedCat = model.getSelectedCat();
+        // for (Cat cat : model.getCats()) {
+            if (selectedCat != null){
+
+                Circle range = selectedCat.getRangeCircle();
+                shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
+                shapeRenderer.circle(range.x, range.y, range.radius);
+            }
+        // }
         shapeRenderer.end();
 
         drawCatMenu(batch);

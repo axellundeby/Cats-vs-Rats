@@ -45,7 +45,8 @@ public class CatMenu implements ICatMenu{
             catsMap.put(cat, new Rectangle(getX() + MARGIN, getY() + MARGIN + i * CATDIM, CATDIM, CATDIM));
             i++;
         }
-        selected = availableCatsList.get(0);
+        // selected = availableCatsList.get(0);
+        selected = null;
     }
 
     
@@ -66,17 +67,26 @@ public class CatMenu implements ICatMenu{
 
     @Override
     public void draw(ShapeRenderer shapeRenderer) {
-        shapeRenderer.setColor(Color.WHITE);
-        Vector2 center = catsMap.get(selected).getCenter(new Vector2());
-        shapeRenderer.circle(center.x, center.y, CATDIM/2);
+        if (selected != null){
+            shapeRenderer.setColor(Color.WHITE);
+            Vector2 center = catsMap.get(selected).getCenter(new Vector2());
+            shapeRenderer.circle(center.x, center.y, CATDIM/2);
+        }
     }
     
     @Override
     public void selector(Vector2 pos){
         for (Cat cat : availableCatsList) {
-            if (catsMap.get(cat).contains(pos))
+            if (catsMap.get(cat).contains(pos)){
+
                 selected = cat;
+                System.out.println(selected);
+                return;
+            }
         }
+        selected = null;
+        System.out.println(selected);
+        
     }
 
     @Override
