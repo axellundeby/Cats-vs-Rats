@@ -35,9 +35,9 @@ public class UpgradeFireRateButton extends Buttons {
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 if (model.getMoney() >= cost && clicked < 3) {
                     model.setMoney(model.getMoney() - cost); 
-                    for (Cat cat : model.getCats()) {
+                    Cat cat = model.getSelectedCat();
+                    if (cat != null)
                         cat.upgradeFireRate(); 
-                    }
                     clicked++;
                 }
                 updateButtonAppearance();
