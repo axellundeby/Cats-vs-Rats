@@ -49,14 +49,21 @@ public class Rat implements IRat {
     }
 
     public void moveAlongPath(float delta) {
-        progress += delta * speed / path.controlPoints.length;
-        if (progress > 1) progress -= 1;
-        path.valueAt(pos, progress);
-        sprite.setPosition(pos.x, pos.y);
-        spriteRect.setPosition(pos.x, pos.y);
+        progress += delta * 0.1; 
+        if (progress >= 1) {
+            progress = 0; 
+            speed = 0;
+        }
+    
+        Vector2 currentPosition = new Vector2();
+        path.valueAt(currentPosition, progress); 
+        pos.set(currentPosition); 
+        sprite.setPosition(pos.x - halfsize, pos.y - halfsize); 
+        spriteRect.setPosition(pos.x - halfsize, pos.y - halfsize); 
     }
+    
 
-    public void createRatsWithSplinePath() {
+    public void createPath() {
         Vector2[] controlPoints = new Vector2[] {
                 new Vector2(133.0f,155.0f),
                 new Vector2(137.0f,360.0f),
@@ -73,10 +80,10 @@ public class Rat implements IRat {
                 new Vector2(447.0f,654.0f),
                 new Vector2(724.0f,664.0f),
                 new Vector2(724.0f,664.0f),
-                new Vector2(739.0f,182.0f)
+                new Vector2(739.0f,182.0f),
+                new Vector2(800,182.0f)
         };
         this.path = new CatmullRomSpline<>(controlPoints, true);
-        this.progress = 0;
     }
 
 
