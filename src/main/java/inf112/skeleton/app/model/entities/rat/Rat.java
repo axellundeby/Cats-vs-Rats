@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -27,6 +28,8 @@ public class Rat implements IRat {
     public ImageSwapper currentState = ImageSwapper.ALIVE;
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
     int halfsize = 25;
+    private CatmullRomSpline<Vector2> path;
+    private float progress;
     
 
     public Rat(int health, int speed, Texture texture, Integer bounty, Integer points, Texture frozenTexture, int halfsize, Texture deadTexture) {
@@ -45,23 +48,37 @@ public class Rat implements IRat {
         this.spriteRect = new Rectangle(pos.x - halfsize, pos.y - halfsize, halfsize * 2, halfsize * 2);
     }
 
-    // public void createRatsWithSplinePath() {
-    // Vector2[] controlPoints = new Vector2[] {
-    // new Vector2(100, 100),
-    // new Vector2(200, 200),
-    // new Vector2(300, 100),
-    // new Vector2(400, 200),
-    // new Vector2(500, 100)
-    // };
-    // CatmullRomSpline<Vector2> path = new CatmullRomSpline<Vector2>(controlPoints,
-    // true);
+    public void moveAlongPath(float delta) {
+        progress += delta * speed / path.controlPoints.length;
+        if (progress > 1) progress -= 1;
+        path.valueAt(pos, progress);
+        sprite.setPosition(pos.x, pos.y);
+        spriteRect.setPosition(pos.x, pos.y);
+    }
 
-    // // Anta at du har en måte å generere eller hente rottedata (helse, hastighet,
-    // etc.)
-    // Rat newRat = new Rat(health, speed, texture, bounty, points, frozenTexture,
-    // halfsize, path);
-    // aliveRats.add(newRat);
-    // }
+    public void createRatsWithSplinePath() {
+        Vector2[] controlPoints = new Vector2[] {
+                new Vector2(133.0f,155.0f),
+                new Vector2(137.0f,360.0f),
+                new Vector2(64.0f,359.0f),
+                new Vector2(64.0f,359.0f),
+                new Vector2(69.0f,671.0f),
+                new Vector2(291.0f,671.0f),
+                new Vector2(304.0f,159.0f),
+                new Vector2(448.0f,147.0f),
+                new Vector2(453.0f,255.0f),
+                new Vector2(584.0f,272.0f),
+                new Vector2(582.0f,479.0f),
+                new Vector2(449.0f,486.0f),
+                new Vector2(447.0f,654.0f),
+                new Vector2(724.0f,664.0f),
+                new Vector2(724.0f,664.0f),
+                new Vector2(739.0f,182.0f)
+        };
+        this.path = new CatmullRomSpline<>(controlPoints, true);
+        this.progress = 0;
+    }
+
 
     @Override
     public boolean isrewardClaimed() {
