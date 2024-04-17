@@ -78,14 +78,11 @@ public class CatMenu implements ICatMenu{
     public void selector(Vector2 pos){
         for (Cat cat : availableCatsList) {
             if (catsMap.get(cat).contains(pos)){
-
                 selected = cat;
-                System.out.println(selected);
                 return;
             }
         }
         selected = null;
-        System.out.println(selected);
         
     }
 

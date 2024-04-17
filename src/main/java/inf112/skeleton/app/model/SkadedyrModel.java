@@ -163,10 +163,10 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     private void selectCat(Vector2 mouse) {
         for (Cat cat : cats) {
-            System.out.println(cat.getSelectionCircle());
-            if (cat.getSelectionCircle().contains(mouse))
+            if (cat.getSelectionCircle().contains(mouse)){
                 selectedCat = cat;
                 return;
+            }
         }
         selectedCat = null;
     }
@@ -363,18 +363,21 @@ public class SkadedyrModel implements ISkadedyrModel {
         int cost = 0;
         if (cat instanceof BasicCat) {
             cat = new BasicCat();
-            cost = cat.getCost();
+
         } else if (cat instanceof ShotgunCat) {
             cat = new ShotgunCat();
-            cost = cat.getCost();
+
         } else if (cat instanceof FreezeCat) {
             cat = new FreezeCat();
-            cost = cat.getCost();
         }
-        if (money >= cost && cat != null) { 
-            cat.setPos(mouseX, mouseY);
-            addCat(cat);
-            money -= cost;
+        if (cat != null){
+            cost = cat.getCost();
+
+            if (money >= cost) { 
+                cat.setPos(mouseX, mouseY);
+                addCat(cat);
+                money -= cost;
+            }
         }
     }
 
