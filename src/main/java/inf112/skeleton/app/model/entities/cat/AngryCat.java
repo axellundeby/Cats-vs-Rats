@@ -12,7 +12,7 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 public class AngryCat extends Cat {
 
     public AngryCat() {
-        super(5, 150, new Texture(Gdx.files.internal("angryCat.png")), new Texture(Gdx.files.internal("angryCat.png")), 300.0f,0);
+        super(5, 150, new Texture(Gdx.files.internal("angryCat.png")), new Texture(Gdx.files.internal("angryCat.png")), null, null, 300.0f,0);
     }
 
     @Override
@@ -44,10 +44,5 @@ public class AngryCat extends Cat {
         this.fireRate *= 0.75;
     }
 
-    @Override
-    public void upgradeImage() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'upgradeImage'");
-    }
     
 }

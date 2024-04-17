@@ -14,7 +14,7 @@ public class FreezeCat extends Cat {
     
     public FreezeCat() {
 
-        super(1, 100,  new Texture(Gdx.files.internal("cats/Spill_frysekatt1.png")), new Texture(Gdx.files.internal("cats/Spill_frysekatt2.png")), 50.0f,1000);
+        super(1, 100,  new Texture(Gdx.files.internal("cats/Spill_frysekatt1.png")), new Texture(Gdx.files.internal("cats/Spill_frysekatt2.png")), null, null, 50.0f,1000);
     }
 
     @Override
