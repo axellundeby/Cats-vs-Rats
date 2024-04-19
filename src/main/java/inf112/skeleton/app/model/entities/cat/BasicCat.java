@@ -13,6 +13,7 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 public class BasicCat extends Cat {
     public BasicCat() {
         super(100, 100, new Texture(Gdx.files.internal("cat.png")), new Texture(Gdx.files.internal("angryCat.png")), 50.0f,200);
+        initAttackSound();
     }
 
     @Override
@@ -20,6 +21,7 @@ public class BasicCat extends Cat {
         ArrayList<Projectile> projectileList = new ArrayList<>();
         if (canAttack()) {
             triggerAttackImage();
+            attackSound.play(1.0f);
             //projectileList.add(shootAt(rats));
             rats.getFirst().takeDamage(getStrength());
             resetAttackTimer();
@@ -48,5 +50,11 @@ public class BasicCat extends Cat {
     @Override
     public void upgradeFireRate() {
         this.fireRate *= 0.75;
+    }
+
+    @Override
+    public void initAttackSound() {
+        // TODO Auto-generated method stub
+        attackSound = Gdx.audio.newSound(Gdx.files.internal("sound/attackSound.mp3"));
     }
 }

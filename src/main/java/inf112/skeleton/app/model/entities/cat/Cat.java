@@ -13,6 +13,9 @@ import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.rat.Rat;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+
 public abstract class Cat {
 
     protected int strength;
@@ -31,6 +34,8 @@ public abstract class Cat {
     private float currentRotationAngle;
     private int cost;
     private Vector2 lastTargetPosition = null;
+
+    protected Sound attackSound;
 
 
     public Cat(int strength, float range, Texture defaultImage, Texture attackImage, float fireRate, int cost) {
@@ -310,5 +315,21 @@ public abstract class Cat {
     public String toString() {
         return "Cat at position: " + pos + " with strength " + strength + " and range " + range;
 
+    }
+
+
+    /**
+     * Initializes the sound for the cat.
+     * This is an abstract method and needs to be implemented in subclasses.
+     */
+    public abstract void initAttackSound();
+
+    /**
+     * Disposes the sound 
+     */
+    public void dispose() {
+        if (attackSound != null) {
+            attackSound.dispose();
+        }
     }
 }

@@ -2,6 +2,8 @@ package inf112.skeleton.app.model;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.audio.Sound;
+
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.Cat;
@@ -122,6 +124,14 @@ public interface ISkadedyrModel {
      * @return the CatMenu object
      */
     CatMenu getBuyMenu();
+
+    //Javadoc
+    Sound getCoinsFromRatSound();
+
+    //javadoc
+    Sound getplayerHealtSound();
+
+    void dispose();
 
 
 

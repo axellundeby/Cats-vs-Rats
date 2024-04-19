@@ -1,5 +1,6 @@
 package inf112.skeleton.app.controller.buttons.upgrade;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -22,6 +23,7 @@ public class UpgradeRangeButton extends Buttons {
 
     public UpgradeRangeButton(SkadedyrModel model, Stage stage) {
         super(model, stage);
+        initUpgradeSound();
     }
 
     @Override
@@ -39,6 +41,7 @@ public class UpgradeRangeButton extends Buttons {
                         cat.upgradeRange(); 
                     }
                     clicked++;
+                    upgradeSound.play(0.5f);
                 }
                 updateButtonAppearance();
             }
@@ -61,4 +64,9 @@ public class UpgradeRangeButton extends Buttons {
         button.getStyle().up = appearance;
         button.getStyle().down = new TextureRegionDrawable(new TextureRegion(new Texture(clickTexture))); 
     }
+
+    @Override
+    public void initUpgradeSound() {
+        // TODO Auto-generated method stub
+        upgradeSound = Gdx.audio.newSound(Gdx.files.internal("sound/kaChing.mp3"));    }
 }

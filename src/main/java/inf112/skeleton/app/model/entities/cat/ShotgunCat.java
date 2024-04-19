@@ -60,4 +60,10 @@ public class ShotgunCat extends Cat {
         this.fireRate *= 0.75;
     }
 
+    @Override
+    public void initAttackSound() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'initSound'");
+    }
+
 }

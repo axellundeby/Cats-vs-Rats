@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 
 import inf112.skeleton.app.main.SkadedyrMain;
@@ -38,6 +39,9 @@ public class SkadedyrModel implements ISkadedyrModel {
     private boolean roundOver = false;
     private boolean writeText = false;
     private boolean speedUp = false;
+
+    private Sound coinFromRatSound = null;
+    private Sound playerHealtSound = null;
     
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
@@ -66,6 +70,26 @@ public class SkadedyrModel implements ISkadedyrModel {
         removeDeadOrExitedRats(deltaTime);
     }
 
+
+    //JAVADOC
+    @Override
+    public Sound getCoinsFromRatSound() {
+        if (coinFromRatSound == null) {
+            coinFromRatSound = Gdx.audio.newSound(Gdx.files.internal("sound/coinFromRat.mp3"));
+        }
+        return coinFromRatSound;
+    }
+ 
+    //JAVADOC
+    @Override
+    public Sound getplayerHealtSound() {
+        if (playerHealtSound == null) {
+            playerHealtSound = Gdx.audio.newSound(Gdx.files.internal("sound/kaChing.mp3"));
+        }
+        return playerHealtSound;
+    }
+
+
     public void removeDeadOrExitedRats(float deltaTime) {
         Iterator<Rat> iterator = aliveRats.iterator();
         while (iterator.hasNext()) {
@@ -80,16 +104,21 @@ public class SkadedyrModel implements ISkadedyrModel {
                 }
                 if (rat.coinVisibleTime >= COIN_DURATION) {
                     iterator.remove();
+                    if (coinFromRatSound != null)
+                        coinFromRatSound.play(1.0f); //Sound for coin
                 }
             } else if (rat.getDirection() == Direction.OUT) {
                 if (!rat.isrewardClaimed()) {
                     if (!rat.isExited()) {
                         lives = Math.max(0, lives - 1);
                         rat.exit();
+                        if (playerHealtSound != null)
+                            playerHealtSound.play(1.0f); 
                     }
                     iterator.remove();
                 }
             }
+            
         }
     }
     
@@ -367,4 +396,12 @@ public class SkadedyrModel implements ISkadedyrModel {
     public CatMenu getBuyMenu() {
         return catMenu;
     }
+
+    @Override
+    public void dispose() {
+        coinFromRatSound.dispose();
+        playerHealtSound.dispose();
+    }
+
+
 }

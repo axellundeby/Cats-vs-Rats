@@ -32,5 +32,11 @@ public class ExitButton  extends Buttons {
     public void updateButtonAppearance() {
 
     }
+
+    @Override
+    public void initUpgradeSound() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'initUpgradeSound'");
+    }
     
 }

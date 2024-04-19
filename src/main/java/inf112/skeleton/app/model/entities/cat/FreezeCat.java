@@ -57,4 +57,10 @@ public class FreezeCat extends Cat {
     public void upgradeFireRate() {
         this.fireRate *= 0.75;
     }
+
+    @Override
+    public void initAttackSound() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'initSound'");
+    }
 }

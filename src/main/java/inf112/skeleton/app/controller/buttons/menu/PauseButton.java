@@ -44,6 +44,12 @@ public class PauseButton extends Buttons {
         }
     }
 
+    @Override
+    public void initUpgradeSound() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'initUpgradeSound'");
+    }
+
         
     }
 

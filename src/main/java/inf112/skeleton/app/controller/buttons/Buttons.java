@@ -1,5 +1,6 @@
 package inf112.skeleton.app.controller.buttons;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import inf112.skeleton.app.model.SkadedyrModel;
@@ -8,6 +9,8 @@ public abstract class Buttons {
     protected  SkadedyrModel model;
     protected Stage stage;
     protected ImageButton button;
+
+    protected Sound upgradeSound;
 
     public Buttons(SkadedyrModel model, Stage stage) {
         this.model = model;
@@ -28,4 +31,22 @@ public abstract class Buttons {
      * in response to changes in the game state.
      */
     protected abstract void updateButtonAppearance();
+
+
+     /**
+     * Initializes the sound for the cat.
+     * This is an abstract method and needs to be implemented in subclasses.
+     */
+    public abstract void initUpgradeSound();
+
+    /**
+     * Disposes the sound 
+     */
+    public void dispose() {
+        if (upgradeSound != null) {
+            upgradeSound.dispose();
+        }
+    }
+
+
 }
