@@ -342,6 +342,7 @@ public class SkadedyrModel implements ISkadedyrModel {
 
 
     private void newCat(int mouseX, int mouseY) {
+        System.out.println(mouseX + " " + mouseY);
         Cat cat = catMenu.getSelectedCat();
         int cost = 0;
         if (cat instanceof BasicCat) {

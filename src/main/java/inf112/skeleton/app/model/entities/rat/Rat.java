@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 
 public class Rat implements IRat {
-    private int speed;
+    private float speed;
     private Vector2 pos;
     private int health;
     private Rectangle spriteRect;
@@ -32,9 +32,11 @@ public class Rat implements IRat {
     private float progress;
     private Vector2[] controlPoints;
     private Direction direction = Direction.RIGHT;
+    private int currentControlPoint = 0; // add this line
+
     
 
-    public Rat(int health, int speed, Texture texture, Integer bounty, Integer points, Texture frozenTexture, int halfsize, Texture deadTexture) {
+    public Rat(int health, float speed, Texture texture, Integer bounty, Integer points, Texture frozenTexture, int halfsize, Texture deadTexture) {
         this.health = health;
         this.speed = speed;
         this.points = points;
@@ -49,51 +51,62 @@ public class Rat implements IRat {
         textures.put(ImageSwapper.DEAD, deadTexture);
         this.spriteRect = new Rectangle(pos.x - halfsize, pos.y - halfsize, halfsize * 2, halfsize * 2);
         createPath();
+
     }
 
     public void moveAlongPath(float delta) {
-        if (progress < 1) {
-            progress += delta * 0.01;
-        }
-    
-        Vector2 currentPosition = new Vector2();
-        path.valueAt(currentPosition, progress); 
-        pos.set(currentPosition); 
-        sprite.setPosition(pos.x - halfsize, pos.y - halfsize); 
-        spriteRect.setPosition(pos.x - halfsize, pos.y - halfsize); 
-        for (int i = 0; i < controlPoints.length - 1; i++) {
-            if (pos.epsilonEquals(controlPoints[i], 1.0f)) {
-                updateDirection(controlPoints[i], controlPoints[i + 1]);
+        if (currentControlPoint < controlPoints.length - 1) {
+            Vector2 currentPoint = controlPoints[currentControlPoint];
+            Vector2 nextPoint = controlPoints[currentControlPoint + 1];
+            Vector2 directionToNextPoint = new Vector2(nextPoint).sub(currentPoint).nor();
+            Vector2 movementThisFrame = new Vector2(directionToNextPoint).scl(speed * delta);
+            pos.add(movementThisFrame);
+            if (currentPoint.dst(pos) >= currentPoint.dst(nextPoint)) {
+                pos.set(nextPoint);
+                currentControlPoint++;
+            }
+            sprite.setPosition(pos.x - halfsize, pos.y - halfsize); 
+            spriteRect.setPosition(pos.x - halfsize, pos.y - halfsize); 
+            if (pos.epsilonEquals(controlPoints[currentControlPoint], 1.0f)) {
+                updateDirection(controlPoints[currentControlPoint], controlPoints[currentControlPoint + 1]);
                 rotateImage();
-                break;
             }
         }
     }
     
+    
 
     public void createPath() {
         controlPoints = new Vector2[] {
-                new Vector2(10.0f,155.0f),
-                new Vector2(133.0f,155.0f),
-                new Vector2(137.0f,360.0f),
-                new Vector2(64.0f,359.0f),
-                new Vector2(64.0f,359.0f),
-                new Vector2(69.0f,671.0f),
-                new Vector2(291.0f,671.0f),
-                new Vector2(304.0f,159.0f),
-                new Vector2(448.0f,147.0f),
-                new Vector2(453.0f,255.0f),
-                new Vector2(584.0f,272.0f),
-                new Vector2(582.0f,479.0f),
-                new Vector2(449.0f,486.0f),
-                new Vector2(447.0f,654.0f),
-                new Vector2(724.0f,664.0f),
-                new Vector2(724.0f,664.0f),
-                new Vector2(739.0f,182.0f),
-                new Vector2(800,182.0f),
+            new Vector2(-10.0f,140.0f),
+            new Vector2(10,150.0f),
+            new Vector2(120, 140),
+            new Vector2(120, 340),
+            new Vector2(70, 350),
+            new Vector2(70,500),
+            new Vector2(70,665),
+            new Vector2(291,665),    
+                // 291 663
+                // 313 154
+                // 432 149
+                // 452 258
+                // 583 269
+                // 583 269
+                // 581 479
+                // 581 479
+                // 452 490
+                // 453 481
+                // 442 652
+                // 442 652
+                // 718 656
+                // 744 180
+                // 744 180
         };
         this.path = new CatmullRomSpline<>(controlPoints, false);
     }
+
+
+    //i want the rats to move at the same speed all the time, when controll points are futher away the speed should be the same for points that are closer
 
     private void updateDirection(Vector2 current, Vector2 next) {
         if (next.x > current.x) {
