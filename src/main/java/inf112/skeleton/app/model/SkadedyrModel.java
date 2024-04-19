@@ -159,11 +159,9 @@ public class SkadedyrModel implements ISkadedyrModel {
         }
     }
 
+    //fjerne
     @Override
     public void moveRats() {
-        for (Rat rat : aliveRats) {
-            rat.move();
-        }
     }
 
     @Override

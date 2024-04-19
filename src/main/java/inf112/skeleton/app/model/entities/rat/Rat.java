@@ -30,6 +30,8 @@ public class Rat implements IRat {
     int halfsize = 25;
     private CatmullRomSpline<Vector2> path;
     private float progress;
+    private Vector2[] controlPoints;
+    private Direction direction = Direction.RIGHT;
     
 
     public Rat(int health, int speed, Texture texture, Integer bounty, Integer points, Texture frozenTexture, int halfsize, Texture deadTexture) {
@@ -46,13 +48,12 @@ public class Rat implements IRat {
         textures.put(ImageSwapper.FROZEN, frozenTexture);
         textures.put(ImageSwapper.DEAD, deadTexture);
         this.spriteRect = new Rectangle(pos.x - halfsize, pos.y - halfsize, halfsize * 2, halfsize * 2);
+        createPath();
     }
 
     public void moveAlongPath(float delta) {
-        progress += delta * 0.1; 
-        if (progress >= 1) {
-            progress = 0; 
-            speed = 0;
+        if (progress < 1) {
+            progress += delta * 0.01;
         }
     
         Vector2 currentPosition = new Vector2();
@@ -60,11 +61,19 @@ public class Rat implements IRat {
         pos.set(currentPosition); 
         sprite.setPosition(pos.x - halfsize, pos.y - halfsize); 
         spriteRect.setPosition(pos.x - halfsize, pos.y - halfsize); 
+        for (int i = 0; i < controlPoints.length - 1; i++) {
+            if (pos.epsilonEquals(controlPoints[i], 1.0f)) {
+                updateDirection(controlPoints[i], controlPoints[i + 1]);
+                rotateImage();
+                break;
+            }
+        }
     }
     
 
     public void createPath() {
-        Vector2[] controlPoints = new Vector2[] {
+        controlPoints = new Vector2[] {
+                new Vector2(10.0f,155.0f),
                 new Vector2(133.0f,155.0f),
                 new Vector2(137.0f,360.0f),
                 new Vector2(64.0f,359.0f),
@@ -81,9 +90,28 @@ public class Rat implements IRat {
                 new Vector2(724.0f,664.0f),
                 new Vector2(724.0f,664.0f),
                 new Vector2(739.0f,182.0f),
-                new Vector2(800,182.0f)
+                new Vector2(800,182.0f),
         };
-        this.path = new CatmullRomSpline<>(controlPoints, true);
+        this.path = new CatmullRomSpline<>(controlPoints, false);
+    }
+
+    private void updateDirection(Vector2 current, Vector2 next) {
+        if (next.x > current.x) {
+            direction = Direction.RIGHT;
+        } else if (next.x < current.x) {
+            direction = Direction.LEFT;
+        } else if (next.y > current.y) {
+            direction = Direction.UP;
+        } else if (next.y < current.y) {
+            direction = Direction.DOWN;
+        }
+        else{ 
+            direction = Direction.OUT;
+        }
+    }
+
+    public Direction getDirection(){
+        return direction;
     }
 
 
@@ -177,64 +205,6 @@ public class Rat implements IRat {
 
     }
 
-    @Override
-    public Direction getDirection() {
-        int category;
-        if (secs < 4)
-            category = 1;
-        else if (secs < 9)
-            category = 2;
-        else if (secs < 14)
-            category = 3;
-        else if (secs < 24)
-            category = 4;
-        else if (secs < 31)
-            category = 5;
-        else if (secs < 35)
-            category = 6;
-        else if (secs < 51)
-            category = 7;
-        else if (secs < 57)
-            category = 8;
-        else if (secs < 62)
-            category = 9;
-        else if (secs < 67)
-            category = 10;
-        else if (secs < 72.5)
-            category = 11;
-        else if (secs < 78)
-            category = 12;
-        else if (secs < 85)
-            category = 13;
-        else if (secs < 87)
-            category = 14;
-        else
-            return Direction.OUT;
-
-        switch (category) {
-            case 1:
-            case 3:
-            case 7:
-            case 11:
-                return Direction.RIGHT;
-            case 2:
-            case 8:
-            case 10:
-            case 12:
-            case 14:
-                return Direction.UP;
-            case 4:
-            case 6:
-                return Direction.DOWN;
-            case 5:
-            case 9:
-            case 13:
-                return Direction.LEFT;
-            default:
-                throw new AssertionError("Unexpected value: " + category);
-        }
-    }
-
     private float getRotationAngle() {
         Direction dir = getDirection();
         switch (dir) {
@@ -247,7 +217,6 @@ public class Rat implements IRat {
             case RIGHT:
                 return -90;
             case OUT:
-                // Assuming no rotation for OUT direction.
                 return 0;
             default:
                 throw new Error("Unexpected Direction: " + dir);
@@ -261,30 +230,7 @@ public class Rat implements IRat {
         this.sprite.setRotation(angle);
     }
 
-    @Override
-    public void move() {
-        Direction dir = getDirection();
-        switch (dir) {
-            case UP:
-                pos.y += speed;
-                break;
-            case DOWN:
-                pos.y -= speed;
-                break;
-            case RIGHT:
-                pos.x += speed;
-                break;
-            case LEFT:
-                pos.x -= speed;
-                break;
-            default:
-                break;
-        }
-
-        this.sprite.setPosition(pos.x, pos.y);
-        rotateImage();
-    }
-
+   
     public Sprite getSprite() {
         return sprite;
     }

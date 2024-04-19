@@ -132,25 +132,11 @@ public interface IRat {
     void addTime();
 
     /**
-     * Returns the current direction of the rat.
-     * 
-     * @return The current direction of the rat.
-     */
-    Direction getDirection();
-
-    /**
      * Rotates the rat's image to face its direction.
      */
     void rotateImage();
 
-    /**
-     * Oppdaterer rottens status og posisjon basert på tidsforløpet og
-     * spilllogikken.
-     * 
-     * @param deltaTime Tiden siden siste frame, brukt for å sikre jevn oppdatering
-     *                  over ulike enheter.
-     */
-    void move();
+   
 
     /**
      * Checks if the rat is out.
