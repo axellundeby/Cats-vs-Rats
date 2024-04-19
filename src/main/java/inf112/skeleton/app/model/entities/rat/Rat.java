@@ -75,38 +75,25 @@ public class Rat implements IRat {
     }
     
     
-
+//litt feil punker og rotasjon er broken
     public void createPath() {
         controlPoints = new Vector2[] {
-            new Vector2(-10.0f,140.0f),
-            new Vector2(10,150.0f),
-            new Vector2(120, 140),
-            new Vector2(120, 340),
-            new Vector2(70, 350),
-            new Vector2(70,500),
-            new Vector2(70,665),
-            new Vector2(291,665),    
-                // 291 663
-                // 313 154
-                // 432 149
-                // 452 258
-                // 583 269
-                // 583 269
-                // 581 479
-                // 581 479
-                // 452 490
-                // 453 481
-                // 442 652
-                // 442 652
-                // 718 656
-                // 744 180
-                // 744 180
+            new Vector2(49,298),
+            new Vector2(209,313),
+            new Vector2(214,416),
+            new Vector2(676,366),
+            new Vector2(868,372),
+            new Vector2(868,496),
+            new Vector2(661,514),
+            new Vector2(666,610),
+            new Vector2(1097,606),
+            new Vector2(1105,611),
+            new Vector2(1103,299)
+            
         };
         this.path = new CatmullRomSpline<>(controlPoints, false);
     }
 
-
-    //i want the rats to move at the same speed all the time, when controll points are futher away the speed should be the same for points that are closer
 
     private void updateDirection(Vector2 current, Vector2 next) {
         if (next.x > current.x) {

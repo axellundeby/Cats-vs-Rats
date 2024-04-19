@@ -150,12 +150,12 @@ public class SkadedyrModel implements ISkadedyrModel {
         int mouseX = Gdx.input.getX();
         int mouseY = Gdx.input.getY();
         Vector2 mouse = new Vector2(mouseX, 842 - mouseY);
-
-        if (Gdx.input.isTouched() && mouseX < 832) {
-            newCat(mouseX, 842 - mouseY);
-        }
+        // if (Gdx.input.isTouched() && mouseX < 832) {
+        //     newCat(mouseX, 842 - mouseY);
+        // }
         if (Gdx.input.isTouched()) {
             catMenu.selector(mouse);
+            System.out.println(mouse);
         }
     }
 

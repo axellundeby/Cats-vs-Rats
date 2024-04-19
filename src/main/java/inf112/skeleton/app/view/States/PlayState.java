@@ -70,7 +70,7 @@ public class PlayState extends State {
         upgradeDamageButton.updateButtonAppearance();
 
         batch.begin();
-        batch.draw(mapTexture, 0, 0, Gdx.graphics.getWidth() - 400, Gdx.graphics.getHeight());
+        batch.draw(mapTexture, 0, 200, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - 300);
         batch.end();
         
         Gdx.gl.glEnable(GL20.GL_BLEND);
