@@ -155,18 +155,8 @@ public interface IRat {
     /**
      * Freezes the rat.
      */
-    void freeze();
+    void freeze(float deltaTime);
 
-    /**
-     * Unfreezes the rat.
-     */
-    void unfreeze();
 
-    /**
-     * Checks if the rat is frozen.
-     * 
-     * @return true if the rat is frozen, false otherwise.
-     */
-    boolean isFrozen();
 
 }

@@ -33,6 +33,10 @@ public class Rat implements IRat {
     private Vector2[] controlPoints;
     private Direction direction = Direction.RIGHT;
     private int currentControlPoint = 0; // add this line
+    private float freezeTimer = 0;
+    private static final float RAT_FREEZE_DELAY = 20;
+    private float originalSpeed;
+    private float effectiveSpeed;
 
     
 
@@ -50,16 +54,21 @@ public class Rat implements IRat {
         textures.put(ImageSwapper.FROZEN, frozenTexture);
         textures.put(ImageSwapper.DEAD, deadTexture);
         this.spriteRect = new Rectangle(pos.x - halfsize, pos.y - halfsize, halfsize * 2, halfsize * 2);
+        this.originalSpeed = speed;
+        this.effectiveSpeed = speed;
         createPath();
 
     }
 
     public void moveAlongPath(float delta) {
+        System.out.println(effectiveSpeed);
+        System.out.println(originalSpeed);
+        System.out.println();;
         if (currentControlPoint < controlPoints.length - 2) {
             Vector2 currentPoint = controlPoints[currentControlPoint];
             Vector2 nextPoint = controlPoints[currentControlPoint + 1];
             Vector2 directionToNextPoint = new Vector2(nextPoint).sub(currentPoint).nor();
-            Vector2 movementThisFrame = new Vector2(directionToNextPoint).scl(speed * delta);
+            Vector2 movementThisFrame = new Vector2(directionToNextPoint).scl(effectiveSpeed * delta);
             pos.add(movementThisFrame);
             if (currentPoint.dst(pos) >= currentPoint.dst(nextPoint)) {
                 pos.set(nextPoint);
@@ -198,7 +207,6 @@ public class Rat implements IRat {
         health -= damage;
     }
 
-    // fix this using getDirection
     public enum Direction {
         UP,
         DOWN,
@@ -296,21 +304,27 @@ public class Rat implements IRat {
     }
 
     @Override
-    public void freeze() {
-        isFrozen = true;
+    public void freeze(float deltaTime) {
+        effectiveSpeed = originalSpeed - 15;  
         swapImage(ImageSwapper.FROZEN);
         this.sprite.setTexture(getTexture());
+        isFrozen = true;
+        freezeTimer += deltaTime;
+        if (freezeTimer > RAT_FREEZE_DELAY) {
+            isFrozen = false;
+            effectiveSpeed = originalSpeed;  
+            swapImage(ImageSwapper.ALIVE);
+            this.sprite.setTexture(getTexture());
+            freezeTimer = 0;  
+        }
     }
 
-    @Override
-    public void unfreeze() {
-        isFrozen = false;
-        swapImage(ImageSwapper.ALIVE);
-        this.sprite.setTexture(getTexture());
-    }
-
-    @Override
     public boolean isFrozen() {
         return isFrozen;
     }
+    public void setFrozen() {
+        isFrozen = true;
+    }
+
+
 }
