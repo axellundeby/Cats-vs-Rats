@@ -155,7 +155,6 @@ public class SkadedyrModel implements ISkadedyrModel {
         // }
         if (Gdx.input.isTouched()) {
             catMenu.selector(mouse);
-            System.out.println(mouse);
         }
     }
 

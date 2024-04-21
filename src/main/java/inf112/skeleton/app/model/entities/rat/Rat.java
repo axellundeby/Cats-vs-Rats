@@ -78,17 +78,25 @@ public class Rat implements IRat {
 //litt feil punker og rotasjon er broken
     public void createPath() {
         controlPoints = new Vector2[] {
-            new Vector2(49,298),
-            new Vector2(209,313),
-            new Vector2(214,416),
-            new Vector2(676,366),
-            new Vector2(868,372),
-            new Vector2(868,496),
-            new Vector2(661,514),
-            new Vector2(666,610),
-            new Vector2(1097,606),
-            new Vector2(1105,611),
-            new Vector2(1103,299)
+            new Vector2(-10,290),
+            new Vector2(8,290),
+            new Vector2(200,290),
+            new Vector2(200,422),
+            new Vector2(85,422),
+            new Vector2(85,616),
+            new Vector2(106,616),
+            new Vector2(435,620),
+            new Vector2(435,290),
+            new Vector2(654,290),
+            new Vector2(654,360),
+            new Vector2(875,360),
+            new Vector2(875,490),
+            new Vector2(660,490),
+            new Vector2(660,610),
+            new Vector2(1080,610),
+            new Vector2(1080,310),
+            new Vector2(1500,310),
+           
             
         };
         this.path = new CatmullRomSpline<>(controlPoints, false);
