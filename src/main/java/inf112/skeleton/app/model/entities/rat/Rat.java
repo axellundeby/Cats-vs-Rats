@@ -1,6 +1,5 @@
 package inf112.skeleton.app.model.entities.rat;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -82,9 +81,7 @@ public class Rat implements IRat {
             }
         }
     }
-    
-    
-//litt feil punker og rotasjon er broken
+
     public void createPath() {
         controlPoints = new Vector2[] {
             new Vector2(-10,290),
@@ -325,6 +322,4 @@ public class Rat implements IRat {
     public void setFrozen() {
         isFrozen = true;
     }
-
-
 }
