@@ -55,7 +55,7 @@ public class Rat implements IRat {
     }
 
     public void moveAlongPath(float delta) {
-        if (currentControlPoint < controlPoints.length - 1) {
+        if (currentControlPoint < controlPoints.length - 2) {
             Vector2 currentPoint = controlPoints[currentControlPoint];
             Vector2 nextPoint = controlPoints[currentControlPoint + 1];
             Vector2 directionToNextPoint = new Vector2(nextPoint).sub(currentPoint).nor();
@@ -95,6 +95,7 @@ public class Rat implements IRat {
             new Vector2(660,610),
             new Vector2(1080,610),
             new Vector2(1080,310),
+            new Vector2(1200,310),
             new Vector2(1500,310),
            
             
@@ -104,7 +105,10 @@ public class Rat implements IRat {
 
 
     private void updateDirection(Vector2 current, Vector2 next) {
-        if (next.x > current.x) {
+        if(current.x > 1150){ 
+            direction = Direction.OUT;
+        }
+        else if (next.x > current.x) {
             direction = Direction.RIGHT;
         } else if (next.x < current.x) {
             direction = Direction.LEFT;
@@ -113,15 +117,11 @@ public class Rat implements IRat {
         } else if (next.y < current.y) {
             direction = Direction.DOWN;
         }
-        else{ 
-            direction = Direction.OUT;
-        }
     }
 
     public Direction getDirection(){
         return direction;
     }
-
 
     @Override
     public boolean isrewardClaimed() {
