@@ -103,12 +103,11 @@ public class PlayState extends State {
     }
 
     private void drawGameStatus(SpriteBatch batch) {
-        font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 50);
-        font.draw(batch, "Dine liv: " + model.getLives(), 1000, 760);
-        font.draw(batch, "Dine penger: " + model.getMoney(), 1000, 840);
-        font.draw(batch, "Din Score: " + model.getPoints(), 1000, 800);
-        font.draw(batch, "Level: " + model.getLevel(), 1000, 720);
-        font.draw(batch, model.nextWaveText(), 900, 600);
+        font.draw(batch, "Dine liv: " + model.getLives(), 1000, 800);
+        font.draw(batch, "Dine penger: " + model.getMoney(), 825, 800);
+        font.draw(batch, "Din Score: " + model.getPoints(), 700, 800);
+        font.draw(batch, "Level: " + model.getLevel(), 600, 800);
+        font.draw(batch, model.nextWaveText(), 500, 150);
         font.setColor(Color.WHITE);
 
     }

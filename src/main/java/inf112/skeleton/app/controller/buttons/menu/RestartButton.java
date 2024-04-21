@@ -16,8 +16,8 @@ public class RestartButton  extends Buttons {
     @Override
     protected void setupButton() {
         button = ButtonFactory.createImageButton("buttons_game/Spill_Restart.png", "snow.png");
-        button.setSize(100, 100);
-        button.setPosition(1000, 600);
+        button.setSize(85, 85);
+        button.setPosition(140, 750);
 
         button.addListener(new ClickListener() {
             @Override
