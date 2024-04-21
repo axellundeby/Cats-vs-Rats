@@ -48,7 +48,9 @@ public class RatFactory {
             else if (type < 80) newRat = new FastRat();
             else newRat = new StrongRat();
         } else {
-            newRat = null;
+            if (type < 40) newRat = new BasicRat();
+            else if (type < 70) newRat = new FastRat();
+            else newRat = new StrongRat();
         }
     
         if (newRat != null) {
