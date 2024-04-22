@@ -1,6 +1,7 @@
 package inf112.skeleton.app.model.entities.cat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,23 +13,15 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 public class FreezeCat extends Cat {
 
     public FreezeCat() {
-        super(1, 100, new Texture(Gdx.files.internal("cats/Spill_Frysekatt1.png")), new Texture(Gdx.files.internal("cats/Spill_Frysekatt2.png")), 50.0f,1000);
+        super(
+            1,
+            100, 
+            Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Frysekatt1.png"))), 
+            Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Frysekatt2.png")), new Texture(Gdx.files.internal("cats/Spill_Frysekatt3.png"))), 
+            50.0f,
+            1000);
     }
 
-    // @Override
-    // public ArrayList<Projectile> attack(LinkedList<Rat> rats) {
-    //     ArrayList<Projectile> projectileList = new ArrayList<>();
-    //     if (canAttack()) {
-    //         triggerAttackImage(); 
-    //         for (Rat rat : rats) {
-    //             //projectileList.add(shootAt(rats));
-    //             rat.setFrozen(); 
-    //             rat.takeDamage(getStrength());
-    //         }
-    //         resetAttackTimer(); 
-    //     }
-    //     return projectileList;
-    // }
     @Override
     public ArrayList<Projectile> attack(LinkedList<Rat> rats) {
         ArrayList<Projectile> projectileList = new ArrayList<>();

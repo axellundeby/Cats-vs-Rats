@@ -1,6 +1,7 @@
 package inf112.skeleton.app.model.entities.cat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
@@ -13,7 +14,13 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 public class ShotgunCat extends Cat {
 
     public ShotgunCat() {
-        super(200, 75, new Texture(Gdx.files.internal("cats/Spill_Skytekatt1.png")), new Texture(Gdx.files.internal("cats/Spill_Skytekatt2.png")), 75.0f,1500);
+        super(
+            200,
+             75,
+             Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Skytekatt1.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt2.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt3.png"))),
+             Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Skytekatt1.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt2.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt3.png"))),
+              75.0f,
+              1500);
     }
 
     @Override

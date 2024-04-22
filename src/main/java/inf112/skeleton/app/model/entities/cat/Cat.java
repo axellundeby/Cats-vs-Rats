@@ -1,27 +1,26 @@
 package inf112.skeleton.app.model.entities.cat;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.EnumMap;
 import java.util.LinkedList;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.rat.Rat;
 
 public abstract class Cat {
 
     protected int strength;
-    protected float range;
+    protected int range;
     private Vector2 pos;
     private Circle rangeCircle;
     private int size;
     private int halfSize;
-    private EnumMap<PictureSwapper, Texture> textures = new EnumMap<>(PictureSwapper.class);
+    private EnumMap<PictureSwapper, List<Texture>> textures = new EnumMap<>(PictureSwapper.class);
     public PictureSwapper currentState = PictureSwapper.DEFAULT;
     protected float fireRate;
     private float attackTimer;
@@ -32,9 +31,11 @@ public abstract class Cat {
     private int cost;
     private Vector2 lastTargetPosition = null;
     private Circle selectionCircle;
+    protected int upgradeCounter = 0;
 
 
-    public Cat(int strength, float range, Texture defaultImage, Texture attackImage, float fireRate, int cost) {
+
+    public Cat(int strength, int range, List<Texture> defaultImages, List<Texture> attackImages, float fireRate, int cost) {
         this.strength = strength;
         this.range = range;
         this.pos = new Vector2();
@@ -42,17 +43,53 @@ public abstract class Cat {
         this.fireRate = fireRate;
         this.attackTimer = 0;
         this.halfSize = size / 2;
-        this.sprite = new Sprite(defaultImage);
+        this.sprite = new Sprite(defaultImages.get(0));
         this.sprite.setSize(size, size);
         this.sprite.setPosition(pos.x - halfSize, pos.y - halfSize);
-        circleUpdater();
+        this.circleUpdater(); 
 
         this.cost = cost;
         this.currentRotationAngle = 0;
 
-        textures.put(PictureSwapper.DEFAULT, defaultImage);
-        textures.put(PictureSwapper.ATTACK, attackImage);
+        textures.put(PictureSwapper.DEFAULT, new ArrayList<>(defaultImages));
+        textures.put(PictureSwapper.ATTACK, new ArrayList<>(attackImages));
     }
+
+
+
+    public int getUpgradeCounter(){
+        return upgradeCounter;
+    }
+
+    private void upgradeTexture(){
+        upgradeCounter++;
+        swapImage(PictureSwapper.DEFAULT);
+        swapImage(PictureSwapper.ATTACK);
+    }
+
+      /**
+     * Triggers the attack image for the cat.
+     */
+    public void triggerAttackImage() {
+        swapImage(PictureSwapper.ATTACK);
+        attackImageTimer = attackImageDuration;
+    }
+
+    /**
+     * Updates the cat's animation based on the elapsed time.
+     *
+     * @param deltaTime The time elapsed since the last frame.
+     */
+    public void updateAnimation(float deltaTime) {
+        if (attackImageTimer > 0) {
+            attackImageTimer -= deltaTime;
+            if (attackImageTimer <= 0) {
+                swapImage(PictureSwapper.DEFAULT);
+            }
+        }
+        updateAttackTimer(deltaTime);
+    }
+
 
     /**
      * Attacks the specified rats.
@@ -180,28 +217,6 @@ public abstract class Cat {
         this.size = size;
     }
 
-    /**
-     * Triggers the attack image for the cat.
-     */
-    public void triggerAttackImage() {
-        swapImage(PictureSwapper.ATTACK);
-        attackImageTimer = attackImageDuration;
-    }
-
-    /**
-     * Updates the cat's animation based on the elapsed time.
-     *
-     * @param deltaTime The time elapsed since the last frame.
-     */
-    public void updateAnimation(float deltaTime) {
-        if (attackImageTimer > 0) {
-            attackImageTimer -= deltaTime;
-            if (attackImageTimer <= 0) {
-                swapImage(PictureSwapper.DEFAULT);
-            }
-        }
-        updateAttackTimer(deltaTime);
-    }
 
     /**
      * Enum representing the possible states of the cat's image.
@@ -254,12 +269,13 @@ public abstract class Cat {
      *
      * @param image The new state of the cat's image.
      */
-    public void swapImage(PictureSwapper image) {
-        currentState = image;
-        Texture newTexture = textures.get(currentState);
-        sprite.setTexture(newTexture);
-        sprite.setOriginCenter();
-    }
+   public void swapImage(PictureSwapper image) {
+    currentState = image;
+    List<Texture> stateTextures = textures.get(currentState);
+    Texture newTexture = stateTextures.get(Math.min(upgradeCounter, stateTextures.size() - 1));
+    sprite.setTexture(newTexture);
+    sprite.setOriginCenter();
+}
 
     /**
      * Returns the current texture of the cat.
@@ -267,7 +283,8 @@ public abstract class Cat {
      * @return The current texture of the cat.
      */
     public Texture getTexture() {
-        return textures.get(currentState);
+        List<Texture> stateTextures = textures.get(currentState);
+        return stateTextures.get(Math.min(upgradeCounter, stateTextures.size() - 1));
     }
 
     /**
