@@ -15,19 +15,34 @@ public class FreezeCat extends Cat {
         super(1, 100, new Texture(Gdx.files.internal("cats/Spill_Frysekatt1.png")), new Texture(Gdx.files.internal("cats/Spill_Frysekatt2.png")), 50.0f,1000);
     }
 
+    // @Override
+    // public ArrayList<Projectile> attack(LinkedList<Rat> rats) {
+    //     ArrayList<Projectile> projectileList = new ArrayList<>();
+    //     if (canAttack()) {
+    //         triggerAttackImage(); 
+    //         for (Rat rat : rats) {
+    //             //projectileList.add(shootAt(rats));
+    //             rat.setFrozen(); 
+    //             rat.takeDamage(getStrength());
+    //         }
+    //         resetAttackTimer(); 
+    //     }
+    //     return projectileList;
+    // }
     @Override
     public ArrayList<Projectile> attack(LinkedList<Rat> rats) {
         ArrayList<Projectile> projectileList = new ArrayList<>();
         if (canAttack()) {
             triggerAttackImage(); 
             for (Rat rat : rats) {
-                //projectileList.add(shootAt(rats));
-                rat.setFrozen(); 
-                rat.takeDamage(getStrength());
+                if (withinRange(rat)) {  
+                    rat.freeze(Gdx.graphics.getDeltaTime()); 
+                    rat.takeDamage(getStrength()); 
+                }
             }
             resetAttackTimer(); 
         }
-        return projectileList;
+            return projectileList;
     }
 
     @Override

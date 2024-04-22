@@ -23,7 +23,7 @@ public class Rat implements IRat {
     private boolean exited = false;
     public float coinVisibleTime = 0f;
     private Sprite sprite;
-    private boolean isFrozen;
+    private boolean isFrozen = false;
     public ImageSwapper currentState = ImageSwapper.ALIVE;
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
     int halfsize = 25;
@@ -35,7 +35,7 @@ public class Rat implements IRat {
     private float freezeTimer = 0;
     private static final float RAT_FREEZE_DELAY = 20;
     private float originalSpeed;
-    private float effectiveSpeed;
+    public float effectiveSpeed;
 
     
 
@@ -299,19 +299,26 @@ public class Rat implements IRat {
 
     @Override
     public void freeze(float deltaTime) {
-        effectiveSpeed = originalSpeed - 15;  
-        swapImage(ImageSwapper.FROZEN);
-        this.sprite.setTexture(getTexture());
-        isFrozen = true;
+        if (!isFrozen) {
+            effectiveSpeed = originalSpeed - 15;  
+            swapImage(ImageSwapper.FROZEN);
+            this.sprite.setTexture(getTexture());
+            isFrozen = true;
+        }
         freezeTimer += deltaTime;
         if (freezeTimer > RAT_FREEZE_DELAY) {
-            isFrozen = false;
-            effectiveSpeed = originalSpeed;  
-            swapImage(ImageSwapper.ALIVE);
-            this.sprite.setTexture(getTexture());
-            freezeTimer = 0;  
+            unfreeze(); 
         }
     }
+    
+    public void unfreeze() {
+        isFrozen = false;
+        effectiveSpeed = originalSpeed;
+        swapImage(ImageSwapper.ALIVE);
+        this.sprite.setTexture(getTexture());
+        freezeTimer = 0;
+    }
+    
 
     public boolean isFrozen() {
         return isFrozen;

@@ -56,9 +56,6 @@ public class SkadedyrModel implements ISkadedyrModel {
         // updateProjectiles(deltaTime);
         List<Rat> newRats = ratFactory.updateRatFactory(deltaTime, level);
         for (Rat newRat : newRats) {
-            if (newRat.isFrozen()) {
-                newRat.freeze(deltaTime);
-            }
             newRat.moveAlongPath(deltaTime);
             newRat.rotateImage();
             if (!aliveRats.contains(newRat)) {

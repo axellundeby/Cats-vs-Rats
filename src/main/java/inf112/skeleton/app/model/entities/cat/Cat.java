@@ -128,12 +128,12 @@ public abstract class Cat {
      * The image is rotated such that it is always facing the direction of the last target.
      */
     public void rotateImage() {
-        // if (lastTargetPosition != null) {
-        //     float dx = lastTargetPosition.x - this.pos.x;
-        //     float dy = lastTargetPosition.y - this.pos.y;
-        //     float angleInRadians = (float) Math.atan2(dy, dx);
-        //     currentRotationAngle = (float) Math.toDegrees(angleInRadians) - 90;
-        // }
+        if (lastTargetPosition != null) {
+            float dx = lastTargetPosition.x - this.pos.x;
+            float dy = lastTargetPosition.y - this.pos.y;
+            float angleInRadians = (float) Math.atan2(dy, dx);
+            currentRotationAngle = (float) Math.toDegrees(angleInRadians) - 90;
+        }
         this.sprite.setOriginCenter();
         this.sprite.setRotation(currentRotationAngle);
     }
@@ -245,8 +245,7 @@ public abstract class Cat {
      * @return True if the rat is within the cat's range, false otherwise.
      */
     public boolean withinRange(Rat target) {
-        Rectangle ratRect = target.getSprite().getBoundingRectangle();
-        return Intersector.overlaps(rangeCircle, ratRect);
+        return Intersector.overlaps(rangeCircle, target.getSprite().getBoundingRectangle());
     }
     
 
