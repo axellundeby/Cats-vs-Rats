@@ -16,11 +16,11 @@ public class ShotgunCat extends Cat {
     public ShotgunCat() {
         super(
             200,
-             75,
-             Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Skytekatt1.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt2.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt3.png"))),
-             Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Skytekatt1.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt2.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt3.png"))),
-              75.0f,
-              1500);
+            75,
+            Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Skytekatt1.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt2.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt3.png"))),
+            Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Skytekatt1_angrip.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt2_angrip.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt3_angrip.png"))),
+            75.0f,
+            200);
     }
 
     @Override
@@ -48,7 +48,6 @@ public class ShotgunCat extends Cat {
     @Override
     public void upgradeDamage() {
        this.strength *= 1.25;
-       this.upgradeCounter++;
 
     }
 
@@ -56,13 +55,11 @@ public class ShotgunCat extends Cat {
     public void upgradeRange() {
         this.range *= 1.25;
         this.circleUpdater();
-        this.upgradeCounter++;
     }
 
     @Override
     public void upgradeFireRate() {
         this.fireRate *= 0.75;
-        this.upgradeCounter++;
     }
 
 }

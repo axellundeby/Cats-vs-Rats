@@ -17,7 +17,7 @@ public class FreezeCat extends Cat {
             1,
             100, 
             Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Frysekatt1.png"))), 
-            Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Frysekatt2.png")), new Texture(Gdx.files.internal("cats/Spill_Frysekatt3.png"))), 
+            Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Frysekatt2_angrip.png")), new Texture(Gdx.files.internal("cats/Spill_Frysekatt3_angrip.png"))), 
             50.0f,
             1000);
     }
@@ -50,7 +50,6 @@ public class FreezeCat extends Cat {
     @Override
     public void upgradeDamage() {
        this.strength *= 1.25;
-       this.upgradeCounter++;
 
     }
 
@@ -58,12 +57,10 @@ public class FreezeCat extends Cat {
     public void upgradeRange() {
         this.range *= 1.25;
         this.circleUpdater();
-        this.upgradeCounter++;
     }
 
     @Override
     public void upgradeFireRate() {
         this.fireRate *= 0.75;
-        this.upgradeCounter++;
     }
 }

@@ -31,7 +31,7 @@ public abstract class Cat {
     private int cost;
     private Vector2 lastTargetPosition = null;
     private Circle selectionCircle;
-    protected int upgradeCounter = 0;
+    public int upgradeCounter = 0;
 
 
 
@@ -62,11 +62,18 @@ public abstract class Cat {
     }
 
     public void upgradeTexture(){
-        System.out.println("upgradeCounter: " + upgradeCounter);
-        if (upgradeCounter % 2 == 0) { 
-            int index = upgradeCounter / 2; 
-            updateTexture(PictureSwapper.DEFAULT, index);
-            updateTexture(PictureSwapper.ATTACK, index);
+        upgradeCounter++;
+        System.out.println("Upgrade counter: " + upgradeCounter);
+        if (upgradeCounter == 3) {
+            updateTexture(PictureSwapper.DEFAULT, 1);
+            updateTexture(PictureSwapper.ATTACK, 1);
+            this.size += 15;
+        }
+
+        if (upgradeCounter == 6) { 
+            updateTexture(PictureSwapper.DEFAULT, 2);
+            updateTexture(PictureSwapper.ATTACK, 2);
+            this.size += 15;
         }
     }
     
@@ -210,7 +217,7 @@ public abstract class Cat {
      */
     public void circleUpdater() {
         this.rangeCircle = new Circle(pos, range);
-        this.selectionCircle = new Circle(pos, halfSize);
+        this.selectionCircle = new Circle(pos, halfSize+10);
     }
 
     /**

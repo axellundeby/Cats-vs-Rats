@@ -17,8 +17,8 @@ public class UpgradeFireRateButton extends Buttons {
     private static final String usedUpTexture= "buttons_game/angryCat.png";
     private static final String clickTexture= "coin.png";
 
-    private int cost = 600;
-    private int clicked = 0;
+    private int cost = 0;
+    private boolean maxUpgrade = false;
 
     public UpgradeFireRateButton(SkadedyrModel model, Stage stage) {
         super(model, stage);
@@ -33,15 +33,20 @@ public class UpgradeFireRateButton extends Buttons {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                if (model.getMoney() >= cost && clicked < 3) {
-                    model.setMoney(model.getMoney() - cost); 
+                if (model.getMoney() >= cost) {
                     Cat cat = model.getSelectedCat();
-                    if (cat != null)
-                        cat.upgradeFireRate(); 
-                    clicked++;
-                }
+                    if (cat != null) {
+                        if (cat.getUpgradeCounter() >= 3) {
+                            maxUpgrade = true;
+                        }
+                        if (cat.getUpgradeCounter() < 3) {
+                            cat.upgradeFireRate();
+                            cat.upgradeTexture();
+                        }
+                    }
                 updateButtonAppearance();
             }
+        }
         });
     }
 
@@ -50,7 +55,7 @@ public class UpgradeFireRateButton extends Buttons {
     @Override
     public void updateButtonAppearance() {
         TextureRegionDrawable appearance;
-        if (clicked >= 3) {
+        if (maxUpgrade) {
             appearance = new TextureRegionDrawable(new TextureRegion(new Texture(usedUpTexture)));
         } else if (model.getMoney() < cost) {
             appearance = new TextureRegionDrawable(new TextureRegion(new Texture(noMoneyTexture)));
