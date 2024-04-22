@@ -60,9 +60,6 @@ public class Rat implements IRat {
     }
 
     public void moveAlongPath(float delta) {
-        System.out.println(effectiveSpeed);
-        System.out.println(originalSpeed);
-        System.out.println();;
         if (currentControlPoint < controlPoints.length - 2) {
             Vector2 currentPoint = controlPoints[currentControlPoint];
             Vector2 nextPoint = controlPoints[currentControlPoint + 1];
