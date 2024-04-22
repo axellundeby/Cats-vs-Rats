@@ -25,7 +25,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Projectile> projectiles = new ArrayList<>();
     private RatFactory ratFactory = new RatFactory();
     private int lives = 5;
-    private int money = 1000;
+    private int money = 1000000;
     private int points = 0;
     private int level = 0;
     private int ratsSpawned;
@@ -61,7 +61,6 @@ public class SkadedyrModel implements ISkadedyrModel {
             if (!aliveRats.contains(newRat)) {
                 aliveRats.add(newRat);
             }
-
         }
         roundHandler(deltaTime);
         removeDeadOrExitedRats(deltaTime);
@@ -144,6 +143,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private void updateCatAnimations(float deltaTime) {
         for (Cat cat : cats) {
             cat.updateAnimation(deltaTime);
+            cat.upgradeTexture();
         }
     }
 

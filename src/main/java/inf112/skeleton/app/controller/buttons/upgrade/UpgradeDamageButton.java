@@ -14,7 +14,7 @@ import inf112.skeleton.app.model.entities.cat.Cat;
 public class UpgradeDamageButton extends Buttons {
     private static final String normalTexture= "buttons_game/damage.png";
     private static final String noMoneyTexture = "buttons_game/noMoney.png";
-    private static final String usedUpTexture= "buttons/angryCat.png";
+    private static final String usedUpTexture= "coin.png";
     private static final String clickTexture= "coin.png";
 
     private int cost = 800;

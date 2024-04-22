@@ -14,11 +14,11 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 
 public class BasicCat extends Cat {
     public BasicCat() {
-        super(100, 
+        super(50, 
         100, 
         Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Kosekatt1.png")),new Texture(Gdx.files.internal("cats/Spill_Kosekatt2.png")),new Texture(Gdx.files.internal("cats/Spill_Kosekatt3.png"))), 
-        Arrays.asList(new Texture(Gdx.files.internal("buttons_game/angryCat.png")),new Texture(Gdx.files.internal("buttons_game/angryCat.png")),new Texture(Gdx.files.internal("buttons_game/angryCat.png"))), 
-        50.0f,
+        Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Kosekatt2.png")),new Texture(Gdx.files.internal("cats/Spill_Kosekatt3.png")),new Texture(Gdx.files.internal("cats/Spill_Kosekatt3.png"))), 
+        25.0f,
         200);
     }
 
@@ -43,19 +43,19 @@ public class BasicCat extends Cat {
     @Override
     public void upgradeDamage() {
        this.strength *= 1.25;
-       this.upgradeCounter++;
+       this.upgradeCounter += 1;
     }
 
     @Override
     public void upgradeRange() {
         this.range *= 1.25;
         this.circleUpdater();
-        this.upgradeCounter++;
+        this.upgradeCounter += 1;
     }
 
     @Override
     public void upgradeFireRate() {
         this.fireRate *= 0.75;
-        this.upgradeCounter++;
+        this.upgradeCounter += 1;
     }
 }

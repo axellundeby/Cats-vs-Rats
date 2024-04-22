@@ -50,6 +50,7 @@ public class FreezeCat extends Cat {
     @Override
     public void upgradeDamage() {
        this.strength *= 1.25;
+       this.upgradeCounter++;
 
     }
 
@@ -57,10 +58,12 @@ public class FreezeCat extends Cat {
     public void upgradeRange() {
         this.range *= 1.25;
         this.circleUpdater();
+        this.upgradeCounter++;
     }
 
     @Override
     public void upgradeFireRate() {
         this.fireRate *= 0.75;
+        this.upgradeCounter++;
     }
 }

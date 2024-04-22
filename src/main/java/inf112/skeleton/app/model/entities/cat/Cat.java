@@ -61,10 +61,24 @@ public abstract class Cat {
         return upgradeCounter;
     }
 
-    private void upgradeTexture(){
-        upgradeCounter++;
-        swapImage(PictureSwapper.DEFAULT);
-        swapImage(PictureSwapper.ATTACK);
+    public void upgradeTexture(){
+        System.out.println("upgradeCounter: " + upgradeCounter);
+        if (upgradeCounter % 2 == 0) { 
+            int index = upgradeCounter / 2; 
+            updateTexture(PictureSwapper.DEFAULT, index);
+            updateTexture(PictureSwapper.ATTACK, index);
+        }
+    }
+    
+    private void updateTexture(PictureSwapper state, int index) {
+        List<Texture> stateTextures = textures.get(state);
+        if (index < stateTextures.size()) { 
+            Texture newTexture = stateTextures.get(index);
+            if (state == currentState) { 
+                sprite.setTexture(newTexture);
+                sprite.setOriginCenter();
+            }
+        }
     }
 
       /**
