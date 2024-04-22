@@ -28,7 +28,7 @@ public class UpgradeFireRateButton extends Buttons {
     protected void setupButton() {
         button = ButtonFactory.createImageButton(normalTexture, clickTexture);
         button.setSize(100, 100);
-        button.setPosition(1050, 100);
+        button.setPosition(975, 50);
         
         button.addListener(new ClickListener() {
             @Override

@@ -28,7 +28,7 @@ public class UpgradeRangeButton extends Buttons {
     protected void setupButton() {
         button = ButtonFactory.createImageButton(normalTexture, clickTexture);
         button.setSize(100, 100);
-        button.setPosition(1050, 300);
+        button.setPosition(1100, 50);
         
         button.addListener(new ClickListener() {
             @Override

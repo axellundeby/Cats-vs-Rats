@@ -17,7 +17,7 @@ public class ExitButton  extends Buttons {
     protected void setupButton() {
         button = ButtonFactory.createImageButton("buttons_game/Spill_Exit.png", "cat2.png");
         button.setSize(100, 100);
-        button.setPosition(850, 600);
+        button.setPosition(10, 740);
 
         button.addListener(new ClickListener() {
             @Override

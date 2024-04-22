@@ -6,6 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 public class StrongRat extends Rat{
     Texture texture = new Texture(Gdx.files.internal("rat1.png"));
     public StrongRat() {
-        super(200, 2, new Texture(Gdx.files.internal("rats/Spill_Rotte3.png")),500,3,new Texture(Gdx.files.internal("rats/Spill_Rotte3_freezed.png")),75, new Texture(Gdx.files.internal("coin.png")));
+        super(200, 20, new Texture(Gdx.files.internal("rats/Spill_Rotte3.png")),500,3,new Texture(Gdx.files.internal("rats/Spill_Rotte3_freezed.png")),75, new Texture(Gdx.files.internal("coin.png")));
     }
 }

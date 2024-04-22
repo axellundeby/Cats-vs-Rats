@@ -56,12 +56,15 @@ public class SkadedyrModel implements ISkadedyrModel {
         // updateProjectiles(deltaTime);
         List<Rat> newRats = ratFactory.updateRatFactory(deltaTime, level);
         for (Rat newRat : newRats) {
-            newRat.addTime();//rat.updatePositionAlongPath(deltaTime);
-            
+            if (newRat.isFrozen()) {
+                newRat.freeze(deltaTime);
+            }
+            newRat.moveAlongPath(deltaTime);
             newRat.rotateImage();
             if (!aliveRats.contains(newRat)) {
                 aliveRats.add(newRat);
             }
+
         }
         roundHandler(deltaTime);
         removeDeadOrExitedRats(deltaTime);
@@ -151,8 +154,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         int mouseX = Gdx.input.getX();
         int mouseY = Gdx.input.getY();
         Vector2 mouse = new Vector2(mouseX, 842 - mouseY);
-
-        if (Gdx.input.isTouched() && mouseX < 832) {
+        if (Gdx.input.isTouched() && mouseY > 100 && mouseY < 650) {
             newCat(mouseX, 842 - mouseY);
         }
         if (Gdx.input.isTouched()) {
@@ -176,9 +178,6 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     @Override
     public void moveRats() {
-        for (Rat rat : aliveRats) {
-            rat.move();
-        }
     }
 
     @Override
@@ -347,14 +346,6 @@ public class SkadedyrModel implements ISkadedyrModel {
     @Override
     public ArrayList<Projectile> getProjectiles() {
         return projectiles;
-    }
-
-    private void unfreezeRats() {
-        for (Rat rat : aliveRats) {
-            if (rat.isFrozen()) {
-                rat.unfreeze();
-            }
-        }
     }
 
 

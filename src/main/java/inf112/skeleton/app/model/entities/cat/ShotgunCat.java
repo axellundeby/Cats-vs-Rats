@@ -13,21 +13,16 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 public class ShotgunCat extends Cat {
 
     public ShotgunCat() {
-        super(20, 50, new Texture(Gdx.files.internal("cats/Spill_Skytekatt1.png")), new Texture(Gdx.files.internal("cats/Spill_Skytekatt2.png")), 3.0f,500);
+        super(200, 75, new Texture(Gdx.files.internal("cats/Spill_Skytekatt1.png")), new Texture(Gdx.files.internal("cats/Spill_Skytekatt2.png")), 75.0f,1500);
     }
 
     @Override
     public ArrayList<Projectile> attack(LinkedList<Rat> rats) {
         ArrayList<Projectile> projectileList = new ArrayList<>();
         if (canAttack()) {
-            int attacks = 3;
-            for (int i = 0; i < rats.size() && attacks > 0; i++) {
-                Rat targetRat = rats.get(i);
-                projectileList.add(shootAt(rats));
-                targetRat.takeDamage(getStrength());
-                attacks--;
-            }
             triggerAttackImage();
+            //projectileList.add(shootAt(rats));
+            rats.getFirst().takeDamage(getStrength());
             resetAttackTimer();
         }
         return projectileList;
