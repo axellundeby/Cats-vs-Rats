@@ -205,32 +205,62 @@ public class SkadedyrModel implements ISkadedyrModel {
         }
     }
 
+
+    //her axel
     @Override
     public void restart() {
-        if (isPaused) {
-            wipe();
+        // Remove all rats from the game
+        if(isPaused){
+
+            
+            System.out.println("Number of rats before removal: " + aliveRats.size());
+            removeAllRats();
+            aliveRats.clear();
+            cats.clear();
+            projectiles.clear();
+            money = 1000;
+            lives = 5;
+            points = 0;
+            //setLevel(0);
+            roundOver = false;
+            roundOverDelay = 0f;
         }
-        helpMessage();
+
+
     }
 
-    private String helpMessage() {
+
+    //Her axel
+    private void removeAllRats() {
+        for (Rat rat : aliveRats) {
+            // rat.setPosition(new Vector2(-1000, -1000));
+            for (int i = 0; i < 2000; i++) {
+                rat.addTime();
+            
+            }
+        }
+        Iterator<Rat> iterator = aliveRats.iterator();
+
+        while (iterator.hasNext()) {
+            Rat rat = iterator.next(); 
+        
+           iterator.remove();  // This removes the rat from the collection
+           //aliveRats.remove(rat); // This removes the rat from the list
+           // aliveRats.clear();
+
+
+        }
+    }
+    
+
+    public String helpMessage() {
         if (writeText) {
             return "Pause the game to restart";
         }
         return "";
     }
 
-    private void wipe() {
-        cats.clear();
-       // aliveRats.clear();
-        projectiles.clear();
-        lives = 5;
-        money = 1000;
-        points = 0;
-        level = 0;
-        ratsSpawned = 0;
-
-    }
+    
 
     
 
@@ -275,6 +305,10 @@ public class SkadedyrModel implements ISkadedyrModel {
     @Override
     public int getLevel() {
         return level;
+    }
+
+    private void setLevel(int level) {
+        this.level = level;
     }
 
     @Override

@@ -8,7 +8,7 @@ import inf112.skeleton.app.controller.buttons.Buttons;
 
 import inf112.skeleton.app.model.SkadedyrModel;
 
-public class RestartButton  extends Buttons {
+public class RestartButton extends Buttons {
     public RestartButton(SkadedyrModel model, Stage stage) {
         super(model, stage);
     }
@@ -22,7 +22,9 @@ public class RestartButton  extends Buttons {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+
                 model.restart();
+
             }
         });
 
@@ -32,5 +34,5 @@ public class RestartButton  extends Buttons {
     public void updateButtonAppearance() {
 
     }
-            
+
 }
