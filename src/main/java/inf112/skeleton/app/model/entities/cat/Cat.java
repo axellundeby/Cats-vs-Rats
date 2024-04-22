@@ -187,13 +187,9 @@ public abstract class Cat {
      */
     public void rotateImage() {
         if (lastTargetPosition != null) {
-            float dx = lastTargetPosition.x - this.pos.x;
-            float dy = lastTargetPosition.y - this.pos.y;
-            float angleInRadians = (float) Math.atan2(dy, dx);
-            currentRotationAngle = (float) Math.toDegrees(angleInRadians) - 90;
+            float angle = (float) Math.toDegrees(Math.atan2(lastTargetPosition.y - sprite.getY(), lastTargetPosition.x - sprite.getX()));
+            sprite.setRotation(angle - 90);
         }
-        this.sprite.setOriginCenter();
-        this.sprite.setRotation(currentRotationAngle);
     }
 
     /**
@@ -281,8 +277,13 @@ public abstract class Cat {
      * @return True if the rat is within the cat's range, false otherwise.
      */
     public boolean withinRange(Rat target) {
-        return Intersector.overlaps(rangeCircle, target.getSprite().getBoundingRectangle());
+        boolean isWithinRange = Intersector.overlaps(rangeCircle, target.getSprite().getBoundingRectangle());
+        if (!isWithinRange) {
+            lastTargetPosition = null;
+        }
+        return isWithinRange;
     }
+    
     
 
     /**
@@ -306,6 +307,10 @@ public abstract class Cat {
     public Texture getTexture() {
         List<Texture> stateTextures = textures.get(currentState);
         return stateTextures.get(Math.min(upgradeCounter, stateTextures.size() - 1));
+    }
+    public Texture getMenuTexture() {
+        List<Texture> stateTextures = textures.get(currentState);
+        return stateTextures.get(0);
     }
 
     /**
