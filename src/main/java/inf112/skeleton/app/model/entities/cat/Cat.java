@@ -31,6 +31,7 @@ public abstract class Cat {
     private float currentRotationAngle;
     private int cost;
     private Vector2 lastTargetPosition = null;
+    private Circle selectionCircle;
 
 
     public Cat(int strength, float range, Texture defaultImage, Texture attackImage, float fireRate, int cost) {
@@ -45,6 +46,7 @@ public abstract class Cat {
         this.sprite.setSize(size, size);
         this.sprite.setPosition(pos.x - halfSize, pos.y - halfSize);
         circleUpdater();
+
         this.cost = cost;
         this.currentRotationAngle = 0;
 
@@ -88,6 +90,13 @@ public abstract class Cat {
         circleUpdater();
     }
 
+    /**
+     * Gets the cat's Circle for selection in-game
+     * @return A Circle-object surrounding the cat sprite
+     */
+    public Circle getSelectionCircle(){
+        return selectionCircle;
+    }
     /**
      * Shoots at the specified targets.
      *
@@ -150,6 +159,7 @@ public abstract class Cat {
      */
     public void circleUpdater() {
         this.rangeCircle = new Circle(pos, range);
+        this.selectionCircle = new Circle(pos, halfSize);
     }
 
     /**
