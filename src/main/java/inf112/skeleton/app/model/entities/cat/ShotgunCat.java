@@ -15,7 +15,7 @@ public class ShotgunCat extends Cat {
 
     public ShotgunCat() {
         super(
-            0,
+            10,
             200,
             Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Skytekatt1.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt2.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt3.png"))),
             Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Skytekatt1_angrip.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt2_angrip.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt3_angrip.png"))),

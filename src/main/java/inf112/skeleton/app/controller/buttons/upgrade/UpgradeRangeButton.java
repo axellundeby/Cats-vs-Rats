@@ -33,21 +33,25 @@ public class UpgradeRangeButton extends Buttons {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                if (model.getMoney() >= cost) {
-                    Cat cat = model.getSelectedCat();
-                    if (cat != null) {
-                        if (cat.getUpgradeCounter() >= 3) {
-                            maxUpgrade = true;
-                        }
-                        if (cat.getUpgradeCounter() < 3) {
-                            cat.upgradeRange();
-                            cat.upgradeTexture();
-                        }
+                System.out.println("UpgradeRangeButton clicked");
+                Cat selectedCat = model.getSelectedCat();
+                System.out.println("Selected Cat: " + selectedCat);  // Check if this prints a non-null value
+                if (selectedCat != null) {
+                    System.out.println("Cat is not null");  // Check if this prints
+                    if (selectedCat.getUpgradeCounter() >= 3) {
+                        maxUpgrade = true;
                     }
-                updateButtonAppearance();
+                    if (selectedCat.getUpgradeCounter() < 3) {
+                        selectedCat.upgradeRange();
+                        selectedCat.upgradeTexture();
+                    }
+                } else {
+                    System.out.println("No cat is selected");
+                }
             }
+            
         }
-        });
+        );
     }
 
 

@@ -32,6 +32,7 @@ public abstract class Cat {
     private Vector2 lastTargetPosition = null;
     private Circle selectionCircle;
     public int upgradeCounter = 0;
+    private static final float SELECTION_CIRCLE_RADIUS_MULTIPLIER = 5f;
 
 
 
@@ -47,6 +48,7 @@ public abstract class Cat {
         this.sprite.setSize(size, size);
         this.sprite.setPosition(pos.x - halfSize, pos.y - halfSize);
         this.circleUpdater(); 
+        this.selectionCircle = new Circle(pos.x, pos.y, halfSize * SELECTION_CIRCLE_RADIUS_MULTIPLIER);
 
         this.cost = cost;
         this.currentRotationAngle = 0;
@@ -213,7 +215,7 @@ public abstract class Cat {
      */
     public void circleUpdater() {
         this.rangeCircle = new Circle(pos, range);
-        this.selectionCircle = new Circle(pos, halfSize+10);
+        this.selectionCircle = new Circle(pos, halfSize);
     }
 
     /**
@@ -364,3 +366,4 @@ public abstract class Cat {
 
     }
 }
+

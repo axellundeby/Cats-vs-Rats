@@ -50,8 +50,6 @@ public class UpgradeFireRateButton extends Buttons {
         });
     }
 
-
-
     @Override
     public void updateButtonAppearance() {
         TextureRegionDrawable appearance;

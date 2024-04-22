@@ -83,7 +83,6 @@ public class CatMenu implements ICatMenu{
             }
         }
         selected = null;
-        
     }
 
     @Override
