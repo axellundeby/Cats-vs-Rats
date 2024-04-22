@@ -12,9 +12,9 @@ import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.entities.cat.Cat;
 
 public class UpgradeDamageButton extends Buttons {
-    private static final String normalTexture= "damage.png";
-    private static final String noMoneyTexture = "noMoney.png";
-    private static final String usedUpTexture= "Cat2.png";
+    private static final String normalTexture= "buttons_game/damage.png";
+    private static final String noMoneyTexture = "buttons_game/noMoney.png";
+    private static final String usedUpTexture= "buttons/angryCat.png";
     private static final String clickTexture= "coin.png";
 
     private int cost = 800;

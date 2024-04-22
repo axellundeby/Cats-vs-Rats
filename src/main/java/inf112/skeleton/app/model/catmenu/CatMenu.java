@@ -35,7 +35,7 @@ public class CatMenu implements ICatMenu{
     
     @Override
     public void init(){
-        this.coinSackTexture = new Texture(Gdx.files.internal("noMoney.png"));
+        this.coinSackTexture = new Texture(Gdx.files.internal("buttons_game/noMoney.png"));
         availableCatsList.add(new BasicCat());
         availableCatsList.add(new FreezeCat());
         availableCatsList.add(new ShotgunCat());
