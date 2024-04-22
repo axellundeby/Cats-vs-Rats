@@ -28,16 +28,16 @@ public class UpgradeFireRateButton extends Buttons {
     protected void setupButton() {
         button = ButtonFactory.createImageButton(normalTexture, clickTexture);
         button.setSize(100, 100);
-        button.setPosition(1050, 100);
+        button.setPosition(975, 50);
         
         button.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 if (model.getMoney() >= cost && clicked < 3) {
                     model.setMoney(model.getMoney() - cost); 
-                    for (Cat cat : model.getCats()) {
+                    Cat cat = model.getSelectedCat();
+                    if (cat != null)
                         cat.upgradeFireRate(); 
-                    }
                     clicked++;
                 }
                 updateButtonAppearance();

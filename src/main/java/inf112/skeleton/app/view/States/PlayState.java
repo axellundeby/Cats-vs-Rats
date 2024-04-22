@@ -24,6 +24,7 @@ import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
+import inf112.skeleton.app.view.GlobalAssetManager;
 
 public class PlayState extends State {
     private ShapeRenderer shapeRenderer;
@@ -56,7 +57,7 @@ public class PlayState extends State {
         upgradeFireRateButton = new UpgradeFireRateButton(model, stage);
         upgradeRangeButton = new UpgradeRangeButton(model, stage);
         upgradeDamageButton = new UpgradeDamageButton(model, stage);
-
+        GlobalAssetManager.loadAssets();
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -70,17 +71,21 @@ public class PlayState extends State {
         upgradeDamageButton.updateButtonAppearance();
 
         batch.begin();
-        batch.draw(mapTexture, 0, 0, Gdx.graphics.getWidth() - 400, Gdx.graphics.getHeight());
+        batch.draw(mapTexture, 0, 200, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - 300);
         batch.end();
         
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        for (Cat cat : model.getCats()) {
-            Circle range = cat.getRangeCircle();
-            shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
-            shapeRenderer.circle(range.x, range.y, range.radius);
-        }
+        Cat selectedCat = model.getSelectedCat();
+        // for (Cat cat : model.getCats()) {
+            if (selectedCat != null){
+
+                Circle range = selectedCat.getRangeCircle();
+                shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
+                shapeRenderer.circle(range.x, range.y, range.radius);
+            }
+        // }
         shapeRenderer.end();
 
         drawCatMenu(batch);
@@ -103,12 +108,11 @@ public class PlayState extends State {
     }
 
     private void drawGameStatus(SpriteBatch batch) {
-        font.draw(batch, "Velkommen til Skadedyrkontrollørerne", 200, 50);
-        font.draw(batch, "Dine liv: " + model.getLives(), 1000, 760);
-        font.draw(batch, "Dine penger: " + model.getMoney(), 1000, 840);
-        font.draw(batch, "Din Score: " + model.getPoints(), 1000, 800);
-        font.draw(batch, "Level: " + model.getLevel(), 1000, 720);
-        font.draw(batch, model.nextWaveText(), 900, 600);
+        font.draw(batch, "Dine liv: " + model.getLives(), 1000, 800);
+        font.draw(batch, "Dine penger: " + model.getMoney(), 825, 800);
+        font.draw(batch, "Din Score: " + model.getPoints(), 700, 800);
+        font.draw(batch, "Level: " + model.getLevel(), 600, 800);
+        font.draw(batch, model.nextWaveText(), 500, 150);
         font.setColor(Color.WHITE);
 
     }
@@ -153,6 +157,7 @@ public class PlayState extends State {
         stage.dispose();
         shapeRenderer.dispose();
         font.dispose();
+        GlobalAssetManager.dispose();
 
     }
 

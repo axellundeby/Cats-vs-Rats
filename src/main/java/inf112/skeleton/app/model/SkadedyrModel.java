@@ -38,6 +38,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private boolean roundOver = false;
     private boolean writeText = false;
     private boolean speedUp = false;
+    private Cat selectedCat;
     
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
@@ -55,12 +56,15 @@ public class SkadedyrModel implements ISkadedyrModel {
         // updateProjectiles(deltaTime);
         List<Rat> newRats = ratFactory.updateRatFactory(deltaTime, level);
         for (Rat newRat : newRats) {
-            newRat.addTime();//rat.updatePositionAlongPath(deltaTime);
-            
+            if (newRat.isFrozen()) {
+                newRat.freeze(deltaTime);
+            }
+            newRat.moveAlongPath(deltaTime);
             newRat.rotateImage();
             if (!aliveRats.contains(newRat)) {
                 aliveRats.add(newRat);
             }
+
         }
         roundHandler(deltaTime);
         removeDeadOrExitedRats(deltaTime);
@@ -150,20 +154,30 @@ public class SkadedyrModel implements ISkadedyrModel {
         int mouseX = Gdx.input.getX();
         int mouseY = Gdx.input.getY();
         Vector2 mouse = new Vector2(mouseX, 842 - mouseY);
-
-        if (Gdx.input.isTouched() && mouseX < 832) {
+        if (Gdx.input.isTouched() && mouseY > 100 && mouseY < 650) {
             newCat(mouseX, 842 - mouseY);
         }
         if (Gdx.input.isTouched()) {
             catMenu.selector(mouse);
+            selectCat(mouse);
         }
+    }
+
+    private void selectCat(Vector2 mouse) {
+        for (Cat cat : cats) {
+            if (cat.getSelectionCircle().contains(mouse)){
+                selectedCat = cat;
+                return;
+            }
+        }
+        selectedCat = null;
+    }
+    public Cat getSelectedCat(){
+        return selectedCat;
     }
 
     @Override
     public void moveRats() {
-        for (Rat rat : aliveRats) {
-            rat.move();
-        }
     }
 
     @Override
@@ -334,32 +348,27 @@ public class SkadedyrModel implements ISkadedyrModel {
         return projectiles;
     }
 
-    private void unfreezeRats() {
-        for (Rat rat : aliveRats) {
-            if (rat.isFrozen()) {
-                rat.unfreeze();
-            }
-        }
-    }
-
 
     private void newCat(int mouseX, int mouseY) {
         Cat cat = catMenu.getSelectedCat();
         int cost = 0;
         if (cat instanceof BasicCat) {
             cat = new BasicCat();
-            cost = cat.getCost();
+
         } else if (cat instanceof ShotgunCat) {
             cat = new ShotgunCat();
-            cost = cat.getCost();
+
         } else if (cat instanceof FreezeCat) {
             cat = new FreezeCat();
-            cost = cat.getCost();
         }
-        if (money >= cost) { 
-            cat.setPos(mouseX, mouseY);
-            addCat(cat);
-            money -= cost;
+        if (cat != null){
+            cost = cat.getCost();
+
+            if (money >= cost) { 
+                cat.setPos(mouseX, mouseY);
+                addCat(cat);
+                money -= cost;
+            }
         }
     }
 
@@ -367,4 +376,6 @@ public class SkadedyrModel implements ISkadedyrModel {
     public CatMenu getBuyMenu() {
         return catMenu;
     }
+
+    
 }

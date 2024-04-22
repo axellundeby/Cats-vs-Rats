@@ -20,7 +20,7 @@ public class CatMenu implements ICatMenu{
 
     private HashMap<Cat, Rectangle> catsMap;
     private ArrayList<Cat> availableCatsList;
-    private Rectangle menuRect = new Rectangle(832, 0, SkadedyrView.screenRect.x - 800, SkadedyrView.screenRect.y);
+    private Rectangle menuRect = new Rectangle(0, 0, SkadedyrView.screenRect.x - 800, SkadedyrView.screenRect.y);
     private static final int CATDIM = 150;
     private static final int MARGIN = 30;
     private Cat selected;
@@ -42,10 +42,11 @@ public class CatMenu implements ICatMenu{
 
         int i = 0;
         for (Cat cat : availableCatsList) {
-            catsMap.put(cat, new Rectangle(getX() + MARGIN, getY() + MARGIN + i * CATDIM, CATDIM, CATDIM));
+            catsMap.put(cat, new Rectangle(getX() + MARGIN + i * CATDIM, getY() + MARGIN, CATDIM, CATDIM));
             i++;
         }
-        selected = availableCatsList.get(0);
+        // selected = availableCatsList.get(0);
+        selected = null;
     }
 
     
@@ -66,17 +67,23 @@ public class CatMenu implements ICatMenu{
 
     @Override
     public void draw(ShapeRenderer shapeRenderer) {
-        shapeRenderer.setColor(Color.WHITE);
-        Vector2 center = catsMap.get(selected).getCenter(new Vector2());
-        shapeRenderer.circle(center.x, center.y, CATDIM/2);
+        if (selected != null){
+            shapeRenderer.setColor(Color.WHITE);
+            Vector2 center = catsMap.get(selected).getCenter(new Vector2());
+            shapeRenderer.circle(center.x, center.y, CATDIM/2);
+        }
     }
     
     @Override
     public void selector(Vector2 pos){
         for (Cat cat : availableCatsList) {
-            if (catsMap.get(cat).contains(pos))
+            if (catsMap.get(cat).contains(pos)){
                 selected = cat;
+                return;
+            }
         }
+        selected = null;
+        
     }
 
     @Override

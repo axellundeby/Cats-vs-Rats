@@ -32,22 +32,31 @@ public class RatFactory {
         return 1 + (round * 5);
     }
 
-    //krasjer etter x runder
     private Rat ratVariation(int level) {
-        // Velg en rotte med variasjon innenfor nivået
-        int type = random.nextInt(100); // Tilfeldig nummer mellom 0 og 99
-
+        // Choose a rat variation within the level
+        int type = random.nextInt(100); // Random number between 0 and 99
+    
+        Rat newRat;
         if (level <= 2) {
-            return new BasicRat(); // Bare BasicRat på de første nivåene
+            newRat = new BasicRat(); // Only BasicRat at the first levels
         } else if (level <= 4) {
-            // 80% sjanse for BasicRat, 20% for SpeedRat
-            return (type < 80) ? new BasicRat() : new FastRat();
+            // 80% chance for BasicRat, 20% for SpeedRat
+            newRat = (type < 80) ? new BasicRat() : new FastRat();
         } else if (level <= 6) {
             // 50% BasicRat, 30% SpeedRat, 20% StrongRat
-            if (type < 50) return new BasicRat();
-            else if (type < 80) return new FastRat();
-            else return new StrongRat();
+            if (type < 50) newRat = new BasicRat();
+            else if (type < 80) newRat = new FastRat();
+            else newRat = new StrongRat();
+        } else {
+            if (type < 40) newRat = new BasicRat();
+            else if (type < 70) newRat = new FastRat();
+            else newRat = new StrongRat();
         }
-        return null; 
+    
+        if (newRat != null) {
+            newRat.createPath();
+        }
+    
+        return newRat;
     }
 }

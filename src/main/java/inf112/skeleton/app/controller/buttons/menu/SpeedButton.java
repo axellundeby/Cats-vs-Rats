@@ -20,7 +20,7 @@ public class SpeedButton extends Buttons {
     protected void setupButton() {
         button = ButtonFactory.createImageButton("buttons_game/Spill_FF.png", "buttons_game/Spill_FF_Down.png");
         button.setSize(100, 100);
-        button.setPosition(1000, 500);
+        button.setPosition(500, 50);
 
         button.addListener(new ClickListener() {
             @Override

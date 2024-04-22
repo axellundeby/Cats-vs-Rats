@@ -28,16 +28,17 @@ public class UpgradeRangeButton extends Buttons {
     protected void setupButton() {
         button = ButtonFactory.createImageButton(normalTexture, clickTexture);
         button.setSize(100, 100);
-        button.setPosition(1050, 300);
+        button.setPosition(1100, 50);
         
         button.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 if (model.getMoney() >= cost && clicked < 3) {
                     model.setMoney(model.getMoney() - cost); 
-                    for (Cat cat : model.getCats()) {
+                    Cat cat = model.getSelectedCat();
+                    if (cat != null)
                         cat.upgradeRange(); 
-                    }
+
                     clicked++;
                 }
                 updateButtonAppearance();
