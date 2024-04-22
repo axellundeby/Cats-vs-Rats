@@ -12,7 +12,6 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 public class FreezeCat extends Cat {
 
     public FreezeCat() {
-
         super(1, 100, new Texture(Gdx.files.internal("cats/Spill_Frysekatt1.png")), new Texture(Gdx.files.internal("cats/Spill_Frysekatt2.png")), 50.0f,1000);
     }
 
@@ -22,9 +21,8 @@ public class FreezeCat extends Cat {
         if (canAttack()) {
             triggerAttackImage(); 
             for (Rat rat : rats) {
-                //når prosejektilet har truffet.
-                projectileList.add(shootAt(rats));
-                rat.freeze(); 
+                //projectileList.add(shootAt(rats));
+                rat.setFrozen(); 
                 rat.takeDamage(getStrength());
             }
             resetAttackTimer(); 
