@@ -62,6 +62,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         isPaused = true;
         intervalSeconds = 0.05f;
         catMenu = new CatMenu();
+        //catMenu.init();
     }
 
     public void clockTick() {

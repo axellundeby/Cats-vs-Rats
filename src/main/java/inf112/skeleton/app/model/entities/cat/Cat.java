@@ -57,8 +57,6 @@ public abstract class Cat {
         textures.put(PictureSwapper.ATTACK, new ArrayList<>(attackImages));
     }
 
-
-
     public int getUpgradeCounter(){
         return upgradeCounter;
     }
@@ -71,12 +69,14 @@ public abstract class Cat {
             updateTexture(PictureSwapper.DEFAULT, 1);
             updateTexture(PictureSwapper.ATTACK, 1);
             this.size += 30;
+            this.sprite.setSize(size, size);
         }
 
         if (upgradeCounter == 4) { 
             updateTexture(PictureSwapper.DEFAULT, 2);
             updateTexture(PictureSwapper.ATTACK, 2);
             this.size += 30;
+            this.sprite.setSize(size, size);
         }
     }
     
