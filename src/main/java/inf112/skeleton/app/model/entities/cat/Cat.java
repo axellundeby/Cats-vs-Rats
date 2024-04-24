@@ -63,19 +63,20 @@ public abstract class Cat {
         return upgradeCounter;
     }
 
+
     public void upgradeTexture(){
         upgradeCounter++;
         System.out.println("Upgrade counter: " + upgradeCounter);
-        if (upgradeCounter == 3) {
+        if (upgradeCounter == 2) {
             updateTexture(PictureSwapper.DEFAULT, 1);
             updateTexture(PictureSwapper.ATTACK, 1);
-            this.size += 15;
+            this.size += 30;
         }
 
-        if (upgradeCounter == 6) { 
+        if (upgradeCounter == 4) { 
             updateTexture(PictureSwapper.DEFAULT, 2);
             updateTexture(PictureSwapper.ATTACK, 2);
-            this.size += 15;
+            this.size += 30;
         }
     }
     

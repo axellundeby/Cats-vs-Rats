@@ -5,20 +5,20 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-
 import inf112.skeleton.app.controller.buttons.ButtonFactory;
 import inf112.skeleton.app.controller.buttons.Buttons;
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.entities.cat.Cat;
 
 public class UpgradeDamageButton extends Buttons {
-    private static final String normalTexture= "buttons_game/damage.png";
+    private static final String normalTexture = "buttons_game/damage.png";
     private static final String noMoneyTexture = "buttons_game/noMoney.png";
-    private static final String usedUpTexture= "coin.png";
-    private static final String clickTexture= "coin.png";
+    private static final String usedUpTexture = "ikkeTilgjengelig.png";
+    private static final String clickTexture = "coin.png";
 
-    private int cost = 0;
-    private boolean maxUpgrade = false;
+    private int cost = 0; 
+    private static final int MAX_UPGRADE = 4;
+    private static final int MAX_UPGRADE_PER = 3;
 
     public UpgradeDamageButton(SkadedyrModel model, Stage stage) {
         super(model, stage);
@@ -29,41 +29,38 @@ public class UpgradeDamageButton extends Buttons {
         button = ButtonFactory.createImageButton(normalTexture, clickTexture);
         button.setSize(100, 100);
         button.setPosition(800, 50);
-        
+
         button.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                if (model.getMoney() >= cost) {
-                    Cat cat = model.getSelectedCat();
-                    if (cat != null) {
-                        if (cat.getUpgradeCounter() >= 3) {
-                            maxUpgrade = true;
-                        }
-                        if (cat.getUpgradeCounter() < 3) {
-                            cat.upgradeDamage();
-                            cat.upgradeTexture();
-                        }
+                Cat selectedCat = model.getSelectedCat();
+                if (selectedCat != null && selectedCat.getUpgradeCounter() <= MAX_UPGRADE) {
+                    if (model.getMoney() >= cost) {
+                        selectedCat.upgradeDamage();
+                        selectedCat.upgradeTexture();
+                    } else {
+                        model.pressedUppgradeButton(); 
                     }
-                updateButtonAppearance();
+                }
+                updateButtonAppearance(); 
             }
-        }
-    });
+        });
     }
-
-
 
     @Override
     public void updateButtonAppearance() {
+        Cat selectedCat = model.getSelectedCat();
         TextureRegionDrawable appearance;
-        if (maxUpgrade) {
+
+        if (selectedCat != null && selectedCat.getUpgradeCounter() >= MAX_UPGRADE_PER)  {
             appearance = new TextureRegionDrawable(new TextureRegion(new Texture(usedUpTexture)));
         } else if (model.getMoney() < cost) {
             appearance = new TextureRegionDrawable(new TextureRegion(new Texture(noMoneyTexture)));
         } else {
             appearance = new TextureRegionDrawable(new TextureRegion(new Texture(normalTexture)));
         }
-        
+
         button.getStyle().up = appearance;
-        button.getStyle().down = new TextureRegionDrawable(new TextureRegion(new Texture(clickTexture))); 
+        button.getStyle().down = new TextureRegionDrawable(new TextureRegion(new Texture(clickTexture)));
     }
 }

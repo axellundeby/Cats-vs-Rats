@@ -113,8 +113,8 @@ public class PlayState extends State {
         font.draw(batch, "Din Score: " + model.getPoints(), 700, 800);
         font.draw(batch, "Level: " + model.getLevel(), 600, 800);
         font.draw(batch, model.nextWaveText(), 500, 150);
+        font.draw(batch, model.uppgradeErrorText(), 900, 190);
         font.setColor(Color.WHITE);
-
     }
 
     private void drawProjectiles(SpriteBatch batch) {

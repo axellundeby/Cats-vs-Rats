@@ -45,7 +45,6 @@ public class CatMenu implements ICatMenu{
             catsMap.put(cat, new Rectangle(getX() + MARGIN + i * CATDIM, getY() + MARGIN, CATDIM, CATDIM));
             i++;
         }
-        // selected = availableCatsList.get(0);
         selected = null;
     }
 

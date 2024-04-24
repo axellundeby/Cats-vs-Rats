@@ -14,11 +14,13 @@ import inf112.skeleton.app.model.entities.cat.Cat;
 public class UpgradeRangeButton extends Buttons {
     private static final String normalTexture= "buttons_game/range.png";
     private static final String noMoneyTexture = "buttons_game/noMoney.png";
-    private static final String usedUpTexture= "buttons_game/angryCat.png";
+    private static final String usedUpTexture= "ikkeTilgjengelig.png";
     private static final String clickTexture= "coin.png";
 
     private int cost = 0;
-    private boolean maxUpgrade = false;
+    private static final int MAX_UPGRADE = 4;
+    private static final int MAX_UPGRADE_PER = 3;
+    private int upgradeCounter = 0;
 
     public UpgradeRangeButton(SkadedyrModel model, Stage stage) {
         super(model, stage);
@@ -33,41 +35,36 @@ public class UpgradeRangeButton extends Buttons {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                System.out.println("UpgradeRangeButton clicked");
                 Cat selectedCat = model.getSelectedCat();
-                System.out.println("Selected Cat: " + selectedCat);  // Check if this prints a non-null value
-                if (selectedCat != null) {
-                    System.out.println("Cat is not null");  // Check if this prints
-                    if (selectedCat.getUpgradeCounter() >= 3) {
-                        maxUpgrade = true;
-                    }
-                    if (selectedCat.getUpgradeCounter() < 3) {
-                        selectedCat.upgradeRange();
+                if (selectedCat != null && selectedCat.getUpgradeCounter() <= MAX_UPGRADE) {
+                    if (model.getMoney() >= cost) {
                         selectedCat.upgradeTexture();
+                        selectedCat.upgradeRange();
+                    } else {
+                        model.pressedUppgradeButton(); 
                     }
-                } else {
-                    System.out.println("No cat is selected");
                 }
+                updateButtonAppearance(); 
             }
-            
-        }
-        );
+        });
     }
 
 
 
     @Override
     public void updateButtonAppearance() {
+        Cat selectedCat = model.getSelectedCat();
         TextureRegionDrawable appearance;
-        if (maxUpgrade) {
+
+        if (selectedCat != null && selectedCat.getUpgradeCounter() >= MAX_UPGRADE_PER) {
             appearance = new TextureRegionDrawable(new TextureRegion(new Texture(usedUpTexture)));
         } else if (model.getMoney() < cost) {
             appearance = new TextureRegionDrawable(new TextureRegion(new Texture(noMoneyTexture)));
         } else {
             appearance = new TextureRegionDrawable(new TextureRegion(new Texture(normalTexture)));
         }
-        
+
         button.getStyle().up = appearance;
-        button.getStyle().down = new TextureRegionDrawable(new TextureRegion(new Texture(clickTexture))); 
+        button.getStyle().down = new TextureRegionDrawable(new TextureRegion(new Texture(clickTexture)));
     }
 }

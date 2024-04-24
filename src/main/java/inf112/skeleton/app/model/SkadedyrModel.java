@@ -39,6 +39,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private boolean writeText = false;
     private boolean speedUp = false;
     private Cat selectedCat;
+    private boolean uppgradePressed = false;
     
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
@@ -140,13 +141,25 @@ public class SkadedyrModel implements ISkadedyrModel {
         return "";
     }
 
+    public Boolean pressedUppgradeButton() {
+        return uppgradePressed = true;
+    }
+
+
+    public String uppgradeErrorText() {
+        if (getSelectedCat() == null && pressedUppgradeButton()) {
+            return "No cat selected";
+        }
+        return "";
+    }
+
     private void updateCatAnimations(float deltaTime) {
         for (Cat cat : cats) {
             cat.updateAnimation(deltaTime);
         }
     }
 
-    private void handleUserInput() {
+    public void handleUserInput() {
         int mouseX = Gdx.input.getX();
         int mouseY = Gdx.input.getY();
         Vector2 mouse = new Vector2(mouseX, 842 - mouseY);
@@ -160,14 +173,19 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     private void selectCat(Vector2 mouse) {
+        if (mouse.y < 200) return;
         for (Cat cat : cats) {
             if (cat.getSelectionCircle().contains(mouse)){
                 selectedCat = cat;
+                System.out.println("Cat selected: " + cat); // Debug output
                 return;
             }
         }
         selectedCat = null;
+        System.out.println("No cat selected"); // Debug output
     }
+    
+
     public Cat getSelectedCat(){
         return selectedCat;
     }
