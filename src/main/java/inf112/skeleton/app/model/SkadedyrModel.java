@@ -271,6 +271,14 @@ public class SkadedyrModel implements ISkadedyrModel {
         return level;
     }
 
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public boolean isGameWon() {
+        return level == 1;
+    }
+
     @Override
     public int getPoints() {
         return points;
