@@ -105,8 +105,7 @@ public class WinState extends State {
     private SkadedyrModel model;
     private Stage stage;
     private Texture winImage;
-    private float alpha = 0f; // Starting alpha at 0 for fully transparent
-    private final float FADE_IN_SPEED = 0.01f;
+    private float alpha = 0f; 
     private BitmapFont titleFont;
 
     public WinState(GameStateManager gsm, SkadedyrModel model) {
@@ -145,13 +144,13 @@ public class WinState extends State {
     @Override
     public void render(SpriteBatch sb) {
 
-        Gdx.gl.glClearColor(1.0f, 0.7529f, 0.7961f, 1.0f);
+        ///Gdx.gl.glClearColor(1.0f, 0.7529f, 0.7961f, 1.0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         sb.begin();
 
         if (alpha < 1f) {
-            alpha += FADE_IN_SPEED;
+            alpha += 0.01f;
             alpha = Math.min(alpha, 1f);
         }
 

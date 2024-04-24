@@ -123,6 +123,12 @@ public interface ISkadedyrModel {
      */
     CatMenu getBuyMenu();
 
+    /**
+     * 
+     * @return 
+     */
+    boolean isgameWon();
+
 
 
 

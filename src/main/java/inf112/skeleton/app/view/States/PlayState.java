@@ -69,8 +69,6 @@ public class PlayState extends State {
     @Override
     public void render(SpriteBatch batch) {
 
-        
-
         ScreenUtils.clear(Color.DARK_GRAY);
         pauseButton.updateButtonAppearance();
         upgradeFireRateButton.updateButtonAppearance();
