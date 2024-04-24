@@ -10,40 +10,35 @@ import inf112.skeleton.app.controller.buttons.ButtonFactory;
 import inf112.skeleton.app.controller.buttons.Buttons;
 import inf112.skeleton.app.model.SkadedyrModel;
 
-public class PauseButton extends Buttons {
+public class SpeedUpButton extends Buttons {
 
-
-    public PauseButton(SkadedyrModel model, Stage stage) {
+    public SpeedUpButton(SkadedyrModel model, Stage stage) {
         super(model, stage);
     }
 
     @Override
     protected void setupButton() {
-        button = ButtonFactory.createImageButton("buttons_game/Spill_Play:Play.png", "buttons_game/Spill_Play:Pause.png");
+        button = ButtonFactory.createImageButton("buttons_game/Spill_FF.png", "buttons_game/Spill_FF_Down.png");
         button.setSize(100, 100);
-        button.setPosition(600, 50);
-
-        
+        button.setPosition(500, 50);
 
         button.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                model.setPause();
+                model.setSpeed();
                 updateButtonAppearance();
             }
         });
+
     }
 
-        @Override
-        public void updateButtonAppearance() {
-    //     if(model.isPaused()){
-    //         button.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("buttons_game/Spill_Play:Play.png")));
-    //     } else {
-            
-    //         button.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("buttons_game/Spill_Play:Pause.png")));
-    //     }
-        }
+    @Override
+    public void updateButtonAppearance() {
+        // if (model.isSpeedUp()) {
+        //     button.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("buttons_game/Spill_FF_Down.png")));
+        // } else {
 
-        
+        //     button.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("buttons_game/Spill_FF.png")));
+        // }
     }
-
+}

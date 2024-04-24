@@ -48,6 +48,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     
     public SkadedyrModel() {
         initializeGame();
+        catMenu = new CatMenu();
     }
 
     private void initializeGame() {
@@ -61,8 +62,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         level = STARTING_LEVEL;
         isPaused = true;
         intervalSeconds = 0.05f;
-        catMenu = new CatMenu();
-        //catMenu.init();
+
     }
 
     public void clockTick() {
@@ -85,7 +85,7 @@ public class SkadedyrModel implements ISkadedyrModel {
             removeDeadOrExitedRats(deltaTime);
         }
     }
-
+    
     private void removeDeadOrExitedRats(float deltaTime) {
         Iterator<Rat> iterator = aliveRats.iterator();
         while (iterator.hasNext()) {

@@ -35,7 +35,7 @@ public class Rat implements IRat {
     private float freezeTimer = 0;
     private static final float RAT_FREEZE_DELAY = 20;
     private float originalSpeed;
-    public float effectiveSpeed;
+    private float effectiveSpeed;
 
     
 
@@ -152,25 +152,7 @@ public class Rat implements IRat {
         DEAD;
     }
 
-    @Override
-    public boolean isHitByProjectile(ArrayList<Projectile> projectiles) {
-        for (Projectile rect : projectiles) {
-            if (rect.getRectangle().overlaps(spriteRect)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public Projectile getHitByProjectile(ArrayList<Projectile> projectiles) {
-        for (Projectile projectile : projectiles) {
-            if (projectile.getRectangle().overlaps(spriteRect)) {
-                return projectile;
-            }
-        }
-        return null;
-    }
+   
 
     @Override
     public int getBounty() {

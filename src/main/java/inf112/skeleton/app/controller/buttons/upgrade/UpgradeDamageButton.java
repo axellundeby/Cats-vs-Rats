@@ -49,18 +49,18 @@ public class UpgradeDamageButton extends Buttons {
 
     @Override
     public void updateButtonAppearance() {
-        Cat selectedCat = model.getSelectedCat();
-        TextureRegionDrawable appearance;
+        // Cat selectedCat = model.getSelectedCat();
+        // TextureRegionDrawable appearance;
 
-        if (selectedCat != null && selectedCat.getUpgradeCounter() >= MAX_UPGRADE_PER)  {
-            appearance = new TextureRegionDrawable(new TextureRegion(new Texture(usedUpTexture)));
-        } else if (model.getMoney() < cost) {
-            appearance = new TextureRegionDrawable(new TextureRegion(new Texture(noMoneyTexture)));
-        } else {
-            appearance = new TextureRegionDrawable(new TextureRegion(new Texture(normalTexture)));
-        }
+        // if (selectedCat != null && selectedCat.getUpgradeCounter() >= MAX_UPGRADE_PER)  {
+        //     appearance = new TextureRegionDrawable(new TextureRegion(new Texture(usedUpTexture)));
+        // } else if (model.getMoney() < cost) {
+        //     appearance = new TextureRegionDrawable(new TextureRegion(new Texture(noMoneyTexture)));
+        // } else {
+        //     appearance = new TextureRegionDrawable(new TextureRegion(new Texture(normalTexture)));
+        // }
 
-        button.getStyle().up = appearance;
-        button.getStyle().down = new TextureRegionDrawable(new TextureRegion(new Texture(clickTexture)));
+        // button.getStyle().up = appearance;
+        // button.getStyle().down = new TextureRegionDrawable(new TextureRegion(new Texture(clickTexture)));
     }
 }

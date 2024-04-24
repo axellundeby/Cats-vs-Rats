@@ -1,120 +1,97 @@
 package inf112.skeleton.app.model.entities.rat;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.backends.headless.HeadlessApplication;
-import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
-import inf112.skeleton.app.model.SkadedyrModel;
-import inf112.skeleton.app.model.entities.Projectile;
-import inf112.skeleton.app.model.entities.rat.LabRat;
-import inf112.skeleton.app.model.entities.rat.Rat;
-import inf112.skeleton.app.model.entities.rat.Rat.Direction;
 
 public class RatTest {
-    static SkadedyrModel model;
 
     @Mock
-    private Texture dependency; // Replace DependencyClass with actual dependency type
+    private Texture aliveTextureMock;
 
+    @Mock
+    private Texture frozenTextureMock;
+
+    @Mock
+    private Texture deadTextureMock;
     private Rat rat;
+    private Vector2 pos;
+    private int currentControlPoint = 0;
+    private Vector2[] controlPoints;
+    private float effectiveSpeed;
+    private float speed;
 
-    @BeforeAll
-    static void setUpBeforeAll() {
-        HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();
-        ApplicationListener listener = new ApplicationListener() {
-
-            @Override
-            public void create() {
-            }
-
-            @Override
-            public void resize(int width, int height) {
-            }
-
-            @Override
-            public void render() {
-            }
-
-            @Override
-            public void pause() {
-            }
-
-            @Override
-            public void resume() {
-            }
-
-            @Override
-            public void dispose() {
-            }
-        };
-        new HeadlessApplication(listener, config);
-
-    }
 
     @BeforeEach
-    void beforeEach() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
-        model = new SkadedyrModel();
-        rat = new LabRat(1, 1, dependency,1,1,1);
+        rat = new Rat(100, 10, aliveTextureMock, 50, 20, frozenTextureMock, 25, deadTextureMock);
+        this.pos = new Vector2(-10, 430);
+        this.effectiveSpeed = speed;
+
+        
+        rat.createPath();
     }
 
-    // @CsvSource(value = {"0,0,0,0,true", "1,9,6,43,false", "1,16,10,7,true", "-50,-50,10,10,false"})
-    // @ParameterizedTest(name = "{0}, {1}, {2}, {3}, {4}")
-    // public void projectileHitTest(int px, int py, int ratx, int raty, boolean hits){
-    //     Projectile testProjectile = new Projectile(new Vector2(px, py), new Vector2(), 0, dependency);
-    //     rat.setPosition(new Vector2(ratx, raty));
-    //     ArrayList<Projectile> list = new ArrayList<>();
-    //     list.add(testProjectile);
-    //     assertEquals(hits, rat.isHitByProjectile(list));
-    // }
-    
+    @Test
+    void testInitialHealth() {
+        assertEquals(100, rat.getHealth());
+    }
 
     @Test
-    public void notMovedTest(){
-        // Check that Vector2 objects can be compared correctly
-        Vector2 firstpos = new Vector2(rat.getPosition());
-        Vector2 movedPos = new Vector2(rat.getPosition());
-        assertEquals(firstpos, movedPos);
-        assertNotEquals(firstpos, new Vector2());
-    
+    void testTakeDamage() {
+        rat.takeDamage(20);
+        assertEquals(80, rat.getHealth());
     }
-    @Test
-    public void moveTest1(){
-        Vector2 firstpos = new Vector2(rat.getPosition());
-        rat.move();
-        Vector2 movedPos = new Vector2(rat.getPosition());
-        assertNotEquals(firstpos, movedPos);
-    
-    }
-    @CsvSource(value = {"0,0,1,0,0,1", "10,10,10,11,5,1", "0,0,0,-1,20,1", "0,-1,0,0,86,1"})
-    @ParameterizedTest(name = "Move {2}-{0} x, {3}-{1} y, speed = {5}")
-    public void moveSpeedTest(int oldx, int oldy, int newx, int newy, int secsAlive, int ratSpeed){
-        Rat labRat = new LabRat(1, 1, dependency,1,1,1);
-        int ticksAlive = secsAlive * 20;
-        labRat.setPosition(new Vector2(oldx, oldy));
-        for (int i = 0; i < ticksAlive; i++) {
-            labRat.addTime();
+
+    public Vector2 calculateExpectedPosition(float deltaTime) {
+        //rat.createPath();
+        Vector2 expectedPosition = new Vector2(pos);
+        int tempControlPoint = currentControlPoint;
+        
+        while (deltaTime > 0 && tempControlPoint < controlPoints.length - 1) {
+            Vector2 currentPoint = controlPoints[tempControlPoint];
+            Vector2 nextPoint = controlPoints[tempControlPoint + 1];
+            Vector2 directionToNextPoint = new Vector2(nextPoint).sub(currentPoint).nor();
+            float distanceToNextPoint = currentPoint.dst(nextPoint);
+            float distanceToMove = effectiveSpeed * deltaTime;
+            
+            if (distanceToMove >= distanceToNextPoint) {
+                deltaTime -= distanceToNextPoint / effectiveSpeed;
+                expectedPosition.set(nextPoint);
+                tempControlPoint++;
+            } else {
+                expectedPosition.add(directionToNextPoint.scl(distanceToMove));
+                deltaTime = 0;
+            }
         }
-        labRat.move();
-        Vector2 expected = new Vector2(newx, newy);
-        assertEquals(expected, labRat.getPosition());
+        
+        return expectedPosition;
+    }
+    
+
+    @Test
+    void testMovement() {
+        float deltaTime = 0.1f;
+        rat.createPath();
+        rat.moveAlongPath(deltaTime);
+        assertEquals(calculateExpectedPosition(deltaTime), rat.getPosition()); 
+    }
+
+    @Test
+    void testFreezing() {
+        assertFalse(rat.isFrozen());
+        rat.freeze(5); 
+        assertTrue(rat.isFrozen());
+        rat.unfreeze();
+        assertFalse(rat.isFrozen());
     }
 }

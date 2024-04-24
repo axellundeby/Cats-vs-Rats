@@ -36,8 +36,6 @@ public class MenuState extends State {
 
         playImageButton.setSize(200, 100);
         playImageButton.setPosition((stage.getWidth() - playImageButton.getWidth()) / 2 - 200 , BUTTON_HEIGHT);
-                // (stage.getHeight() - playImageButton.getHeight()) / 2 - 100);
-
         playImageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -54,8 +52,6 @@ public class MenuState extends State {
 
         playImageButton.setSize(200, 150);
         playImageButton.setPosition((stage.getWidth() - playImageButton.getWidth()) / 2 + 200 , BUTTON_HEIGHT-20);
-                // (stage.getHeight() - playImageButton.getHeight()) / 2 - 100);
-
         playImageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

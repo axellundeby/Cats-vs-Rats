@@ -30,7 +30,6 @@ public class RestartButton  extends Buttons {
 
     @Override
     public void updateButtonAppearance() {
-
     }
             
 }

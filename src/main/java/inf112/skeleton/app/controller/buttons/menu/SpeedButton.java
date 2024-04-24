@@ -34,11 +34,11 @@ public class SpeedButton extends Buttons {
 
     @Override
     public void updateButtonAppearance() {
-        if (model.isSpeedUp()) {
-            button.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("buttons_game/Spill_FF_Down.png")));
-        } else {
+        // if (model.isSpeedUp()) {
+        //     button.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("buttons_game/Spill_FF_Down.png")));
+        // } else {
 
-            button.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("buttons_game/Spill_FF.png")));
-        }
+        //     button.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("buttons_game/Spill_FF.png")));
+        // }
     }
 }

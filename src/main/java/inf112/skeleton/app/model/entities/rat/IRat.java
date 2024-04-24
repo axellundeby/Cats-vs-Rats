@@ -66,24 +66,6 @@ public interface IRat {
      * Marks the rat as exited.
      */
     void exit();
-
-    /**
-     * Checks if the rat is hit by any of the given projectiles.
-     * 
-     * @param projectiles The list of projectiles to check.
-     * @return true if the rat is hit by any projectile, false otherwise.
-     */
-    boolean isHitByProjectile(ArrayList<Projectile> projectiles);
-
-    /**
-     * Returns the projectile that hits the rat.
-     * 
-     * @param projectiles The list of projectiles to check.
-     * @return The projectile that hits the rat, or null if no projectile hits the
-     *         rat.
-     */
-    Projectile getHitByProjectile(ArrayList<Projectile> projectiles);
-
     /**
      * Returns the bounty of the rat.
      * 

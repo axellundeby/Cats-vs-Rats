@@ -9,19 +9,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import inf112.skeleton.app.controller.buttons.menu.ExitButton;
 import inf112.skeleton.app.controller.buttons.menu.PauseButton;
 import inf112.skeleton.app.controller.buttons.menu.RestartButton;
-import inf112.skeleton.app.controller.buttons.menu.SpeedButton;
+import inf112.skeleton.app.controller.buttons.menu.SpeedUpButton;
 import inf112.skeleton.app.controller.buttons.upgrade.UpgradeDamageButton;
 import inf112.skeleton.app.controller.buttons.upgrade.UpgradeFireRateButton;
 import inf112.skeleton.app.controller.buttons.upgrade.UpgradeRangeButton;
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.catmenu.CatMenu;
-import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.GlobalAssetManager;
@@ -49,7 +47,7 @@ public class PlayState extends State {
         this.stage = new Stage();
         this.mapTexture = new Texture("map/Spill_Plattform.jpg");
 
-        new SpeedButton(model, stage);
+        new SpeedUpButton(model, stage);
         new RestartButton(model, stage);
         new ExitButton(model, stage);
         pauseButton = new PauseButton(model, stage);
@@ -78,14 +76,12 @@ public class PlayState extends State {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         Cat selectedCat = model.getSelectedCat();
-        // for (Cat cat : model.getCats()) {
             if (selectedCat != null){
 
                 Circle range = selectedCat.getRangeCircle();
                 shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
                 shapeRenderer.circle(range.x, range.y, range.radius);
             }
-        // }
         shapeRenderer.end();
 
         drawCatMenu(batch);
