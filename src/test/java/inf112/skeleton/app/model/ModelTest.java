@@ -11,6 +11,9 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+
 import inf112.skeleton.app.model.entities.cat.BasicCat;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.cat.LabCat;
@@ -20,6 +23,7 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 
 public class ModelTest {
     static SkadedyrModel model;
+    private List<Texture> dependency1;
     private Texture dependency;
 
     @BeforeAll
@@ -85,17 +89,12 @@ public class ModelTest {
 
     @Test
     public void ratRemovalTest(){
-        // Add 10 dead rats to the game
         for (int i = 0; i < 10; i++) {
             Rat labrat = new LabRat(0, 1, dependency,1,1,1);
-            // Coin has been there long enough
             labrat.coinVisibleTime = 1000;
             model.addRat(labrat);
         }
-        // Test rat list sizes
         assertEquals(10, model.getRats().size());
-
-        // Removes dead rats
         model.removeDeadOrExitedRats(0);
         assertEquals(0, model.getRats().size());
     }
@@ -111,22 +110,13 @@ public class ModelTest {
 
     @Test
     public void attackQueueTest1() {
-        // Create and add mocks to model
         Cat mockCat = mock(BasicCat.class);
-
         model.addCat(mockCat);
-
         Rat mockRat = mock(BasicRat.class);
-
         model.addRat(mockRat);
-
-        // When asked if rat is within range, return true
         when(mockCat.withinRange(mockRat)).thenReturn(true);
-
         HashMap<Cat, LinkedList<Rat>> attackMap = model.attackQueueForEachCat();
-
         LinkedList<Rat> ratQue = attackMap.get(mockCat);
-
         int expected = mockRat.hashCode();
         int actual = ratQue.getFirst().hashCode();
         assertEquals(expected, actual, "Wrong rat targeted for attack");
@@ -134,31 +124,19 @@ public class ModelTest {
 
     @Test
     public void attackQueueTest2() {
-        // Create mocks
         Cat mockCat = mock(BasicCat.class);
-
         model.addCat(mockCat);
-
-        // Mock rats as well
         Rat rat1 = mock(BasicRat.class);
         Rat rat2 = mock(BasicRat.class);
-
         model.addRat(rat1);
         model.addRat(rat2);
-
-        // When asked if rat is within range, return true
-        // Rat 1 is closer to the cat than rat 2, but both are in range
         when(mockCat.withinRange(rat1)).thenReturn(true);
         when(mockCat.withinRange(rat2)).thenReturn(true);
-
         HashMap<Cat, LinkedList<Rat>> attackMap = model.attackQueueForEachCat();
-
         LinkedList<Rat> ratQue = attackMap.get(mockCat);
-
         int expected = rat1.hashCode();
         int actual = ratQue.getFirst().hashCode();
         assertEquals(expected, actual, "Wrong rat targeted for attack");
-
         expected = rat2.hashCode();
         actual = ratQue.getLast().hashCode();
         assertEquals(expected, actual, "Wrong rat targeted for attack");
@@ -166,23 +144,16 @@ public class ModelTest {
 
     @Test
     public void attackQueueTest3() {
-        // Thrid scenario where one rat is close to the cat and one is out of range
         Cat mockCat = mock(BasicCat.class);
         Rat ratClose = mock(BasicRat.class),
             ratFar = mock(BasicRat.class);
-
-        // Check that only the rat within range of the cat is taken into account
         when(mockCat.withinRange(ratClose)).thenReturn(true);
         when(mockCat.withinRange(ratFar)).thenReturn(false);
 
         model.addCat(mockCat);
         model.addRat(ratClose);
         model.addRat(ratFar);
-
-        // Execute the method under test
         HashMap<Cat, LinkedList<Rat>> attackMap = model.attackQueueForEachCat();
-
-        // Verify outcomes
         assertTrue(attackMap.containsKey(mockCat), "Attack is missing cat");
         LinkedList<Rat> assignedRats = attackMap.get(mockCat);
         assertNotNull(assignedRats, "List of rats missing for the cat");
@@ -197,6 +168,36 @@ public class ModelTest {
         assertFalse(model.isPaused(), "Game should be unpaused after calling setPause");
     }
 
+   
+    @Test
+    public void clockTickTest() {
+        model.clockTick();
+        assertTrue(model.isPaused(), "Game should be paused after a clock tick");
+    }
 
+    @Test
+    public void testPauseToggle() {
+        boolean initialPauseState = model.isPaused();
+        model.setPause();
+        assertNotEquals(initialPauseState, model.isPaused(), "Pause state should toggle");
+    }
 
+    @Test
+    public void testSpeedToggle() {
+        float initialSpeed = model.getSpeed();
+        model.setSpeed();
+        assertNotEquals(initialSpeed, model.getSpeed(), "Speed should toggle between two values");
+        model.setSpeed();
+        assertEquals(initialSpeed, model.getSpeed(), "Speed should toggle between two values");
+    }
+
+    @Test
+    public void testMoneyManagement() {
+        int initialMoney = model.getMoney();
+        model.setMoney(initialMoney + 100);
+        assertEquals(initialMoney + 100, model.getMoney(), "Money should be correctly set");
+    }
+
+ 
+   
 }

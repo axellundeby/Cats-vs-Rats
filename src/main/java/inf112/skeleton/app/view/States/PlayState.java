@@ -95,7 +95,6 @@ public class PlayState extends State {
         batch.begin();
         drawCats(batch);
         drawRats(batch);
-        drawProjectiles(batch);
         batch.end();
 
         batch.begin();
@@ -117,15 +116,7 @@ public class PlayState extends State {
         font.setColor(Color.WHITE);
     }
 
-    private void drawProjectiles(SpriteBatch batch) {
-        for (Projectile projectile : model.getProjectiles()) {
-            Rectangle projectileRect = projectile.getRectangle();
-            float width = projectileRect.width / 15;
-            float height = projectileRect.height / 15;
-            batch.draw(projectile.getTexture(), projectileRect.x, projectileRect.y, width, height);
-        }
-    }
-
+   
     private void drawCatMenu(SpriteBatch batch) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 

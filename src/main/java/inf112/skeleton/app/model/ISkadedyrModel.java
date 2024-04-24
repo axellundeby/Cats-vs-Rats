@@ -3,22 +3,11 @@ package inf112.skeleton.app.model;
 import java.util.ArrayList;
 
 import inf112.skeleton.app.model.catmenu.CatMenu;
-import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 
 public interface ISkadedyrModel {
-    /**
-     * Adds a Cat object to the list of current cats in the game
-     * @param cat the Cat object to be added
-     */
-    void addCat(Cat cat);
-    /**
-     * Adds a Rat object to the list of current rats alive in the game
-     * @param rat the Rat object to be added
-     */
-    void addRat(Rat rat);
-
+    
     /**
      * Gets all cats currently in the game
      * @return an ArrayList of Cat objects
@@ -110,12 +99,6 @@ public interface ISkadedyrModel {
      * @return the amount of lives the player has
      */
     int getLives();
-
-    /**
-     * Gets all projectiles being displayed in the game 
-     * @return an ArrayList of Projectile objects
-     */
-    ArrayList<Projectile> getProjectiles();
 
     /**
      * Get the cat menu object
