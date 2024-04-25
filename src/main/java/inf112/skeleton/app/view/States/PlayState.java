@@ -77,18 +77,18 @@ public class PlayState extends State {
         batch.begin();
         batch.draw(mapTexture, 0, 200, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - 300);
         batch.end();
-        
+
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         Cat selectedCat = model.getSelectedCat();
         // for (Cat cat : model.getCats()) {
-            if (selectedCat != null){
+        if (selectedCat != null) {
 
-                Circle range = selectedCat.getRangeCircle();
-                shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
-                shapeRenderer.circle(range.x, range.y, range.radius);
-            }
+            Circle range = selectedCat.getRangeCircle();
+            shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
+            shapeRenderer.circle(range.x, range.y, range.radius);
+        }
         // }
         shapeRenderer.end();
 
@@ -108,6 +108,12 @@ public class PlayState extends State {
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+        if (model.isGameWon()) {
+            GameStateManager.set(new WinState(gsm, model));
+        }
+        if (model.isGameOver()) {
+            GameStateManager.set(new GameOverState(gsm, model));
+        }
 
     }
 

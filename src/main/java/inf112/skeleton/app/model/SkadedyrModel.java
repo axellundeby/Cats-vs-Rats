@@ -218,6 +218,8 @@ public class SkadedyrModel implements ISkadedyrModel {
         return speedUp;
     }
 
+
+
     @Override
     public void setSpeed() {
         if (!isPaused) {
@@ -276,13 +278,22 @@ public class SkadedyrModel implements ISkadedyrModel {
     @Override
     public void setMoney(int money) {
         this.money = money;
-       
-       
     }
    
     @Override
     public int getLevel() {
         return level;
+    }
+
+
+    @Override
+    public boolean isGameWon() {
+        return level == 10;
+    }
+
+    @Override
+    public boolean isGameOver() {
+        return lives <= 0;
     }
 
     @Override
