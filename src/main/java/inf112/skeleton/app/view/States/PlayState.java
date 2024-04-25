@@ -62,7 +62,7 @@ public class PlayState extends State {
     
         upgradeFireRateButton = upgrade.upgradeFireRateButton();
         upgradeRangeButton = upgrade.upgradeRangeButton();
-        upgradeDamageButton = upgrade.upgradeFireRateButton();
+        upgradeDamageButton = upgrade.upgradeDamageButton();
 
         stage.addActor(upgradeFireRateButton);
         stage.addActor(upgradeRangeButton);
@@ -77,7 +77,6 @@ public class PlayState extends State {
         menu.updateButtonAppearance();
         upgrade.updateButtonAppearance();
 
-       
     }
     @Override
     public void render(SpriteBatch batch) {

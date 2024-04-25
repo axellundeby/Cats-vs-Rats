@@ -42,7 +42,7 @@ public class MenuButtons implements IMenuButtons {
         pauseButton = ButtonFactory.createImageButton("buttons_game/Spill_Pause_Pause.png",
                 "buttons_game/Spill_Pause_Play.png");
         pauseButton.setSize(100, 100);
-        pauseButton.setPosition(600, 50);
+        pauseButton.setPosition(600, 70);
         pauseButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
@@ -90,7 +90,7 @@ public class MenuButtons implements IMenuButtons {
     public Button speedButton() {
         speedButton = ButtonFactory.createImageButton("buttons_game/Spill_FF.png", "buttons_game/Spill_FF_Down.png");
         speedButton.setSize(100, 100);
-        speedButton.setPosition(500, 50);
+        speedButton.setPosition(500, 70);
         speedButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
