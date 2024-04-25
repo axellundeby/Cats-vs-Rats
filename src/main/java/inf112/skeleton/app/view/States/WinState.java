@@ -15,19 +15,19 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import inf112.skeleton.app.controller.buttons.ButtonFactory;
 import inf112.skeleton.app.model.SkadedyrModel;
 
-public class GameOverState extends State {
+public class WinState extends State {
     private SkadedyrModel model;
     private Stage stage;
-    private Texture gameOverImage;
+    private Texture winImage;
     private float alpha = 0f; 
-   
 
-    public GameOverState(GameStateManager gsm, SkadedyrModel model) {
+
+    public WinState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
         this.model = model;
 
         this.stage = new Stage();
-        this.gameOverImage = new Texture("Spill_GameOver.jpg");
+        this.winImage = new Texture("Spill_Won.jpg");
      
        
 
@@ -41,12 +41,12 @@ public class GameOverState extends State {
 
         playImageButton.setSize(200, 200);
         playImageButton.setPosition((stage.getWidth() - playImageButton.getWidth()) / 2,
-                (stage.getHeight() - playImageButton.getHeight()) / 2 - 200);
+                (stage.getHeight() - playImageButton.getHeight()) / 2 );
 
         playImageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-               // model.setLevel(0);
+                model.setLevel(0);
                 model.restart();
                 GameStateManager.set(new MenuState(gsm, model));
             }
@@ -55,6 +55,7 @@ public class GameOverState extends State {
         stage.addActor(playImageButton);
     }
 
+    
     @Override
     public void render(SpriteBatch sb) {
 
@@ -68,8 +69,8 @@ public class GameOverState extends State {
             alpha = Math.min(alpha, 1f);
         }
 
-        sb.setColor(1, 1, 1, alpha);
-        sb.draw(gameOverImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        
+        sb.draw(winImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         sb.end();
 
         stage.draw();
@@ -78,6 +79,6 @@ public class GameOverState extends State {
     @Override
     public void dispose() {
         stage.dispose();
-        gameOverImage.dispose();
+        winImage.dispose();
     }
 }
