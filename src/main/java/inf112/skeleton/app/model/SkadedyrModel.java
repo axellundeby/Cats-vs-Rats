@@ -84,6 +84,10 @@ public class SkadedyrModel implements ISkadedyrModel {
             if (rat.isKilled()) {
                 rat.updateCoinVisibility(deltaTime); 
                 if (!rat.isrewardClaimed()) {
+                    // Buttons update each time a rat is killed
+                    if (currentState instanceof PlayState){
+                        ((PlayState) currentState).updateButtons();
+                    }
                     money += rat.getBounty();
                     points += rat.getPoints();
                     rat.rewardClaimed();
