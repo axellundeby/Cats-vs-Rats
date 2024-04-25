@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.controller.buttons.ButtonFactory;
 import inf112.skeleton.app.model.SkadedyrModel;
 
-public class MenuButtons implements IMenuButtons{
+public class MenuButtons implements IMenuButtons {
     private SkadedyrModel model;
     private Stage stage;
     private Button pauseButton;
@@ -20,7 +20,6 @@ public class MenuButtons implements IMenuButtons{
         this.model = model;
         this.stage = stage;
 
-        
     }
 
     @Override
@@ -32,16 +31,18 @@ public class MenuButtons implements IMenuButtons{
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 model.exit();
-               
+
             }
         });
         return exitButton;
     }
-@Override
+
+    @Override
     public Button pauseButton() {
-        pauseButton = ButtonFactory.createImageButton("buttons_game/Spill_Pause_Pause.png", "buttons_game/Spill_Pause_Play.png");
+        pauseButton = ButtonFactory.createImageButton("buttons_game/Spill_Pause_Pause.png",
+                "buttons_game/Spill_Pause_Play.png");
         pauseButton.setSize(100, 100);
-        pauseButton.setPosition(600, 50);
+        pauseButton.setPosition(600, 70);
         pauseButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
@@ -53,29 +54,33 @@ public class MenuButtons implements IMenuButtons{
     }
 
     // public Button helpButton() {
-    //     Button button = ButtonFactory.createImageButton("buttons_game/Spill_Help.png", "buttons_game/Spill_Play-Down.png");
-    //     button.setSize(200, 150);
-    //     button.setPosition((stage.getWidth() - button.getWidth()) / 2 + 200, 50);
-    //     button.addListener(new ClickListener() {
-    //         @Override
-    //         public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-    //             model.help();
-    //             updateButtonAppearance();   
-    //         }
-    //     });
-    //     return button;
+    // Button button =
+    // ButtonFactory.createImageButton("buttons_game/Spill_Help.png",
+    // "buttons_game/Spill_Play-Down.png");
+    // button.setSize(200, 150);
+    // button.setPosition((stage.getWidth() - button.getWidth()) / 2 + 200, 50);
+    // button.addListener(new ClickListener() {
+    // @Override
+    // public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float
+    // x, float y) {
+    // model.help();
+    // updateButtonAppearance();
+    // }
+    // });
+    // return button;
     // }
 
     @Override
     public Button restarButton() {
-        Button restartButton = ButtonFactory.createImageButton("buttons_game/Spill_Restart.png", "buttons_game/angryCat.png");
+        Button restartButton = ButtonFactory.createImageButton("buttons_game/Spill_Restart.png",
+                "buttons_game/angryCat.png");
         restartButton.setSize(85, 85);
         restartButton.setPosition(140, 750);
         restartButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 model.restart();
-                
+
             }
         });
         return restartButton;
@@ -85,7 +90,7 @@ public class MenuButtons implements IMenuButtons{
     public Button speedButton() {
         speedButton = ButtonFactory.createImageButton("buttons_game/Spill_FF.png", "buttons_game/Spill_FF_Down.png");
         speedButton.setSize(100, 100);
-        speedButton.setPosition(500, 50);
+        speedButton.setPosition(500, 70);
         speedButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
@@ -97,24 +102,24 @@ public class MenuButtons implements IMenuButtons{
     }
 
     @Override
-    public void updateButtonAppearance(){
+    public void updateButtonAppearance() {
 
-
-        if(model.isPaused()){
-            pauseButton.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("buttons_game/Spill_Pause_Play.png")));
+        if (model.isPaused()) {
+            pauseButton.getStyle().up = new TextureRegionDrawable(
+                    new TextureRegion(new Texture("buttons_game/Spill_Pause_Play.png")));
         } else {
-            pauseButton.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("buttons_game/Spill_Pause_Play.png")));
+            pauseButton.getStyle().up = new TextureRegionDrawable(
+                    new TextureRegion(new Texture("buttons_game/Spill_Pause_Play.png")));
         }
         if (model.isSpeedUp()) {
-            speedButton.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("buttons_game/Spill_FF_Down.png")));
+            speedButton.getStyle().up = new TextureRegionDrawable(
+                    new TextureRegion(new Texture("buttons_game/Spill_FF_Down.png")));
         } else {
 
-            speedButton.getStyle().up = new TextureRegionDrawable(new TextureRegion(new Texture("buttons_game/Spill_FF.png")));
+            speedButton.getStyle().up = new TextureRegionDrawable(
+                    new TextureRegion(new Texture("buttons_game/Spill_FF.png")));
         }
-
 
     }
 
-
-   
 }
