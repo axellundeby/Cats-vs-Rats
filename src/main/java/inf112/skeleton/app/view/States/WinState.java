@@ -19,8 +19,7 @@ public class WinState extends State {
     private SkadedyrModel model;
     private Stage stage;
     private Texture winImage;
-    private float alpha = 0f; 
-
+    private float alpha = 0f;
 
     public WinState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
@@ -28,8 +27,6 @@ public class WinState extends State {
 
         this.stage = new Stage();
         this.winImage = new Texture("Spill_Won.jpg");
-     
-       
 
         Gdx.input.setInputProcessor(stage);
         setupPlayButtons();
@@ -41,12 +38,12 @@ public class WinState extends State {
 
         playImageButton.setSize(200, 200);
         playImageButton.setPosition((stage.getWidth() - playImageButton.getWidth()) / 2,
-                (stage.getHeight() - playImageButton.getHeight()) / 2 );
+                (stage.getHeight() - playImageButton.getHeight()) / 2 - 200);
 
         playImageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                model.setLevel(0);
+                // model.setLevel(0);
                 model.restart();
                 GameStateManager.set(new MenuState(gsm, model));
             }
@@ -55,22 +52,18 @@ public class WinState extends State {
         stage.addActor(playImageButton);
     }
 
-    
     @Override
     public void render(SpriteBatch sb) {
-
-        
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         sb.begin();
-
         if (alpha < 1f) {
-            alpha += 0.009f;
+            alpha += 0.01f;
             alpha = Math.min(alpha, 1f);
         }
-
-        
+        sb.setColor(1f, 1f, 1f, alpha);
         sb.draw(winImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        sb.setColor(1f, 1f, 1f, 1f);
         sb.end();
 
         stage.draw();
