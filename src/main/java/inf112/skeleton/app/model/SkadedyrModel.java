@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-
-import inf112.skeleton.app.main.SkadedyrMain;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
@@ -85,7 +83,7 @@ public class SkadedyrModel implements ISkadedyrModel {
             removeDeadOrExitedRats(deltaTime);
         }
     }
-    
+
     private void removeDeadOrExitedRats(float deltaTime) {
         Iterator<Rat> iterator = aliveRats.iterator();
         while (iterator.hasNext()) {
@@ -96,7 +94,6 @@ public class SkadedyrModel implements ISkadedyrModel {
                     money += rat.getBounty();
                     points += rat.getPoints();
                     rat.rewardClaimed();
-                    rat.killedAnimation();
                 }
                 if (rat.coinVisibleTime >= COIN_DURATION) {
                     iterator.remove();

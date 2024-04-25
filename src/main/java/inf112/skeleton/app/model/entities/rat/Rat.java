@@ -28,7 +28,7 @@ public class Rat implements IRat {
     private float progress;
     private Vector2[] controlPoints;
     private Direction direction = Direction.RIGHT;
-    private int currentControlPoint = 0; 
+    public int currentControlPoint = 0; 
     private float freezeTimer = 0;
     private static final float RAT_FREEZE_DELAY = 20;
     private float originalSpeed;
@@ -41,7 +41,8 @@ public class Rat implements IRat {
         this.speed = speed;
         this.points = points;
         this.bounty = bounty;
-        this.pos = new Vector2(-10, 430);
+        createPath();
+        this.pos = new Vector2(controlPoints[0]);
         this.sprite = new Sprite(texture);
         this.sprite.setSize(halfsize * 2, halfsize * 2);
         this.sprite.setPosition(pos.x - halfsize, pos.y - halfsize);
@@ -52,7 +53,6 @@ public class Rat implements IRat {
         this.spriteRect = new Rectangle(pos.x - halfsize, pos.y - halfsize, halfsize * 2, halfsize * 2);
         this.originalSpeed = speed;
         this.effectiveSpeed = speed;
-        createPath();
 
     }
 
@@ -74,6 +74,10 @@ public class Rat implements IRat {
                 rotateImage();
             }
         }
+    }
+
+    public int getCurrentControlPoint() {
+        return currentControlPoint;
     }
 
     public void setEffectiveSpeed(float newSpeed) {
@@ -190,6 +194,10 @@ public class Rat implements IRat {
     @Override
     public void takeDamage(int damage) {
         health -= damage;
+        if (health <= 0) {
+            health = 0; 
+            killedAnimation(); 
+        }
     }
 
     public enum Direction {
@@ -198,6 +206,10 @@ public class Rat implements IRat {
         RIGHT,
         LEFT,
         OUT;
+    }
+
+    public void setDirection(Direction dir) {
+        this.direction = dir;
     }
 
     private float getRotationAngle() {
@@ -230,10 +242,6 @@ public class Rat implements IRat {
         return sprite;
     }
 
-    @Override
-    public void render(SpriteBatch batch) {
-    }
-
     public void killedAnimation() {
         swapImage(ImageSwapper.DEAD);
         health = 0;
@@ -247,6 +255,10 @@ public class Rat implements IRat {
         }
     }
 
+    public float getCoinVisibleTime() {
+        return coinVisibleTime;
+    }
+
     @Override
     public boolean isKilled() {
         return health <= 0;
@@ -254,7 +266,7 @@ public class Rat implements IRat {
 
     @Override
     public boolean isOut() {
-        if (this.getDirection() == Direction.OUT) {
+        if (this.getDirection() == Direction.OUT || this.pos.x >= 1150) {
             return true;
         }
         return false;
@@ -266,7 +278,7 @@ public class Rat implements IRat {
         rectangleUpdater();
     }
 
-    public void rectangleUpdater(){
+    private void rectangleUpdater(){
         spriteRect.x = pos.x - halfsize;
         spriteRect.y = pos.y - halfsize;
     }

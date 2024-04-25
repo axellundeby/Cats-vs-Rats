@@ -24,21 +24,19 @@ public class RatTest {
     @Mock
     private Texture deadTextureMock;
     private Rat rat;
-    private Vector2 pos;
-    private int currentControlPoint = 0;
     private Vector2[] controlPoints;
+    private int halfSize;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        this.pos = new Vector2(-10, 430); 
-        Vector2[] sharedControlPoints = new Vector2[] {
+        controlPoints = new Vector2[] {
             new Vector2(-10,290),
             new Vector2(8,290),
             new Vector2(200,290),
             new Vector2(200,422),
-            new Vector2(85,422),
-            new Vector2(85,616),
+            new Vector2(85,422), 
+            new Vector2(85,616), 
             new Vector2(106,616),
             new Vector2(435,620),
             new Vector2(435,290),
@@ -53,9 +51,9 @@ public class RatTest {
             new Vector2(1200,310),
             new Vector2(1500,310),
         };
-        this.controlPoints = sharedControlPoints; 
         rat = new Rat(100, 10, aliveTextureMock, 50, 20, frozenTextureMock, 25, deadTextureMock);
-        rat.setPosition(this.pos); 
+        rat.setPosition(controlPoints[0]); 
+        this.halfSize = 25;
     }
     
 
@@ -64,13 +62,6 @@ public class RatTest {
     void testInitialHealth() {
         assertEquals(100, rat.getHealth());
     }
-
-    @Test
-    void testTakeDamage() {
-        rat.takeDamage(20);
-        assertEquals(80, rat.getHealth());
-    }
-
 
    
     private Vector2 calculateExpectedPosition(float deltaTime, int startControlPoint, Vector2 startPosition, float speed) {
@@ -183,50 +174,238 @@ public class RatTest {
         assertEquals(newPos, rat.getPosition(), "Position should be updated to the new position");
     }
 
-    @Test   
-    void testDirectionUpdateForRightMovment() {
-        float deltaTime = 0.01f; 
-        rat.moveAlongPath(deltaTime);
-        Direction expectedDirectionWhenMovingRight = Direction.RIGHT; 
-        Direction actualDirection = rat.getDirection(); 
-        assertEquals(expectedDirectionWhenMovingRight, actualDirection, "The direction should be updated correctly after movement.");
-    }
-
+    
     @Test
-    void testImageRotationForRightMovment() {
-        float deltaTime = 0.01f; 
+    void testImageDirectionAndRotationForRightMovment(){
+        int startPointIndex = 0; 
+        rat.setPosition(controlPoints[startPointIndex]);
+        rat.currentControlPoint = startPointIndex;
+        rat.setEffectiveSpeed(10);
+        float deltaTime = 0.1f; 
         rat.moveAlongPath(deltaTime);
-        float expectedRotationWhennMovingTight = -90; 
+        float expectedRotationWhennMovingUp = -90; 
         Sprite sprite = rat.getSprite();
-        assertEquals(expectedRotationWhennMovingTight, sprite.getRotation(), "The sprite's rotation should match the expected value.");
+        Direction expectedDirectionWhenMovingUp = Direction.RIGHT; 
+        Direction actualDirection = rat.getDirection(); 
+        assertEquals(expectedDirectionWhenMovingUp, actualDirection, "The direction should be updated correctly after movement.");
+        assertEquals(expectedRotationWhennMovingUp, sprite.getRotation(), "The sprite's rotation should match the expected value.");
     }
+    
 
-    @Test
-    void testDirectionUpdateForUpMovment(){
-        float deltaTime = 0.03f; 
+        @Test
+    void testImageDirectionAndRotationForUpMovment(){
+        int startPointIndex = 2; 
+        rat.setPosition(controlPoints[startPointIndex]);
+        rat.currentControlPoint = startPointIndex;
+        rat.setEffectiveSpeed(10);
+        float deltaTime = 0.1f; 
         rat.moveAlongPath(deltaTime);
+        float expectedRotationWhennMovingUp = 0; 
+        Sprite sprite = rat.getSprite();
         Direction expectedDirectionWhenMovingUp = Direction.UP; 
         Direction actualDirection = rat.getDirection(); 
         assertEquals(expectedDirectionWhenMovingUp, actualDirection, "The direction should be updated correctly after movement.");
+        assertEquals(expectedRotationWhennMovingUp, sprite.getRotation(), "The sprite's rotation should match the expected value.");
+    }
+
+    @Test
+    void testImageDirectionAndRotationForLeftMovment(){
+        int startPointIndex = 3; 
+        rat.setPosition(controlPoints[startPointIndex]);
+        rat.currentControlPoint = startPointIndex;
+        rat.setEffectiveSpeed(10);
+        float deltaTime = 0.1f; 
+        rat.moveAlongPath(deltaTime);
+        float expectedRotationWhennMovingUp = 90; 
+        Sprite sprite = rat.getSprite();
+        Direction expectedDirectionWhenMovingUp = Direction.LEFT; 
+        Direction actualDirection = rat.getDirection(); 
+        assertEquals(expectedDirectionWhenMovingUp, actualDirection, "The direction should be updated correctly after movement.");
+        assertEquals(expectedRotationWhennMovingUp, sprite.getRotation(), "The sprite's rotation should match the expected value.");
+    }
+
+    @Test
+    void testImageDirectionAndRotationForDownMovment(){
+        int startPointIndex = 7; 
+        rat.setPosition(controlPoints[startPointIndex]);
+        rat.currentControlPoint = startPointIndex;
+        rat.setEffectiveSpeed(10);
+        float deltaTime = 0.1f; 
+        rat.moveAlongPath(deltaTime);
+        float expectedRotationWhennMovingUp = 180; 
+        Sprite sprite = rat.getSprite();
+        Direction expectedDirectionWhenMovingUp = Direction.DOWN; 
+        Direction actualDirection = rat.getDirection(); 
+        assertEquals(expectedDirectionWhenMovingUp, actualDirection, "The direction should be updated correctly after movement.");
+        assertEquals(expectedRotationWhennMovingUp, sprite.getRotation(), "The sprite's rotation should match the expected value.");
+    }
+
+    @Test
+    void isOutTest() {
+        assertFalse(rat.isOut());
+        rat.setPosition(new Vector2(1150, 310));
+        assertTrue(rat.isOut());
+    }
+
+    @Test 
+    void isrewardClaimedTest() {
+        assertFalse(rat.isrewardClaimed());
+        rat.rewardClaimed();
+        assertTrue(rat.isrewardClaimed());
+    }
+
+    @Test
+    void isExitedTest() {
+        assertFalse(rat.isExited());
+        rat.exit();
+        assertTrue(rat.isExited());
     }
 
 
+    @Test
+    void getBountyTest(){
+        assertEquals(50, rat.getBounty());
+    }
+
+    @Test
+    void getPointsTest(){
+        assertEquals(20, rat.getPoints());
+    }
 
 
+    @Test
+    void getTextureTest(){
+        assertEquals(aliveTextureMock, rat.getTexture());
+    }
+
+    @Test
+    void getRectangleTest(){
+        rat.setPosition(new Vector2(100, 100));
+        System.out.println(rat.getPosition());
+        assertEquals(100 - halfSize, rat.getRectangle().x);
+        assertEquals(100 - halfSize, rat.getRectangle().y);
+        assertEquals(halfSize * 2, rat.getRectangle().width);
+        assertEquals(halfSize * 2, rat.getRectangle().height);
+    }    
 
 
+    @Test
+    void testTakeDamage(){
+        rat.takeDamage(10);
+        assertEquals(90, rat.getHealth());
+    }
+
+    @Test
+    void testRotateImageDown() {
+        rat.setDirection(Direction.DOWN);
+        rat.rotateImage();
+        assertEquals(180, rat.getSprite().getRotation(), "Sprite rotation should be 180 degrees for DOWN direction");
+    }
 
 
-    
+    @Test
+    void testRotateImageUp() {
+        rat.setDirection(Direction.UP);
+        rat.rotateImage();
+        assertEquals(0, rat.getSprite().getRotation(), "Sprite rotation should be 180 degrees for DOWN direction");
+    }
 
 
+    @Test
+    void setDirectionTest() {
+        rat.setDirection(Direction.UP);
+        assertEquals(Direction.UP, rat.getDirection());
+        rat.setDirection(Direction.DOWN);
+        assertEquals(Direction.DOWN, rat.getDirection());
+        rat.setDirection(Direction.RIGHT);
+        assertEquals(Direction.RIGHT, rat.getDirection());
+        rat.setDirection(Direction.LEFT);
+        assertEquals(Direction.LEFT, rat.getDirection());
+        rat.setDirection(Direction.OUT);
+        assertEquals(Direction.OUT, rat.getDirection());
+    }
+
+
+    @Test
+    void getSpriteTest() {
+        Sprite sprite = rat.getSprite();
+        assertEquals(aliveTextureMock, sprite.getTexture(), "Sprite texture should be initialized with the 'alive' texture");
+        assertEquals(halfSize * 2, sprite.getWidth(), "Sprite width should be correctly set based on halfSize");
+        assertEquals(halfSize * 2, sprite.getHeight(), "Sprite height should be correctly set based on halfSize");
+        Vector2 expectedPosition = new Vector2(rat.getPosition().x - halfSize, rat.getPosition().y - halfSize);
+        assertEquals(expectedPosition.x, sprite.getX(), "Sprite X coordinate should match the expected initial position");
+        assertEquals(expectedPosition.y, sprite.getY(), "Sprite Y coordinate should match the expected initial position");
+    }
+
+    @Test 
+    void killedAnimationTest() {
+        rat.takeDamage(100);
+        assertEquals(0, rat.getHealth());
+        assertTrue(rat.isKilled(), "Rat should be marked as killed");
+        assertEquals(deadTextureMock, rat.getTexture());
+    }
+
+    @Test
+    void updateCoinVisibilityTest() {
+        float coin = rat.getCoinVisibleTime();
+        rat.takeDamage(100);
+        rat.updateCoinVisibility(50);
+        assertEquals(coin + 50, rat.getCoinVisibleTime());
+    }
+
+    @Test
+    void getCoinVisibleTimeTest() {
+        assertEquals(0, rat.getCoinVisibleTime());
+    }
+
+    @Test
+    void isKilledTest(){
+        assertFalse(rat.isKilled());
+        rat.takeDamage(100);
+        assertTrue(rat.isKilled());
+    }
+
+    @Test
+    void setPositionTest(){
+        Vector2 pos = new Vector2(100, 100);
+        rat.setPosition(pos);
+        assertEquals(pos, rat.getPosition());
+        assertEquals(pos.x - halfSize, rat.getRectangle().x);
+        assertEquals(pos.y - halfSize, rat.getRectangle().y);
+    }
+         
+
+    @Test 
+    void getHealthTest(){
+        assertEquals(100, rat.getHealth());
+    }
+
+    @Test
+    void getPositionTest(){
+        Vector2 pos = new Vector2(100, 100);
+        rat.setPosition(pos);
+        assertEquals(pos, rat.getPosition());
+    }
 
     @Test
     void testFreezing() {
         assertFalse(rat.isFrozen());
         rat.freeze(5); 
+        assertEquals(frozenTextureMock, rat.getTexture());
         assertTrue(rat.isFrozen());
         rat.unfreeze();
+        assertEquals(aliveTextureMock, rat.getTexture());
         assertFalse(rat.isFrozen());
     }
+
+    @Test
+    void getEffectiveSpeedTest() {
+        assertEquals(10, rat.getEffectiveSpeed());
+    }
+
+
+
+
+
+
 }

@@ -11,14 +11,7 @@ import inf112.skeleton.app.model.entities.rat.Rat.Direction;
 
 public interface IRat {
 
-    /**
-     * Tegner rotten på skjermen ved bruk av en SpriteBatch.
-     * 
-     * @param batch SpriteBatch som brukes for å tegne rotten, sikrer effektiv
-     *              tegning.
-     */
-    void render(com.badlogic.gdx.graphics.g2d.SpriteBatch batch);
-
+  
     /** Metode for å håndtere hva som skjer når en rotte blir drept */
     void killedAnimation();
 
