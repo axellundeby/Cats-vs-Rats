@@ -38,7 +38,7 @@ public class PlayState extends State {
     private PauseButton pauseButton;
     private Texture mapTexture;
 
-    protected PlayState(GameStateManager gsm, SkadedyrModel model) {
+    public PlayState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
         this.model = model;
         this.shapeRenderer = new ShapeRenderer();
@@ -61,14 +61,18 @@ public class PlayState extends State {
         Gdx.input.setInputProcessor(stage);
     }
 
+
+    public void updateButtons(){
+        pauseButton.updateButtonAppearance();
+        upgradeFireRateButton.updateButtonAppearance();
+        upgradeRangeButton.updateButtonAppearance();
+        upgradeDamageButton.updateButtonAppearance();
+
+    }
     @Override
     public void render(SpriteBatch batch) {
 
         ScreenUtils.clear(Color.DARK_GRAY);
-        // pauseButton.updateButtonAppearance();
-        // upgradeFireRateButton.updateButtonAppearance();
-        // upgradeRangeButton.updateButtonAppearance();
-        // upgradeDamageButton.updateButtonAppearance();
 
         batch.begin();
         batch.draw(mapTexture, 0, 200, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - 300);

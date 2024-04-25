@@ -16,6 +16,8 @@ import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
+import inf112.skeleton.app.view.States.PlayState;
+import inf112.skeleton.app.view.States.State;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
 import java.util.List;
 
@@ -39,13 +41,18 @@ public class SkadedyrModel implements ISkadedyrModel {
     private boolean writeText = false;
     private boolean speedUp = false;
     private Cat selectedCat;
+    private State currentState;
     
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
         this.catMenu = new CatMenu();
         this.aliveRats = new ArrayList<>();
+        this.currentState = null;
     }
 
+    public void setState(State newState){
+        this.currentState = newState;
+    }
     public void clockTick() {
         float deltaTime = Gdx.graphics.getDeltaTime();
         updateCatAnimations(deltaTime);
@@ -77,6 +84,10 @@ public class SkadedyrModel implements ISkadedyrModel {
             if (rat.isKilled()) {
                 rat.updateCoinVisibility(deltaTime); 
                 if (!rat.isrewardClaimed()) {
+                    // Buttons update each time a rat is killed
+                    if (currentState instanceof PlayState){
+                        ((PlayState) currentState).updateButtons();
+                    }
                     money += rat.getBounty();
                     points += rat.getPoints();
                     rat.rewardClaimed();
@@ -160,6 +171,9 @@ public class SkadedyrModel implements ISkadedyrModel {
         if (Gdx.input.isTouched()) {
             catMenu.selector(mouse);
             selectCat(mouse);
+            if (currentState instanceof PlayState){
+                ((PlayState) currentState).updateButtons();
+            }
         }
     }
 

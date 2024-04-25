@@ -17,11 +17,12 @@ public class MenuState extends State {
     private Stage stage;
     private Texture background;
     private final static int BUTTON_HEIGHT=50; 
+    private final GameStateManager gsm;
 
     public MenuState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
         this.model = model;
-
+        this.gsm = gsm;
         this.stage = new Stage();
         this.background = new Texture("Spill_Forside.jpg");
 
@@ -41,7 +42,7 @@ public class MenuState extends State {
         playImageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                GameStateManager.set(new PlayState(gsm, model));
+                gsm.set(new PlayState(gsm, model));
             }
         });
 
@@ -59,7 +60,7 @@ public class MenuState extends State {
         playImageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                GameStateManager.set(new PlayState(gsm, model));
+                gsm.set(new PlayState(gsm, model));
             }
         });
 
