@@ -14,9 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.ScreenUtils;
 import inf112.skeleton.app.controller.buttons.menu.MenuButtons;
-import inf112.skeleton.app.controller.buttons.upgrade.UpgradeDamageButton;
-import inf112.skeleton.app.controller.buttons.upgrade.UpgradeFireRateButton;
-import inf112.skeleton.app.controller.buttons.upgrade.UpgradeRangeButton;
+import inf112.skeleton.app.controller.buttons.upgrade.UpgradeButtons;
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.Projectile;
@@ -30,12 +28,13 @@ public class PlayState extends State {
     private BitmapFont font;
     private Stage stage;
     private CatMenu catMenu;
-    private UpgradeFireRateButton upgradeFireRateButton;
-    private UpgradeRangeButton upgradeRangeButton;
-    private UpgradeDamageButton upgradeDamageButton;
+    private Button upgradeFireRateButton;
+    private Button upgradeRangeButton;
+    private Button upgradeDamageButton;
     private Button pauseButton;
     private Texture mapTexture;
     private MenuButtons menu;
+    private UpgradeButtons upgrade;
     
 
     public PlayState(GameStateManager gsm, SkadedyrModel model) {
@@ -59,9 +58,16 @@ public class PlayState extends State {
         // stage.addActor(menu.helpButton());
         stage.addActor(menu.restarButton());
 
-        upgradeFireRateButton = new UpgradeFireRateButton(model, stage);
-        upgradeRangeButton = new UpgradeRangeButton(model, stage);
-        upgradeDamageButton = new UpgradeDamageButton(model, stage);
+        upgrade = new UpgradeButtons(model, stage);
+    
+        upgradeFireRateButton = upgrade.upgradeFireRateButton();
+        upgradeRangeButton = upgrade.upgradeRangeButton();
+        upgradeDamageButton = upgrade.upgradeFireRateButton();
+
+        stage.addActor(upgradeFireRateButton);
+        stage.addActor(upgradeRangeButton);
+        stage.addActor(upgradeDamageButton);
+        
         GlobalAssetManager.loadAssets();
         Gdx.input.setInputProcessor(stage);
     }
@@ -69,10 +75,9 @@ public class PlayState extends State {
 
     public void updateButtons(){
         menu.updateButtonAppearance();
-        upgradeFireRateButton.updateButtonAppearance();
-        upgradeRangeButton.updateButtonAppearance();
-        upgradeDamageButton.updateButtonAppearance();
+        upgrade.updateButtonAppearance();
 
+       
     }
     @Override
     public void render(SpriteBatch batch) {

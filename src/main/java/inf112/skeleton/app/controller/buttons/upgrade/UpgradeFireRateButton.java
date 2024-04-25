@@ -1,64 +1,64 @@
-package inf112.skeleton.app.controller.buttons.upgrade;
+// package inf112.skeleton.app.controller.buttons.upgrade;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+// import com.badlogic.gdx.graphics.Texture;
+// import com.badlogic.gdx.graphics.g2d.TextureRegion;
+// import com.badlogic.gdx.scenes.scene2d.Stage;
+// import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+// import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import inf112.skeleton.app.controller.buttons.ButtonFactory;
-import inf112.skeleton.app.controller.buttons.Buttons;
-import inf112.skeleton.app.model.SkadedyrModel;
-import inf112.skeleton.app.model.entities.cat.Cat;
+// import inf112.skeleton.app.controller.buttons.ButtonFactory;
+// import inf112.skeleton.app.controller.buttons.Buttons;
+// import inf112.skeleton.app.model.SkadedyrModel;
+// import inf112.skeleton.app.model.entities.cat.Cat;
 
-public class UpgradeFireRateButton extends Buttons {
-    private static final String normalTexture= "buttons_game/firerate.png";
-    private static final String noMoneyTexture = "buttons_game/noMoney.png";
-    private static final String usedUpTexture= "buttons_game/angryCat.png";
-    private static final String clickTexture= "coin.png";
+// public class UpgradeFireRateButton extends Buttons {
+//     private static final String normalTexture= "buttons_game/firerate.png";
+//     private static final String noMoneyTexture = "buttons_game/noMoney.png";
+//     private static final String usedUpTexture= "buttons_game/angryCat.png";
+//     private static final String clickTexture= "coin.png";
 
-    private int cost = 600;
-    private int clicked = 0;
+//     private int cost = 600;
+//     private int clicked = 0;
 
-    public UpgradeFireRateButton(SkadedyrModel model, Stage stage) {
-        super(model, stage);
-    }
+//     public UpgradeFireRateButton(SkadedyrModel model, Stage stage) {
+//         super(model, stage);
+//     }
 
-    @Override
-    protected void setupButton() {
-        button = ButtonFactory.createImageButton(normalTexture, clickTexture);
-        button.setSize(100, 100);
-        button.setPosition(975, 50);
+//     @Override
+//     protected void setupButton() {
+//         button = ButtonFactory.createImageButton(normalTexture, clickTexture);
+//         button.setSize(100, 100);
+//         button.setPosition(975, 50);
         
-        button.addListener(new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                if (model.getMoney() >= cost && clicked < 3) {
-                    model.setMoney(model.getMoney() - cost); 
-                    Cat cat = model.getSelectedCat();
-                    if (cat != null)
-                        cat.upgradeFireRate(); 
-                    clicked++;
-                }
-                updateButtonAppearance();
-            }
-        });
-    }
+//         button.addListener(new ClickListener() {
+//             @Override
+//             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+//                 if (model.getMoney() >= cost && clicked < 3) {
+//                     model.setMoney(model.getMoney() - cost); 
+//                     Cat cat = model.getSelectedCat();
+//                     if (cat != null)
+//                         cat.upgradeFireRate(); 
+//                     clicked++;
+//                 }
+//                 updateButtonAppearance();
+//             }
+//         });
+//     }
 
 
 
-    @Override
-    public void updateButtonAppearance() {
-        TextureRegionDrawable appearance;
-        if (clicked >= 3) {
-            appearance = new TextureRegionDrawable(new TextureRegion(new Texture(usedUpTexture)));
-        } else if (model.getMoney() < cost) {
-            appearance = new TextureRegionDrawable(new TextureRegion(new Texture(noMoneyTexture)));
-        } else {
-            appearance = new TextureRegionDrawable(new TextureRegion(new Texture(normalTexture)));
-        }
+//     @Override
+//     public void updateButtonAppearance() {
+//         TextureRegionDrawable appearance;
+//         if (clicked >= 3) {
+//             appearance = new TextureRegionDrawable(new TextureRegion(new Texture(usedUpTexture)));
+//         } else if (model.getMoney() < cost) {
+//             appearance = new TextureRegionDrawable(new TextureRegion(new Texture(noMoneyTexture)));
+//         } else {
+//             appearance = new TextureRegionDrawable(new TextureRegion(new Texture(normalTexture)));
+//         }
         
-        button.getStyle().up = appearance;
-        button.getStyle().down = new TextureRegionDrawable(new TextureRegion(new Texture(clickTexture))); 
-    }
-}
+//         button.getStyle().up = appearance;
+//         button.getStyle().down = new TextureRegionDrawable(new TextureRegion(new Texture(clickTexture))); 
+//     }
+// }
