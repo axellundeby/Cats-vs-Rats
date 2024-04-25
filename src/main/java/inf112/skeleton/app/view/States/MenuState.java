@@ -59,7 +59,7 @@ public class MenuState extends State {
         playImageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                GameStateManager.set(new PlayState(gsm, model));
+                GameStateManager.set(new OptionsState(gsm, model));
             }
         });
 
