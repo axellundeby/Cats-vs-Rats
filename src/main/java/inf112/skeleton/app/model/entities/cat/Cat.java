@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
-import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.rat.Rat;
 
 public abstract class Cat {
@@ -25,7 +24,7 @@ public abstract class Cat {
     protected float fireRate;
     private float attackTimer;
     private float attackImageTimer = 0;
-    private final float attackImageDuration = 0.5f;
+    private final float ATTACKIMAGEDURATION = 0.5f;
     private Sprite sprite;
     private float currentRotationAngle;
     private int cost;
@@ -57,14 +56,25 @@ public abstract class Cat {
         textures.put(PictureSwapper.ATTACK, new ArrayList<>(attackImages));
     }
 
+    public PictureSwapper getCurrentState() {
+        return this.currentState;
+    }
+
     public int getUpgradeCounter(){
         return upgradeCounter;
     }
 
+    public int setUpgradeCounter(int upgradeCounter){
+        return this.upgradeCounter = upgradeCounter;
+    }
 
+    public int getSize(){
+        return size;
+    }
+
+    
     public void upgradeTexture(){
         upgradeCounter++;
-        System.out.println("Upgrade counter: " + upgradeCounter);
         if (upgradeCounter == 2) {
             updateTexture(PictureSwapper.DEFAULT, 1);
             updateTexture(PictureSwapper.ATTACK, 1);
@@ -96,7 +106,7 @@ public abstract class Cat {
      */
     public void triggerAttackImage() {
         swapImage(PictureSwapper.ATTACK);
-        attackImageTimer = attackImageDuration;
+        attackImageTimer = ATTACKIMAGEDURATION;
     }
 
     /**
@@ -114,6 +124,14 @@ public abstract class Cat {
         updateAttackTimer(deltaTime);
     }
 
+    public float getAttackImageTimer(){
+        return attackImageTimer;
+    }
+
+    public float getAttackTimer(){
+        return attackTimer;
+    }
+
 
     /**
      * Attacks the specified rats.
@@ -121,7 +139,7 @@ public abstract class Cat {
      * @param rats The rats to attack.
      * @return A list of projectiles fired by the cat.
      */
-    public abstract ArrayList<Projectile> attack(LinkedList<Rat> rats);
+    public abstract void attack(LinkedList<Rat> rats);
 
      /**
      * Upgrades the cat's damage.
@@ -144,7 +162,7 @@ public abstract class Cat {
      * @param x The new x-coordinate of the cat.
      * @param y The new y-coordinate of the cat.
      */
-    public void setPos(int x, int y) {
+    public void setPos(float x, float y) {
         pos.x = x;
         pos.y = y;
         this.sprite.setPosition(pos.x - halfSize, pos.y - halfSize);
@@ -158,32 +176,15 @@ public abstract class Cat {
     public Circle getSelectionCircle(){
         return selectionCircle;
     }
-    /**
-     * Shoots at the specified targets.
-     *
-     * @param targets The targets to shoot at.
-     * @return A projectile fired by the cat.
-     */
-    public abstract Projectile shootAt(LinkedList<Rat> targets);
 
-    /**
-     * Returns the position of the cat's last target.
-     *
-     * @return The position of the cat's last target.
-     */
     public Vector2 getLastTargetPosition() {
         return lastTargetPosition;
     }
 
-    /**
-     * Sets the position of the cat's last target.
-     *
-     * @param lastTargetPosition The new position of the cat's last target.
-     */
     public void setLastTargetPosition(Vector2 lastTargetPosition) {
         this.lastTargetPosition = lastTargetPosition;
     }
-
+ 
      /**
      * Rotates the cat's image to face its last target.
      * The image is rotated such that it is always facing the direction of the last target.
@@ -341,6 +342,14 @@ public abstract class Cat {
      */
     public int getStrength() {
         return strength;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public float getFireRate() {
+        return fireRate;
     }
 
     /**

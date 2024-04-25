@@ -23,26 +23,17 @@ public class BasicCat extends Cat {
     }
 
     @Override
-    public ArrayList<Projectile> attack(LinkedList<Rat> rats) {
-        ArrayList<Projectile> projectileList = new ArrayList<>();
+    public void attack(LinkedList<Rat> rats) {
         if (canAttack()) {
             triggerAttackImage();
-            //projectileList.add(shootAt(rats));
             rats.getFirst().takeDamage(getStrength());
             resetAttackTimer();
         }
-        return projectileList;
-    }
-
-    @Override
-    public Projectile shootAt(LinkedList<Rat> targets) {
-        Vector2 direction = new Vector2(targets.getFirst().getPosition().x - getPosition().x, targets.getFirst().getPosition().y - getPosition().y);
-        return new Projectile(new Vector2(this.getPosition()), direction, 300,  new Texture("claw.png"));
     }
 
     @Override
     public void upgradeDamage() {
-       this.strength *= 1.25;
+       this.strength *= 1.20;
     }
 
     @Override

@@ -24,25 +24,12 @@ public class ShotgunCat extends Cat {
     }
 
     @Override
-    public ArrayList<Projectile> attack(LinkedList<Rat> rats) {
-        ArrayList<Projectile> projectileList = new ArrayList<>();
+    public void attack(LinkedList<Rat> rats) {
         if (canAttack()) {
             triggerAttackImage();
-            //projectileList.add(shootAt(rats));
             rats.getFirst().takeDamage(getStrength());
             resetAttackTimer();
         }
-        return projectileList;
-    }
-
-    @Override
-    public Projectile shootAt(LinkedList<Rat> targets) {
-
-       for (Rat target : targets) {
-            Vector2 direction = new Vector2(target.getPosition().x - getPosition().x, target.getPosition().y - getPosition().y);
-            return new Projectile(new Vector2(this.getPosition()), direction, 100,  new Texture("b.png"));
-        }
-        return null;  
     }
 
     @Override

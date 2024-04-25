@@ -56,13 +56,6 @@ public class RatTest {
         this.halfSize = 25;
     }
     
-
-
-    @Test
-    void testInitialHealth() {
-        assertEquals(100, rat.getHealth());
-    }
-
    
     private Vector2 calculateExpectedPosition(float deltaTime, int startControlPoint, Vector2 startPosition, float speed) {
         Vector2 expectedPosition = new Vector2(startPosition); 
@@ -401,6 +394,11 @@ public class RatTest {
     @Test
     void getEffectiveSpeedTest() {
         assertEquals(10, rat.getEffectiveSpeed());
+    }
+
+    @Test
+    void testInitialHealth() {
+        assertEquals(100, rat.getHealth());
     }
 
 

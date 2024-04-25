@@ -1,5 +1,4 @@
 package inf112.skeleton.app.model;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -7,7 +6,6 @@ import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.model.catmenu.CatMenu;
-import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.cat.ShotgunCat;
@@ -20,7 +18,6 @@ import java.util.List;
 public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Cat> cats = new ArrayList<>();
     private ArrayList<Rat> aliveRats = new ArrayList<>();
-    private ArrayList<Projectile> projectiles = new ArrayList<>();
     private RatFactory ratFactory = new RatFactory();
     private int lives = 5;
     private int money = 200;
@@ -343,14 +340,14 @@ public class SkadedyrModel implements ISkadedyrModel {
             cat.updateAttackTimer(Gdx.graphics.getDeltaTime());
             LinkedList<Rat> attackableRats = attackMap.get(cat);
             if (cat.canAttack() && !attackableRats.isEmpty()) {
-                projectiles.addAll(cat.attack(attackableRats));
+                cat.attack(attackableRats);
                 cat.resetAttackTimer();
             }
         }
     }
 
 
-    private void newCat(int mouseX, int mouseY) {
+    private void newCat(float mouseX, float mouseY) {
         Cat cat = catMenu.getSelectedCat();
         int cost = 0;
         if (cat instanceof BasicCat) {
