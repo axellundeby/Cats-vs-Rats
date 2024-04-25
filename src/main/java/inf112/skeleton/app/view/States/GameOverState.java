@@ -4,8 +4,6 @@ package inf112.skeleton.app.view.States;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -19,8 +17,7 @@ public class GameOverState extends State {
     private SkadedyrModel model;
     private Stage stage;
     private Texture gameOverImage;
-    private float alpha = 0f; 
-   
+    private float alpha = 0f;
 
     public GameOverState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
@@ -28,8 +25,6 @@ public class GameOverState extends State {
 
         this.stage = new Stage();
         this.gameOverImage = new Texture("Spill_GameOver.jpg");
-     
-       
 
         Gdx.input.setInputProcessor(stage);
         setupPlayButtons();
@@ -46,7 +41,7 @@ public class GameOverState extends State {
         playImageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-               // model.setLevel(0);
+                // model.setLevel(0);
                 model.restart();
                 GameStateManager.set(new MenuState(gsm, model));
             }
@@ -58,7 +53,6 @@ public class GameOverState extends State {
     @Override
     public void render(SpriteBatch sb) {
 
-        
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         sb.begin();
@@ -67,9 +61,9 @@ public class GameOverState extends State {
             alpha += 0.009f;
             alpha = Math.min(alpha, 1f);
         }
-
         sb.setColor(1, 1, 1, alpha);
         sb.draw(gameOverImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        sb.setColor(1f, 1f, 1f, 1f);
         sb.end();
 
         stage.draw();

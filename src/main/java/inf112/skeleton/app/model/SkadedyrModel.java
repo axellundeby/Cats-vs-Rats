@@ -274,7 +274,7 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     @Override
     public boolean isGameWon() {
-        return level == 8;
+        return level == 10;
     }
 
     @Override
