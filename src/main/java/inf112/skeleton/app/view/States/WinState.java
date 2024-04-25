@@ -20,15 +20,15 @@ public class WinState extends State {
     private Stage stage;
     private Texture winImage;
     private float alpha = 0f; 
-    private BitmapFont titleFont;
+
 
     public WinState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
         this.model = model;
 
         this.stage = new Stage();
-        this.winImage = new Texture("Spill_Forside.png");
-        this.titleFont = new BitmapFont();
+        this.winImage = new Texture("Spill_Won.jpg");
+     
        
 
         Gdx.input.setInputProcessor(stage);
@@ -41,7 +41,7 @@ public class WinState extends State {
 
         playImageButton.setSize(200, 200);
         playImageButton.setPosition((stage.getWidth() - playImageButton.getWidth()) / 2,
-                (stage.getHeight() - playImageButton.getHeight()) / 2 - 100);
+                (stage.getHeight() - playImageButton.getHeight()) / 2 );
 
         playImageButton.addListener(new ChangeListener() {
             @Override
@@ -55,27 +55,22 @@ public class WinState extends State {
         stage.addActor(playImageButton);
     }
 
+    
     @Override
     public void render(SpriteBatch sb) {
 
-        ///Gdx.gl.glClearColor(1.0f, 0.7529f, 0.7961f, 1.0f);
+        
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         sb.begin();
 
         if (alpha < 1f) {
-            alpha += 0.01f;
+            alpha += 0.009f;
             alpha = Math.min(alpha, 1f);
         }
 
-        sb.setColor(1, 1, 1, alpha);
+        
         sb.draw(winImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        sb.setColor(1, 1, 1, 1);
-        GlyphLayout layout = new GlyphLayout(titleFont, "You Win!");
-        float x = (Gdx.graphics.getWidth() - layout.width) / 2;
-        float y = (Gdx.graphics.getHeight() + layout.height) / 2;
-        titleFont.draw(sb, layout, x, y);
-
         sb.end();
 
         stage.draw();
