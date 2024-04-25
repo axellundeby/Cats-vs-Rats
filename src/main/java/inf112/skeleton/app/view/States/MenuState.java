@@ -32,8 +32,8 @@ public class MenuState extends State {
     }
 
     private void setupPlayButtons() {
-        ImageButton playImageButton = ButtonFactory.createImageButton("buttons_game/Spill_Play.png",
-                "buttons_game/Spill_Play-Down.png");
+        ImageButton playImageButton = ButtonFactory.createImageButton("buttons_game/Spill_Play_Up.png",
+                "buttons_game/Spill_Play_Down.png");
 
         playImageButton.setSize(200, 100);
         playImageButton.setPosition((stage.getWidth() - playImageButton.getWidth()) / 2 - 200 , BUTTON_HEIGHT);
@@ -51,7 +51,7 @@ public class MenuState extends State {
 
     private void setupHelpButtons() {
         ImageButton playImageButton = ButtonFactory.createImageButton("buttons_game/Spill_Help.png",
-                "buttons_game/Spill_Play-Down.png");
+                "buttons_game/Spill_Help.png");
 
         playImageButton.setSize(200, 150);
         playImageButton.setPosition((stage.getWidth() - playImageButton.getWidth()) / 2 + 200 , BUTTON_HEIGHT-20);

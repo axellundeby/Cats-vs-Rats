@@ -43,7 +43,7 @@ public class GameOverState extends State {
             public void changed(ChangeEvent event, Actor actor) {
                 // model.setLevel(0);
                 model.restart();
-                GameStateManager.set(new MenuState(gsm, model));
+                gsm.set(new MenuState(gsm, model));
             }
         });
 

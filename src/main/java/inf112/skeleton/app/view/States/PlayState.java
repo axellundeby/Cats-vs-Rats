@@ -11,11 +11,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.ScreenUtils;
-import inf112.skeleton.app.controller.buttons.menu.ExitButton;
-import inf112.skeleton.app.controller.buttons.menu.PauseButton;
-import inf112.skeleton.app.controller.buttons.menu.RestartButton;
-import inf112.skeleton.app.controller.buttons.menu.SpeedButton;
+import inf112.skeleton.app.controller.buttons.menu.MenuButtons;
 import inf112.skeleton.app.controller.buttons.upgrade.UpgradeDamageButton;
 import inf112.skeleton.app.controller.buttons.upgrade.UpgradeFireRateButton;
 import inf112.skeleton.app.controller.buttons.upgrade.UpgradeRangeButton;
@@ -35,8 +33,10 @@ public class PlayState extends State {
     private UpgradeFireRateButton upgradeFireRateButton;
     private UpgradeRangeButton upgradeRangeButton;
     private UpgradeDamageButton upgradeDamageButton;
-    private PauseButton pauseButton;
+    private Button pauseButton;
     private Texture mapTexture;
+    private MenuButtons menu;
+    
 
     public PlayState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
@@ -49,10 +49,15 @@ public class PlayState extends State {
         this.stage = new Stage();
         this.mapTexture = new Texture("map/Spill_Plattform.jpg");
 
-        new SpeedButton(model, stage);
-        new RestartButton(model, stage);
-        new ExitButton(model, stage);
-        pauseButton = new PauseButton(model, stage);
+        
+        menu = new MenuButtons(model, stage);
+        stage.addActor(menu.exitButton());
+
+        pauseButton = menu.pauseButton();
+        stage.addActor(pauseButton);
+        stage.addActor(menu.speedButton());
+        // stage.addActor(menu.helpButton());
+        stage.addActor(menu.restarButton());
 
         upgradeFireRateButton = new UpgradeFireRateButton(model, stage);
         upgradeRangeButton = new UpgradeRangeButton(model, stage);
@@ -63,7 +68,7 @@ public class PlayState extends State {
 
 
     public void updateButtons(){
-        pauseButton.updateButtonAppearance();
+        menu.updateButtonAppearance();
         upgradeFireRateButton.updateButtonAppearance();
         upgradeRangeButton.updateButtonAppearance();
         upgradeDamageButton.updateButtonAppearance();
@@ -109,10 +114,10 @@ public class PlayState extends State {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
         if (model.isGameWon()) {
-            GameStateManager.set(new WinState(gsm, model));
+            gsm.set(new WinState(gsm, model));
         }
         if (model.isGameOver()) {
-            GameStateManager.set(new GameOverState(gsm, model));
+            gsm.set(new GameOverState(gsm, model));
         }
 
     }
