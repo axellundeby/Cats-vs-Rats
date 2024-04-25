@@ -6,9 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-
-import inf112.skeleton.app.model.entities.Projectile;
-import java.util.ArrayList;
 import java.util.EnumMap;
 
 public class Rat implements IRat {
@@ -31,7 +28,7 @@ public class Rat implements IRat {
     private float progress;
     private Vector2[] controlPoints;
     private Direction direction = Direction.RIGHT;
-    private int currentControlPoint = 0; // add this line
+    private int currentControlPoint = 0; 
     private float freezeTimer = 0;
     private static final float RAT_FREEZE_DELAY = 20;
     private float originalSpeed;
@@ -79,6 +76,10 @@ public class Rat implements IRat {
         }
     }
 
+    public void setEffectiveSpeed(float newSpeed) {
+        this.effectiveSpeed = newSpeed;
+    }
+
     public void createPath() {
         controlPoints = new Vector2[] {
             new Vector2(-10,290),
@@ -104,6 +105,14 @@ public class Rat implements IRat {
             
         };
         this.path = new CatmullRomSpline<>(controlPoints, false);
+    }
+
+    public Vector2[] getControlPoints() {
+        return controlPoints;
+    }
+
+    public CatmullRomSpline<Vector2> getPath() {
+        return path;
     }
 
 
@@ -191,12 +200,6 @@ public class Rat implements IRat {
         OUT;
     }
 
-    @Override
-    public void addTime() {
-        this.secs += 0.05;
-
-    }
-
     private float getRotationAngle() {
         Direction dir = getDirection();
         switch (dir) {
@@ -266,7 +269,6 @@ public class Rat implements IRat {
     public void rectangleUpdater(){
         spriteRect.x = pos.x - halfsize;
         spriteRect.y = pos.y - halfsize;
-        
     }
 
     @Override
@@ -307,5 +309,9 @@ public class Rat implements IRat {
     }
     public void setFrozen() {
         isFrozen = true;
+    }
+
+    public float getEffectiveSpeed() {
+       return effectiveSpeed;
     }
 }

@@ -12,34 +12,41 @@ import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.entities.cat.Cat;
 
 public class UpgradeRangeButton extends Buttons {
-    private static final String normalTexture= "buttons_game/range.png";
-    private static final String noMoneyTexture = "buttons_game/noMoney.png";
-    private static final String usedUpTexture= "ikkeTilgjengelig.png";
-    private static final String clickTexture= "coin.png";
+    private Texture normalTexture;
+    private Texture noMoneyTexture;
+    private Texture usedUpTexture;
+    private Texture clickTexture;
 
-    private int cost = 0;
     private static final int MAX_UPGRADE = 4;
     private static final int MAX_UPGRADE_PER = 3;
-    private int upgradeCounter = 0;
+    private int cost = 0;
 
     public UpgradeRangeButton(SkadedyrModel model, Stage stage) {
         super(model, stage);
+        normalTexture = new Texture("buttons_game/range.png");
+        noMoneyTexture = new Texture("buttons_game/noMoney.png");
+        usedUpTexture = new Texture("ikkeTilgjengelig.png");
+        clickTexture = new Texture("coin.png");
+        setupButton();
     }
 
-    @Override
     protected void setupButton() {
-        button = ButtonFactory.createImageButton(normalTexture, clickTexture);
+        button = ButtonFactory.createImageButton(
+            new TextureRegionDrawable(new TextureRegion(normalTexture)),
+            new TextureRegionDrawable(new TextureRegion(clickTexture))
+        );
         button.setSize(100, 100);
-        button.setPosition(1100, 50);
-        
+        button.setPosition(800, 50);
+
         button.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 Cat selectedCat = model.getSelectedCat();
                 if (selectedCat != null && selectedCat.getUpgradeCounter() <= MAX_UPGRADE) {
                     if (model.getMoney() >= cost) {
-                        selectedCat.upgradeTexture();
                         selectedCat.upgradeRange();
+                        selectedCat.circleUpdater();
+                        selectedCat.upgradeTexture();
                     } else {
                         model.pressedUppgradeButton(); 
                     }
@@ -49,22 +56,20 @@ public class UpgradeRangeButton extends Buttons {
         });
     }
 
-
-
     @Override
     public void updateButtonAppearance() {
-    //     Cat selectedCat = model.getSelectedCat();
-    //     TextureRegionDrawable appearance;
+        Cat selectedCat = model.getSelectedCat();
+        TextureRegionDrawable appearance;
 
-    //     if (selectedCat != null && selectedCat.getUpgradeCounter() >= MAX_UPGRADE_PER) {
-    //         appearance = new TextureRegionDrawable(new TextureRegion(new Texture(usedUpTexture)));
-    //     } else if (model.getMoney() < cost) {
-    //         appearance = new TextureRegionDrawable(new TextureRegion(new Texture(noMoneyTexture)));
-    //     } else {
-    //         appearance = new TextureRegionDrawable(new TextureRegion(new Texture(normalTexture)));
-    //     }
+        if (selectedCat != null && selectedCat.getUpgradeCounter() >= MAX_UPGRADE_PER) {
+            appearance = new TextureRegionDrawable(new TextureRegion(usedUpTexture));
+        } else if (model.getMoney() < cost) {
+            appearance = new TextureRegionDrawable(new TextureRegion(noMoneyTexture));
+        } else {
+            appearance = new TextureRegionDrawable(new TextureRegion(normalTexture));
+        }
 
-    //     button.getStyle().up = appearance;
-    //     button.getStyle().down = new TextureRegionDrawable(new TextureRegion(new Texture(clickTexture)));
+        button.getStyle().up = appearance;
+        button.getStyle().down = new TextureRegionDrawable(new TextureRegion(clickTexture));
     }
 }

@@ -109,11 +109,6 @@ public interface IRat {
     // enum Direction;
 
     /**
-     * Adds time to the rat's internal timer.
-     */
-    void addTime();
-
-    /**
      * Rotates the rat's image to face its direction.
      */
     void rotateImage();
