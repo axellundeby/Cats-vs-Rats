@@ -31,8 +31,6 @@ public class UpgradeButtons {
 
 
 
-
-
     public UpgradeButtons(SkadedyrModel model, Stage stage) {
         this.model = model;
         this.stage = stage;
@@ -103,11 +101,8 @@ public class UpgradeButtons {
     }
 
     public void updateButtonAppearance() {
-       
         updateDamageButtonAppearance();
-   
         updateFireRateButtonAppearance();
-  
         updateRangeButtonAppearance();
     }
     

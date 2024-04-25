@@ -53,22 +53,20 @@ public class MenuButtons implements IMenuButtons {
         return pauseButton;
     }
 
-    // public Button helpButton() {
-    // Button button =
-    // ButtonFactory.createImageButton("buttons_game/Spill_Help.png",
-    // "buttons_game/Spill_Play-Down.png");
-    // button.setSize(200, 150);
-    // button.setPosition((stage.getWidth() - button.getWidth()) / 2 + 200, 50);
-    // button.addListener(new ClickListener() {
-    // @Override
-    // public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float
-    // x, float y) {
-    // model.help();
-    // updateButtonAppearance();
-    // }
-    // });
-    // return button;
-    // }
+    public Button helpButton() {
+        Button button = ButtonFactory.createImageButton("buttons_game/Spill_Help.png",
+                "buttons_game/Spill_Play-Down.png");
+        button.setSize(200, 150);
+        button.setPosition((stage.getWidth() - button.getWidth()) / 2 + 200, 50);
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                model.help();
+                updateButtonAppearance();
+            }
+        });
+        return button;
+    }
 
     @Override
     public Button restarButton() {
