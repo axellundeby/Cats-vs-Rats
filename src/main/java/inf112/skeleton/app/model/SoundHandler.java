@@ -25,6 +25,10 @@ public class SoundHandler implements Disposable {
         basicCatAttackSound.play();
     }
 
+    public void playShotgunCatAttack() {
+        basicCatAttackSound.play();
+    }
+
     public void playRatSpawn() {
         ratSpawnSound.play();
     }
