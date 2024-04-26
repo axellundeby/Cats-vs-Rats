@@ -46,7 +46,6 @@ public class CatMenu implements ICatMenu{
             catsMap.put(cat, new Rectangle(getX() + MARGIN_X + i * CATDIM, getY() + MARGIN_Y, CATDIM, CATDIM));
             i++;
         }
-        // selected = availableCatsList.get(0);
         selected = null;
     }
 
@@ -55,7 +54,7 @@ public class CatMenu implements ICatMenu{
     public void draw(SpriteBatch batch, int playerMoney) {
         for (Cat cat : availableCatsList) {
             Rectangle crt = catsMap.get(cat);
-            batch.draw(cat.getTexture(), crt.x, crt.y, crt.width, crt.height);
+            batch.draw(cat.getMenuTexture(), crt.x, crt.y, crt.width, crt.height);
             if (playerMoney < cat.getCost()) {
                 float halfWidth = crt.width / 2;
                 float halfHeight = crt.height / 2;
@@ -84,7 +83,6 @@ public class CatMenu implements ICatMenu{
             }
         }
         selected = null;
-        
     }
 
     @Override

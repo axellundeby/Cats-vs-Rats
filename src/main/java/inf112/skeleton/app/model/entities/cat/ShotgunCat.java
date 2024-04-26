@@ -1,41 +1,33 @@
 package inf112.skeleton.app.model.entities.cat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-
-import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.rat.Rat;
 
 public class ShotgunCat extends Cat {
 
     public ShotgunCat() {
-        super(200, 75, new Texture(Gdx.files.internal("cats/Spill_Skytekatt1.png")), new Texture(Gdx.files.internal("cats/Spill_Skytekatt2.png")), 75.0f,1500);
+        super(
+            10,
+            200,
+            Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Skytekatt1.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt2.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt3.png"))),
+            Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Skytekatt1_angrip.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt2_angrip.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt3_angrip.png"))),
+            5.0f,
+            200);
     }
 
     @Override
-    public ArrayList<Projectile> attack(LinkedList<Rat> rats) {
-        ArrayList<Projectile> projectileList = new ArrayList<>();
+    public void attack(LinkedList<Rat> rats) {
         if (canAttack()) {
             triggerAttackImage();
-            //projectileList.add(shootAt(rats));
             rats.getFirst().takeDamage(getStrength());
             resetAttackTimer();
         }
-        return projectileList;
-    }
-
-    @Override
-    public Projectile shootAt(LinkedList<Rat> targets) {
-
-       for (Rat target : targets) {
-            Vector2 direction = new Vector2(target.getPosition().x - getPosition().x, target.getPosition().y - getPosition().y);
-            return new Projectile(new Vector2(this.getPosition()), direction, 100,  new Texture("b.png"));
-        }
-        return null;  
     }
 
     @Override
