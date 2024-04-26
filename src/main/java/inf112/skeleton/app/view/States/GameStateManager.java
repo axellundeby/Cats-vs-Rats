@@ -3,7 +3,7 @@ package inf112.skeleton.app.view.States;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameStateManager {
-    private static State currentState;
+    private State currentState;
 
     /**
      * Called when the application window is resized.
@@ -11,11 +11,15 @@ public class GameStateManager {
      * @param width The new width.
      * @param height The new height.
      */
-    public static void set(State newState) {
+    public void set(State newState) {
         if (currentState != null) {
             currentState.dispose();
         }
         currentState = newState;
+    }
+
+    public State getState(){
+        return currentState;
     }
 
      /**

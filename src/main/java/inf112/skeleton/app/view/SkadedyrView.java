@@ -36,10 +36,11 @@ public class SkadedyrView {
         font = new BitmapFont();
         font.setColor(Color.RED);
         gsm = new GameStateManager();
-        GameStateManager.set(new MenuState(gsm, model));
+        gsm.set(new MenuState(gsm, model));
 
         Gdx.graphics.setForegroundFPS(60);
     }
+    
 
     /**
      * Disposes of all resources used by the SkadedyrView.
@@ -63,6 +64,7 @@ public class SkadedyrView {
      */
     public void render() {
         gsm.render(batch);
+        model.setState(gsm.getState());
     }
 
     /**

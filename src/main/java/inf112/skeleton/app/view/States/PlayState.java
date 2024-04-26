@@ -10,14 +10,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.ScreenUtils;
-import inf112.skeleton.app.controller.buttons.menu.ExitButton;
-import inf112.skeleton.app.controller.buttons.menu.PauseButton;
-import inf112.skeleton.app.controller.buttons.menu.RestartButton;
-import inf112.skeleton.app.controller.buttons.menu.SpeedUpButton;
-import inf112.skeleton.app.controller.buttons.upgrade.UpgradeDamageButton;
-import inf112.skeleton.app.controller.buttons.upgrade.UpgradeFireRateButton;
-import inf112.skeleton.app.controller.buttons.upgrade.UpgradeRangeButton;
+import inf112.skeleton.app.controller.buttons.menu.MenuButtons;
+import inf112.skeleton.app.controller.buttons.upgrade.UpgradeButtons;
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.cat.Cat;
@@ -30,48 +26,71 @@ public class PlayState extends State {
     private BitmapFont font;
     private Stage stage;
     private CatMenu catMenu;
-    private UpgradeFireRateButton upgradeFireRateButton;
-    private UpgradeRangeButton upgradeRangeButton;
-    private UpgradeDamageButton upgradeDamageButton;
-    private PauseButton pauseButton;
+    private Button upgradeFireRateButton;
+    private Button upgradeRangeButton;
+    private Button upgradeDamageButton;
+    private Button pauseButton;
     private Texture mapTexture;
+    private MenuButtons menu;
+    private UpgradeButtons upgrade;
+    private float alpha = 0f;
+    private Button helpButton;
 
-    protected PlayState(GameStateManager gsm, SkadedyrModel model) {
+    public PlayState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
         this.model = model;
         this.shapeRenderer = new ShapeRenderer();
         this.font = new BitmapFont();
         font.setColor(Color.BLACK);
         this.catMenu = model.getBuyMenu();
-        catMenu.init();
+        // catMenu.init();
         this.stage = new Stage();
         this.mapTexture = new Texture("map/Spill_Plattform.jpg");
 
-        new SpeedUpButton(model, stage);
-        new RestartButton(model, stage);
-        new ExitButton(model, stage);
-        pauseButton = new PauseButton(model, stage);
+        menu = new MenuButtons(model, stage);
+        stage.addActor(menu.exitButton());
 
-        upgradeFireRateButton = new UpgradeFireRateButton(model, stage);
-        upgradeRangeButton = new UpgradeRangeButton(model, stage);
-        upgradeDamageButton = new UpgradeDamageButton(model, stage);
+        pauseButton = menu.pauseButton();
+        stage.addActor(pauseButton);
+        stage.addActor(menu.speedButton());
+        stage.addActor(menu.helpButtonPlay());
+        stage.addActor(menu.restarButton());
+
+        upgrade = new UpgradeButtons(model, stage);
+
+        upgradeFireRateButton = upgrade.upgradeFireRateButton();
+        upgradeRangeButton = upgrade.upgradeRangeButton();
+        upgradeDamageButton = upgrade.upgradeDamageButton();
+
+        stage.addActor(upgradeFireRateButton);
+        stage.addActor(upgradeRangeButton);
+        stage.addActor(upgradeDamageButton);
+
         GlobalAssetManager.loadAssets();
         Gdx.input.setInputProcessor(stage);
+    }
+
+    public void updateButtons() {
+        menu.updateButtonAppearance();
+        upgrade.updateButtonAppearance();
+
     }
 
     @Override
     public void render(SpriteBatch batch) {
 
         ScreenUtils.clear(Color.DARK_GRAY);
-        pauseButton.updateButtonAppearance();
-        upgradeFireRateButton.updateButtonAppearance();
-        upgradeRangeButton.updateButtonAppearance();
-        upgradeDamageButton.updateButtonAppearance();
 
+        if (alpha < 1f) {
+            alpha += Gdx.graphics.getDeltaTime() / 2; // Increase alpha over time
+        }
         batch.begin();
+
+        batch.setColor(1, 1, 1, alpha);
         batch.draw(mapTexture, 0, 200, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - 300);
+
         batch.end();
-        
+
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -100,13 +119,23 @@ public class PlayState extends State {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
+        if (model.isGameWon()) {
+            gsm.set(new WinState(gsm, model));
+        }
+        if (model.isGameOver()) {
+            gsm.set(new GameOverState(gsm, model));
+        }
+        if (model.getHelp()) {
+            gsm.set(new HelpState(gsm, model));
+        }
+
     }
 
     private void drawGameStatus(SpriteBatch batch) {
-        font.draw(batch, "Dine liv: " + model.getLives(), 1000, 800);
-        font.draw(batch, "Dine penger: " + model.getMoney(), 825, 800);
-        font.draw(batch, "Din Score: " + model.getPoints(), 700, 800);
-        font.draw(batch, "Level: " + model.getLevel(), 600, 800);
+        font.draw(batch, "Dine liv: " + model.getLives(), 1100, 800);
+        font.draw(batch, "Dine penger: " + model.getMoney(), 925, 800);
+        font.draw(batch, "Din Score: " + model.getPoints(), 800, 800);
+        font.draw(batch, "Level: " + model.getLevel(), 700, 800);
         font.draw(batch, model.nextWaveText(), 500, 150);
         font.draw(batch, model.uppgradeErrorText(), 900, 190);
         font.setColor(Color.WHITE);

@@ -22,7 +22,8 @@ public class CatMenu implements ICatMenu{
     private ArrayList<Cat> availableCatsList;
     private Rectangle menuRect = new Rectangle(0, 0, SkadedyrView.screenRect.x - 800, SkadedyrView.screenRect.y);
     private static final int CATDIM = 150;
-    private static final int MARGIN = 30;
+    private static final int MARGIN_Y = 50;
+    private static final int MARGIN_X = 30;
     private Cat selected;
     private Texture coinSackTexture;
 
@@ -42,7 +43,7 @@ public class CatMenu implements ICatMenu{
 
         int i = 0;
         for (Cat cat : availableCatsList) {
-            catsMap.put(cat, new Rectangle(getX() + MARGIN + i * CATDIM, getY() + MARGIN, CATDIM, CATDIM));
+            catsMap.put(cat, new Rectangle(getX() + MARGIN_X + i * CATDIM, getY() + MARGIN_Y, CATDIM, CATDIM));
             i++;
         }
         selected = null;

@@ -12,6 +12,8 @@ import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
+import inf112.skeleton.app.view.States.PlayState;
+import inf112.skeleton.app.view.States.State;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
 import java.util.List;
 
@@ -38,6 +40,9 @@ public class SkadedyrModel implements ISkadedyrModel {
     private boolean writeText = false;
     private boolean speedUp = false;
     private Cat selectedCat;
+    private State currentState;
+    private boolean isHelp = false;
+    private boolean startGame = false;
     private boolean uppgradePressed = false;
     private List<Rat> newRats;
     
@@ -59,6 +64,21 @@ public class SkadedyrModel implements ISkadedyrModel {
         intervalSeconds = 0.05f;
 
     }
+
+    public void initCatMenu() {
+        catMenu.init();
+        
+    }
+    
+    public void setState(State newState){
+        this.currentState = newState;
+    }
+
+    public State getState(){
+        System.out.println(currentState);
+        return currentState;
+    }
+
 
     public void clockTick() {
         if (!isPaused) {
@@ -88,6 +108,10 @@ public class SkadedyrModel implements ISkadedyrModel {
             if (rat.isKilled()) {
                 rat.updateCoinVisibility(deltaTime); 
                 if (!rat.isrewardClaimed()) {
+                    // Buttons update each time a rat is killed
+                    if (currentState instanceof PlayState){
+                        ((PlayState) currentState).updateButtons();
+                    }
                     money += rat.getBounty();
                     points += rat.getPoints();
                     rat.rewardClaimed();
@@ -125,6 +149,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         level++;
         writeText = true;
         nextWaveText();
+
         setPause();
         for (Cat cat : cats) {
             cat.resetAttackTimer();
@@ -149,6 +174,8 @@ public class SkadedyrModel implements ISkadedyrModel {
     public String nextWaveText() {
         if (writeText) {
             return "Round over. Press unPause to continue.";
+        } else if (level == 0) {
+            return "Press unPause to start";
         }
         return "";
     }
@@ -181,6 +208,9 @@ public class SkadedyrModel implements ISkadedyrModel {
         if (Gdx.input.isTouched()) {
             catMenu.selector(mouse);
             selectCat(mouse);
+            if (currentState instanceof PlayState){
+                ((PlayState) currentState).updateButtons();
+            }
         }
     }
 
@@ -230,6 +260,8 @@ public class SkadedyrModel implements ISkadedyrModel {
         return speedUp;
     }
 
+
+
     @Override
     public void setSpeed() {
         speedUp = !speedUp;
@@ -274,13 +306,40 @@ public class SkadedyrModel implements ISkadedyrModel {
     @Override
     public void setMoney(int money) {
         this.money = money;
-       
-       
     }
    
     @Override
     public int getLevel() {
         return level;
+    }
+
+
+    @Override
+    public boolean isGameWon() {
+        return level == 10;
+    }
+
+    public void setHelp() {
+         isHelp = !isHelp;
+         startGame = false;
+    }
+
+    public boolean getHelp() {
+        return isHelp;
+    }
+
+    public void setStartGame() {
+        startGame = !startGame;
+        isHelp = false;
+    }
+
+    public boolean getStartGame() {
+        return startGame;
+    }
+
+    @Override
+    public boolean isGameOver() {
+        return lives <= 0;
     }
 
     @Override
@@ -374,6 +433,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     public CatMenu getBuyMenu() {
         return catMenu;
     }
+
 
     
 }

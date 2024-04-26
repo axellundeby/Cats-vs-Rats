@@ -107,6 +107,20 @@ public interface ISkadedyrModel {
     CatMenu getBuyMenu();
 
 
+    /**
+     * Checks if the game has been won.
+     * @return a boolean value - true if the game has been won, false otherwise.
+     */
+    boolean isGameWon();
+
+
+      /**
+     * Checks if the game is over.
+     * @return a boolean value - true if the game is over, false otherwise.
+     */
+    boolean isGameOver();
+
+
 
 
 
