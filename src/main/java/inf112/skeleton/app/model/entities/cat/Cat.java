@@ -13,6 +13,8 @@ import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.rat.Rat;
 
+import inf112.skeleton.app.model.SoundHandler;
+
 public abstract class Cat {
 
     protected int strength;
@@ -33,6 +35,8 @@ public abstract class Cat {
     private Vector2 lastTargetPosition = null;
     private Circle selectionCircle;
 
+    private SoundHandler soundHandler;
+
 
     public Cat(int strength, float range, Texture defaultImage, Texture attackImage, float fireRate, int cost) {
         this.strength = strength;
@@ -52,6 +56,8 @@ public abstract class Cat {
 
         textures.put(PictureSwapper.DEFAULT, defaultImage);
         textures.put(PictureSwapper.ATTACK, attackImage);
+
+        this.soundHandler = soundHandler;
     }
 
     /**
@@ -315,6 +321,8 @@ public abstract class Cat {
     public int getCost() {
         return cost;
     }
+
+    public abstract void playAttackSound();
 
     @Override
     public String toString() {

@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.rat.Rat;
 
+import inf112.skeleton.app.model.SoundHandler;
+
 public class BasicCat extends Cat {
     public BasicCat() {
         super(100, 100, new Texture(Gdx.files.internal("cats/Spill_Kosekatt1.png")), new Texture(Gdx.files.internal("buttons_game/angryCat.png")), 50.0f,200);
@@ -20,6 +22,7 @@ public class BasicCat extends Cat {
         ArrayList<Projectile> projectileList = new ArrayList<>();
         if (canAttack()) {
             triggerAttackImage();
+            playAttackSound();
             //projectileList.add(shootAt(rats));
             rats.getFirst().takeDamage(getStrength());
             resetAttackTimer();
@@ -48,5 +51,11 @@ public class BasicCat extends Cat {
     @Override
     public void upgradeFireRate() {
         this.fireRate *= 0.75;
+    }
+
+    @Override
+    public void playAttackSound() {
+        SoundHandler.playBasicCatAttack();
+    
     }
 }
