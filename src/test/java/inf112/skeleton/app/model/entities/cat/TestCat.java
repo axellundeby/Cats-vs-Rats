@@ -95,7 +95,6 @@ public class TestCat {
        assertEquals(100, cat.getSize());
     }
 
-    //tester ikke for at bilde endres, og den upgradeTexture()
     @Test
     void firstUpgradeTextureTest() {
         int catSizeBeforeUpgrade = cat.getSize();
@@ -124,6 +123,8 @@ public class TestCat {
         assertEquals(defaultTextureMock.get(2), sprite.getTexture());
     }
 
+
+    //THEODOR!!!!!!!!! 3 TESTER SOM IKKE GÅR
     @Test
     void setRotationTowardTest(){
         Cat cat = setupCatWithSpriteAtPosition(0, 0);
