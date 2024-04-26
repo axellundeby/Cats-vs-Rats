@@ -23,7 +23,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private RatFactory ratFactory = new RatFactory();
     private int lives = 5;
     private int money = 1000000;
-    private final int STARTING_MONEY = 500000;
+    private final int STARTING_MONEY = 200;
     private final int STARTING_LIVES = 5;
     private final int STARTING_POINTS = 0;
     private final int STARTING_LEVEL = 0;
@@ -75,7 +75,6 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     public State getState(){
-        System.out.println(currentState);
         return currentState;
     }
 
@@ -208,9 +207,9 @@ public class SkadedyrModel implements ISkadedyrModel {
         if (Gdx.input.isTouched()) {
             catMenu.selector(mouse);
             selectCat(mouse);
-            if (currentState instanceof PlayState){
-                ((PlayState) currentState).updateButtons();
-            }
+            // if (currentState instanceof PlayState){
+            //     ((PlayState) currentState).updateButtons();
+            // }
         }
     }
 
@@ -306,6 +305,10 @@ public class SkadedyrModel implements ISkadedyrModel {
     @Override
     public void setMoney(int money) {
         this.money = money;
+        if (currentState instanceof PlayState){
+            ((PlayState) currentState).updateButtons();
+        }
+
     }
    
     @Override
@@ -424,7 +427,7 @@ public class SkadedyrModel implements ISkadedyrModel {
             if (money >= cost) { 
                 cat.setPos(mouseX, mouseY);
                 addCat(cat);
-                money -= cost;
+                setMoney(money - cost);
             }
         }
     }
@@ -433,6 +436,8 @@ public class SkadedyrModel implements ISkadedyrModel {
     public CatMenu getBuyMenu() {
         return catMenu;
     }
+
+
 
 
     

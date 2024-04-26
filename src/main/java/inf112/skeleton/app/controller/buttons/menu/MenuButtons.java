@@ -45,9 +45,9 @@ public class MenuButtons implements IMenuButtons {
 
     @Override
     public Button pauseButton() {
-        pauseButton = ButtonFactory.createImageButton("buttons_game/Spill_Pause_Pause.png",
-                "buttons_game/Spill_Pause_Play.png");
+        pauseButton = ButtonFactory.createImageButton("buttons_game/Spill_Pause_Pause.png", "buttons_game/Spill_Pause_Play.png");
         pauseButton.setSize(100, 100);
+        //pauseButton.setPosition(540, MENU_BUTTONS_HEIGHT - 10);
         pauseButton.setPosition(440, MENU_BUTTONS_HEIGHT - 10);
         pauseButton.addListener(new ClickListener() {
             @Override
@@ -58,6 +58,7 @@ public class MenuButtons implements IMenuButtons {
         });
         return pauseButton;
     }
+
 
     @Override
     public Button playButton() {
@@ -146,7 +147,7 @@ public class MenuButtons implements IMenuButtons {
 
         if (model.isPaused()) {
             pauseButton.getStyle().up = new TextureRegionDrawable(
-                    new TextureRegion(new Texture("buttons_game/Spill_Pause_Play.png")));
+                    new TextureRegion(new Texture("buttons_game/Spill_Pause_Pause.png")));
         } else {
             pauseButton.getStyle().up = new TextureRegionDrawable(
                     new TextureRegion(new Texture("buttons_game/Spill_Pause_Play.png")));
