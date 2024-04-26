@@ -424,6 +424,13 @@ public class RatTest {
         assertEquals(aliveTextureMock, rat.getTexture());
     }
 
+    @Test
+    void testSetFreeze(){
+        assertFalse(rat.isFrozen());
+        rat.setFrozen();
+        assertTrue(rat.isFrozen());
+    }
+
     @Test 
     void testFreezingTime() {
         rat.freeze(7);
@@ -444,4 +451,11 @@ public class RatTest {
     void getOriginalSpeedTest(){
         assertEquals(10, rat.getOriginalSpeed());
     }
+
+    @Test 
+    void getCurrentControlPointTest(){
+        assertEquals(0, rat.getCurrentControlPoint());
+    }
+
+    
 }
