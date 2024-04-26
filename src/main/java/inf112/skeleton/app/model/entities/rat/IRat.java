@@ -157,6 +157,8 @@ public interface IRat {
      */
     void freeze(float deltaTime);
 
+    void playSpawnSound();
+
 
 
 }

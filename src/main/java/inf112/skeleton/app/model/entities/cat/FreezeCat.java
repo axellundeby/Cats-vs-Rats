@@ -3,6 +3,7 @@ package inf112.skeleton.app.model.entities.cat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
@@ -20,6 +21,7 @@ public class FreezeCat extends Cat {
         ArrayList<Projectile> projectileList = new ArrayList<>();
         if (canAttack()) {
             triggerAttackImage(); 
+            playAttackSound();
             for (Rat rat : rats) {
                 //projectileList.add(shootAt(rats));
                 rat.setFrozen(); 
@@ -54,5 +56,11 @@ public class FreezeCat extends Cat {
     @Override
     public void upgradeFireRate() {
         this.fireRate *= 0.75;
+    }
+
+    @Override
+    public void playAttackSound() {
+        Sound attackSound = Gdx.audio.newSound(Gdx.files.internal("sound/caralarm.mp3"));
+        attackSound.play();
     }
 }

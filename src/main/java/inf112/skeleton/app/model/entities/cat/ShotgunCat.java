@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
@@ -21,6 +22,7 @@ public class ShotgunCat extends Cat {
         ArrayList<Projectile> projectileList = new ArrayList<>();
         if (canAttack()) {
             triggerAttackImage();
+            playAttackSound();
             //projectileList.add(shootAt(rats));
             rats.getFirst().takeDamage(getStrength());
             resetAttackTimer();
@@ -53,6 +55,12 @@ public class ShotgunCat extends Cat {
     @Override
     public void upgradeFireRate() {
         this.fireRate *= 0.75;
+    }
+
+    @Override
+    public void playAttackSound() {
+        Sound attackSound = Gdx.audio.newSound(Gdx.files.internal("sound/caralarm.mp3"));
+        attackSound.play();
     }
 
 }

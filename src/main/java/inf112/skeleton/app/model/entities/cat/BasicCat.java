@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.rat.Rat;
-
-import inf112.skeleton.app.model.SoundHandler;
 
 public class BasicCat extends Cat {
     public BasicCat() {
@@ -55,7 +54,7 @@ public class BasicCat extends Cat {
 
     @Override
     public void playAttackSound() {
-        SoundHandler.playBasicCatAttack();
-    
+        Sound attackSound = Gdx.audio.newSound(Gdx.files.internal("sound/caralarm.mp3"));
+        attackSound.play();
     }
 }
