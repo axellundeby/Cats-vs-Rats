@@ -62,6 +62,9 @@ public class SkadedyrModel implements ISkadedyrModel {
         level = STARTING_LEVEL;
         isPaused = true;
         intervalSeconds = 0.05f;
+        if (currentState instanceof PlayState){
+            ((PlayState) currentState).updateButtons();
+        }
 
     }
 
@@ -319,7 +322,8 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     @Override
     public boolean isGameWon() {
-        return level == 10;
+        
+        return level == 1;
     }
 
     public void setHelp() {
@@ -379,6 +383,8 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     public void restart() {
         initializeGame();
+        
+
     }
 
    

@@ -39,8 +39,8 @@ public class UpgradeButtons {
     public Button upgradeDamageButton() {
         cost = 500;
         upgradeDamageButton = ButtonFactory.createImageButton("buttons_game/damage.png", "buttons_game/damage.png");
-        upgradeDamageButton.setSize(100, 100);
-        upgradeDamageButton.setPosition(800, KUKK);
+        upgradeDamageButton.setSize(160, 80);
+        upgradeDamageButton.setPosition(650, KUKK);
         upgradeDamageButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
@@ -61,8 +61,8 @@ public class UpgradeButtons {
     public Button upgradeFireRateButton() {
             cost = 600;
             upgradeFireRateButton = ButtonFactory.createImageButton("buttons_game/firerate.png", "buttons_game/firerate.png");
-            upgradeFireRateButton.setSize(100, 100);
-            upgradeFireRateButton.setPosition(925, KUKK);
+            upgradeFireRateButton.setSize(160, 80);
+            upgradeFireRateButton.setPosition(820, KUKK);
             upgradeFireRateButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
@@ -83,8 +83,8 @@ public class UpgradeButtons {
     public Button upgradeRangeButton() {
             cost = 700;
             upgradeRangeButton = ButtonFactory.createImageButton("buttons_game/range.png", "buttons_game/range.png");
-            upgradeRangeButton.setSize(100, 100);
-            upgradeRangeButton.setPosition(1050, KUKK);
+            upgradeRangeButton.setSize(160, 80);
+            upgradeRangeButton.setPosition(990, KUKK);
             upgradeRangeButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {

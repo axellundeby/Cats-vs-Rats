@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.controller.buttons.ButtonFactory;
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.view.States.PlayState;
+import inf112.skeleton.app.view.States.WinState;
+import inf112.skeleton.app.view.States.GameOverState;
 import inf112.skeleton.app.view.States.HelpState;
 import inf112.skeleton.app.view.States.MenuState;
 
@@ -30,7 +32,7 @@ public class MenuButtons implements IMenuButtons {
 
     @Override
     public Button exitButton() {
-        Button exitButton = ButtonFactory.createImageButton("buttons_game/Spill_Exit.png", "buttons_game/angryCat.png");
+        Button exitButton = ButtonFactory.createImageButton("buttons_game/Spill_Exit.png", "buttons_game/Spill_Exit_Down.png");
         exitButton.setSize(150, 75);
         exitButton.setPosition(5, MENU_BUTTONS_HEIGHT);
         exitButton.addListener(new ClickListener() {
@@ -70,7 +72,7 @@ public class MenuButtons implements IMenuButtons {
         if (model.getState() instanceof PlayState) {
             playButton.setPosition(800, 400);
 
-        } else if (model.getState() instanceof MenuState) {
+        } else if (model.getState() instanceof MenuState || model.getState() instanceof WinState || model.getState() instanceof GameOverState){
             playButton.setPosition(800, 400);
         }
 
@@ -114,7 +116,7 @@ public class MenuButtons implements IMenuButtons {
     @Override
     public Button restarButton() {
         Button restartButton = ButtonFactory.createImageButton("buttons_game/Spill_Restart.png",
-                "buttons_game/angryCat.png");
+                "buttons_game/Spill_Restart_Down.png");
         restartButton.setSize(150, 75);
         restartButton.setPosition(140, MENU_BUTTONS_HEIGHT);
         restartButton.addListener(new ClickListener() {

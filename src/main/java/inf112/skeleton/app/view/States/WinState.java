@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import inf112.skeleton.app.controller.buttons.ButtonFactory;
+import inf112.skeleton.app.controller.buttons.menu.MenuButtons;
 import inf112.skeleton.app.model.SkadedyrModel;
 
 public class WinState extends State {
@@ -20,6 +21,7 @@ public class WinState extends State {
     private Stage stage;
     private Texture winImage;
     private float alpha = 0f;
+    private MenuButtons menu;
 
     public WinState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
@@ -28,29 +30,16 @@ public class WinState extends State {
         this.stage = new Stage();
         this.winImage = new Texture("Spill_Won.jpg");
 
+        menu = new MenuButtons(model, stage);
+        stage.addActor(menu.helpButtonPlay());
+        stage.addActor(menu.playButton());
+
         Gdx.input.setInputProcessor(stage);
-        setupPlayButtons();
+
+      
     }
 
-    private void setupPlayButtons() {
-        ImageButton playImageButton = ButtonFactory.createImageButton("buttons_game/Spill_Play.png",
-                "buttons_game/Spill_Play-Down.png");
-
-        playImageButton.setSize(200, 200);
-        playImageButton.setPosition((stage.getWidth() - playImageButton.getWidth()) / 2,
-                (stage.getHeight() - playImageButton.getHeight()) / 2 - 200);
-
-        playImageButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                // model.setLevel(0);
-                model.restart();
-                gsm.set(new MenuState(gsm, model));
-            }
-        });
-
-        stage.addActor(playImageButton);
-    }
+    
 
     @Override
     public void render(SpriteBatch sb) {
@@ -65,6 +54,12 @@ public class WinState extends State {
         sb.draw(winImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         sb.setColor(1f, 1f, 1f, 1f);
         sb.end();
+
+        // if (model.getStartGame()) {
+        //     gsm.set(new MenuState(gsm, model));
+        // }
+
+        
 
         stage.draw();
     }
