@@ -205,14 +205,14 @@ public class Rat implements IRat {
         DOWN,
         RIGHT,
         LEFT,
-        OUT;
+        OUT,
     }
 
     public void setDirection(Direction dir) {
         this.direction = dir;
     }
 
-    private float getRotationAngle() {
+    private int getRotationAngle() {
         Direction dir = getDirection();
         switch (dir) {
             case UP:
@@ -223,15 +223,15 @@ public class Rat implements IRat {
                 return 90;
             case RIGHT:
                 return -90;
-            case OUT:
+            default:
                 return 0;
         }
-        return 0;
+
     }
 
     @Override
     public void rotateImage() {
-        float angle = getRotationAngle();
+        int angle = getRotationAngle();
         this.sprite.setOriginCenter();
         this.sprite.setRotation(angle);
     }
@@ -305,8 +305,16 @@ public class Rat implements IRat {
             unfreeze(); 
         }
     }
+
+    public void setFreezeTimer(float time) {
+        freezeTimer = time;
+    }
+
+    public float getFreezeTimer() {
+        return freezeTimer;
+    }
     
-    public void unfreeze() {
+    private void unfreeze() {
         isFrozen = false;
         effectiveSpeed = originalSpeed;
         swapImage(ImageSwapper.ALIVE);
@@ -324,5 +332,8 @@ public class Rat implements IRat {
 
     public float getEffectiveSpeed() {
        return effectiveSpeed;
+    }
+    public float getOriginalSpeed() {
+        return originalSpeed;
     }
 }

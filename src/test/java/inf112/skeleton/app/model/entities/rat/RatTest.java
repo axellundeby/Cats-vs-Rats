@@ -390,17 +390,6 @@ public class RatTest {
     }
 
     @Test
-    void testFreezing() {
-        assertFalse(rat.isFrozen());
-        rat.freeze(5); 
-        assertEquals(frozenTextureMock, rat.getTexture());
-        assertTrue(rat.isFrozen());
-        rat.unfreeze();
-        assertEquals(aliveTextureMock, rat.getTexture());
-        assertFalse(rat.isFrozen());
-    }
-
-    @Test
     void getEffectiveSpeedTest() {
         assertEquals(10, rat.getEffectiveSpeed());
     }
@@ -412,13 +401,47 @@ public class RatTest {
 
     @Test
     void getControlPointsTest() {
-        rat.createPath();
         assertArrayEquals(controlPoints, rat.getControlPoints());
     }
+
     @Test
     void testRotationAngleForOutDirection() {
         rat.setDirection(Direction.OUT);
         rat.rotateImage(); 
         assertEquals(0, rat.getSprite().getRotation());
+    }
+
+    @Test
+    void testFreezing() {
+        assertFalse(rat.isFrozen());
+        rat.freeze(5); 
+        assertEquals(frozenTextureMock, rat.getTexture());
+        assertEquals(rat.getOriginalSpeed() - 15 ,rat.getEffectiveSpeed());
+        assertTrue(rat.isFrozen());
+        rat.setFreezeTimer(1000);
+        rat.freeze(0);
+        assertFalse(rat.isFrozen());
+        assertEquals(aliveTextureMock, rat.getTexture());
+    }
+
+    @Test 
+    void testFreezingTime() {
+        rat.freeze(7);
+        assertEquals(7, rat.getFreezeTimer());
+    }
+
+    @Test
+    void getFreezeTimerTest() {
+        assertEquals(0, rat.getFreezeTimer());
+    }
+
+    @Test
+    void testUnfrezzeCallFromFreezeMethod(){
+        rat.freeze(5);
+    }
+
+    @Test 
+    void getOriginalSpeedTest(){
+        assertEquals(10, rat.getOriginalSpeed());
     }
 }
