@@ -312,6 +312,7 @@ public abstract class Cat {
         List<Texture> stateTextures = textures.get(currentState);
         return stateTextures.get(Math.min(upgradeCounter, stateTextures.size() - 1));
     }
+
     public Texture getMenuTexture() {
         List<Texture> stateTextures = textures.get(currentState);
         return stateTextures.get(0);
@@ -368,12 +369,6 @@ public abstract class Cat {
      */
     public int getCost() {
         return cost;
-    }
-
-    @Override
-    public String toString() {
-        return "Cat at position: " + pos + " with strength " + strength + " and range " + range;
-
     }
 }
 

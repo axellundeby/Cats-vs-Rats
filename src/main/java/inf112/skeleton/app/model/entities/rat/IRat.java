@@ -1,13 +1,7 @@
 package inf112.skeleton.app.model.entities.rat;
-
-import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-
-import inf112.skeleton.app.model.entities.Projectile;
-import inf112.skeleton.app.model.entities.rat.Rat.Direction;
 
 public interface IRat {
 

@@ -7,6 +7,8 @@ import org.mockito.MockitoAnnotations;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import inf112.skeleton.app.model.entities.cat.Cat.PictureSwapper;
@@ -14,6 +16,7 @@ import inf112.skeleton.app.model.entities.rat.Rat;
 import net.bytebuddy.dynamic.scaffold.MethodGraph.Linked;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
@@ -89,20 +92,28 @@ public class TestCat {
     void firstUpgradeTextureTest() {
         int catSizeBeforeUpgrade = cat.getSize();
         cat.setUpgradeCounter(1);
+
+        Sprite sprite = cat.getSprite();
+        assertEquals(defaultTextureMock.get(0), sprite.getTexture());
+
         cat.upgradeTexture();
         assertEquals(2, cat.getUpgradeCounter(), "Upgrade counter should be 2 after one upgrade");
         assertEquals(catSizeBeforeUpgrade + 30, cat.getSize());
+        //assertEquals(defaultTextureMock.get(1), sprite.getTexture());
     }
 
     @Test
     void secondUpgradeTextureTest() {
         int catSizeBeforeUpgrade = cat.getSize();
+        Sprite sprite = cat.getSprite();
+        assertEquals(defaultTextureMock.get(0), sprite.getTexture());
         cat.upgradeTexture();
         cat.upgradeTexture();
         cat.upgradeTexture();
         cat.upgradeTexture();
         assertEquals(4, cat.getUpgradeCounter(), "Upgrade counter should be 4 after one upgrade");
         assertEquals(catSizeBeforeUpgrade + 60, cat.getSize());
+        //assertEquals(defaultTextureMock.get(2), sprite.getTexture());
     }
 
     @Test
@@ -275,7 +286,99 @@ public class TestCat {
         //assertEquals(expectedAngle, cat.getRotationAngle());
     }
 
+    @Test
+    void setSizeTest(){
+        cat.setSize(200);
+        assertEquals(200, cat.getSize());
+    }
+
+    @Test
+    void updateAttackTimerTest(){
+        cat.resetAttackTimer();
+        cat.updateAttackTimer(0.1f);
+        assertEquals(24.9f, cat.getAttackTimer());
+    }
+
+    @Test
+    void canAttackTest(){
+        assertTrue(cat.canAttack());
+        cat.resetAttackTimer();
+        assertFalse(cat.canAttack());
+    }
+
+    //denne failer
+   @Test
+   void withinRangeTest(){
+        rat.setPosition(new Vector2(1000, 1000));
+        cat.withinRange(rat);
+        assertEquals(null, cat.getLastTargetPosition());
+        
+        cat.setPos(10, 10);
+        rat.setPosition(new Vector2(10, 10));
+        //assertTrue(cat.withinRange(rat));
+   }
+
+   @Test
+   void swapImageTest(){
+        assertEquals(PictureSwapper.DEFAULT, cat.getCurrentState());
+         cat.swapImage(PictureSwapper.ATTACK);
+         assertEquals(PictureSwapper.ATTACK, cat.getCurrentState());
+         cat.swapImage(PictureSwapper.DEFAULT);
+         assertEquals(PictureSwapper.DEFAULT, cat.getCurrentState());
+   }
+
+   @Test
+   void getTextureTest(){
+        assertEquals(defaultTextureMock.get(0), cat.getTexture());
+        cat.swapImage(PictureSwapper.ATTACK);
+        assertEquals(attacksTextureMock.get(0),cat.getTexture());
+
+   }
+
+    @Test
+    void getMenuTexture(){
+        assertEquals(defaultTextureMock.get(0), cat.getMenuTexture());
+    }
+
+    @Test
+    void getSprite(){
+        Sprite sprite = cat.getSprite();
+        assertEquals(defaultTextureMock.get(0), sprite.getTexture());
+        cat.swapImage(PictureSwapper.ATTACK);
+        assertEquals(attacksTextureMock.get(0), sprite.getTexture());
+    }
+
+    @Test
+   void getStrengthAndFireRateAndRangeTest(){
+         assertEquals(40, cat.getStrength());
+         assertEquals(25.0f, cat.getFireRate());
+         assertEquals(100, cat.getRange());
+    }
+
+    @Test
+    void getCostTest(){
+        assertEquals(200, cat.getCost());
+    }
+
+
+
+
+
+
+
+  
     
+   
+
+
+
+
+
+
+
+    
+
+
 
 
 

@@ -275,16 +275,7 @@ public class Rat implements IRat {
     public void setPosition(Vector2 pos) {
         this.pos = pos;
         rectangleUpdater();
-        updatePosIfNessesary(pos);
-        
     }
-
-    private void updatePosIfNessesary(Vector2 pos) {
-        if (currentControlPoint < controlPoints.length - 1) {
-            updateDirection(controlPoints[currentControlPoint], controlPoints[currentControlPoint + 1]);
-        }
-    }
-
 
     private void rectangleUpdater(){
         spriteRect.x = pos.x - halfsize;
