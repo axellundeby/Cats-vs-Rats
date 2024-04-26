@@ -21,11 +21,6 @@ public class BasicRat extends Rat {
             //GlobalAssetManager.getTexture("coin.png") 
             new Texture(Gdx.files.internal("coin.png"))
         );
-        @Override
-        public void playSpawnkSound() {
-            Sound attackSound = Gdx.audio.newSound(Gdx.files.internal("sound/caralarm.mp3"));
-            attackSound.play();
-        }
     }   
 }
 

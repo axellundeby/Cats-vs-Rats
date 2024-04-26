@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
 import inf112.skeleton.app.model.entities.Projectile;
@@ -43,5 +44,14 @@ public class AngryCat extends Cat {
     public void upgradeFireRate() {
         this.fireRate *= 0.75;
     }
+
+    @Override
+    public void playAttackSound() {
+        Sound attackSound = Gdx.audio.newSound(Gdx.files.internal("sound/caralarm.mp3"));
+        attackSound.play();
+
+    }
     
 }
+
+

@@ -314,8 +314,7 @@ public abstract class Cat {
         return cost;
     }
 
-    public void playAttackSound() {
-    }
+    public abstract void playAttackSound();
 
     @Override
     public String toString() {

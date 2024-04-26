@@ -156,9 +156,4 @@ public interface IRat {
      * Freezes the rat.
      */
     void freeze(float deltaTime);
-
-    void playSpawnSound();
-
-
-
 }
