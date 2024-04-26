@@ -23,10 +23,6 @@ public class SkadedyrModel implements ISkadedyrModel {
     private RatFactory ratFactory = new RatFactory();
     private int lives = 5;
     private int money = 1000000;
-    private final int STARTING_MONEY = 500000;
-    private final int STARTING_LIVES = 5;
-    private final int STARTING_POINTS = 0;
-    private final int STARTING_LEVEL = 0;
     private int points = 0;
     private int level = 0;
     private int ratsSpawned;
@@ -56,10 +52,6 @@ public class SkadedyrModel implements ISkadedyrModel {
         aliveRats = new ArrayList<>();
         newRats = new ArrayList<>(); 
         ratFactory = new RatFactory();
-        lives = STARTING_LIVES;
-        money = STARTING_MONEY;
-        points = STARTING_POINTS;
-        level = STARTING_LEVEL;
         isPaused = true;
         intervalSeconds = 0.05f;
 
