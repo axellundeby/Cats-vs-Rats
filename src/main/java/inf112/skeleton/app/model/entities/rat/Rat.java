@@ -121,10 +121,9 @@ public class Rat implements IRat {
 
 
     private void updateDirection(Vector2 current, Vector2 next) {
-        if(current.x > 1150){ 
+        if (current.x > 1150) {
             direction = Direction.OUT;
-        }
-        else if (next.x > current.x) {
+        } else if (next.x > current.x) {
             direction = Direction.RIGHT;
         } else if (next.x < current.x) {
             direction = Direction.LEFT;
@@ -134,6 +133,7 @@ public class Rat implements IRat {
             direction = Direction.DOWN;
         }
     }
+    
 
     public Direction getDirection(){
         return direction;
@@ -225,9 +225,8 @@ public class Rat implements IRat {
                 return -90;
             case OUT:
                 return 0;
-            default:
-                throw new Error("Unexpected Direction: " + dir);
         }
+        return 0;
     }
 
     @Override
@@ -276,7 +275,16 @@ public class Rat implements IRat {
     public void setPosition(Vector2 pos) {
         this.pos = pos;
         rectangleUpdater();
+        updatePosIfNessesary(pos);
+        
     }
+
+    private void updatePosIfNessesary(Vector2 pos) {
+        if (currentControlPoint < controlPoints.length - 1) {
+            updateDirection(controlPoints[currentControlPoint], controlPoints[currentControlPoint + 1]);
+        }
+    }
+
 
     private void rectangleUpdater(){
         spriteRect.x = pos.x - halfsize;

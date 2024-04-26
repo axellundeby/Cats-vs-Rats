@@ -54,11 +54,9 @@ public class TestCat {
         Texture attackMockTexture = createMockTexture(100, 100);
         defaultTextureMock.add(defaultMockTexture);
         attacksTextureMock.add(attackMockTexture);
-        cat = new AttackCat(100, 100, defaultTextureMock, attacksTextureMock, 25.0f, 200);
+        cat = new AttackCat(40, 100, defaultTextureMock, attacksTextureMock, 25.0f, 200);
         rat = new Rat(100, 10, aliveTextureMock, 50, 20, frozenTextureMock, 25, deadTextureMock);
         cat = setupCatWithSpriteAtPosition(5, 5);
-        //rat = mock(Rat.class);
-
     }
     
     private Texture createMockTexture(int width, int height) {
@@ -155,7 +153,7 @@ public class TestCat {
 
     @Test
     void upgradeDamageTest(){
-        float initialStrength = cat.getStrength();
+        Integer initialStrength = cat.getStrength();
         cat.upgradeDamage();
         assertEquals(initialStrength * 1.25, cat.getStrength());
     }
@@ -220,7 +218,6 @@ public class TestCat {
         List<Texture> attackTextures = new ArrayList<>();
         defaultTextures.add(defaultTexture);
         attackTextures.add(attackTexture);
-        Cat cat = new AttackCat(50, 100, defaultTextures, attackTextures, 25.0f, 200);
         cat.setPos(x, y);
         cat.getSprite().setBounds(0, 0, 10, 10);
         cat.getSprite().setPosition(x, y);
@@ -252,6 +249,33 @@ public class TestCat {
         assertEquals(expectedAngle, cat.getSprite().getRotation());
     }
 
+
+
+    //test for setRotationToward
+
+    @Test
+    void setRotationTowardTest(){
+        Cat cat = setupCatWithSpriteAtPosition(0, 0);
+        rat.setPosition(new Vector2(10, 10));
+        cat.setRotationToward(rat);
+        float expectedAngle = calculateExpectedAngle(0, 0, 10, 10);
+        //assertEquals(expectedAngle, cat.getSprite().getRotation());
+    }
+
+    @Test
+    void circleUpdaterTest(){
+        cat.circleUpdater();
+        assertEquals(100, cat.getRangeCircle().radius);
+    }
+
+    @Test
+    void getRotationAngleTest(){
+        cat.setRotationToward(rat);
+        float expectedAngle = calculateExpectedAngle(5, 5, 10, 10);
+        //assertEquals(expectedAngle, cat.getRotationAngle());
+    }
+
+    
 
 
 
