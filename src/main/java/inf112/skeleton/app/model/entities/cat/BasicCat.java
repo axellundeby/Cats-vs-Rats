@@ -1,12 +1,8 @@
 package inf112.skeleton.app.model.entities.cat;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.model.entities.rat.Rat;
 
 

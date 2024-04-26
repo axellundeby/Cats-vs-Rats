@@ -54,9 +54,17 @@ public class TestCat {
         defaultTextureMock = new ArrayList<>();
         attacksTextureMock = new ArrayList<>();
         Texture defaultMockTexture = createMockTexture(100, 100);
+        Texture defaultMockTexture2 = createMockTexture(100, 100);
+        Texture defaultMockTexture3 = createMockTexture(100, 100);
         Texture attackMockTexture = createMockTexture(100, 100);
+        Texture attackMockTexture2 = createMockTexture(100, 100);
+        Texture attackMockTexture3 = createMockTexture(100, 100);
         defaultTextureMock.add(defaultMockTexture);
+        defaultTextureMock.add(defaultMockTexture2);
+        defaultTextureMock.add(defaultMockTexture3);
         attacksTextureMock.add(attackMockTexture);
+        attacksTextureMock.add(attackMockTexture2);
+        attacksTextureMock.add(attackMockTexture3);
         cat = new AttackCat(40, 100, defaultTextureMock, attacksTextureMock, 25.0f, 200);
         rat = new Rat(100, 10, aliveTextureMock, 50, 20, frozenTextureMock, 25, deadTextureMock);
         cat = setupCatWithSpriteAtPosition(5, 5);
@@ -71,20 +79,20 @@ public class TestCat {
 
     @Test
         void getUpgradeCounterTest() {
-        assertEquals(0, cat.getUpgradeCounter(), "Upgrade counter should be initially 0");
+        assertEquals(0, cat.getUpgradeCounter());
         cat.upgradeTexture(); 
-        assertEquals(1, cat.getUpgradeCounter(), "Upgrade counter should be 1 after one upgrade");
+        assertEquals(1, cat.getUpgradeCounter());
     }
 
     @Test
     void setUpgradeCounterTest(){
         cat.setUpgradeCounter(3);
-        assertEquals(3, cat.getUpgradeCounter(), "Upgrade counter should be 3");
+        assertEquals(3, cat.getUpgradeCounter());
     }
 
    @Test
    void getSizeTest(){
-       assertEquals(100, cat.getSize(), "Size should be 100");
+       assertEquals(100, cat.getSize());
     }
 
     //tester ikke for at bilde endres, og den upgradeTexture()
@@ -97,9 +105,9 @@ public class TestCat {
         assertEquals(defaultTextureMock.get(0), sprite.getTexture());
 
         cat.upgradeTexture();
-        assertEquals(2, cat.getUpgradeCounter(), "Upgrade counter should be 2 after one upgrade");
+        assertEquals(2, cat.getUpgradeCounter());
         assertEquals(catSizeBeforeUpgrade + 30, cat.getSize());
-        //assertEquals(defaultTextureMock.get(1), sprite.getTexture());
+        assertEquals(defaultTextureMock.get(1), sprite.getTexture());
     }
 
     @Test
@@ -111,9 +119,43 @@ public class TestCat {
         cat.upgradeTexture();
         cat.upgradeTexture();
         cat.upgradeTexture();
-        assertEquals(4, cat.getUpgradeCounter(), "Upgrade counter should be 4 after one upgrade");
+        assertEquals(4, cat.getUpgradeCounter());
         assertEquals(catSizeBeforeUpgrade + 60, cat.getSize());
-        //assertEquals(defaultTextureMock.get(2), sprite.getTexture());
+        assertEquals(defaultTextureMock.get(2), sprite.getTexture());
+    }
+
+    @Test
+    void setRotationTowardTest(){
+        Cat cat = setupCatWithSpriteAtPosition(0, 0);
+        rat.setPosition(new Vector2(10, 10));
+        cat.setRotationToward(rat);
+        float expectedAngle = calculateExpectedAngle(0, 0, 10, 10);
+        //assertEquals(expectedAngle, cat.getSprite().getRotation());
+    }
+
+    
+    @Test
+    void getRotationAngleTest(){
+        cat.setRotationToward(rat);
+        float expectedAngle = calculateExpectedAngle(5, 5, 10, 10);
+        //assertEquals(expectedAngle, cat.getRotationAngle());
+    }
+    
+    @Test
+    void withinRangeTest(){
+        rat.setPosition(new Vector2(1000, 1000));
+        cat.withinRange(rat);
+        assertEquals(null, cat.getLastTargetPosition());
+        
+        cat.setPos(10, 10);
+        rat.setPosition(new Vector2(10, 10));
+        //assertTrue(cat.withinRange(rat));
+    }
+
+    @Test
+    void circleUpdaterTest(){
+        cat.circleUpdater();
+        assertEquals(100, cat.getRangeCircle().radius);
     }
 
     @Test
@@ -261,31 +303,6 @@ public class TestCat {
     }
 
 
-
-    //test for setRotationToward
-
-    @Test
-    void setRotationTowardTest(){
-        Cat cat = setupCatWithSpriteAtPosition(0, 0);
-        rat.setPosition(new Vector2(10, 10));
-        cat.setRotationToward(rat);
-        float expectedAngle = calculateExpectedAngle(0, 0, 10, 10);
-        //assertEquals(expectedAngle, cat.getSprite().getRotation());
-    }
-
-    @Test
-    void circleUpdaterTest(){
-        cat.circleUpdater();
-        assertEquals(100, cat.getRangeCircle().radius);
-    }
-
-    @Test
-    void getRotationAngleTest(){
-        cat.setRotationToward(rat);
-        float expectedAngle = calculateExpectedAngle(5, 5, 10, 10);
-        //assertEquals(expectedAngle, cat.getRotationAngle());
-    }
-
     @Test
     void setSizeTest(){
         cat.setSize(200);
@@ -305,18 +322,7 @@ public class TestCat {
         cat.resetAttackTimer();
         assertFalse(cat.canAttack());
     }
-
-    //denne failer
-   @Test
-   void withinRangeTest(){
-        rat.setPosition(new Vector2(1000, 1000));
-        cat.withinRange(rat);
-        assertEquals(null, cat.getLastTargetPosition());
-        
-        cat.setPos(10, 10);
-        rat.setPosition(new Vector2(10, 10));
-        //assertTrue(cat.withinRange(rat));
-   }
+   
 
    @Test
    void swapImageTest(){
@@ -359,6 +365,13 @@ public class TestCat {
     void getCostTest(){
         assertEquals(200, cat.getCost());
     }
+
+    @Test 
+    void getSelectionCircleTest(){
+        Circle selectionCircle = new Circle(cat.getPosition(),50);
+        assertEquals(selectionCircle , cat.getSelectionCircle());
+    }
+
 
 
 
