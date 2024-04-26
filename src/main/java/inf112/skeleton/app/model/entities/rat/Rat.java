@@ -103,7 +103,7 @@ public class Rat implements IRat {
             new Vector2(660,610),
             new Vector2(1080,610),
             new Vector2(1080,310),
-            new Vector2(1200,310),
+            new Vector2(1300,310),
             new Vector2(1500,310),
            
             
