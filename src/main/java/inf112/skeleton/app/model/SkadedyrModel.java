@@ -22,8 +22,8 @@ public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Rat> aliveRats = new ArrayList<>();
     private RatFactory ratFactory = new RatFactory();
     private int lives = 5;
-    private int money = 200;
-    private final int STARTING_MONEY = 200;
+    private int money = 1000000;
+    private final int STARTING_MONEY = 500000;
     private final int STARTING_LIVES = 5;
     private final int STARTING_POINTS = 0;
     private final int STARTING_LEVEL = 0;

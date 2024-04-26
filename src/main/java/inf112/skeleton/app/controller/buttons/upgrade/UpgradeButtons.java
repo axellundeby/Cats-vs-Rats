@@ -26,7 +26,7 @@ public class UpgradeButtons {
     private static final String rangeTexture= "buttons_game/range.png";
 
     private static final String noMoneyTexture = "buttons_game/noMoney.png";
-    private static final String usedUpTexture= "buttons/angryCat.png";
+    private static final String usedUpTexture= "buttons_game/angryCat.png";
     private static final String clickTexture= "coin.png";
 
 
@@ -44,11 +44,12 @@ public class UpgradeButtons {
         upgradeDamageButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                if (model.getMoney() >= cost && clicked < 3) {
+                if (model.getMoney() >= cost && clicked < 4) {
                     model.setMoney(model.getMoney() - cost); 
                     Cat cat = model.getSelectedCat();
                     if (cat != null)
                         cat.upgradeDamage();
+                        cat.upgradeTexture();
                     clicked++;
                 }
                 updateButtonAppearance();
@@ -65,11 +66,12 @@ public class UpgradeButtons {
             upgradeFireRateButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                    if (model.getMoney() >= cost && clicked < 3) {
+                    if (model.getMoney() >= cost && clicked < 4) {
                         model.setMoney(model.getMoney() - cost); 
                         Cat cat = model.getSelectedCat();
                         if (cat != null)
                             cat.upgradeFireRate(); 
+                            cat.upgradeTexture();
                         clicked++;
                     }
                     updateButtonAppearance();
@@ -86,11 +88,12 @@ public class UpgradeButtons {
             upgradeRangeButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                    if (model.getMoney() >= cost && clicked < 3) {
+                    if (model.getMoney() >= cost && clicked < 4) {
                         model.setMoney(model.getMoney() - cost); 
                         Cat cat = model.getSelectedCat();
                         if (cat != null)
                             cat.upgradeRange(); 
+                            cat.upgradeTexture();
     
                         clicked++;
                     }
