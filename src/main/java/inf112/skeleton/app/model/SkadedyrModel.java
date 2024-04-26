@@ -20,6 +20,7 @@ import inf112.skeleton.app.view.States.PlayState;
 import inf112.skeleton.app.view.States.State;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
 import java.util.List;
+import inf112.skeleton.app.model.SoundManager;
 
 public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Cat> cats = new ArrayList<>();
@@ -42,12 +43,18 @@ public class SkadedyrModel implements ISkadedyrModel {
     private boolean speedUp = false;
     private Cat selectedCat;
     private State currentState;
-    
+    private SoundManager soundManager;
+
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
         this.catMenu = new CatMenu();
         this.aliveRats = new ArrayList<>();
         this.currentState = null;
+        this.soundManager = new SoundManager();
+    }
+
+    public void initSound(){
+        soundManager.init();
     }
 
     public void setState(State newState){
@@ -82,6 +89,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         while (iterator.hasNext()) {
             Rat rat = iterator.next();
             if (rat.isKilled()) {
+                //Coin spawning sound
                 rat.updateCoinVisibility(deltaTime); 
                 if (!rat.isrewardClaimed()) {
                     // Buttons update each time a rat is killed
@@ -92,6 +100,7 @@ public class SkadedyrModel implements ISkadedyrModel {
                     points += rat.getPoints();
                     rat.rewardClaimed();
                     rat.killedAnimation();
+                    soundManager.playCoinSpawnSound();
                 }
                 if (rat.coinVisibleTime >= COIN_DURATION) {
                     iterator.remove();
@@ -100,6 +109,8 @@ public class SkadedyrModel implements ISkadedyrModel {
                 if (!rat.isrewardClaimed()) {
                     if (!rat.isExited()) {
                         lives = Math.max(0, lives - 1);
+                        //LIV går ned sound
+                        soundManager.playHpSound();
                         rat.exit();
                     }
                     iterator.remove();
@@ -213,12 +224,9 @@ public class SkadedyrModel implements ISkadedyrModel {
         return intervalSeconds;
     }
 
-
     public boolean isSpeedUp() {
         return speedUp;
     }
-
-
 
     @Override
     public void setSpeed() {
@@ -277,6 +285,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     
     @Override
     public void setMoney(int money) {
+        soundManager.playUpgradeSound();
         this.money = money;
     }
    
@@ -401,6 +410,5 @@ public class SkadedyrModel implements ISkadedyrModel {
     public CatMenu getBuyMenu() {
         return catMenu;
     }
-
     
 }

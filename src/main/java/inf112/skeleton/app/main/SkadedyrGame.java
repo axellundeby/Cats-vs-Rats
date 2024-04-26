@@ -25,6 +25,8 @@ public class SkadedyrGame implements ApplicationListener{
     public void create() {
         controller.startTimer();
         view.create();
+    
+        model.initSound();
     }
 
     @Override

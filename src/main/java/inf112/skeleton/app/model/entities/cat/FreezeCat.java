@@ -20,8 +20,8 @@ public class FreezeCat extends Cat {
     public ArrayList<Projectile> attack(LinkedList<Rat> rats) {
         ArrayList<Projectile> projectileList = new ArrayList<>();
         if (canAttack()) {
-            triggerAttackImage(); 
             playAttackSound();
+            triggerAttackImage(); 
             for (Rat rat : rats) {
                 //projectileList.add(shootAt(rats));
                 rat.setFrozen(); 
@@ -60,7 +60,7 @@ public class FreezeCat extends Cat {
 
     @Override
     public void playAttackSound() {
-        Sound attackSound = Gdx.audio.newSound(Gdx.files.internal("sound/caralarm.mp3"));
-        attackSound.play();
+        Sound attackSound = Gdx.audio.newSound(Gdx.files.internal("sound/ice.mp3"));
+        attackSound.play(1.0f);
     }
 }

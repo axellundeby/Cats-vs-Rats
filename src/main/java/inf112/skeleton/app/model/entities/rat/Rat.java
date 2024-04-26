@@ -319,4 +319,6 @@ public class Rat implements IRat {
     public void setFrozen() {
         isFrozen = true;
     }
+
+    
 }

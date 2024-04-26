@@ -59,8 +59,8 @@ public class ShotgunCat extends Cat {
 
     @Override
     public void playAttackSound() {
-        Sound attackSound = Gdx.audio.newSound(Gdx.files.internal("sound/caralarm.mp3"));
-        attackSound.play();
+        Sound attackSound = Gdx.audio.newSound(Gdx.files.internal("sound/gunshot.mp3"));
+        attackSound.play(0.6f);
     }
 
 }
