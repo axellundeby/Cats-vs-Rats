@@ -4,15 +4,8 @@ package inf112.skeleton.app.view.States;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-
-import inf112.skeleton.app.controller.buttons.ButtonFactory;
 import inf112.skeleton.app.controller.buttons.menu.MenuButtons;
 import inf112.skeleton.app.model.SkadedyrModel;
 
@@ -31,8 +24,8 @@ public class WinState extends State {
         this.winImage = new Texture("Spill_Won.jpg");
 
         menu = new MenuButtons(model, stage);
-        stage.addActor(menu.helpButtonPlay());
-        stage.addActor(menu.playButton());
+        stage.addActor(menu.exitButton());
+      
 
         Gdx.input.setInputProcessor(stage);
 
@@ -55,9 +48,7 @@ public class WinState extends State {
         sb.setColor(1f, 1f, 1f, 1f);
         sb.end();
 
-        // if (model.getStartGame()) {
-        //     gsm.set(new MenuState(gsm, model));
-        // }
+        
 
         
 

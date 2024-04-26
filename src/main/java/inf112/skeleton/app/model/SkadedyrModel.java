@@ -53,9 +53,8 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     private void initializeGame() {
         cats = new ArrayList<>();
-        aliveRats = new ArrayList<>();
-        newRats = new ArrayList<>(); 
         ratFactory = new RatFactory();
+        removeAllRats();
         lives = STARTING_LIVES;
         money = STARTING_MONEY;
         points = STARTING_POINTS;
@@ -66,6 +65,11 @@ public class SkadedyrModel implements ISkadedyrModel {
             ((PlayState) currentState).updateButtons();
         }
 
+    }
+
+    private void removeAllRats(){
+        aliveRats = new ArrayList<>();
+        newRats = new ArrayList<>(); 
     }
 
     public void initCatMenu() {
@@ -151,6 +155,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         level++;
         writeText = true;
         nextWaveText();
+        removeAllRats();
 
         setPause();
         for (Cat cat : cats) {
@@ -322,8 +327,7 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     @Override
     public boolean isGameWon() {
-        
-        return level == 1;
+        return level == 10;
     }
 
     public void setHelp() {

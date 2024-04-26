@@ -34,7 +34,7 @@ public class PlayState extends State {
     private MenuButtons menu;
     private UpgradeButtons upgrade;
     private float alpha = 0f;
-    private Button helpButton;
+   
 
     public PlayState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
