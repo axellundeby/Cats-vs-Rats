@@ -58,7 +58,6 @@ public class PlayState extends State {
         stage.addActor(menu.helpButtonPlay());
         stage.addActor(menu.restarButton());
 
-
         upgrade = new UpgradeButtons(model, stage);
 
         upgradeFireRateButton = upgrade.upgradeFireRateButton();
@@ -91,6 +90,7 @@ public class PlayState extends State {
 
         batch.setColor(1, 1, 1, alpha);
         batch.draw(mapTexture, 0, 200, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - 300);
+
         batch.end();
 
         Gdx.gl.glEnable(GL20.GL_BLEND);
@@ -137,11 +137,13 @@ public class PlayState extends State {
     }
 
     private void drawGameStatus(SpriteBatch batch) {
-        font.draw(batch, "Dine liv: " + model.getLives(), 1000, 800);
-        font.draw(batch, "Dine penger: " + model.getMoney(), 825, 800);
-        font.draw(batch, "Din Score: " + model.getPoints(), 700, 800);
-        font.draw(batch, "Level: " + model.getLevel(), 600, 800);
+        font.draw(batch, "Dine liv: " + model.getLives(), 1100, 800);
+        font.draw(batch, "Dine penger: " + model.getMoney(), 925, 800);
+        font.draw(batch, "Din Score: " + model.getPoints(), 800, 800);
+        font.draw(batch, "Level: " + model.getLevel(), 700, 800);
         font.draw(batch, model.nextWaveText(), 500, 150);
+        
+
         font.setColor(Color.WHITE);
 
     }

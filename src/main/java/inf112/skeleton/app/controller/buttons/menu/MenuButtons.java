@@ -7,21 +7,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-
 import inf112.skeleton.app.controller.buttons.ButtonFactory;
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.view.States.PlayState;
+import inf112.skeleton.app.view.States.HelpState;
 import inf112.skeleton.app.view.States.MenuState;
-
-
 
 public class MenuButtons implements IMenuButtons {
     private SkadedyrModel model;
     private Stage stage;
     private Button pauseButton;
     private Button speedButton;
-    private final static int BUTTON_HEIGHT=50; 
-    
+    private final static int BUTTON_HEIGHT = 50;
+    private final static int MENU_BUTTONS_HEIGHT = 750;
+
 
     public MenuButtons(SkadedyrModel model, Stage stage) {
         this.model = model;
@@ -32,8 +31,8 @@ public class MenuButtons implements IMenuButtons {
     @Override
     public Button exitButton() {
         Button exitButton = ButtonFactory.createImageButton("buttons_game/Spill_Exit.png", "buttons_game/angryCat.png");
-        exitButton.setSize(100, 100);
-        exitButton.setPosition(10, 740);
+        exitButton.setSize(150, 75);
+        exitButton.setPosition(5, MENU_BUTTONS_HEIGHT);
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
@@ -49,7 +48,7 @@ public class MenuButtons implements IMenuButtons {
         pauseButton = ButtonFactory.createImageButton("buttons_game/Spill_Pause_Pause.png",
                 "buttons_game/Spill_Pause_Play.png");
         pauseButton.setSize(100, 100);
-        pauseButton.setPosition(600, 70);
+        pauseButton.setPosition(440, MENU_BUTTONS_HEIGHT - 10);
         pauseButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
@@ -62,12 +61,20 @@ public class MenuButtons implements IMenuButtons {
 
     @Override
     public Button playButton() {
-        Button playButton = ButtonFactory.createImageButton("buttons_game/Spill_Play_Up.png", "buttons_game/Spill_Play_Down.png");
+
+        Button playButton = ButtonFactory.createImageButton("buttons_game/Spill_Play_Up.png",
+                "buttons_game/Spill_Play_Down.png");
         playButton.setSize(200, 100);
-        if (model.getState() instanceof MenuState) {
-            playButton.setPosition((stage.getWidth() - playButton.getWidth()) / 2, stage.getHeight() - 500); 
-        } else {
-            playButton.setPosition(500, 500);
+
+        if (model.getState() instanceof PlayState) {
+            playButton.setPosition(800, 400);
+
+        } else if (model.getState() instanceof MenuState) {
+            playButton.setPosition(800, 400);
+        }
+
+        else {
+            playButton.setPosition((stage.getWidth() - playButton.getWidth()) / 2 - 200, BUTTON_HEIGHT);
         }
         playButton.addListener(new ClickListener() {
             @Override
@@ -83,31 +90,32 @@ public class MenuButtons implements IMenuButtons {
         Button helpButton = ButtonFactory.createImageButton("buttons_game/Spill_Help.png",
                 "buttons_game/Spill_Help.png");
         helpButton.setSize(100, 100);
-        
+
         if (model.getState() instanceof MenuState) {
-            helpButton.setPosition((stage.getWidth() - helpButton.getWidth()) / 2, stage.getHeight() - 200); 
+            helpButton.setPosition(340, MENU_BUTTONS_HEIGHT - 10);
+        } else if (model.getState() instanceof HelpState) {
+            helpButton.setPosition(340, MENU_BUTTONS_HEIGHT - 10) ;
         } else {
-            helpButton.setPosition(270, 750);
+            helpButton.setPosition((stage.getWidth() - helpButton.getWidth()) / 2 + 200, BUTTON_HEIGHT);
         }
 
         helpButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                if(model.isPaused())
+                if (model.isPaused())
                     model.setHelp();
-              
+
             }
         });
         return helpButton;
     }
 
-
     @Override
     public Button restarButton() {
         Button restartButton = ButtonFactory.createImageButton("buttons_game/Spill_Restart.png",
                 "buttons_game/angryCat.png");
-        restartButton.setSize(85, 85);
-        restartButton.setPosition(140, 750);
+        restartButton.setSize(150, 75);
+        restartButton.setPosition(140, MENU_BUTTONS_HEIGHT);
         restartButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
@@ -122,7 +130,7 @@ public class MenuButtons implements IMenuButtons {
     public Button speedButton() {
         speedButton = ButtonFactory.createImageButton("buttons_game/Spill_FF.png", "buttons_game/Spill_FF_Down.png");
         speedButton.setSize(100, 100);
-        speedButton.setPosition(500, 70);
+        speedButton.setPosition(540, MENU_BUTTONS_HEIGHT - 10);
         speedButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {

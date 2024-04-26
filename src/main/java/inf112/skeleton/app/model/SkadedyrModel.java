@@ -50,10 +50,13 @@ public class SkadedyrModel implements ISkadedyrModel {
         this.catMenu = new CatMenu();
         this.aliveRats = new ArrayList<>();
         this.currentState = null;
+        
+        
     }
 
     public void initCatMenu() {
         catMenu.init();
+        
     }
     
     public void setState(State newState){
@@ -140,6 +143,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         ratFactory.updateRatFactory(deltaTime, level);
         writeText = true;
         nextWaveText();
+
         setPause();
         for (Cat cat : cats) {
             cat.resetAttackTimer();
@@ -164,9 +168,13 @@ public class SkadedyrModel implements ISkadedyrModel {
     public String nextWaveText() {
         if (writeText) {
             return "Round over. Press unPause to continue.";
+        } else if (level == 0) {
+            return "Press unPause to start";
         }
         return "";
     }
+
+    
 
     private void updateCatAnimations(float deltaTime) {
         for (Cat cat : cats) {
