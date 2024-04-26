@@ -1,24 +1,11 @@
 package inf112.skeleton.app.model.entities.rat;
-
-import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import inf112.skeleton.app.model.entities.Projectile;
-import inf112.skeleton.app.model.entities.rat.Rat.Direction;
-
 public interface IRat {
 
-    /**
-     * Tegner rotten på skjermen ved bruk av en SpriteBatch.
-     * 
-     * @param batch SpriteBatch som brukes for å tegne rotten, sikrer effektiv
-     *              tegning.
-     */
-    void render(com.badlogic.gdx.graphics.g2d.SpriteBatch batch);
-
+  
     /** Metode for å håndtere hva som skjer når en rotte blir drept */
     void killedAnimation();
 
@@ -66,24 +53,6 @@ public interface IRat {
      * Marks the rat as exited.
      */
     void exit();
-
-    /**
-     * Checks if the rat is hit by any of the given projectiles.
-     * 
-     * @param projectiles The list of projectiles to check.
-     * @return true if the rat is hit by any projectile, false otherwise.
-     */
-    boolean isHitByProjectile(ArrayList<Projectile> projectiles);
-
-    /**
-     * Returns the projectile that hits the rat.
-     * 
-     * @param projectiles The list of projectiles to check.
-     * @return The projectile that hits the rat, or null if no projectile hits the
-     *         rat.
-     */
-    Projectile getHitByProjectile(ArrayList<Projectile> projectiles);
-
     /**
      * Returns the bounty of the rat.
      * 
@@ -125,11 +94,6 @@ public interface IRat {
      * Enum representing the possible directions of the rat.
      */
     // enum Direction;
-
-    /**
-     * Adds time to the rat's internal timer.
-     */
-    void addTime();
 
     /**
      * Rotates the rat's image to face its direction.

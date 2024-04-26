@@ -6,9 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-
-import inf112.skeleton.app.model.entities.Projectile;
-import java.util.ArrayList;
 import java.util.EnumMap;
 
 public class Rat implements IRat {
@@ -23,7 +20,7 @@ public class Rat implements IRat {
     private boolean exited = false;
     public float coinVisibleTime = 0f;
     private Sprite sprite;
-    private boolean isFrozen;
+    private boolean isFrozen = false;
     public ImageSwapper currentState = ImageSwapper.ALIVE;
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
     int halfsize = 25;
@@ -31,7 +28,7 @@ public class Rat implements IRat {
     private float progress;
     private Vector2[] controlPoints;
     private Direction direction = Direction.RIGHT;
-    private int currentControlPoint = 0; // add this line
+    public int currentControlPoint = 0; 
     private float freezeTimer = 0;
     private static final float RAT_FREEZE_DELAY = 20;
     private float originalSpeed;
@@ -44,7 +41,8 @@ public class Rat implements IRat {
         this.speed = speed;
         this.points = points;
         this.bounty = bounty;
-        this.pos = new Vector2(-10, 430);
+        createPath();
+        this.pos = new Vector2(controlPoints[0]);
         this.sprite = new Sprite(texture);
         this.sprite.setSize(halfsize * 2, halfsize * 2);
         this.sprite.setPosition(pos.x - halfsize, pos.y - halfsize);
@@ -55,7 +53,6 @@ public class Rat implements IRat {
         this.spriteRect = new Rectangle(pos.x - halfsize, pos.y - halfsize, halfsize * 2, halfsize * 2);
         this.originalSpeed = speed;
         this.effectiveSpeed = speed;
-        createPath();
 
     }
 
@@ -77,6 +74,14 @@ public class Rat implements IRat {
                 rotateImage();
             }
         }
+    }
+
+    public int getCurrentControlPoint() {
+        return currentControlPoint;
+    }
+
+    public void setEffectiveSpeed(float newSpeed) {
+        this.effectiveSpeed = newSpeed;
     }
 
     public void createPath() {
@@ -106,12 +111,19 @@ public class Rat implements IRat {
         this.path = new CatmullRomSpline<>(controlPoints, false);
     }
 
+    public Vector2[] getControlPoints() {
+        return controlPoints;
+    }
+
+    public CatmullRomSpline<Vector2> getPath() {
+        return path;
+    }
+
 
     private void updateDirection(Vector2 current, Vector2 next) {
-        if(current.x > 1150){ 
+        if (current.x > 1150) {
             direction = Direction.OUT;
-        }
-        else if (next.x > current.x) {
+        } else if (next.x > current.x) {
             direction = Direction.RIGHT;
         } else if (next.x < current.x) {
             direction = Direction.LEFT;
@@ -121,6 +133,7 @@ public class Rat implements IRat {
             direction = Direction.DOWN;
         }
     }
+    
 
     public Direction getDirection(){
         return direction;
@@ -152,25 +165,7 @@ public class Rat implements IRat {
         DEAD;
     }
 
-    @Override
-    public boolean isHitByProjectile(ArrayList<Projectile> projectiles) {
-        for (Projectile rect : projectiles) {
-            if (rect.getRectangle().overlaps(spriteRect)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public Projectile getHitByProjectile(ArrayList<Projectile> projectiles) {
-        for (Projectile projectile : projectiles) {
-            if (projectile.getRectangle().overlaps(spriteRect)) {
-                return projectile;
-            }
-        }
-        return null;
-    }
+   
 
     @Override
     public int getBounty() {
@@ -199,6 +194,10 @@ public class Rat implements IRat {
     @Override
     public void takeDamage(int damage) {
         health -= damage;
+        if (health <= 0) {
+            health = 0; 
+            killedAnimation(); 
+        }
     }
 
     public enum Direction {
@@ -209,10 +208,8 @@ public class Rat implements IRat {
         OUT;
     }
 
-    @Override
-    public void addTime() {
-        this.secs += 0.05;
-
+    public void setDirection(Direction dir) {
+        this.direction = dir;
     }
 
     private float getRotationAngle() {
@@ -228,9 +225,8 @@ public class Rat implements IRat {
                 return -90;
             case OUT:
                 return 0;
-            default:
-                throw new Error("Unexpected Direction: " + dir);
         }
+        return 0;
     }
 
     @Override
@@ -243,10 +239,6 @@ public class Rat implements IRat {
    
     public Sprite getSprite() {
         return sprite;
-    }
-
-    @Override
-    public void render(SpriteBatch batch) {
     }
 
     public void killedAnimation() {
@@ -262,6 +254,10 @@ public class Rat implements IRat {
         }
     }
 
+    public float getCoinVisibleTime() {
+        return coinVisibleTime;
+    }
+
     @Override
     public boolean isKilled() {
         return health <= 0;
@@ -269,7 +265,7 @@ public class Rat implements IRat {
 
     @Override
     public boolean isOut() {
-        if (this.getDirection() == Direction.OUT) {
+        if (this.getDirection() == Direction.OUT || this.pos.x >= 1150) {
             return true;
         }
         return false;
@@ -281,10 +277,9 @@ public class Rat implements IRat {
         rectangleUpdater();
     }
 
-    public void rectangleUpdater(){
+    private void rectangleUpdater(){
         spriteRect.x = pos.x - halfsize;
         spriteRect.y = pos.y - halfsize;
-        
     }
 
     @Override
@@ -299,24 +294,35 @@ public class Rat implements IRat {
 
     @Override
     public void freeze(float deltaTime) {
-        effectiveSpeed = originalSpeed - 15;  
-        swapImage(ImageSwapper.FROZEN);
-        this.sprite.setTexture(getTexture());
-        isFrozen = true;
+        if (!isFrozen) {
+            effectiveSpeed = originalSpeed - 15;  
+            swapImage(ImageSwapper.FROZEN);
+            this.sprite.setTexture(getTexture());
+            isFrozen = true;
+        }
         freezeTimer += deltaTime;
         if (freezeTimer > RAT_FREEZE_DELAY) {
-            isFrozen = false;
-            effectiveSpeed = originalSpeed;  
-            swapImage(ImageSwapper.ALIVE);
-            this.sprite.setTexture(getTexture());
-            freezeTimer = 0;  
+            unfreeze(); 
         }
     }
+    
+    public void unfreeze() {
+        isFrozen = false;
+        effectiveSpeed = originalSpeed;
+        swapImage(ImageSwapper.ALIVE);
+        this.sprite.setTexture(getTexture());
+        freezeTimer = 0;
+    }
+    
 
     public boolean isFrozen() {
         return isFrozen;
     }
     public void setFrozen() {
         isFrozen = true;
+    }
+
+    public float getEffectiveSpeed() {
+       return effectiveSpeed;
     }
 }

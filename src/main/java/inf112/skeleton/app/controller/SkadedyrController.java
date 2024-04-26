@@ -36,6 +36,7 @@ public class SkadedyrController {
             public void run() {
                 startTimer();
                 if (model.isPaused()) {
+                    model.handleUserInput();
                     return; 
                 }
                 model.clockTick();

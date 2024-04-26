@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -17,7 +16,6 @@ import inf112.skeleton.app.controller.buttons.menu.MenuButtons;
 import inf112.skeleton.app.controller.buttons.upgrade.UpgradeButtons;
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.catmenu.CatMenu;
-import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.GlobalAssetManager;
@@ -97,14 +95,12 @@ public class PlayState extends State {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         Cat selectedCat = model.getSelectedCat();
-        // for (Cat cat : model.getCats()) {
-        if (selectedCat != null) {
+            if (selectedCat != null){
 
-            Circle range = selectedCat.getRangeCircle();
-            shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
-            shapeRenderer.circle(range.x, range.y, range.radius);
-        }
-        // }
+                Circle range = selectedCat.getRangeCircle();
+                shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
+                shapeRenderer.circle(range.x, range.y, range.radius);
+            }
         shapeRenderer.end();
 
         drawCatMenu(batch);
@@ -114,7 +110,6 @@ public class PlayState extends State {
         batch.begin();
         drawCats(batch);
         drawRats(batch);
-        drawProjectiles(batch);
         batch.end();
 
         batch.begin();
@@ -142,21 +137,11 @@ public class PlayState extends State {
         font.draw(batch, "Din Score: " + model.getPoints(), 800, 800);
         font.draw(batch, "Level: " + model.getLevel(), 700, 800);
         font.draw(batch, model.nextWaveText(), 500, 150);
-        
-
+        font.draw(batch, model.uppgradeErrorText(), 900, 190);
         font.setColor(Color.WHITE);
-
     }
 
-    private void drawProjectiles(SpriteBatch batch) {
-        for (Projectile projectile : model.getProjectiles()) {
-            Rectangle projectileRect = projectile.getRectangle();
-            float width = projectileRect.width / 15;
-            float height = projectileRect.height / 15;
-            batch.draw(projectile.getTexture(), projectileRect.x, projectileRect.y, width, height);
-        }
-    }
-
+   
     private void drawCatMenu(SpriteBatch batch) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
