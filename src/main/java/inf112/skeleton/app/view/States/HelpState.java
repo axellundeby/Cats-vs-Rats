@@ -1,59 +1,65 @@
 package inf112.skeleton.app.view.States;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-import inf112.skeleton.app.controller.buttons.ButtonFactory;
 import inf112.skeleton.app.controller.buttons.menu.MenuButtons;
 import inf112.skeleton.app.model.SkadedyrModel;
 
-public class MenuState extends State {
+public class HelpState extends State {
+
     private SkadedyrModel model;
     private Stage stage;
-    private Texture background;
-    private final GameStateManager gsm;
+    private Texture help;
+    private float alpha = 0f;
     private MenuButtons menu;
 
-    public MenuState(GameStateManager gsm, SkadedyrModel model) {
+    public HelpState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
         this.model = model;
-        this.gsm = gsm;
         this.stage = new Stage();
-        this.background = new Texture("Spill_Forside.jpg");
+        this.help = new Texture("Spill_Help.png");
+        menu = new MenuButtons(model, stage);
+        stage.addActor(menu.playButton());
 
         Gdx.input.setInputProcessor(stage);
-
-        menu = new MenuButtons(model, stage);
-        stage.addActor(menu.helpButtonPlay());
-        stage.addActor(menu.playButton());
     }
 
     @Override
     public void render(SpriteBatch sb) {
-
         sb.begin();
-        sb.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        if (alpha < 1f) {
+            alpha += 0.01f;
+            alpha = Math.min(alpha, 1f);
+        } else {
+            if (alpha > 0f) {
+                alpha -= 0.01f;
+                alpha = Math.max(alpha, 0f);
+            }
+        }
+
+        sb.setColor(1, 1, 1, alpha);
+        sb.draw(help, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        sb.setColor(1, 1, 1, alpha);
+
         sb.end();
 
-        stage.draw();
-        if (model.getHelp()) {
-            gsm.set(new HelpState(gsm, model));
-        } 
         if (model.getStartGame()) {
             gsm.set(new PlayState(gsm, model));
         }
-
+        stage.draw();
     }
 
     @Override
     public void dispose() {
         stage.dispose();
-        background.dispose();
+        help.dispose();
     }
+
 }
