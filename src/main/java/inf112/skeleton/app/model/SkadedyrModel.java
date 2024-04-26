@@ -42,17 +42,33 @@ public class SkadedyrModel implements ISkadedyrModel {
     private boolean speedUp = false;
     private Cat selectedCat;
     private State currentState;
+    private boolean isHelp = false;
+    private boolean startGame = false;
     
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
         this.catMenu = new CatMenu();
         this.aliveRats = new ArrayList<>();
         this.currentState = null;
+        
+        
     }
 
+    public void initCatMenu() {
+        catMenu.init();
+        
+    }
+    
     public void setState(State newState){
         this.currentState = newState;
     }
+
+    public State getState(){
+        System.out.println(currentState);
+        return currentState;
+    }
+
+
     public void clockTick() {
         float deltaTime = Gdx.graphics.getDeltaTime();
         updateCatAnimations(deltaTime);
@@ -127,6 +143,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         ratFactory.updateRatFactory(deltaTime, level);
         writeText = true;
         nextWaveText();
+
         setPause();
         for (Cat cat : cats) {
             cat.resetAttackTimer();
@@ -151,9 +168,13 @@ public class SkadedyrModel implements ISkadedyrModel {
     public String nextWaveText() {
         if (writeText) {
             return "Round over. Press unPause to continue.";
+        } else if (level == 0) {
+            return "Press unPause to start";
         }
         return "";
     }
+
+    
 
     private void updateCatAnimations(float deltaTime) {
         for (Cat cat : cats) {
@@ -291,6 +312,24 @@ public class SkadedyrModel implements ISkadedyrModel {
         return level == 10;
     }
 
+    public void setHelp() {
+         isHelp = !isHelp;
+         startGame = false;
+    }
+
+    public boolean getHelp() {
+        return isHelp;
+    }
+
+    public void setStartGame() {
+        startGame = !startGame;
+        isHelp = false;
+    }
+
+    public boolean getStartGame() {
+        return startGame;
+    }
+
     @Override
     public boolean isGameOver() {
         return lives <= 0;
@@ -401,6 +440,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     public CatMenu getBuyMenu() {
         return catMenu;
     }
+
 
     
 }
