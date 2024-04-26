@@ -7,14 +7,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+
 import inf112.skeleton.app.controller.buttons.ButtonFactory;
 import inf112.skeleton.app.model.SkadedyrModel;
+import inf112.skeleton.app.view.States.PlayState;
+import inf112.skeleton.app.view.States.MenuState;
+
+
 
 public class MenuButtons implements IMenuButtons {
     private SkadedyrModel model;
     private Stage stage;
     private Button pauseButton;
     private Button speedButton;
+    private final static int BUTTON_HEIGHT=50; 
+    
 
     public MenuButtons(SkadedyrModel model, Stage stage) {
         this.model = model;
@@ -53,20 +60,47 @@ public class MenuButtons implements IMenuButtons {
         return pauseButton;
     }
 
-    public Button helpButton() {
-        Button button = ButtonFactory.createImageButton("buttons_game/Spill_Help.png",
-                "buttons_game/Spill_Play-Down.png");
-        button.setSize(200, 150);
-        button.setPosition((stage.getWidth() - button.getWidth()) / 2 + 200, 50);
-        button.addListener(new ClickListener() {
+    @Override
+    public Button playButton() {
+        Button playButton = ButtonFactory.createImageButton("buttons_game/Spill_Play_Up.png", "buttons_game/Spill_Play_Down.png");
+        playButton.setSize(200, 100);
+        if (model.getState() instanceof MenuState) {
+            playButton.setPosition((stage.getWidth() - playButton.getWidth()) / 2, stage.getHeight() - 500); 
+        } else {
+            playButton.setPosition(500, 500);
+        }
+        playButton.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                model.help();
-                updateButtonAppearance();
+                model.setStartGame();
             }
         });
-        return button;
+        return playButton;
     }
+
+    @Override
+    public Button helpButtonPlay() {
+        Button helpButton = ButtonFactory.createImageButton("buttons_game/Spill_Help.png",
+                "buttons_game/Spill_Help.png");
+        helpButton.setSize(100, 100);
+        
+        if (model.getState() instanceof MenuState) {
+            helpButton.setPosition((stage.getWidth() - helpButton.getWidth()) / 2, stage.getHeight() - 200); 
+        } else {
+            helpButton.setPosition(270, 750);
+        }
+
+        helpButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+                if(model.isPaused())
+                    model.setHelp();
+              
+            }
+        });
+        return helpButton;
+    }
+
 
     @Override
     public Button restarButton() {

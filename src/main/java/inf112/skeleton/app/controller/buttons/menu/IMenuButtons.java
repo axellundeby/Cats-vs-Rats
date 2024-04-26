@@ -35,4 +35,11 @@ public interface IMenuButtons {
      * Updates the appearance of the buttons.
      */
     void updateButtonAppearance();
+    
+
+    Button helpButtonPlay();
+
+    Button playButton();
+
+   
 }

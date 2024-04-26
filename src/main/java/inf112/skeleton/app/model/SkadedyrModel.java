@@ -42,6 +42,8 @@ public class SkadedyrModel implements ISkadedyrModel {
     private boolean speedUp = false;
     private Cat selectedCat;
     private State currentState;
+    private boolean isHelp = false;
+    private boolean startGame = false;
     
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
@@ -50,9 +52,20 @@ public class SkadedyrModel implements ISkadedyrModel {
         this.currentState = null;
     }
 
+    public void initCatMenu() {
+        catMenu.init();
+    }
+    
     public void setState(State newState){
         this.currentState = newState;
     }
+
+    public State getState(){
+        System.out.println(currentState);
+        return currentState;
+    }
+
+
     public void clockTick() {
         float deltaTime = Gdx.graphics.getDeltaTime();
         updateCatAnimations(deltaTime);
@@ -291,6 +304,24 @@ public class SkadedyrModel implements ISkadedyrModel {
         return level == 10;
     }
 
+    public void setHelp() {
+         isHelp = !isHelp;
+         startGame = false;
+    }
+
+    public boolean getHelp() {
+        return isHelp;
+    }
+
+    public void setStartGame() {
+        startGame = !startGame;
+        isHelp = false;
+    }
+
+    public boolean getStartGame() {
+        return startGame;
+    }
+
     @Override
     public boolean isGameOver() {
         return lives <= 0;
@@ -401,6 +432,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     public CatMenu getBuyMenu() {
         return catMenu;
     }
+
 
     
 }
