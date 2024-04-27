@@ -2,9 +2,6 @@ package inf112.skeleton.app.model.entities.rat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-
-import inf112.skeleton.app.view.GlobalAssetManager;
-
 public class BasicRat extends Rat {
 
     public BasicRat() {

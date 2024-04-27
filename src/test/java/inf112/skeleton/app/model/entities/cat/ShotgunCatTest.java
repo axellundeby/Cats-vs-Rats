@@ -1,7 +1,12 @@
 package inf112.skeleton.app.model.entities.cat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import java.util.LinkedList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,17 +14,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.badlogic.gdx.graphics.Texture;
+
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.GameResourceFactory;
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
-public class BasicCatTest {
-    private BasicCat basicCat;
-
+public class ShotgunCatTest {
+    private ShotgunCat shotgunCat;
     @Mock
     private Texture aliveTextureMock;
     @Mock
@@ -31,11 +32,11 @@ public class BasicCatTest {
 
     @BeforeEach
     void setup() {
-    GameResourceFactory mockFactory = mock(GameResourceFactory.class);
-    Texture mockTexture = mock(Texture.class);
-    when(mockFactory.getTexture(anyString())).thenReturn(mockTexture);
+        GameResourceFactory mockFactory = mock(GameResourceFactory.class);
+        Texture mockTexture = mock(Texture.class);
+        when(mockFactory.getTexture(anyString())).thenReturn(mockTexture);
 
-    basicCat = new BasicCat(mockFactory);
+        shotgunCat = new ShotgunCat(mockFactory);
         rats = new LinkedList<>();
         for (int i = 0; i < 3; i++) {
             rats.add(new Rat(100, 10, aliveTextureMock, 50, 20, frozenTextureMock, 25, deadTextureMock));
@@ -44,31 +45,31 @@ public class BasicCatTest {
 
     @Test
     void testAttack() {
-        if (basicCat.canAttack()) {
+        if (shotgunCat.canAttack()) {
             int initialHealth = rats.getFirst().getHealth();
-            basicCat.attack(rats);
-            assertEquals(initialHealth - basicCat.getStrength(), rats.getFirst().getHealth());
+            shotgunCat.attack(rats);
+            assertEquals(initialHealth - shotgunCat.getStrength(), rats.getFirst().getHealth());
         }
     }
 
     @Test
     void upgradeDamageTest() {
-        int initialStrength = basicCat.getStrength();
-        basicCat.upgradeDamage();
-        assertEquals((int)(initialStrength * 1.25), basicCat.getStrength());
+        int initialStrength = shotgunCat.getStrength();
+        shotgunCat.upgradeDamage();
+        assertEquals((int)(initialStrength * 1.25), shotgunCat.getStrength());
     }
 
     @Test
     void testUpgradeRange() {
-        int initialRange = basicCat.getRange();
-        basicCat.upgradeRange();
-        assertEquals((int)(initialRange * 1.25), basicCat.getRange());
+        int initialRange = shotgunCat.getRange();
+        shotgunCat.upgradeRange();
+        assertEquals((int)(initialRange * 1.25), shotgunCat.getRange());
     }
 
     @Test
     void testUpgradeFireRate() {
-        float initialFireRate = basicCat.getFireRate();
-        basicCat.upgradeFireRate();
-        assertEquals(initialFireRate * 0.75, basicCat.getFireRate(), 0.01);
+        float initialFireRate = shotgunCat.getFireRate();
+        shotgunCat.upgradeFireRate();
+        assertEquals(initialFireRate * 0.75, shotgunCat.getFireRate(), 0.01);
     }
 }

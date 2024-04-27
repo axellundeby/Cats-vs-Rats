@@ -1,22 +1,18 @@
 package inf112.skeleton.app.model.entities.cat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.model.entities.rat.Rat;
+import inf112.skeleton.app.view.GameResourceFactory;
 
 public class ShotgunCat extends Cat {
 
-    public ShotgunCat() {
+    public ShotgunCat(GameResourceFactory resourceFactory) {
         super(
             10,
             200,
-            Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Skytekatt1.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt2.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt3.png"))),
-            Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Skytekatt1_angrip.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt2_angrip.png")),new Texture(Gdx.files.internal("cats/Spill_Skytekatt3_angrip.png"))),
+            Arrays.asList(resourceFactory.getTexture("cats/Spill_Skytekatt1.png"),resourceFactory.getTexture("cats/Spill_Skytekatt2.png"),resourceFactory.getTexture("cats/Spill_Skytekatt3.png")),
+            Arrays.asList(resourceFactory.getTexture("cats/Spill_Skytekatt1_angrip.png"),resourceFactory.getTexture("cats/Spill_Skytekatt2_angrip.png"),resourceFactory.getTexture("cats/Spill_Skytekatt3_angrip.png")),
             5.0f,
             200);
     }

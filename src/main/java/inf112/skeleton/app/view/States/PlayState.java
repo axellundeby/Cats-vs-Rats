@@ -18,7 +18,6 @@ import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
-import inf112.skeleton.app.view.GlobalAssetManager;
 
 public class PlayState extends State {
     private ShapeRenderer shapeRenderer;
@@ -65,8 +64,6 @@ public class PlayState extends State {
         stage.addActor(upgradeFireRateButton);
         stage.addActor(upgradeRangeButton);
         stage.addActor(upgradeDamageButton);
-
-        GlobalAssetManager.loadAssets();
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -173,8 +170,6 @@ public class PlayState extends State {
         stage.dispose();
         shapeRenderer.dispose();
         font.dispose();
-        GlobalAssetManager.dispose();
-
     }
 
 }

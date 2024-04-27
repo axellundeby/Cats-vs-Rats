@@ -16,6 +16,8 @@ import inf112.skeleton.app.view.States.PlayState;
 import inf112.skeleton.app.view.States.State;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
 import java.util.List;
+import inf112.skeleton.app.view.GameResourceFactory;
+import inf112.skeleton.app.view.TimeSource;
 
 public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Cat> cats = new ArrayList<>();
@@ -23,10 +25,6 @@ public class SkadedyrModel implements ISkadedyrModel {
     private RatFactory ratFactory = new RatFactory();
     private int lives = 5;
     private int money = 1000000;
-    private final int STARTING_MONEY = 200;
-    private final int STARTING_LIVES = 5;
-    private final int STARTING_POINTS = 0;
-    private final int STARTING_LEVEL = 0;
     private int points = 0;
     private int level = 0;
     private int ratsSpawned;
@@ -45,10 +43,15 @@ public class SkadedyrModel implements ISkadedyrModel {
     private boolean startGame = false;
     private boolean uppgradePressed = false;
     private List<Rat> newRats;
+    private GameResourceFactory resourceFactory;
+    private TimeSource timeSource;
     
-    public SkadedyrModel() {
+    public SkadedyrModel(GameResourceFactory resourceFactory, TimeSource timeSource) {
         initializeGame();
-        catMenu = new CatMenu();
+        this.resourceFactory = resourceFactory;
+        this.timeSource = timeSource;
+        catMenu = new CatMenu(resourceFactory, timeSource);
+
     }
 
     private void initializeGame() {
@@ -56,10 +59,6 @@ public class SkadedyrModel implements ISkadedyrModel {
         aliveRats = new ArrayList<>();
         newRats = new ArrayList<>(); 
         ratFactory = new RatFactory();
-        lives = STARTING_LIVES;
-        money = STARTING_MONEY;
-        points = STARTING_POINTS;
-        level = STARTING_LEVEL;
         isPaused = true;
         intervalSeconds = 0.05f;
 
@@ -81,7 +80,7 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     public void clockTick() {
         if (!isPaused) {
-            float deltaTime = Gdx.graphics.getDeltaTime();
+            float deltaTime = timeSource.getDeltaTime();
             updateCatAnimations(deltaTime);
             handleUserInput();
             moveRats();
@@ -413,13 +412,13 @@ public class SkadedyrModel implements ISkadedyrModel {
         Cat cat = catMenu.getSelectedCat();
         int cost = 0;
         if (cat instanceof BasicCat) {
-            cat = new BasicCat();
+            cat = new BasicCat(resourceFactory);
 
         } else if (cat instanceof ShotgunCat) {
-            cat = new ShotgunCat();
+            cat = new ShotgunCat(resourceFactory);
 
         } else if (cat instanceof FreezeCat) {
-            cat = new FreezeCat();
+            cat = new FreezeCat(resourceFactory, timeSource);
         }
         if (cat != null){
             cost = cat.getCost();

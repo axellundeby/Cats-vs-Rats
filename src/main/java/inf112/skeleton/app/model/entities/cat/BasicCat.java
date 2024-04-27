@@ -1,19 +1,16 @@
 package inf112.skeleton.app.model.entities.cat;
 import java.util.Arrays;
 import java.util.LinkedList;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import inf112.skeleton.app.model.entities.rat.Rat;
+import inf112.skeleton.app.view.GameResourceFactory;
 
 
 public class BasicCat extends Cat {
-    public BasicCat() {
-        super(50, 
-        100, 
-        Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Kosekatt1.png")),new Texture(Gdx.files.internal("cats/Spill_Kosekatt2.png")),new Texture(Gdx.files.internal("cats/Spill_Kosekatt3.png"))), 
-        Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Kosekatt1_angrip.png")),new Texture(Gdx.files.internal("cats/Spill_Kosekatt3_angrip.png")),new Texture(Gdx.files.internal("cats/Spill_Kosekatt3_angrip.png"))), 
-        25.0f,
-        200);
+      public BasicCat(GameResourceFactory resourceFactory) {
+        super(50, 100, 
+            Arrays.asList(resourceFactory.getTexture("cats/Spill_Kosekatt1.png"), resourceFactory.getTexture("cats/Spill_Kosekatt2.png"), resourceFactory.getTexture("cats/Spill_Kosekatt3.png")), 
+            Arrays.asList(resourceFactory.getTexture("cats/Spill_Kosekatt1_angrip.png"), resourceFactory.getTexture("cats/Spill_Kosekatt3_angrip.png"), resourceFactory.getTexture("cats/Spill_Kosekatt3_angrip.png")), 
+            25.0f, 200);
     }
 
     @Override
