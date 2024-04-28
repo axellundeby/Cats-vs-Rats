@@ -35,8 +35,8 @@ public class RatTest {
             new Vector2(8,290),
             new Vector2(200,290),
             new Vector2(200,422),
-            new Vector2(85,422), 
-            new Vector2(85,616), 
+            new Vector2(85,422),
+            new Vector2(85,616),
             new Vector2(106,616),
             new Vector2(435,620),
             new Vector2(435,290),
@@ -48,7 +48,7 @@ public class RatTest {
             new Vector2(660,610),
             new Vector2(1080,610),
             new Vector2(1080,310),
-            new Vector2(1200,310),
+            new Vector2(1300,310),
             new Vector2(1500,310),
         };
         rat = new Rat(100, 10, aliveTextureMock, 50, 20, frozenTextureMock, 25, deadTextureMock);

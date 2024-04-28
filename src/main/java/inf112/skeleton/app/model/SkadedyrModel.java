@@ -22,7 +22,7 @@ import inf112.skeleton.app.view.TimeSource;
 public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Cat> cats = new ArrayList<>();
     private ArrayList<Rat> aliveRats = new ArrayList<>();
-    private RatFactory ratFactory = new RatFactory();
+    private RatFactory ratFactory;
     private int lives = 5;
     private int money = 1000000;
     private int points = 0;
@@ -47,21 +47,25 @@ public class SkadedyrModel implements ISkadedyrModel {
     private TimeSource timeSource;
     
     public SkadedyrModel(GameResourceFactory resourceFactory, TimeSource timeSource) {
-        initializeGame();
         this.resourceFactory = resourceFactory;
         this.timeSource = timeSource;
         catMenu = new CatMenu(resourceFactory, timeSource);
+        ratFactory = new RatFactory(resourceFactory);
+        cats = new ArrayList<>();
+        aliveRats = new ArrayList<>();
+        newRats = new ArrayList<>(); 
+        initializeGame();
 
     }
 
     private void initializeGame() {
-        cats = new ArrayList<>();
-        aliveRats = new ArrayList<>();
-        newRats = new ArrayList<>(); 
-        ratFactory = new RatFactory();
+        cats.clear();
+        aliveRats.clear();
+        newRats.clear();
+        ratFactory.resetRatFactory();
         isPaused = true;
         intervalSeconds = 0.05f;
-
+        speedUp = false;
     }
 
     public void initCatMenu() {
