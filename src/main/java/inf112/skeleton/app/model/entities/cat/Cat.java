@@ -314,6 +314,9 @@ public abstract class Cat {
         return cost;
     }
 
+    /**
+     * Abstract method used for playing sounds in subclasses
+     */
     public abstract void playAttackSound();
 
     @Override
