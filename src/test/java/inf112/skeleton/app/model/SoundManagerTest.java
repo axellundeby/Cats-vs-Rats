@@ -28,7 +28,8 @@ public class SoundManagerTest {
         when(soundFactory.getSound("sound/cashier.mp3")).thenReturn(upgradeSound);
         when(soundFactory.getSound("sound/hp.mp3")).thenReturn(hpSound);
     
-        soundManager = new SoundManager(); // Assuming constructor injection is possible
+ 
+        //soundManager = new SoundManager();  soundManager needs factory as argument?
     }
     
     @Test
