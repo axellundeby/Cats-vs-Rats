@@ -55,7 +55,6 @@ public class BasicCat extends Cat {
 
     @Override
     public void playAttackSound() {
-        //Sound attackSound = GlobalAssetManager.getSound("sound/fart.mp3");
         Sound attackSound = Gdx.audio.newSound(Gdx.files.internal("sound/fart.mp3"));
         attackSound.play(0.6f);
     }
