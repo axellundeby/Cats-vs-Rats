@@ -23,6 +23,7 @@ import java.util.List;
 import inf112.skeleton.app.model.SoundManager;
 import inf112.skeleton.app.view.GlobalAssetManager;
 
+
 public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Cat> cats = new ArrayList<>();
     private ArrayList<Rat> aliveRats = new ArrayList<>();
