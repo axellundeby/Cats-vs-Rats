@@ -60,7 +60,7 @@ public class MenuButtons implements IMenuButtons {
     public Button exitButton() {
         Button exitButton = ButtonFactory.createImageButton("buttons_game/Spill_Exit.png", "buttons_game/Spill_Exit_Down.png");
         exitButton.setSize(150, 75);
-        if(model.getState() instanceof MenuState){
+        if(model.getState() instanceof MenuState || model.getState() instanceof HelpState){
             exitButton.setPosition(5, MENU_BUTTONS_HEIGHT);
         } else {
             exitButton.setPosition((stage.getWidth() - exitButton.getWidth()) / 2 - 30 , 
