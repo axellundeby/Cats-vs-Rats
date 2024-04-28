@@ -53,16 +53,23 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     private void initializeGame() {
         cats = new ArrayList<>();
-        aliveRats = new ArrayList<>();
-        newRats = new ArrayList<>(); 
         ratFactory = new RatFactory();
+        removeAllRats();
         lives = STARTING_LIVES;
         money = STARTING_MONEY;
         points = STARTING_POINTS;
         level = STARTING_LEVEL;
         isPaused = true;
         intervalSeconds = 0.05f;
+        if (currentState instanceof PlayState){
+            ((PlayState) currentState).updateButtons();
+        }
 
+    }
+
+    private void removeAllRats(){
+        aliveRats = new ArrayList<>();
+        newRats = new ArrayList<>(); 
     }
 
     public void initCatMenu() {
@@ -148,6 +155,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         level++;
         writeText = true;
         nextWaveText();
+        removeAllRats();
 
         setPause();
         for (Cat cat : cats) {
@@ -379,6 +387,8 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     public void restart() {
         initializeGame();
+        
+
     }
 
    
