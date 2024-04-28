@@ -25,7 +25,7 @@ public class PlayState extends State {
     private SkadedyrModel model;
     private BitmapFont font;
     private Stage stage;
-
+    private Stage upgradeStage;
     private CatMenu catMenu;
     private Button pauseButton;
     private Texture mapTexture;
@@ -41,6 +41,7 @@ public class PlayState extends State {
         font.setColor(Color.BLACK);
         this.catMenu = model.getBuyMenu();
         this.stage = new Stage();
+        this.upgradeStage = new Stage();
 
         this.mapTexture = new Texture("map/Spill_Plattform.jpg");
 
@@ -62,13 +63,13 @@ public class PlayState extends State {
     }
 
     public void addButtonsToStage() {
-        if (model.getSelectedCat() != null) {
+        // if (model.getSelectedCat() != null) {
 
-            stage.addActor(upgradeButtons.upgradeDamageButton());
-            stage.addActor(upgradeButtons.upgradeFireRateButton());
-            stage.addActor(upgradeButtons.upgradeRangeButton());
+            upgradeStage.addActor(upgradeButtons.upgradeDamageButton());
+            upgradeStage.addActor(upgradeButtons.upgradeFireRateButton());
+            upgradeStage.addActor(upgradeButtons.upgradeRangeButton());
 
-        }
+        // }
 
     }
 
@@ -80,7 +81,7 @@ public class PlayState extends State {
 
     @Override
     public void render(SpriteBatch batch) {
-
+        Cat selectedCat = model.getSelectedCat();
         ScreenUtils.clear(Color.DARK_GRAY);
 
         if (alpha < 1f) {
@@ -97,7 +98,7 @@ public class PlayState extends State {
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        Cat selectedCat = model.getSelectedCat();
+
         if (selectedCat != null) {
 
             Circle range = selectedCat.getRangeCircle();
@@ -119,12 +120,24 @@ public class PlayState extends State {
         drawGameStatus(batch);
         batch.end();
 
-        if (model.getSelectedCat() != null) {
-            // draw the upgradebuttons with stage
-        }
-
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+
+
+
+    
+        
+        if (selectedCat != null) {
+            Gdx.input.setInputProcessor(upgradeStage);
+            upgradeStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+            upgradeStage.draw();
+
+        } else {
+            Gdx.input.setInputProcessor(stage);
+        }
+
+
+
 
         if (model.isGameWon()) {
             gsm.set(new WinState(gsm, model));
@@ -177,6 +190,7 @@ public class PlayState extends State {
     @Override
     public void dispose() {
         stage.dispose();
+        upgradeStage.dispose();
         shapeRenderer.dispose();
         font.dispose();
         GlobalAssetManager.dispose();

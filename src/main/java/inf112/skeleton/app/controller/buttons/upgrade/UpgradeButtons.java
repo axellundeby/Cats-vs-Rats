@@ -31,11 +31,13 @@ public class UpgradeButtons {
     private static final String usedUpTexture = "buttons_game/angryCat.png";
     private static final String clickTexture = "coin.png";
 
+
     public UpgradeButtons(SkadedyrModel model) {
         this.model = model;
     }
 
     private Button createUpgradeButton(int cost, String textureUp, int xPosition, Consumer<Cat> upgradeAction) {
+
 
         Button upgradeButton = ButtonFactory.createImageButton(textureUp, "coin.png");
 
@@ -62,17 +64,18 @@ public class UpgradeButtons {
     }
 
     public Button upgradeDamageButton() {
-
-        return createUpgradeButton(20, damageTexture, 650, Cat::upgradeDamage);
+        this.upgradeDamageButton = createUpgradeButton(2000, damageTexture, 650, Cat::upgradeDamage);
+        return upgradeDamageButton;
     }
 
     public Button upgradeFireRateButton() {
-        return createUpgradeButton(20, fireRateTexture, 820, Cat::upgradeFireRate);
+        this.upgradeFireRateButton = createUpgradeButton(2000, fireRateTexture, 820, Cat::upgradeFireRate);
+        return upgradeFireRateButton;
     }
 
     public Button upgradeRangeButton() {
-
-        return createUpgradeButton(20, rangeTexture, 990, Cat::upgradeRange);
+        this.upgradeRangeButton = createUpgradeButton(200, rangeTexture, 990, Cat::upgradeRange);
+        return upgradeRangeButton;
     }
 
     public void updateButtonAppearance() {
@@ -85,7 +88,7 @@ public class UpgradeButtons {
 
     private void updateUpgradeButtonAppearances(Button button, String upgradeTexture) {
         Cat selectedCat = model.getSelectedCat();
-        TextureRegionDrawable newDrawable;
+        TextureRegionDrawable newDrawable = null;
         if (selectedCat != null) {
 
             if (selectedCat.getUpgradeCounter() >= 4) {
@@ -96,6 +99,11 @@ public class UpgradeButtons {
                 newDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(upgradeTexture)));
             }
         }
+        button.getStyle().up = newDrawable;
+        button.getStyle().down = newDrawable;
+
+        
+        
     }
 
 }
