@@ -103,10 +103,8 @@ public class Rat implements IRat {
             new Vector2(660,610),
             new Vector2(1080,610),
             new Vector2(1080,310),
-            new Vector2(1200,310),
+            new Vector2(1300,310),
             new Vector2(1500,310),
-           
-            
         };
         this.path = new CatmullRomSpline<>(controlPoints, false);
     }
@@ -121,7 +119,7 @@ public class Rat implements IRat {
 
 
     private void updateDirection(Vector2 current, Vector2 next) {
-        if (current.x > 1150) {
+        if (current.x > 1200) {
             direction = Direction.OUT;
         } else if (next.x > current.x) {
             direction = Direction.RIGHT;
@@ -265,7 +263,7 @@ public class Rat implements IRat {
 
     @Override
     public boolean isOut() {
-        if (this.getDirection() == Direction.OUT || this.pos.x >= 1150) {
+        if (this.getDirection() == Direction.OUT) {
             return true;
         }
         return false;

@@ -34,7 +34,7 @@ public class PlayState extends State {
     private MenuButtons menu;
     private UpgradeButtons upgrade;
     private float alpha = 0f;
-    private Button helpButton;
+   
 
     public PlayState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
@@ -122,7 +122,7 @@ public class PlayState extends State {
         if (model.isGameWon()) {
             gsm.set(new WinState(gsm, model));
         }
-        if (model.isGameOver()) {
+        if  (model.isGameOver()) {
             gsm.set(new GameOverState(gsm, model));
         }
         if (model.getHelp()) {
