@@ -25,16 +25,13 @@ public class PlayState extends State {
     private SkadedyrModel model;
     private BitmapFont font;
     private Stage stage;
+
     private CatMenu catMenu;
-    private Button upgradeFireRateButton;
-    private Button upgradeRangeButton;
-    private Button upgradeDamageButton;
     private Button pauseButton;
     private Texture mapTexture;
     private MenuButtons menu;
-    private UpgradeButtons upgrade;
+    private UpgradeButtons upgradeButtons;
     private float alpha = 0f;
-   
 
     public PlayState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
@@ -43,8 +40,8 @@ public class PlayState extends State {
         this.font = new BitmapFont();
         font.setColor(Color.BLACK);
         this.catMenu = model.getBuyMenu();
-        // catMenu.init();
         this.stage = new Stage();
+
         this.mapTexture = new Texture("map/Spill_Plattform.jpg");
 
         menu = new MenuButtons(model, stage);
@@ -56,24 +53,29 @@ public class PlayState extends State {
         stage.addActor(menu.helpButtonPlay());
         stage.addActor(menu.restarButton());
 
-        upgrade = new UpgradeButtons(model, stage);
+        upgradeButtons = new UpgradeButtons(model);
 
-        upgradeFireRateButton = upgrade.upgradeFireRateButton();
-        upgradeRangeButton = upgrade.upgradeRangeButton();
-        upgradeDamageButton = upgrade.upgradeDamageButton();
-
-        stage.addActor(upgradeFireRateButton);
-        stage.addActor(upgradeRangeButton);
-        stage.addActor(upgradeDamageButton);
+        addButtonsToStage();
 
         GlobalAssetManager.loadAssets();
         Gdx.input.setInputProcessor(stage);
     }
 
-    public void updateButtons() {
-        menu.updateButtonAppearance();
-        upgrade.updateButtonAppearance();
+    public void addButtonsToStage() {
+        if (model.getSelectedCat() != null) {
 
+            stage.addActor(upgradeButtons.upgradeDamageButton());
+            stage.addActor(upgradeButtons.upgradeFireRateButton());
+            stage.addActor(upgradeButtons.upgradeRangeButton());
+
+        }
+
+    }
+
+    public void updateButtons() {
+
+        menu.updateButtonAppearance();
+        upgradeButtons.updateButtonAppearance();
     }
 
     @Override
@@ -84,6 +86,7 @@ public class PlayState extends State {
         if (alpha < 1f) {
             alpha += Gdx.graphics.getDeltaTime() / 2; // Increase alpha over time
         }
+
         batch.begin();
 
         batch.setColor(1, 1, 1, alpha);
@@ -95,12 +98,12 @@ public class PlayState extends State {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         Cat selectedCat = model.getSelectedCat();
-            if (selectedCat != null){
+        if (selectedCat != null) {
 
-                Circle range = selectedCat.getRangeCircle();
-                shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
-                shapeRenderer.circle(range.x, range.y, range.radius);
-            }
+            Circle range = selectedCat.getRangeCircle();
+            shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
+            shapeRenderer.circle(range.x, range.y, range.radius);
+        }
         shapeRenderer.end();
 
         drawCatMenu(batch);
@@ -116,13 +119,17 @@ public class PlayState extends State {
         drawGameStatus(batch);
         batch.end();
 
+        if (model.getSelectedCat() != null) {
+            // draw the upgradebuttons with stage
+        }
+
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
         if (model.isGameWon()) {
             gsm.set(new WinState(gsm, model));
         }
-        if  (model.isGameOver()) {
+        if (model.isGameOver()) {
             gsm.set(new GameOverState(gsm, model));
         }
         if (model.getHelp()) {
@@ -141,7 +148,6 @@ public class PlayState extends State {
         font.setColor(Color.WHITE);
     }
 
-   
     private void drawCatMenu(SpriteBatch batch) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 

@@ -30,8 +30,9 @@ public abstract class Cat {
     private int cost;
     private Vector2 lastTargetPosition = null;
     private Circle selectionCircle;
-    public int upgradeCounter = 0;
+    private int upgradeCounter = 0;
     private static final float SELECTION_CIRCLE_RADIUS_MULTIPLIER = 5f;
+    private static final int MAX_UPGRADES = 4;
 
 
 
@@ -66,6 +67,22 @@ public abstract class Cat {
 
     public int setUpgradeCounter(int upgradeCounter){
         return this.upgradeCounter = upgradeCounter;
+    }
+
+     /**
+     * Checks if the cat can be further upgraded.
+     * @return true if upgrades are still possible, false otherwise.
+     */
+    public boolean canUpgrade() {
+        return upgradeCounter < MAX_UPGRADES;
+    }
+
+    /**
+     * Returns the current number of upgrades.
+     * @return the current upgrade counter.
+     */
+    public int getUpgradeCount() {
+        return upgradeCounter;
     }
 
     public int getSize(){

@@ -43,7 +43,6 @@ public class MenuButtons implements IMenuButtons {
         } else if (model.getState() instanceof MenuState || model.getState() instanceof WinState || model.getState() instanceof GameOverState){
             playButton.setPosition(800, 400);
         }
-
         else {
             playButton.setPosition((stage.getWidth() - playButton.getWidth()) / 2 - 200, BUTTON_HEIGHT);
         }
