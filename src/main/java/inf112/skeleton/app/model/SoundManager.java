@@ -33,7 +33,6 @@ public class SoundManager {
 
     }
 
-    // Get the singleton instance of SoundManager
     public static SoundManager getInstance() {
         if (instance == null) {
             instance = new SoundManager();
@@ -42,13 +41,13 @@ public class SoundManager {
     }
 
     // Method to play rat spawn sound
-    public void playRatSpawnSound() {
-        ratSpawnSound.play();
-    }
+    // public void playRatSpawnSound() {
+    //     ratSpawnSound.play();
+    // }
 
     // Method to play coin spawn sound
     public void playCoinSpawnSound() {
-        coinSpawnSound.play();
+        coinSpawnSound.play(0.5f);
     }
 
     public void playUpgradeSound() {
@@ -56,7 +55,7 @@ public class SoundManager {
     }
 
     public void playHpSound(){
-        hpSound.play();
+        hpSound.play(0.5f);
     }
 
     // Dispose of sounds when they're no longer needed
@@ -64,5 +63,6 @@ public class SoundManager {
         ratSpawnSound.dispose();
         coinSpawnSound.dispose();
         upgradeSound.dispose();
+        hpSound.dispose();
     }
 }

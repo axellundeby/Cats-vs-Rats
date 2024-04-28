@@ -109,7 +109,6 @@ public class SkadedyrModel implements ISkadedyrModel {
                 if (!rat.isrewardClaimed()) {
                     if (!rat.isExited()) {
                         lives = Math.max(0, lives - 1);
-                        //LIV går ned sound
                         soundManager.playHpSound();
                         rat.exit();
                     }
