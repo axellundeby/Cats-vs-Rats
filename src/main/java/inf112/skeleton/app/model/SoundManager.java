@@ -3,6 +3,8 @@ package inf112.skeleton.app.model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 
+import inf112.skeleton.app.view.SoundResourceFactory;
+
 public class SoundManager {
     // Define constants for sound file paths
     private static final String RAT_SPAWN_SOUND_PATH = "sound/caralarm.mp3";
@@ -21,8 +23,8 @@ public class SoundManager {
     private static SoundManager instance;
 
     // Private constructor to prevent instantiation from outside
-    public SoundManager() {
-        // Initialize sounds
+    public SoundManager(SoundResourceFactory factory) {
+        this.coinSpawnSound = factory.getSound("sound/coin.mp3");
     }
     
     public void init(){
@@ -34,9 +36,9 @@ public class SoundManager {
 
     }
 
-    public static SoundManager getInstance() {
+    public static SoundManager getInstance(SoundResourceFactory factory) {
         if (instance == null) {
-            instance = new SoundManager();
+            instance = new SoundManager(factory);
         }
         return instance;
     }
