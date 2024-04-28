@@ -30,6 +30,7 @@ public class SoundManager {
         coinSpawnSound = Gdx.audio.newSound(Gdx.files.internal(COIN_SPAWN_SOUND_PATH));
         upgradeSound = Gdx.audio.newSound(Gdx.files.internal(UPGRADE_SOUND_PATH));
         hpSound = Gdx.audio.newSound(Gdx.files.internal(HP_SOUND_PATH));
+        
 
     }
 

@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import inf112.skeleton.app.model.entities.Projectile;
 import inf112.skeleton.app.model.entities.rat.Rat;
+import inf112.skeleton.app.view.GlobalAssetManager;
 
 public class BasicCat extends Cat {
     public BasicCat() {
@@ -54,7 +55,8 @@ public class BasicCat extends Cat {
 
     @Override
     public void playAttackSound() {
-        Sound attackSound = Gdx.audio.newSound(Gdx.files.internal("sound/fart.mp3"));
+        Sound attackSound = GlobalAssetManager.getSound("sound/fart.mp3");
+        //Sound attackSound = Gdx.audio.newSound(Gdx.files.internal("sound/fart.mp3"));
         attackSound.play(0.6f);
     }
 

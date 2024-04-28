@@ -11,14 +11,15 @@ public class GlobalAssetManager {
         // Load all necessary assets
         public static void loadAssets() {
             // Load textures
-            manager.load("rats/Spill_Rotte1.png", Texture.class);
-            manager.load("rats/Spill_Rotte1_freezed.png", Texture.class);
-            manager.load("coin.png", Texture.class);
+            //manager.load("rats/Spill_Rotte1.png", Texture.class);
+            //manager.load("rats/Spill_Rotte1_freezed.png", Texture.class);
+            //manager.load("coin.png", Texture.class);
     
      
-            // manager.load("sounds/meow.mp3", Sound.class);
+            manager.load("sound/fart.mp3", Sound.class);
             // manager.load("sounds/ratsqueak.mp3", Sound.class);
             // manager.load("music/background_music.mp3", Music.class);
+            // private static final String HP_SOUND_PATH = "sound/hp.mp3";
         }
     
         // Retrieve a texture

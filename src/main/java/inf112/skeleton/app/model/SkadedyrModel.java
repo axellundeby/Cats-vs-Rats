@@ -21,6 +21,7 @@ import inf112.skeleton.app.view.States.State;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
 import java.util.List;
 import inf112.skeleton.app.model.SoundManager;
+import inf112.skeleton.app.view.GlobalAssetManager;
 
 public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Cat> cats = new ArrayList<>();
@@ -44,6 +45,8 @@ public class SkadedyrModel implements ISkadedyrModel {
     private Cat selectedCat;
     private State currentState;
     private SoundManager soundManager;
+
+
 
     public SkadedyrModel() {
         this.cats = new ArrayList<>();
