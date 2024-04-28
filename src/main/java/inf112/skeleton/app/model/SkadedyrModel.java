@@ -55,7 +55,6 @@ public class SkadedyrModel implements ISkadedyrModel {
         aliveRats = new ArrayList<>();
         newRats = new ArrayList<>(); 
         initializeGame();
-
     }
 
     private void initializeGame() {
