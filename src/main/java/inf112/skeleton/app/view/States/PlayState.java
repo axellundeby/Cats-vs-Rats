@@ -45,38 +45,35 @@ public class PlayState extends State {
 
         this.mapTexture = new Texture("map/Spill_Plattform.jpg");
 
-        menu = new MenuButtons(model, stage);
-        stage.addActor(menu.exitButton());
+       
 
-        pauseButton = menu.pauseButton();
-        stage.addActor(pauseButton);
-        stage.addActor(menu.speedButton());
-        stage.addActor(menu.helpButtonPlay());
-        stage.addActor(menu.restarButton());
-
-        upgradeButtons = new UpgradeButtons(model);
-
-        addButtonsToStage();
+        addUpgradeButtonsToStage();
+        addMenuButtonsToStage();
 
         GlobalAssetManager.loadAssets();
         Gdx.input.setInputProcessor(stage);
     }
 
-    public void addButtonsToStage() {
-        // if (model.getSelectedCat() != null) {
-
-            upgradeStage.addActor(upgradeButtons.upgradeDamageButton());
-            upgradeStage.addActor(upgradeButtons.upgradeFireRateButton());
-            upgradeStage.addActor(upgradeButtons.upgradeRangeButton());
-
-        // }
-
+    public void addUpgradeButtonsToStage() {
+        upgradeStage.addActor(upgradeButtons.upgradeDamageButton());
+        upgradeStage.addActor(upgradeButtons.upgradeFireRateButton());
+        upgradeStage.addActor(upgradeButtons.upgradeRangeButton());
     }
 
-    public void updateButtons() {
+    private void addMenuButtonsToStage() {
+        stage.addActor(menu.exitButton());
+        stage.addActor(menu.pauseButton());
+        stage.addActor(menu.speedButton());
+        stage.addActor(menu.helpButton());
+        stage.addActor(menu.restartButton());
+    }
 
-        menu.updateButtonAppearance();
+    public void updateUpgradeButtons() {
         upgradeButtons.updateButtonAppearance();
+    }
+
+    public void updateMenuButtons() {
+        menu.updateButtonAppearance();
     }
 
     @Override
@@ -123,10 +120,6 @@ public class PlayState extends State {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
-
-
-    
-        
         if (selectedCat != null) {
             Gdx.input.setInputProcessor(upgradeStage);
             upgradeStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -135,9 +128,6 @@ public class PlayState extends State {
         } else {
             Gdx.input.setInputProcessor(stage);
         }
-
-
-
 
         if (model.isGameWon()) {
             gsm.set(new WinState(gsm, model));

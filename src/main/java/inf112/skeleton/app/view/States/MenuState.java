@@ -29,8 +29,8 @@ public class MenuState extends State {
 
         Gdx.input.setInputProcessor(stage);
 
-        menu = new MenuButtons(model, stage);
-        stage.addActor(menu.helpButtonPlay());
+        menu = new MenuButtons(model);
+        stage.addActor(menu.helpButton());
         stage.addActor(menu.playButton());
     }
 

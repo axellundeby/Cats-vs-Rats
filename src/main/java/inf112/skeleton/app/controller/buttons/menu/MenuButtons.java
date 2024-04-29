@@ -9,168 +9,83 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import inf112.skeleton.app.controller.buttons.ButtonFactory;
 import inf112.skeleton.app.model.SkadedyrModel;
-import inf112.skeleton.app.view.States.PlayState;
-import inf112.skeleton.app.view.States.WinState;
-import inf112.skeleton.app.view.States.GameOverState;
-import inf112.skeleton.app.view.States.HelpState;
-import inf112.skeleton.app.view.States.MenuState;
 
-public class MenuButtons implements IMenuButtons {
+
+public class MenuButtons {
     private SkadedyrModel model;
-    private Stage stage;
+
+    private Button playButton;
+    private Button exitButton;
+    private Button restartButton;
+    private Button helpButton;
     private Button pauseButton;
     private Button speedButton;
-    private final static int BUTTON_HEIGHT = 50;
-    private final static int MENU_BUTTONS_HEIGHT = 750;
 
+    private static final int BUTTON_WIDTH = 150;
+    private static final int BUTTON_HEIGHT = 75;
+    private static final int MENU_BUTTONS_Y_POS = 750;
 
-    public MenuButtons(SkadedyrModel model, Stage stage) {
+    public MenuButtons(SkadedyrModel model) {
         this.model = model;
-        this.stage = stage;
-
+       
     }
 
-    @Override
-    public Button playButton() {
-
-        Button playButton = ButtonFactory.createImageButton("buttons_game/Spill_Play_Up.png",
-                "buttons_game/Spill_Play_Down.png");
-        playButton.setSize(200, 100);
-
-        if (model.getState() instanceof PlayState) {
-            playButton.setPosition(800, 400);
-
-        } else if (model.getState() instanceof MenuState || model.getState() instanceof WinState || model.getState() instanceof GameOverState){
-            playButton.setPosition(800, 400);
-        }
-        else {
-            playButton.setPosition((stage.getWidth() - playButton.getWidth()) / 2 - 200, BUTTON_HEIGHT);
-        }
-        playButton.addListener(new ClickListener() {
+    private Button createButton(String textureUp, String textureDown, int xPosition, Runnable action) {
+        Button button = ButtonFactory.createImageButton(textureUp, textureDown);
+        button.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        button.setPosition(xPosition, MENU_BUTTONS_Y_POS);
+        button.addListener(new ClickListener() {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                model.setStartGame();
+                action.run();
+                updateButtonAppearance();
             }
         });
+        return button;
+    }
+
+    public Button playButton() {
+        this.playButton = createButton("buttons_game/Spill_Play_Up.png", "buttons_game/Spill_Play_Down.png", 800, () -> model.setStartGame());
         return playButton;
     }
 
-    @Override
     public Button exitButton() {
-        Button exitButton = ButtonFactory.createImageButton("buttons_game/Spill_Exit.png", "buttons_game/Spill_Exit_Down.png");
-        exitButton.setSize(150, 75);
-        if(model.getState() instanceof MenuState || model.getState() instanceof HelpState){
-            exitButton.setPosition(5, MENU_BUTTONS_HEIGHT);
-        } else {
-            exitButton.setPosition((stage.getWidth() - exitButton.getWidth()) / 2 - 30 , 
-            100);
-        }
-
-       
-        exitButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                model.exit();
-
-            }
-        });
+        this.exitButton = createButton("buttons_game/Spill_Exit.png", "buttons_game/Spill_Exit.png", 10, () -> model.exit());
         return exitButton;
     }
 
-    
-    
-    
-    @Override
-    public Button restarButton() {
-        Button restartButton = ButtonFactory.createImageButton("buttons_game/Spill_Restart.png",
-        "buttons_game/Spill_Restart_Down.png");
-        restartButton.setSize(150, 75);
-        restartButton.setPosition(140, MENU_BUTTONS_HEIGHT);
-        restartButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                model.restart();
-                
-            }
-        });
+    public Button restartButton() {
+        this.restartButton = createButton("buttons_game/Spill_Restart.png", "buttons_game/Spill_Restart_Down.png", 140, () -> model.restart());
         return restartButton;
     }
-    @Override
-    public Button helpButtonPlay() {
-        Button helpButton = ButtonFactory.createImageButton("buttons_game/Spill_Help.png",
-        "buttons_game/Spill_Help.png");
-        helpButton.setSize(100, 100);
-        
-        if (model.getState() instanceof MenuState) {
-            helpButton.setPosition(340, MENU_BUTTONS_HEIGHT - 10);
-        } else if (model.getState() instanceof HelpState) {
-            helpButton.setPosition(340, MENU_BUTTONS_HEIGHT - 10) ;
-        } else {
-            helpButton.setPosition((stage.getWidth() - helpButton.getWidth()) / 2 + 200, BUTTON_HEIGHT);
-        }
-        
-        helpButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                if (model.isPaused())
-                model.setHelp();
-                
-            }
-        });
+
+    public Button helpButton() {
+        this.helpButton = createButton("buttons_game/Spill_Help.png", "buttons_game/Spill_Help.png", 340, () -> model.setHelp());
         return helpButton;
     }
 
-    @Override
     public Button pauseButton() {
-        pauseButton = ButtonFactory.createImageButton("buttons_game/Spill_Pause_Pause.png", 
-        "buttons_game/Spill_Pause_Play.png");
-        pauseButton.setSize(100, 100);
-
-        pauseButton.setPosition(440, MENU_BUTTONS_HEIGHT - 10);
-        pauseButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                model.setPause();
-                updateButtonAppearance();
-            }
-        });
+        this.pauseButton = createButton("buttons_game/Spill_Pause_Pause.png", "buttons_game/Spill_Pause_Play.png", 440, () -> model.setPause());
         return pauseButton;
     }
 
-    @Override
     public Button speedButton() {
-        speedButton = ButtonFactory.createImageButton("buttons_game/Spill_FF.png", 
-        "buttons_game/Spill_FF_Down.png");
-        speedButton.setSize(100, 100);
-        speedButton.setPosition(540, MENU_BUTTONS_HEIGHT - 10);
-        speedButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-                model.setSpeed();
-                updateButtonAppearance();
-            }
-        });
+        this.speedButton = createButton("buttons_game/Spill_FF.png", "buttons_game/Spill_FF_Down.png", 540, () -> model.setSpeed());
         return speedButton;
     }
 
-    @Override
     public void updateButtonAppearance() {
-
-        if (model.isPaused()) {
-            pauseButton.getStyle().up = new TextureRegionDrawable(
-                    new TextureRegion(new Texture("buttons_game/Spill_Pause_Pause.png")));
-        } else {
-            pauseButton.getStyle().up = new TextureRegionDrawable(
-                    new TextureRegion(new Texture("buttons_game/Spill_Pause_Play.png")));
-        }
-        if (model.isSpeedUp()) {
-            speedButton.getStyle().up = new TextureRegionDrawable(
-                    new TextureRegion(new Texture("buttons_game/Spill_FF_Down.png")));
-        } else {
-            speedButton.getStyle().up = new TextureRegionDrawable(
-                    new TextureRegion(new Texture("buttons_game/Spill_FF.png")));
-        }
-
+        updateButtonAppearance(this.playButton, "buttons_game/Spill_Play_Up.png");
+        updateButtonAppearance(this.helpButton, "buttons_game/Spill_Help.png");
+        updateButtonAppearance(this.speedButton, "buttons_game/Spill_FF.png");
+        updateButtonAppearance(this.pauseButton, "buttons_game/Spill_Pause_Pause.png");
+        updateButtonAppearance(this.restartButton, "buttons_game/Spill_Restart.png");
+        updateButtonAppearance(this.exitButton, "buttons_game/Spill_Exit.png");
     }
 
+    private void updateButtonAppearance(Button button, String texture) {
+        TextureRegionDrawable newDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(texture)));
+        button.getStyle().up = newDrawable;
+        button.getStyle().down = newDrawable;
+    }
 }

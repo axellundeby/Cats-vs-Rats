@@ -118,7 +118,7 @@ public class SkadedyrModel implements ISkadedyrModel {
                 if (!rat.isrewardClaimed()) {
                     // Buttons update each time a rat is killed
                     if (currentState instanceof PlayState) {
-                        ((PlayState) currentState).updateButtons();
+                        ((PlayState) currentState).updateUpgradeButtons();
                     }
                     money += rat.getBounty();
                     points += rat.getPoints();
@@ -218,9 +218,9 @@ public class SkadedyrModel implements ISkadedyrModel {
             catMenu.selector(mouse);
             selectCat(mouse);
             if (currentState instanceof PlayState) {
-                ((PlayState) currentState).updateButtons();
+                ((PlayState) currentState).updateUpgradeButtons();
                
-                    ((PlayState) currentState).addButtonsToStage();
+                   // ((PlayState) currentState).addButtonsToStage();
 
     
             }
@@ -256,6 +256,9 @@ public class SkadedyrModel implements ISkadedyrModel {
     @Override
     public void setPause() {
         isPaused = !isPaused;
+        if (currentState instanceof PlayState) {
+            ((PlayState) currentState).updateMenuButtons();
+        }
     }
 
     @Override
@@ -314,9 +317,9 @@ public class SkadedyrModel implements ISkadedyrModel {
     public void setMoney(int money) {
         this.money = money;
         if (currentState instanceof PlayState) {
-            ((PlayState) currentState).updateButtons();
+            ((PlayState) currentState).updateUpgradeButtons();
             
-                ((PlayState) currentState).addButtonsToStage();
+                ((PlayState) currentState).addUpgradeButtonsToStage();
             
         }
 

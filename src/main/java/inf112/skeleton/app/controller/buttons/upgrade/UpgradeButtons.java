@@ -28,7 +28,7 @@ public class UpgradeButtons {
     private static final String rangeTexture = "buttons_game/range.png";
 
     private static final String noMoneyTexture = "buttons_game/noMoney.png";
-    private static final String usedUpTexture = "buttons_game/angryCat.png";
+    private static final String usedUpTexture = "buttons_game/Spill_Exit.png";
     private static final String clickTexture = "coin.png";
 
 
@@ -37,20 +37,13 @@ public class UpgradeButtons {
     }
 
     private Button createUpgradeButton(int cost, String textureUp, int xPosition, Consumer<Cat> upgradeAction) {
-
-
         Button upgradeButton = ButtonFactory.createImageButton(textureUp, "coin.png");
-
         upgradeButton.setSize(160, 80);
-
         upgradeButton.setPosition(xPosition, Y_POS);
-
         upgradeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
                 Cat selectedCat = model.getSelectedCat();
-
                 if (selectedCat != null && model.getMoney() >= cost && selectedCat.getUpgradeCounter() < 4) {
                     upgradeAction.accept(selectedCat);
                     selectedCat.setUpgradeCounter(selectedCat.getUpgradeCounter() + 1);
@@ -64,17 +57,17 @@ public class UpgradeButtons {
     }
 
     public Button upgradeDamageButton() {
-        this.upgradeDamageButton = createUpgradeButton(2000, damageTexture, 650, Cat::upgradeDamage);
+        this.upgradeDamageButton = createUpgradeButton(20, damageTexture, 650, Cat::upgradeDamage);
         return upgradeDamageButton;
     }
 
     public Button upgradeFireRateButton() {
-        this.upgradeFireRateButton = createUpgradeButton(2000, fireRateTexture, 820, Cat::upgradeFireRate);
+        this.upgradeFireRateButton = createUpgradeButton(20, fireRateTexture, 820, Cat::upgradeFireRate);
         return upgradeFireRateButton;
     }
 
     public Button upgradeRangeButton() {
-        this.upgradeRangeButton = createUpgradeButton(200, rangeTexture, 990, Cat::upgradeRange);
+        this.upgradeRangeButton = createUpgradeButton(20, rangeTexture, 990, Cat::upgradeRange);
         return upgradeRangeButton;
     }
 
