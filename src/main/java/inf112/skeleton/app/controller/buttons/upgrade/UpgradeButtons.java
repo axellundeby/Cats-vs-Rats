@@ -1,12 +1,8 @@
 package inf112.skeleton.app.controller.buttons.upgrade;
 
-import java.util.function.Consumer;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import inf112.skeleton.app.controller.buttons.ButtonFactory;
@@ -31,48 +27,32 @@ public class UpgradeButtons {
     private static final String usedUpTexture = "buttons_game/Spill_Exit.png";
     private static final String clickTexture = "coin.png";
 
+    private ButtonFactory buttonFactory;
 
     public UpgradeButtons(SkadedyrModel model) {
         this.model = model;
-    }
-
-    private Button createUpgradeButton(int cost, String textureUp, int xPosition, Consumer<Cat> upgradeAction) {
-        Button upgradeButton = ButtonFactory.createImageButton(textureUp, "coin.png");
-        upgradeButton.setSize(160, 80);
-        upgradeButton.setPosition(xPosition, Y_POS);
-        upgradeButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Cat selectedCat = model.getSelectedCat();
-                if (selectedCat != null && model.getMoney() >= cost && selectedCat.getUpgradeCounter() < 4) {
-                    upgradeAction.accept(selectedCat);
-                    selectedCat.setUpgradeCounter(selectedCat.getUpgradeCounter() + 1);
-                    model.setMoney(model.getMoney() - cost);
-                    updateButtonAppearance();
-                }
-            }
-        });
-
-        return upgradeButton;
+        buttonFactory = new ButtonFactory(model);
     }
 
     public Button upgradeDamageButton() {
-        this.upgradeDamageButton = createUpgradeButton(20, damageTexture, 650, Cat::upgradeDamage);
+        this.upgradeDamageButton = buttonFactory.createUpgradeButton(20, damageTexture, clickTexture, 660, Y_POS,
+                Cat::upgradeDamage);
         return upgradeDamageButton;
     }
 
     public Button upgradeFireRateButton() {
-        this.upgradeFireRateButton = createUpgradeButton(20, fireRateTexture, 820, Cat::upgradeFireRate);
+        this.upgradeFireRateButton = buttonFactory.createUpgradeButton(20, fireRateTexture, clickTexture, 825, Y_POS,
+                Cat::upgradeFireRate);
         return upgradeFireRateButton;
     }
 
     public Button upgradeRangeButton() {
-        this.upgradeRangeButton = createUpgradeButton(20, rangeTexture, 990, Cat::upgradeRange);
+        this.upgradeRangeButton = buttonFactory.createUpgradeButton(20, rangeTexture, clickTexture, 990, Y_POS,
+                Cat::upgradeRange);
         return upgradeRangeButton;
     }
 
     public void updateButtonAppearance() {
-
         updateUpgradeButtonAppearances(upgradeDamageButton, damageTexture);
         updateUpgradeButtonAppearances(upgradeFireRateButton, fireRateTexture);
         updateUpgradeButtonAppearances(upgradeRangeButton, rangeTexture);
@@ -84,7 +64,7 @@ public class UpgradeButtons {
         TextureRegionDrawable newDrawable = null;
         if (selectedCat != null) {
 
-            if (selectedCat.getUpgradeCounter() >= 4) {
+            if (selectedCat.getUpgradeCount() >= 4) {
                 newDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(usedUpTexture)));
             } else if (model.getMoney() < cost) {
                 newDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(noMoneyTexture)));
@@ -95,8 +75,6 @@ public class UpgradeButtons {
         button.getStyle().up = newDrawable;
         button.getStyle().down = newDrawable;
 
-        
-        
     }
 
 }

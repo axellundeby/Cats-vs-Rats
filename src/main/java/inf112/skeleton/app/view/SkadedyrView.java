@@ -12,6 +12,7 @@ import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.States.GameStateManager;
 import inf112.skeleton.app.view.States.MenuState;
+import inf112.skeleton.app.view.States.PlayState;
 
 public class SkadedyrView {
     private SpriteBatch batch;
@@ -36,7 +37,7 @@ public class SkadedyrView {
         font = new BitmapFont();
         font.setColor(Color.RED);
         gsm = new GameStateManager();
-        gsm.set(new MenuState(gsm, model));
+        gsm.set(new PlayState(gsm, model));
 
         Gdx.graphics.setForegroundFPS(60);
     }

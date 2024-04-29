@@ -61,10 +61,7 @@ public abstract class Cat {
         return this.currentState;
     }
 
-    public int getUpgradeCounter(){
-        return upgradeCounter;
-    }
-
+ 
     public int setUpgradeCounter(int upgradeCounter){
         return this.upgradeCounter = upgradeCounter;
     }
@@ -97,6 +94,7 @@ public abstract class Cat {
             updateTexture(PictureSwapper.ATTACK, 1);
             this.size += 30;
             this.sprite.setSize(size, size);
+            this.sprite.setPosition(pos.x - halfSize, pos.y - halfSize);
         }
 
         if (upgradeCounter == 4) { 
@@ -104,6 +102,7 @@ public abstract class Cat {
             updateTexture(PictureSwapper.ATTACK, 2);
             this.size += 30;
             this.sprite.setSize(size, size);
+            this.sprite.setPosition(pos.x - halfSize, pos.y - halfSize);
         }
     }
     

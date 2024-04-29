@@ -27,7 +27,7 @@ public class PlayState extends State {
     private Stage stage;
     private Stage upgradeStage;
     private CatMenu catMenu;
-    private Button pauseButton;
+   // private Button pauseButton;
     private Texture mapTexture;
     private MenuButtons menu;
     private UpgradeButtons upgradeButtons;
@@ -45,7 +45,8 @@ public class PlayState extends State {
 
         this.mapTexture = new Texture("map/Spill_Plattform.jpg");
 
-       
+       upgradeButtons = new UpgradeButtons(model);
+        menu = new MenuButtons(model);
 
         addUpgradeButtonsToStage();
         addMenuButtonsToStage();
@@ -74,6 +75,7 @@ public class PlayState extends State {
 
     public void updateMenuButtons() {
         menu.updateButtonAppearance();
+
     }
 
     @Override

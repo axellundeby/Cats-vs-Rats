@@ -26,11 +26,8 @@ public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Rat> aliveRats = new ArrayList<>();
     private RatFactory ratFactory = new RatFactory();
     private int lives = 5;
-    private int money = 1000000;
-    private final int STARTING_MONEY = 200;
-    private final int STARTING_LIVES = 5;
-    private final int STARTING_POINTS = 0;
-    private final int STARTING_LEVEL = 0;
+    private int money = 50000000;
+  
     private int points = 0;
     private int level = 0;
     private int ratsSpawned;
@@ -60,10 +57,6 @@ public class SkadedyrModel implements ISkadedyrModel {
         cats = new ArrayList<>();
         ratFactory = new RatFactory();
         removeAllRats();
-        lives = STARTING_LIVES;
-        money = STARTING_MONEY;
-        points = STARTING_POINTS;
-        level = STARTING_LEVEL;
         isPaused = true;
         intervalSeconds = 0.05f;
        
@@ -118,7 +111,7 @@ public class SkadedyrModel implements ISkadedyrModel {
                 if (!rat.isrewardClaimed()) {
                     // Buttons update each time a rat is killed
                     if (currentState instanceof PlayState) {
-                        ((PlayState) currentState).updateUpgradeButtons();
+                     //   ((PlayState) currentState).updateUpgradeButtons();
                     }
                     money += rat.getBounty();
                     points += rat.getPoints();
@@ -220,7 +213,7 @@ public class SkadedyrModel implements ISkadedyrModel {
             if (currentState instanceof PlayState) {
                 ((PlayState) currentState).updateUpgradeButtons();
                
-                   // ((PlayState) currentState).addButtonsToStage();
+                // ((PlayState) currentState).add();
 
     
             }
@@ -278,8 +271,12 @@ public class SkadedyrModel implements ISkadedyrModel {
     @Override
     public void setSpeed() {
         speedUp = !speedUp;
+        if (currentState instanceof PlayState) {
+            ((PlayState) currentState).updateMenuButtons();
+        }
         if (speedUp) {
             intervalSeconds = (float) 0.0025;
+            
 
         } else {
             intervalSeconds = (float) 0.05;
