@@ -52,11 +52,6 @@ public class ModelTest {
         model = new SkadedyrModel(mockFactory, mockTimeSource);
 
         rats = new LinkedList<>();
-        for (int i = 0; i < 3; i++) {
-            Rat rat = new Rat(1000, 10, mockTexture, 50, 20, mockTexture, 25, mockTexture);
-            rats.add(rat);
-            model.addRat(rat);
-        }
     }
     
 
@@ -64,6 +59,7 @@ public class ModelTest {
     
     @Test
     void updateCatAnimationsTest(){
+        addRatsWithHighHp(3);
         model.addCat(basicCat);
         basicCat.setPos(500, 500);
 
@@ -80,10 +76,28 @@ public class ModelTest {
         }
         catImage = basicCat.getCurrentState(); 
         assertEquals(catImage, PictureSwapper.DEFAULT);
+        rats.removeAll(rats);
+    }
+
+    private void addRatsWithHighHp(int amount) {
+        for (int i = 0; i < amount; i++) {
+            Rat rat = new Rat(1000, 10, mockTexture, 50, 20, mockTexture, 25, mockTexture);
+            rats.add(rat);
+            model.addRat(rat);
+        }
+    }
+
+    private void addRatsWithLowHp(int amount) {
+        for (int i = 0; i < amount; i++) {
+            Rat rat = new Rat(10, 10, mockTexture, 50, 20, mockTexture, 25, mockTexture);
+            rats.add(rat);
+            model.addRat(rat);
+        }
     }
 
     @Test
-    void attackRatTest() {
+    void attackRatTest1() {
+        addRatsWithHighHp(3);
         model.setPause();
         
         model.addCat(basicCat);
@@ -105,6 +119,27 @@ public class ModelTest {
         assertEquals(0, shotgunCat.getAttackTimer());
         assertEquals(expectedHealth1, rat1.getHealth());
         assertEquals(initialHealth2, rat2.getHealth());
+        rats.removeAll(rats);
+    }
+
+    @Test
+    void attackRatTest2() {
+        addRatsWithLowHp(3);
+        model.setPause();
+        
+        model.addCat(basicCat);
+        basicCat.setPos(15, 15);
+        model.addCat(shotgunCat);
+        shotgunCat.setPos(800, 800);
+
+        Rat rat1 = rats.get(0);
+        rat1.setPosition(new Vector2(15,15));
+        model.clockTick();
+    
+        assertEquals(basicCat.getFireRate(), basicCat.getAttackTimer());
+        assertEquals(0, shotgunCat.getAttackTimer());
+        assertTrue(rat1.isKilled());
+        rats.removeAll(rats);
     }
 
     @Test
@@ -115,8 +150,27 @@ public class ModelTest {
     
     @Test
     void roundTester(){
+        addRatsWithHighHp(3);
 
+        assertEquals(0, model.getLevel());
+        model.setPause();
+        Rat rat1 = rats.get(0);
+        Rat rat2 = rats.get(1);
+        Rat rat3 = rats.get(2);
+        
+        rat1.setPosition(new Vector2(2000,15));
+        rat2.setPosition(new Vector2(2000,15));
+        rat3.setPosition(new Vector2(2000,15));
+
+        System.out.println(rat1.getPosition() +":"+ rat2.getPosition() +":"+ rat3.getPosition());
+        
+        model.clockTick();
+        // assertTrue(model.isPaused());
+        // assertEquals(1, model.getLevel());
+        rats.removeAll(rats);
     }
+
+
 
     private float calculateExpectedAngle(float catX, float catY, float targetX, float targetY) {
         float dx = targetX - catX;
@@ -128,6 +182,8 @@ public class ModelTest {
 
     @Test
     void rotateTester(){
+        addRatsWithHighHp(3);
+
         model.setPause();
         model.addCat(basicCat);
         basicCat.setPos(15, 15);
@@ -149,6 +205,7 @@ public class ModelTest {
             assertEquals(expectedAngleForFirstRat, basicCat.getRotationAngle());
             assertEquals(expectedAngleForSecondRat, shotgunCat.getRotationAngle());
         }
+        rats.removeAll(rats);
     }
 
     @Test 
