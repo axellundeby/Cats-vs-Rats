@@ -50,7 +50,7 @@ public class PlayState extends State {
         addUpgradeButtonsToStage();
         addMenuButtonsToStage();
 
-        GlobalAssetManager.loadAssets();
+        
         Gdx.input.setInputProcessor(stage);
     }
 
