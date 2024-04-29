@@ -91,6 +91,11 @@ public class CatMenu implements ICatMenu{
     }
 
     @Override
+    public void deselect(){
+        selected = null;
+    }
+
+    @Override
     public Cat getSelectedCat(){
         return selected;
     }
