@@ -20,11 +20,7 @@ public interface ISkadedyrModel {
      */
     ArrayList<Rat> getRats();
 
-    /**
-     * Moves all rats by one
-     */
-    void moveRats();
-
+ 
     /**
      * Moves all cats by one
      */

@@ -1,5 +1,7 @@
 package inf112.skeleton.app.model.entities.cat;
 import java.util.LinkedList;
+
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import java.util.List;
 import inf112.skeleton.app.model.entities.rat.Rat;
@@ -14,6 +16,7 @@ public class AttackCat extends Cat {
     public void attack(LinkedList<Rat> rats) {
         if (canAttack()) {
             triggerAttackImage();
+            playAttackSound();
             rats.getFirst().takeDamage(getStrength());
             resetAttackTimer();
         }
@@ -33,6 +36,11 @@ public class AttackCat extends Cat {
     @Override
     public void upgradeFireRate() {
         this.fireRate *= 0.75;
+    }
+
+    @Override
+    public void playAttackSound() {
+        //testing for sound in the other cat objects
     }
 
    

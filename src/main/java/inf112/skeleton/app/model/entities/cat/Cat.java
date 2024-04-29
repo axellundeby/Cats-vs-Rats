@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.model.entities.rat.Rat;
 
@@ -172,6 +171,8 @@ public abstract class Cat {
      */
     public abstract void upgradeFireRate();
 
+
+    public abstract void playAttackSound();
     /**
      * Sets the cat's position.
      *
@@ -200,17 +201,7 @@ public abstract class Cat {
     public void setLastTargetPosition(Vector2 lastTargetPosition) {
         this.lastTargetPosition = lastTargetPosition;
     }
- 
-     /**
-     * Rotates the cat's image to face its last target.
-     * The image is rotated such that it is always facing the direction of the last target.
-     */
-    public void rotateImage() {
-        if (lastTargetPosition != null) {
-            float angle = (float) Math.toDegrees(Math.atan2(lastTargetPosition.y - sprite.getY(), lastTargetPosition.x - sprite.getX()));
-            sprite.setRotation(angle - 90);
-        }
-    }
+   
 
     /**
      * Sets the cat's rotation to face the specified rat.
@@ -224,7 +215,18 @@ public abstract class Cat {
             float angleInRadians = (float) Math.atan2(dy, dx);
             currentRotationAngle = (float) Math.toDegrees(angleInRadians) - 90;
             this.lastTargetPosition = target.getPosition();
+            sprite.setRotation(currentRotationAngle); 
         }
+    }
+    
+
+    /**
+     * Returns the current rotation angle of the cat.
+     *
+     * @return The current rotation angle of the cat.
+     */
+    public float getRotationAngle() {
+        return currentRotationAngle;
     }
 
     /**
@@ -236,14 +238,6 @@ public abstract class Cat {
         this.selectionCircle = new Circle(pos, halfSize);
     }
 
-    /**
-     * Returns the current rotation angle of the cat.
-     *
-     * @return The current rotation angle of the cat.
-     */
-    public float getRotationAngle() {
-        return currentRotationAngle;
-    }
 
     /**
      * Sets the size of the cat.
@@ -297,11 +291,15 @@ public abstract class Cat {
      * @return True if the rat is within the cat's range, false otherwise.
      */
     public boolean withinRange(Rat target) {
-        boolean isWithinRange = Intersector.overlaps(rangeCircle, target.getSprite().getBoundingRectangle());
-        if (!isWithinRange) {
-            lastTargetPosition = null;
+        if (target.getPosition() != null) {
+            boolean isWithinRange = rangeCircle.contains(target.getPosition());
+            if (!isWithinRange) {
+                lastTargetPosition = null;
+            }
+            return isWithinRange;
+            
         }
-        return isWithinRange;
+        return false;
     }
     
     

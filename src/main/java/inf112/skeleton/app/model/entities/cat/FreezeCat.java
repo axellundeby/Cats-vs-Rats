@@ -1,36 +1,41 @@
 package inf112.skeleton.app.model.entities.cat;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
+
+import com.badlogic.gdx.audio.Sound;
+
 import inf112.skeleton.app.model.entities.rat.Rat;
+import inf112.skeleton.app.view.GameResourceFactory;
+import inf112.skeleton.app.view.TimeSource;
 
 public class FreezeCat extends Cat {
-
-    public FreezeCat() {
+    private TimeSource timeSource;
+    private GameResourceFactory resourceFactory;
+    
+    public FreezeCat(GameResourceFactory resourceFactory, TimeSource timeSource) {
         super(
-            1,
+            5,
             100, 
-            Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Frysekatt1.png"))), 
-            Arrays.asList(new Texture(Gdx.files.internal("cats/Spill_Frysekatt2_angrip.png")), new Texture(Gdx.files.internal("cats/Spill_Frysekatt3_angrip.png"))), 
+            Arrays.asList(resourceFactory.getTexture("cats/Spill_Frysekatt1.png")),
+            Arrays.asList(resourceFactory.getTexture("cats/Spill_Frysekatt2_angrip.png"),resourceFactory.getTexture("cats/Spill_Frysekatt3_angrip.png")), 
             50.0f,
             1000);
+            this.timeSource = timeSource;
+            this.resourceFactory = resourceFactory;
     }
 
     @Override
     public void attack(LinkedList<Rat> rats) {
         if (canAttack()) {
-            triggerAttackImage(); 
+            triggerAttackImage();
+            playAttackSound();
+            float deltaTime = timeSource.getDeltaTime();
             for (Rat rat : rats) {
-                if (withinRange(rat)) {  
-                    rat.freeze(Gdx.graphics.getDeltaTime()); 
-                    rat.takeDamage(getStrength()); 
-                }
+                rat.freeze(deltaTime);
+                rat.takeDamage(getStrength());
             }
-            resetAttackTimer(); 
+            resetAttackTimer();
         }
     }
 
@@ -50,5 +55,11 @@ public class FreezeCat extends Cat {
     @Override
     public void upgradeFireRate() {
         this.fireRate *= 0.75;
+    }
+
+    @Override
+    public void playAttackSound() {
+        Sound s = this.resourceFactory.getSound("sound/ice.mp3");
+        s.play(0.6f);
     }
 }
