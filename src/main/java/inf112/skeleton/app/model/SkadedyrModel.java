@@ -95,7 +95,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         if (!isPaused) {
             float deltaTime = timeSource.getDeltaTime();
             updateCatAnimations(deltaTime);
-            //handleUserInput();
+            handleUserInput();
             attackRat();
             catRotater();
             ratHandler(deltaTime);
@@ -203,12 +203,12 @@ public class SkadedyrModel implements ISkadedyrModel {
         return uppgradePressed = true;
     }
 
-    public String uppgradeErrorText() {
-        if (getSelectedCat() == null && pressedUppgradeButton()) {
-            return "No cat selected";
-        }
-        return "";
-    }
+    // public String uppgradeErrorText() {
+    //     if (getSelectedCat() == null && pressedUppgradeButton()) {
+    //         return "No cat selected";
+    //     }
+    //     return "";
+    // }
 
     private void updateCatAnimations(float deltaTime) {
         for (Cat cat : cats) {

@@ -148,8 +148,8 @@ public class PlayState extends State {
         font.draw(batch, "Dine penger: " + model.getMoney(), 925, 800);
         font.draw(batch, "Din Score: " + model.getPoints(), 800, 800);
         font.draw(batch, "Level: " + model.getLevel(), 700, 800);
-        font.draw(batch, model.nextWaveText(), 500, 150);
-        font.draw(batch, model.uppgradeErrorText(), 900, 190);
+        font.draw(batch, model.nextWaveText(), 500, 170);
+      
         font.setColor(Color.WHITE);
     }
 

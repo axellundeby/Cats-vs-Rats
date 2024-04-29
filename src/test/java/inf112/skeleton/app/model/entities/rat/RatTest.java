@@ -245,7 +245,7 @@ public class RatTest {
     @Test
     void isOutTest() {
         assertFalse(rat.isOut());
-        rat.setPosition(new Vector2(1150, 310));
+        rat.setPosition(new Vector2(1300, 310));
         assertTrue(rat.isOut());
     }
 

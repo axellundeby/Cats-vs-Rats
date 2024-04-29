@@ -118,7 +118,7 @@ public class Rat implements IRat {
 
 
     private void updateDirection(Vector2 current, Vector2 next) {
-        if (current.x > 1200) {
+        if (current.x > 1300) {
             direction = Direction.OUT;
         } else if (next.x > current.x) {
             direction = Direction.RIGHT;
