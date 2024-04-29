@@ -21,6 +21,7 @@ public class RatFactoryTest {
     private RatFactory ratFactory;
     private Texture mockTexture;
 
+    @SuppressWarnings("deprecation")
     @BeforeEach
     void setup() {
         MockitoAnnotations.initMocks(this);

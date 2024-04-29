@@ -7,14 +7,9 @@ import org.mockito.MockitoAnnotations;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-
 import inf112.skeleton.app.model.entities.cat.Cat.PictureSwapper;
 import inf112.skeleton.app.model.entities.rat.Rat;
-import net.bytebuddy.dynamic.scaffold.MethodGraph.Linked;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -46,6 +41,7 @@ public class TestCat {
     private Cat cat;   
     private Rat rat;
     private LinkedList<Rat> rats = new LinkedList<>();
+    private int range;
 
 
     @BeforeEach
@@ -68,6 +64,7 @@ public class TestCat {
         cat = new AttackCat(40, 100, defaultTextureMock, attacksTextureMock, 25.0f, 200);
         rat = new Rat(100, 10, aliveTextureMock, 50, 20, frozenTextureMock, 25, deadTextureMock);
         cat = setupCatWithSpriteAtPosition(5, 5);
+        this.range = 100;
     }
     
     private Texture createMockTexture(int width, int height) {
@@ -124,22 +121,24 @@ public class TestCat {
     }
 
 
-    //THEODOR!!!!!!!!! 3 TESTER SOM IKKE GÅR
+
     @Test
     void setRotationTowardTest(){
         Cat cat = setupCatWithSpriteAtPosition(0, 0);
         rat.setPosition(new Vector2(10, 10));
         cat.setRotationToward(rat);
         float expectedAngle = calculateExpectedAngle(0, 0, 10, 10);
-        //assertEquals(expectedAngle, cat.getSprite().getRotation());
+        assertEquals(expectedAngle, cat.getSprite().getRotation());
     }
 
     
     @Test
     void getRotationAngleTest(){
+        cat.setPos(10, 10);
+        rat.setPosition(new Vector2(0, 0));
         cat.setRotationToward(rat);
-        float expectedAngle = calculateExpectedAngle(5, 5, 10, 10);
-        //assertEquals(expectedAngle, cat.getRotationAngle());
+        float expectedAngle = calculateExpectedAngle(10, 10, 0, 0);
+        assertEquals(expectedAngle, cat.getRotationAngle());
     }
     
     @Test
@@ -147,16 +146,25 @@ public class TestCat {
         rat.setPosition(new Vector2(1000, 1000));
         cat.withinRange(rat);
         assertEquals(null, cat.getLastTargetPosition());
-        
         cat.setPos(10, 10);
         rat.setPosition(new Vector2(10, 10));
-        //assertTrue(cat.withinRange(rat));
+        assertTrue(cat.withinRange(rat));
+    }
+
+    @Test
+    void withinRangeTest2(){
+        rat.setPosition(new Vector2(1000, 1000));
+        cat.withinRange(rat);
+        assertEquals(null, cat.getLastTargetPosition());
+        cat.setPos(30, 30);
+        rat.setPosition(new Vector2(0, 0));
+        assertTrue(cat.withinRange(rat));
     }
 
     @Test
     void circleUpdaterTest(){
         cat.circleUpdater();
-        assertEquals(100, cat.getRangeCircle().radius);
+        assertEquals(range, cat.getRangeCircle().radius);
     }
 
     @Test
@@ -205,6 +213,7 @@ public class TestCat {
         assertEquals(PictureSwapper.DEFAULT, cat.getCurrentState());
     }
 
+
     @Test
     void upgradeDamageTest(){
         Integer initialStrength = cat.getStrength();
@@ -215,9 +224,10 @@ public class TestCat {
     @Test
     void upgradeRangeTest(){
         int initialRange = cat.getRange();
-        Circle initialRangeCirle = cat.getRangeCircle();
+        float initialRangeCirleRadius = cat.getRangeCircle().radius;
         cat.upgradeRange();
-        assertEquals(initialRangeCirle.radius * 1.25, cat.getRangeCircle().radius);
+        float upgradedRangeRadius = cat.getRangeCircle().radius;
+        assertEquals((initialRangeCirleRadius) * 1.25 , upgradedRangeRadius);
         assertEquals(initialRange * 1.25, cat.getRange());
     }
 
@@ -248,7 +258,7 @@ public class TestCat {
 
     @Test
     void getRangeCircleTest(){
-        assertEquals(100, cat.getRangeCircle().radius);
+        assertEquals(range, cat.getRangeCircle().radius);
     }
 
     @Test
@@ -284,23 +294,6 @@ public class TestCat {
         float dy = targetY - catY;
         float angle = (float) Math.toDegrees(Math.atan2(dy, dx));
         return angle - 90;
-    }
-
-    @Test 
-    void rotateImageTest(){
-        Cat cat = setupCatWithSpriteAtPosition(0, 0);
-        Vector2 targetPosition = new Vector2(10, 10);
-        cat.setLastTargetPosition(targetPosition);
-        cat.rotateImage();
-        float expectedAngle = calculateExpectedAngle(0, 0, 10, 10);
-        
-        assertEquals(expectedAngle, cat.getSprite().getRotation());
-        cat.setPos(5, 5); 
-        cat.setLastTargetPosition(new Vector2(15, 15)); 
-        cat.rotateImage();
-        expectedAngle = calculateExpectedAngle(5, 5, 15, 15);
-        
-        assertEquals(expectedAngle, cat.getSprite().getRotation());
     }
 
 

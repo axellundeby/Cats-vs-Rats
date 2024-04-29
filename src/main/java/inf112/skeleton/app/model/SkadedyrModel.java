@@ -45,6 +45,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private List<Rat> newRats;
     private GameResourceFactory resourceFactory;
     private TimeSource timeSource;
+    private float elapsedTime = 0.0f;
     
     public SkadedyrModel(GameResourceFactory resourceFactory, TimeSource timeSource) {
         this.resourceFactory = resourceFactory;
@@ -69,7 +70,6 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     public void initCatMenu() {
         catMenu.init();
-        
     }
     
     public void setState(State newState){
@@ -80,13 +80,11 @@ public class SkadedyrModel implements ISkadedyrModel {
         return currentState;
     }
 
-
     public void clockTick() {
         if (!isPaused) {
             float deltaTime = timeSource.getDeltaTime();
             updateCatAnimations(deltaTime);
-            handleUserInput();
-            moveRats();
+            //handleUserInput();
             attackRat();
             catRotater();
             newRats = ratFactory.updateRatFactory(deltaTime, level); 
@@ -209,9 +207,6 @@ public class SkadedyrModel implements ISkadedyrModel {
         if (Gdx.input.isTouched()) {
             catMenu.selector(mouse);
             selectCat(mouse);
-            // if (currentState instanceof PlayState){
-            //     ((PlayState) currentState).updateButtons();
-            // }
         }
     }
 
@@ -220,12 +215,10 @@ public class SkadedyrModel implements ISkadedyrModel {
         for (Cat cat : cats) {
             if (cat.getSelectionCircle().contains(mouse)){
                 selectedCat = cat;
-                System.out.println("Cat selected: " + cat); // Debug output
                 return;
             }
         }
         selectedCat = null;
-        System.out.println("No cat selected"); // Debug output
     }
     
 
@@ -233,12 +226,8 @@ public class SkadedyrModel implements ISkadedyrModel {
         return selectedCat;
     }
 
-    @Override
-    public void moveRats() {
-    }
-
     
-    private void addCat(Cat cat) {
+    public void addCat(Cat cat) {
         cats.add(cat);
     }
 
@@ -361,7 +350,6 @@ public class SkadedyrModel implements ISkadedyrModel {
                 Rat firstRat = attackableRats.getFirst();
                 cat.setRotationToward(firstRat);
             }
-            cat.rotateImage();
         }
     }
 
@@ -373,9 +361,6 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     @Override
     public int getLives() {
-        if (lives <= 0) {
-            // gameOver();
-        }
         return lives;
     }
 
@@ -384,12 +369,12 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
    
-    public HashMap<Cat, LinkedList<Rat>> attackQueueForEachCat() {
+    private HashMap<Cat, LinkedList<Rat>> attackQueueForEachCat() {
         HashMap<Cat, LinkedList<Rat>> attackMap = new HashMap<>();
         for (Cat cat : cats) {
             LinkedList<Rat> attackableRats = new LinkedList<>();
             for (Rat rat : aliveRats) {
-                if (!rat.isKilled() && cat.withinRange(rat)) { //gir mening
+                if (!rat.isKilled() && cat.withinRange(rat)) { 
                     attackableRats.addLast(rat);
                 }
             }
@@ -398,10 +383,11 @@ public class SkadedyrModel implements ISkadedyrModel {
         return attackMap;
     }
 
+  
     private void attackRat() {
         HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
         for (Cat cat : cats) {
-            cat.updateAttackTimer(Gdx.graphics.getDeltaTime());
+            cat.updateAttackTimer(timeSource.getDeltaTime());
             LinkedList<Rat> attackableRats = attackMap.get(cat);
             if (cat.canAttack() && !attackableRats.isEmpty()) {
                 cat.attack(attackableRats);
