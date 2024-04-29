@@ -35,6 +35,12 @@ public class AttackCat extends Cat {
         this.fireRate *= 0.75;
     }
 
+    @Override
+    public void playAttackSound() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'playAttackSound'");
+    }
+
    
 
 }

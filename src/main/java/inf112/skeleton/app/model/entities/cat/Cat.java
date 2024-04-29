@@ -155,6 +155,8 @@ public abstract class Cat {
      */
     public abstract void upgradeFireRate();
 
+
+    public abstract void playAttackSound();
     /**
      * Sets the cat's position.
      *

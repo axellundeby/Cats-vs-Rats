@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
@@ -46,7 +47,8 @@ public class SkadedyrModel implements ISkadedyrModel {
     private GameResourceFactory resourceFactory;
     private TimeSource timeSource;
     private float elapsedTime = 0.0f;
-    
+
+   
     public SkadedyrModel(GameResourceFactory resourceFactory, TimeSource timeSource) {
         this.resourceFactory = resourceFactory;
         this.timeSource = timeSource;
@@ -118,6 +120,8 @@ public class SkadedyrModel implements ISkadedyrModel {
                     money += rat.getBounty();
                     points += rat.getPoints();
                     rat.rewardClaimed();
+                    Sound collectCoinSound = resourceFactory.getSound("sound/coin.mp3");
+                    collectCoinSound.play(0.6f);
                 }
                 if (rat.coinVisibleTime >= COIN_DURATION) {
                     iterator.remove();
@@ -126,6 +130,8 @@ public class SkadedyrModel implements ISkadedyrModel {
                 if (!rat.isrewardClaimed()) {
                     if (!rat.isExited()) {
                         lives = Math.max(0, lives - 1);
+                        Sound livesSound = resourceFactory.getSound("sound/hp.mp3");
+                        livesSound.play(0.6f);
                         rat.exit();
                     }
                     iterator.remove();
@@ -303,6 +309,8 @@ public class SkadedyrModel implements ISkadedyrModel {
         if (currentState instanceof PlayState){
             ((PlayState) currentState).updateButtons();
         }
+        Sound buySound = resourceFactory.getSound("sound/cashier.mp3");
+        buySound.play(0.6f);
 
     }
    

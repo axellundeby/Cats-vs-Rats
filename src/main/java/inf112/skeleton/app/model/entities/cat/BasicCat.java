@@ -1,6 +1,7 @@
 package inf112.skeleton.app.model.entities.cat;
 import java.util.Arrays;
 import java.util.LinkedList;
+import com.badlogic.gdx.audio.Sound;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.GameResourceFactory;
 
@@ -43,8 +44,8 @@ public class BasicCat extends Cat {
     }
 
      public void playAttackSound() {
-        resourceFactory.getSound("sound/fart.mp3");
-       
+        Sound s = resourceFactory.getSound("sound/fart.mp3");
+        s.play(0.6f);
     }
 
 }

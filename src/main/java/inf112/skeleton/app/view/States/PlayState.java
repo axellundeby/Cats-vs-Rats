@@ -1,6 +1,7 @@
 package inf112.skeleton.app.view.States;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -118,6 +119,7 @@ public class PlayState extends State {
 
         if (model.isGameWon()) {
             gsm.set(new WinState(gsm, model));
+
         }
         if (model.isGameOver()) {
             gsm.set(new GameOverState(gsm, model));
