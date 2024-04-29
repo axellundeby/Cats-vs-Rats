@@ -76,15 +76,15 @@ public class TestCat {
 
     @Test
         void getUpgradeCounterTest() {
-        assertEquals(0, cat.getUpgradeCounter());
+        assertEquals(0, cat.getUpgradeCount());
         cat.upgradeTexture(); 
-        assertEquals(1, cat.getUpgradeCounter());
+        assertEquals(1, cat.getUpgradeCount());
     }
 
     @Test
     void setUpgradeCounterTest(){
         cat.setUpgradeCounter(3);
-        assertEquals(3, cat.getUpgradeCounter());
+        assertEquals(3, cat.getUpgradeCount());
     }
 
    @Test
@@ -101,7 +101,7 @@ public class TestCat {
         assertEquals(defaultTextureMock.get(0), sprite.getTexture());
 
         cat.upgradeTexture();
-        assertEquals(2, cat.getUpgradeCounter());
+        assertEquals(2, cat.getUpgradeCount());
         assertEquals(catSizeBeforeUpgrade + 30, cat.getSize());
         assertEquals(defaultTextureMock.get(1), sprite.getTexture());
     }
@@ -115,7 +115,7 @@ public class TestCat {
         cat.upgradeTexture();
         cat.upgradeTexture();
         cat.upgradeTexture();
-        assertEquals(4, cat.getUpgradeCounter());
+        assertEquals(4, cat.getUpgradeCount());
         assertEquals(catSizeBeforeUpgrade + 60, cat.getSize());
         assertEquals(defaultTextureMock.get(2), sprite.getTexture());
     }
