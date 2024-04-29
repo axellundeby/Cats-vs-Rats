@@ -50,6 +50,11 @@ public class ModelTest {
         for (int i = 0; i < 3; i++) {
             rats.add(new Rat(50, 10, mockTexture, 50, 20, mockTexture, 25, mockTexture));
         }
+
+        for (Rat rat : rats) {
+            model.addRat(rat);
+        }
+
     }
 
 
@@ -88,9 +93,9 @@ public class ModelTest {
     
         assertTrue(basicCat.withinRange(rats.get(0)));
         assertFalse(shotgunCat.withinRange(rats.get(0)));
+        assertFalse(model.attackQueueForEachCat().get(basicCat).isEmpty());
+
         
-        System.out.println(basicCat.canAttack());
-    
         int initialHealth = rats.get(0).getHealth();
         System.out.println("Initial Health: " + initialHealth);
     
@@ -112,9 +117,37 @@ public class ModelTest {
 
     }
 
+    private float calculateExpectedAngle(float catX, float catY, float targetX, float targetY) {
+        float dx = targetX - catX;
+        float dy = targetY - catY;
+        float angle = (float) Math.toDegrees(Math.atan2(dy, dx));
+        return angle - 90;
+    }
+    
+
     @Test
     void rotateTester(){
+        model.setPause();
+        model.addCat(basicCat);
+        basicCat.setPos(15, 15);
+    
+        model.addCat(shotgunCat);
+        shotgunCat.setPos(800, 800);
+        for (int i = 0; i < 5; i++) {
+            rats.get(0).setPosition(new Vector2(5 + (i * 2) , 5 + (i * 2)));
+            rats.get(1).setPosition(new Vector2(5 + (i * 2) , 5 + (i * 2)));            
+            model.clockTick();
 
+            assertTrue(basicCat.withinRange(rats.get(0)));
+            assertFalse(shotgunCat.withinRange(rats.get(0)));
+            assertFalse(model.getAliveRats().isEmpty());
+            
+            float expectedAngle = calculateExpectedAngle(basicCat.getPosition().x, basicCat.getPosition().y, rats.get(0).getPosition().x, rats.get(0).getPosition().y);
+            System.out.println("Expected Angle: " + expectedAngle);
+            System.out.println("Cat Rotation: " + basicCat.getRotationAngle());
+            System.out.println(model.attackQueueForEachCat().get(basicCat).size());
+            assertEquals(expectedAngle, basicCat.getRotationAngle());
+        }
     }
 
     @Test 

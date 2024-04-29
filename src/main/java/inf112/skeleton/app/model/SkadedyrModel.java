@@ -87,7 +87,14 @@ public class SkadedyrModel implements ISkadedyrModel {
             //handleUserInput();
             attackRat();
             catRotater();
-            newRats = ratFactory.updateRatFactory(deltaTime, level); 
+            ratHandler(deltaTime);
+            roundHandler(deltaTime);
+            removeDeadOrExitedRats(deltaTime);
+        }
+    }
+
+    private void ratHandler(float deltaTime){
+        newRats = ratFactory.updateRatFactory(deltaTime, level); 
             for (Rat newRat : newRats) {
                 newRat.moveAlongPath(deltaTime);
                 newRat.rotateImage();
@@ -95,9 +102,6 @@ public class SkadedyrModel implements ISkadedyrModel {
                     aliveRats.add(newRat);
                 }
             }
-            roundHandler(deltaTime);
-            removeDeadOrExitedRats(deltaTime);
-        }
     }
 
     private void removeDeadOrExitedRats(float deltaTime) {
@@ -173,7 +177,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     public String nextWaveText() {
         if (writeText) {
             return "Round over. Press unPause to continue.";
-        } else if (level == 0) {
+        } else if (level == 0 && isPaused) {
             return "Press unPause to start";
         }
         return "";
@@ -368,8 +372,16 @@ public class SkadedyrModel implements ISkadedyrModel {
         initializeGame();
     }
 
+    public void addRat(Rat rat) {
+        aliveRats.add(rat);
+    }
+
+    public ArrayList<Rat> getAliveRats() {
+        return aliveRats;
+    }
+
    
-    private HashMap<Cat, LinkedList<Rat>> attackQueueForEachCat() {
+    public HashMap<Cat, LinkedList<Rat>> attackQueueForEachCat() {
         HashMap<Cat, LinkedList<Rat>> attackMap = new HashMap<>();
         for (Cat cat : cats) {
             LinkedList<Rat> attackableRats = new LinkedList<>();
