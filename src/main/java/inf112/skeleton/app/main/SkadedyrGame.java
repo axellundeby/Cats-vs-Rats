@@ -1,20 +1,33 @@
 package inf112.skeleton.app.main;
 
 import com.badlogic.gdx.ApplicationListener;
-
+import com.badlogic.gdx.Gdx;
 
 import inf112.skeleton.app.controller.SkadedyrController;
 import inf112.skeleton.app.model.SkadedyrModel;
+import inf112.skeleton.app.view.GameResourceFactory;
+import inf112.skeleton.app.view.LibGDXResourceFactory;
 import inf112.skeleton.app.view.SkadedyrView;
+import inf112.skeleton.app.view.TimeSource;
 
 public class SkadedyrGame implements ApplicationListener{
 
     private final SkadedyrModel model;
     private final SkadedyrView view;
     private final SkadedyrController controller;
+    private TimeSource timeSource;
 
     public SkadedyrGame(){
-        this.model  = new SkadedyrModel();
+        GameResourceFactory factory = new LibGDXResourceFactory();
+        TimeSource timeSource = new TimeSource() {
+
+            @Override
+            public float getDeltaTime() {
+                return Gdx.graphics.getDeltaTime();
+            }
+            
+        };
+        this.model  = new SkadedyrModel(factory, timeSource);
         this.controller = new SkadedyrController(model);
         this.view = new SkadedyrView(model);
        
@@ -24,6 +37,7 @@ public class SkadedyrGame implements ApplicationListener{
     @Override
     public void create() {
         controller.startTimer();
+        //timeSource.getDeltaTime();
         view.create();
         model.initCatMenu();
     }

@@ -1,5 +1,6 @@
 package inf112.skeleton.app.model.catmenu;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,7 +12,9 @@ import inf112.skeleton.app.model.entities.cat.BasicCat;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.cat.ShotgunCat;
+import inf112.skeleton.app.view.GameResourceFactory;
 import inf112.skeleton.app.view.SkadedyrView;
+import inf112.skeleton.app.view.TimeSource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,20 +29,22 @@ public class CatMenu implements ICatMenu{
     private static final int MARGIN_X = 30;
     private Cat selected;
     private Texture coinSackTexture;
+    private GameResourceFactory resourceFactory;
+    private TimeSource timeSource;
 
-
-    public CatMenu() {
+    public CatMenu(GameResourceFactory resourceFactory, TimeSource timeSource) {
         this.catsMap = new HashMap<>();
         this.availableCatsList = new ArrayList<>();
-
+        this.resourceFactory = resourceFactory;
+        this.timeSource = timeSource;
     }
     
     @Override
     public void init(){
         this.coinSackTexture = new Texture(Gdx.files.internal("buttons_game/noMoney.png"));
-        availableCatsList.add(new BasicCat());
-        availableCatsList.add(new FreezeCat());
-        availableCatsList.add(new ShotgunCat());
+        availableCatsList.add(new BasicCat(resourceFactory));
+        availableCatsList.add(new FreezeCat(resourceFactory, timeSource));
+        availableCatsList.add(new ShotgunCat(resourceFactory));
 
         int i = 0;
         for (Cat cat : availableCatsList) {

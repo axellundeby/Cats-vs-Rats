@@ -1,6 +1,7 @@
 package inf112.skeleton.app.view.States;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,7 +18,6 @@ import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
-import inf112.skeleton.app.view.GlobalAssetManager;
 
 public class PlayState extends State {
     private ShapeRenderer shapeRenderer;
@@ -132,6 +132,7 @@ public class PlayState extends State {
 
         if (model.isGameWon()) {
             gsm.set(new WinState(gsm, model));
+
         }
         if (model.isGameOver()) {
             gsm.set(new GameOverState(gsm, model));
@@ -184,8 +185,6 @@ public class PlayState extends State {
         upgradeStage.dispose();
         shapeRenderer.dispose();
         font.dispose();
-        GlobalAssetManager.dispose();
-
     }
 
 }
