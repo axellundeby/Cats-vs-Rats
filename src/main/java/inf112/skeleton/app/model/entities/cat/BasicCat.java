@@ -32,6 +32,7 @@ public class BasicCat extends Cat {
     @Override
     public void upgradeDamage() {
        this.strength *= 1.20;
+       System.out.println("Damage upgraded to: " + this.strength);
     }
 
     @Override

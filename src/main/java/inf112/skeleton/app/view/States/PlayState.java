@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.ScreenUtils;
 import inf112.skeleton.app.controller.buttons.menu.MenuButtons;
 import inf112.skeleton.app.controller.buttons.upgrade.UpgradeButtons;
@@ -25,16 +24,13 @@ public class PlayState extends State {
     private SkadedyrModel model;
     private BitmapFont font;
     private Stage stage;
+    private Stage upgradeStage;
     private CatMenu catMenu;
-    private Button upgradeFireRateButton;
-    private Button upgradeRangeButton;
-    private Button upgradeDamageButton;
-    private Button pauseButton;
+   // private Button pauseButton;
     private Texture mapTexture;
     private MenuButtons menu;
-    private UpgradeButtons upgrade;
+    private UpgradeButtons upgradeButtons;
     private float alpha = 0f;
-   
 
     public PlayState(GameStateManager gsm, SkadedyrModel model) {
         super(gsm);
@@ -43,47 +39,53 @@ public class PlayState extends State {
         this.font = new BitmapFont();
         font.setColor(Color.BLACK);
         this.catMenu = model.getBuyMenu();
-        // catMenu.init();
         this.stage = new Stage();
+        this.upgradeStage = new Stage();
+
         this.mapTexture = new Texture("map/Spill_Plattform.jpg");
 
-        menu = new MenuButtons(model, stage);
-        stage.addActor(menu.exitButton());
+       upgradeButtons = new UpgradeButtons(model);
+        menu = new MenuButtons(model);
 
-        pauseButton = menu.pauseButton();
-        stage.addActor(pauseButton);
-        stage.addActor(menu.speedButton());
-        stage.addActor(menu.helpButtonPlay());
-        stage.addActor(menu.restarButton());
-
-        upgrade = new UpgradeButtons(model, stage);
-
-        upgradeFireRateButton = upgrade.upgradeFireRateButton();
-        upgradeRangeButton = upgrade.upgradeRangeButton();
-        upgradeDamageButton = upgrade.upgradeDamageButton();
-
-        stage.addActor(upgradeFireRateButton);
-        stage.addActor(upgradeRangeButton);
-        stage.addActor(upgradeDamageButton);
+        addUpgradeButtonsToStage();
+        addMenuButtonsToStage();
 
         GlobalAssetManager.loadAssets();
         Gdx.input.setInputProcessor(stage);
     }
 
-    public void updateButtons() {
+    public void addUpgradeButtonsToStage() {
+        upgradeStage.addActor(upgradeButtons.upgradeDamageButton());
+        upgradeStage.addActor(upgradeButtons.upgradeFireRateButton());
+        upgradeStage.addActor(upgradeButtons.upgradeRangeButton());
+    }
+
+    private void addMenuButtonsToStage() {
+        stage.addActor(menu.exitButton());
+        stage.addActor(menu.pauseButton());
+        stage.addActor(menu.speedButton());
+        stage.addActor(menu.helpButton());
+        stage.addActor(menu.restartButton());
+    }
+
+    public void updateUpgradeButtons() {
+        upgradeButtons.updateButtonAppearance();
+    }
+
+    public void updateMenuButtons() {
         menu.updateButtonAppearance();
-        upgrade.updateButtonAppearance();
 
     }
 
     @Override
     public void render(SpriteBatch batch) {
-
+        Cat selectedCat = model.getSelectedCat();
         ScreenUtils.clear(Color.DARK_GRAY);
 
         if (alpha < 1f) {
             alpha += Gdx.graphics.getDeltaTime() / 2; // Increase alpha over time
         }
+
         batch.begin();
 
         batch.setColor(1, 1, 1, alpha);
@@ -94,13 +96,13 @@ public class PlayState extends State {
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        Cat selectedCat = model.getSelectedCat();
-            if (selectedCat != null){
 
-                Circle range = selectedCat.getRangeCircle();
-                shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
-                shapeRenderer.circle(range.x, range.y, range.radius);
-            }
+        if (selectedCat != null) {
+
+            Circle range = selectedCat.getRangeCircle();
+            shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
+            shapeRenderer.circle(range.x, range.y, range.radius);
+        }
         shapeRenderer.end();
 
         drawCatMenu(batch);
@@ -119,10 +121,19 @@ public class PlayState extends State {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
+        if (selectedCat != null) {
+            Gdx.input.setInputProcessor(upgradeStage);
+            upgradeStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+            upgradeStage.draw();
+
+        } else {
+            Gdx.input.setInputProcessor(stage);
+        }
+
         if (model.isGameWon()) {
             gsm.set(new WinState(gsm, model));
         }
-        if  (model.isGameOver()) {
+        if (model.isGameOver()) {
             gsm.set(new GameOverState(gsm, model));
         }
         if (model.getHelp()) {
@@ -141,7 +152,6 @@ public class PlayState extends State {
         font.setColor(Color.WHITE);
     }
 
-   
     private void drawCatMenu(SpriteBatch batch) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
@@ -171,6 +181,7 @@ public class PlayState extends State {
     @Override
     public void dispose() {
         stage.dispose();
+        upgradeStage.dispose();
         shapeRenderer.dispose();
         font.dispose();
         GlobalAssetManager.dispose();
