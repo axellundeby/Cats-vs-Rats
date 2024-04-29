@@ -23,6 +23,8 @@ import inf112.skeleton.app.model.entities.rat.BasicRat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.GameResourceFactory;
 import inf112.skeleton.app.view.TimeSource;
+import com.badlogic.gdx.audio.Sound;
+
 
 public class ModelTest {
     Texture mockTexture;
@@ -31,31 +33,32 @@ public class ModelTest {
     private ShotgunCat shotgunCat;
     private TimeSource mockTimeSource;
     private LinkedList<Rat> rats;
-  
 
    
     @BeforeEach
     public void setup() {
+        MockitoAnnotations.openMocks(this);  
         GameResourceFactory mockFactory = mock(GameResourceFactory.class);
-        Texture mockTexture = mock(Texture.class);
-        mockTimeSource = mock(TimeSource.class);  // Use the class-level mockTimeSource
+        mockTexture = mock(Texture.class);
+        Sound mockSound = mock(Sound.class);  
+    
+        mockTimeSource = mock(TimeSource.class);
         when(mockTimeSource.getDeltaTime()).thenReturn(0.1f);
         when(mockFactory.getTexture(anyString())).thenReturn(mockTexture);
-
+        when(mockFactory.getSound(anyString())).thenReturn(mockSound);  
+    
         shotgunCat = new ShotgunCat(mockFactory);
         basicCat = new BasicCat(mockFactory);
         model = new SkadedyrModel(mockFactory, mockTimeSource);
+
         rats = new LinkedList<>();
-
         for (int i = 0; i < 3; i++) {
-            rats.add(new Rat(1000, 10, mockTexture, 50, 20, mockTexture, 25, mockTexture));
-        }
-
-        for (Rat rat : rats) {
+            Rat rat = new Rat(1000, 10, mockTexture, 50, 20, mockTexture, 25, mockTexture);
+            rats.add(rat);
             model.addRat(rat);
         }
-
     }
+    
 
 
     
@@ -82,10 +85,11 @@ public class ModelTest {
     @Test
     void attackRatTest() {
         model.setPause();
+        
         model.addCat(basicCat);
         basicCat.setPos(15, 15);
-
-        //legg til en shotgun katt der det ikke har skjedd noe med firerate
+        model.addCat(shotgunCat);
+        shotgunCat.setPos(800, 800);
 
         Rat rat1 = rats.get(0);
         Rat rat2 = rats.get(1);
@@ -98,6 +102,7 @@ public class ModelTest {
         int expectedHealth1 = initialHealth1 - basicCat.getStrength();
 
         assertEquals(basicCat.getFireRate(), basicCat.getAttackTimer());
+        assertEquals(0, shotgunCat.getAttackTimer());
         assertEquals(expectedHealth1, rat1.getHealth());
         assertEquals(initialHealth2, rat2.getHealth());
     }
