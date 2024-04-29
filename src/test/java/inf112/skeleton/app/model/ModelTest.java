@@ -48,7 +48,7 @@ public class ModelTest {
         rats = new LinkedList<>();
 
         for (int i = 0; i < 3; i++) {
-            rats.add(new Rat(50, 10, mockTexture, 50, 20, mockTexture, 25, mockTexture));
+            rats.add(new Rat(1000, 10, mockTexture, 50, 20, mockTexture, 25, mockTexture));
         }
 
         for (Rat rat : rats) {
@@ -81,35 +81,31 @@ public class ModelTest {
 
     @Test
     void attackRatTest() {
+        model.setPause();
         model.addCat(basicCat);
         basicCat.setPos(15, 15);
-    
-        model.addCat(shotgunCat);
-        shotgunCat.setPos(800, 800);
-        
-        for (int i = 0; i < rats.size(); i++) {
-            rats.get(i).setPosition(new Vector2(15, 15));
-        }
-    
-        assertTrue(basicCat.withinRange(rats.get(0)));
-        assertFalse(shotgunCat.withinRange(rats.get(0)));
-        assertFalse(model.attackQueueForEachCat().get(basicCat).isEmpty());
 
-        
-        int initialHealth = rats.get(0).getHealth();
-        System.out.println("Initial Health: " + initialHealth);
-    
-        model.clockTick(); 
-    
-        int finalHealth = rats.get(0).getHealth();
-        System.out.println("Final Health: " + finalHealth);
-    
-        assertTrue(finalHealth < initialHealth, "Rat should have taken damage but did not.");
+        //legg til en shotgun katt der det ikke har skjedd noe med firerate
+
+        Rat rat1 = rats.get(0);
+        Rat rat2 = rats.get(1);
+
+        int initialHealth1 = rat1.getHealth();
+        int initialHealth2 = rat2.getHealth();
+        rat1.setPosition(new Vector2(15,15));
+        rat2.setPosition(new Vector2(10,10));
+        model.clockTick();
+        int expectedHealth1 = initialHealth1 - basicCat.getStrength();
+
+        assertEquals(basicCat.getFireRate(), basicCat.getAttackTimer());
+        assertEquals(expectedHealth1, rat1.getHealth());
+        assertEquals(initialHealth2, rat2.getHealth());
     }
 
     @Test
     void removeDeadOrExitedRatsTest(){
-
+       
+           
     }
     
     @Test
@@ -130,23 +126,23 @@ public class ModelTest {
         model.setPause();
         model.addCat(basicCat);
         basicCat.setPos(15, 15);
-    
         model.addCat(shotgunCat);
         shotgunCat.setPos(800, 800);
+
         for (int i = 0; i < 5; i++) {
-            rats.get(0).setPosition(new Vector2(5 + (i * 2) , 5 + (i * 2)));
-            rats.get(1).setPosition(new Vector2(5 + (i * 2) , 5 + (i * 2)));            
+            rats.get(0).setPosition(new Vector2(5 + (i * 20) , 30 + (i * -5)));       
+            rats.get(1).setPosition(new Vector2(800 + (i * -5),800 + (i * 10)));       
             model.clockTick();
 
             assertTrue(basicCat.withinRange(rats.get(0)));
             assertFalse(shotgunCat.withinRange(rats.get(0)));
-            assertFalse(model.getAliveRats().isEmpty());
+            assertTrue(shotgunCat.withinRange(rats.get(1)));
             
-            float expectedAngle = calculateExpectedAngle(basicCat.getPosition().x, basicCat.getPosition().y, rats.get(0).getPosition().x, rats.get(0).getPosition().y);
-            System.out.println("Expected Angle: " + expectedAngle);
-            System.out.println("Cat Rotation: " + basicCat.getRotationAngle());
-            System.out.println(model.attackQueueForEachCat().get(basicCat).size());
-            assertEquals(expectedAngle, basicCat.getRotationAngle());
+            float expectedAngleForFirstRat = calculateExpectedAngle(basicCat.getPosition().x, basicCat.getPosition().y, rats.get(0).getPosition().x, rats.get(0).getPosition().y);
+            float expectedAngleForSecondRat = calculateExpectedAngle(shotgunCat.getPosition().x, shotgunCat.getPosition().y, rats.get(1).getPosition().x, rats.get(1).getPosition().y);
+            
+            assertEquals(expectedAngleForFirstRat, basicCat.getRotationAngle());
+            assertEquals(expectedAngleForSecondRat, shotgunCat.getRotationAngle());
         }
     }
 

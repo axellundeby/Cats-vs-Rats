@@ -376,12 +376,8 @@ public class SkadedyrModel implements ISkadedyrModel {
         aliveRats.add(rat);
     }
 
-    public ArrayList<Rat> getAliveRats() {
-        return aliveRats;
-    }
-
    
-    public HashMap<Cat, LinkedList<Rat>> attackQueueForEachCat() {
+    private HashMap<Cat, LinkedList<Rat>> attackQueueForEachCat() {
         HashMap<Cat, LinkedList<Rat>> attackMap = new HashMap<>();
         for (Cat cat : cats) {
             LinkedList<Rat> attackableRats = new LinkedList<>();
