@@ -51,7 +51,7 @@ public class ShotgunCat extends Cat {
 
     @Override
     public void playAttackSound() {
-        Sound s = resourceFactory.getSound("sound/gunshot.mp3");
+        Sound s = this.resourceFactory.getSound("sound/gunshot.mp3");
         s.play(0.6f);
     }
 

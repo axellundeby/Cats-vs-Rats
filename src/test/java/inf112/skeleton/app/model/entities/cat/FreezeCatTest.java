@@ -2,6 +2,7 @@ package inf112.skeleton.app.model.entities.cat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -10,6 +11,8 @@ import java.util.LinkedList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.GameResourceFactory;
@@ -29,6 +32,8 @@ public class FreezeCatTest {
     private Texture frozenTextureMock;
     @Mock
     private Texture deadTextureMock;
+    @Mock
+    private Sound mockSound; 
 
     private LinkedList<Rat> rats;
 
@@ -37,7 +42,9 @@ public class FreezeCatTest {
     GameResourceFactory mockFactory = mock(GameResourceFactory.class);
     Texture mockTexture = mock(Texture.class);
     TimeSource mockTimeSource = () -> 0.016f; 
-    when(mockFactory.getTexture(anyString())).thenReturn(mockTexture);
+
+    lenient().when(mockFactory.getSound("sound/ice.mp3")).thenReturn(this.mockSound);
+    lenient().when(mockFactory.getTexture(anyString())).thenReturn(mockTexture);
 
     freezeCat = new FreezeCat(mockFactory,mockTimeSource);
         rats = new LinkedList<>();

@@ -43,9 +43,10 @@ public class BasicCat extends Cat {
         this.fireRate *= 0.75;
     }
 
-     public void playAttackSound() {
-        Sound s = resourceFactory.getSound("sound/fart.mp3");
+    public void playAttackSound() {
+        Sound s = this.resourceFactory.getSound("sound/fart.mp3"); 
         s.play(0.6f);
     }
+    
 
 }

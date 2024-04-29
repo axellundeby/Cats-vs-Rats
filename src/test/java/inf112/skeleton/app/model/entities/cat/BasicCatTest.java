@@ -8,13 +8,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.GameResourceFactory;
 
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class BasicCatTest {
@@ -26,21 +29,26 @@ public class BasicCatTest {
     private Texture frozenTextureMock;
     @Mock
     private Texture deadTextureMock;
+   
+    @Mock
+    private Sound mockSound; 
 
     private LinkedList<Rat> rats;
 
+
     @BeforeEach
     void setup() {
-    GameResourceFactory mockFactory = mock(GameResourceFactory.class);
-    Texture mockTexture = mock(Texture.class);
-    when(mockFactory.getTexture(anyString())).thenReturn(mockTexture);
-
-    basicCat = new BasicCat(mockFactory);
+        GameResourceFactory mockFactory = mock(GameResourceFactory.class);
+        lenient().when(mockFactory.getSound("sound/fart.mp3")).thenReturn(this.mockSound);
+        lenient().when(mockFactory.getTexture(anyString())).thenReturn(mock(Texture.class));
+    
+        basicCat = new BasicCat(mockFactory);
         rats = new LinkedList<>();
         for (int i = 0; i < 3; i++) {
             rats.add(new Rat(100, 10, aliveTextureMock, 50, 20, frozenTextureMock, 25, deadTextureMock));
         }
     }
+    
 
     @Test
     void testAttack() {
@@ -71,4 +79,14 @@ public class BasicCatTest {
         basicCat.upgradeFireRate();
         assertEquals(initialFireRate * 0.75, basicCat.getFireRate(), 0.01);
     }
+    
+    @Test
+    void testPlayAttackSound() {
+        if (basicCat.canAttack()) {
+            basicCat.attack(rats);
+            verify(mockSound, times(1)).play(0.6f);
+        }
+    }
+
+    
 }

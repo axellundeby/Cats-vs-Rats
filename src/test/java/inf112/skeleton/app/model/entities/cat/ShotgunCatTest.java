@@ -2,9 +2,8 @@ package inf112.skeleton.app.model.entities.cat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import java.util.LinkedList;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
 import inf112.skeleton.app.model.entities.rat.Rat;
@@ -27,20 +27,23 @@ public class ShotgunCatTest {
     private Texture frozenTextureMock;
     @Mock
     private Texture deadTextureMock;
+    @Mock
+    private Sound mockSound; 
 
     private LinkedList<Rat> rats;
 
     @BeforeEach
     void setup() {
         GameResourceFactory mockFactory = mock(GameResourceFactory.class);
-        Texture mockTexture = mock(Texture.class);
-        when(mockFactory.getTexture(anyString())).thenReturn(mockTexture);
+        lenient().when(mockFactory.getSound("sound/gunshot.mp3")).thenReturn(this.mockSound);
+        lenient().when(mockFactory.getTexture(anyString())).thenReturn(mock(Texture.class));
+
 
         shotgunCat = new ShotgunCat(mockFactory);
-        rats = new LinkedList<>();
-        for (int i = 0; i < 3; i++) {
-            rats.add(new Rat(100, 10, aliveTextureMock, 50, 20, frozenTextureMock, 25, deadTextureMock));
-        }
+            rats = new LinkedList<>();
+            for (int i = 0; i < 3; i++) {
+                rats.add(new Rat(100, 10, aliveTextureMock, 50, 20, frozenTextureMock, 25, deadTextureMock));
+            }
     }
 
     @Test
