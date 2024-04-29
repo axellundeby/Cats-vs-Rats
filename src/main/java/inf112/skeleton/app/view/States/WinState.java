@@ -23,7 +23,7 @@ public class WinState extends State {
         this.stage = new Stage();
         this.winImage = new Texture("Spill_Won.jpg");
 
-        menu = new MenuButtons(model, stage);
+        menu = new MenuButtons(model);
         stage.addActor(menu.exitButton());
       
 

@@ -37,6 +37,11 @@ public interface ICatMenu {
      */
     void selector(Vector2 pos);
 
+
+    /**
+     * Deselects the currently selected cat.
+     */
+    void deselect();
     /**
      * Returns the currently selected cat.
      *

@@ -16,7 +16,7 @@
 
 // import inf112.skeleton.app.model.entities.cat.BasicCat;
 // import inf112.skeleton.app.model.entities.cat.Cat;
-// import inf112.skeleton.app.model.entities.cat.AttackCat;
+// import inf112.skeleton.app.model.entities.cat.LabCat;
 // import inf112.skeleton.app.model.entities.rat.BasicRat;
 // import inf112.skeleton.app.model.entities.rat.LabRat;
 // import inf112.skeleton.app.model.entities.rat.Rat;
@@ -68,7 +68,7 @@
 
 //     @Test
 //     public void testAddCat() {
-//         Cat cat = new AttackCat(0, 0, dependency, dependency, 0, 0);
+//         Cat cat = new LabCat(0, 0, dependency, dependency, 0, 0);
 //         assertEquals(0, model.getCats().size(), "Initial Cats list is not empty");
 //         model.addCat(cat);
 //         int actual = model.getCats().size();
@@ -103,7 +103,7 @@
 //     public void attackTest(){
 //         for (int i = 0; i < 10; i++) {
 //             model.addRat(new LabRat(1, 1, dependency,1,1,1));
-//             model.addCat(new AttackCat(10, 10, dependency, dependency, 1, 0));
+//             model.addCat(new LabCat(10, 10, dependency, dependency, 1, 0));
 //         }
         
 //     }

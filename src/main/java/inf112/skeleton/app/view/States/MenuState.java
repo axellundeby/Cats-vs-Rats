@@ -1,15 +1,9 @@
 package inf112.skeleton.app.view.States;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-
-import inf112.skeleton.app.controller.buttons.ButtonFactory;
 import inf112.skeleton.app.controller.buttons.menu.MenuButtons;
 import inf112.skeleton.app.model.SkadedyrModel;
 
@@ -29,8 +23,8 @@ public class MenuState extends State {
 
         Gdx.input.setInputProcessor(stage);
 
-        menu = new MenuButtons(model, stage);
-        stage.addActor(menu.helpButtonPlay());
+        menu = new MenuButtons(model);
+        stage.addActor(menu.helpButton());
         stage.addActor(menu.playButton());
     }
 

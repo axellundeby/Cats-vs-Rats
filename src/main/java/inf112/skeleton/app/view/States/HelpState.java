@@ -24,7 +24,7 @@ public class HelpState extends State {
         this.model = model;
         this.stage = new Stage();
         this.help = new Texture("Spill_Help.png");
-        menu = new MenuButtons(model, stage);
+        menu = new MenuButtons(model);
         stage.addActor(menu.playButton());
 
         Gdx.input.setInputProcessor(stage);

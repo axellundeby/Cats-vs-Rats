@@ -23,7 +23,7 @@ public class GameOverState extends State {
         this.stage = new Stage();
         this.gameOverImage = new Texture("Spill_GameOver.jpg");
 
-        menu = new MenuButtons(model, stage);
+        menu = new MenuButtons(model);
         stage.addActor(menu.exitButton());
         Gdx.input.setInputProcessor(stage);
     }
