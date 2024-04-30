@@ -95,7 +95,7 @@ public interface ISkadedyrModel {
      * Get the cat menu object
      * @return the CatMenu object
      */
-    CatMenu getBuyMenu();
+    CatMenu getCatMenu();
 
 
     /**

@@ -1,17 +1,11 @@
 package inf112.skeleton.app.model;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.model.catmenu.CatMenu;
-import inf112.skeleton.app.model.entities.cat.BasicCat;
 import inf112.skeleton.app.model.entities.cat.Cat;
-import inf112.skeleton.app.model.entities.cat.ShotgunCat;
-import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
 import inf112.skeleton.app.view.States.PlayState;
@@ -47,7 +41,6 @@ public class SkadedyrModel implements ISkadedyrModel {
     private TimeSource timeSource;
 
 
-   
     public SkadedyrModel(GameResourceFactory resourceFactory, TimeSource timeSource) {
         this.resourceFactory = resourceFactory;
         this.timeSource = timeSource;
@@ -92,7 +85,6 @@ public class SkadedyrModel implements ISkadedyrModel {
         if (!isPaused) {
             float deltaTime = timeSource.getDeltaTime();
             updateCatAnimations(deltaTime);
-            //handleUserInput();
             attackRat();
             catRotater();
             ratHandler(deltaTime);
@@ -212,31 +204,55 @@ public class SkadedyrModel implements ISkadedyrModel {
         }
     }
 
-    public void handleUserInput() {
-        int mouseX = Gdx.input.getX();
-        int mouseY = Gdx.input.getY();
-        Vector2 mouse = new Vector2(mouseX, 842 - mouseY);
-        if (Gdx.input.isTouched() && mouseY > 100 && mouseY < 650) {
-            newCat(mouseX, 842 - mouseY);
-            catMenu.deselect();
-        }
-        if (Gdx.input.isTouched()) {
-            catMenu.selector(mouse);
-            selectCat(mouse);
-        }
-    }
+    // public void handleUserInput() {
+    //     int mouseX = Gdx.input.getX();
+    //     int mouseY = Gdx.input.getY();
+    //     Vector2 mouse = new Vector2(mouseX, 842 - mouseY);
+    //     if (Gdx.input.isTouched() && mouseY > 100 && mouseY < 650) {
+    //         newCat(mouseX, 842 - mouseY);
+    //         catMenu.deselect();
+    //     }
+    //     if (Gdx.input.isTouched()) {
+    //         catMenu.selector(mouse);
+    //         selectCat(mouse);
+    //     }
+    // }
 
-    private void selectCat(Vector2 mouse) {
-        if (mouse.y < 200)
-            return;
-        for (Cat cat : cats) {
-            if (cat.getSelectionCircle().contains(mouse)) {
-                selectedCat = cat;
-                return;
-            }
-        }
-        selectedCat = null;
-    }
+    // private void selectCat(Vector2 mouse) {
+    //     if (mouse.y < 200)
+    //         return;
+    //     for (Cat cat : cats) {
+    //         if (cat.getSelectionCircle().contains(mouse)) {
+    //             selectedCat = cat;
+    //             return;
+    //         }
+    //     }
+    //     selectedCat = null;
+    // }
+
+
+    // private void newCat(float mouseX, float mouseY) {
+    //     Cat cat = catMenu.getSelectedCat();
+    //     int cost = 0;
+    //     if (cat instanceof BasicCat) {
+    //         cat = new BasicCat(resourceFactory);
+
+    //     } else if (cat instanceof ShotgunCat) {
+    //         cat = new ShotgunCat(resourceFactory);
+
+    //     } else if (cat instanceof FreezeCat) {
+    //         cat = new FreezeCat(resourceFactory, timeSource);
+    //     }
+    //     if (cat != null) {
+    //         cost = cat.getCost();
+
+    //         if (money >= cost) {
+    //             cat.setPos(mouseX, mouseY);
+    //             addCat(cat);
+    //             setMoney(money - cost);
+    //         }
+    //     }
+    // }
 
     public Cat getSelectedCat() {
         return selectedCat;
@@ -429,32 +445,10 @@ public class SkadedyrModel implements ISkadedyrModel {
         }
     }
 
-    private void newCat(float mouseX, float mouseY) {
-        Cat cat = catMenu.getSelectedCat();
-        int cost = 0;
-        if (cat instanceof BasicCat) {
-            cat = new BasicCat(resourceFactory);
-
-        } else if (cat instanceof ShotgunCat) {
-            cat = new ShotgunCat(resourceFactory);
-
-        } else if (cat instanceof FreezeCat) {
-            cat = new FreezeCat(resourceFactory, timeSource);
-        }
-        if (cat != null) {
-            cost = cat.getCost();
-
-            if (money >= cost) {
-                cat.setPos(mouseX, mouseY);
-                addCat(cat);
-                setMoney(money - cost);
-            }
-        }
-    }
-
     @Override
-    public CatMenu getBuyMenu() {
+    public CatMenu getCatMenu() {
         return catMenu;
     }
+
 
 }

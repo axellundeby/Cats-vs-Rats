@@ -92,6 +92,7 @@ public abstract class Cat {
             updateTexture(PictureSwapper.DEFAULT, 1);
             updateTexture(PictureSwapper.ATTACK, 1);
             this.size += 30;
+            this.halfSize = size / 2;
             this.sprite.setSize(size, size);
             this.sprite.setPosition(pos.x - halfSize, pos.y - halfSize);
         }
@@ -100,6 +101,7 @@ public abstract class Cat {
             updateTexture(PictureSwapper.DEFAULT, 2);
             updateTexture(PictureSwapper.ATTACK, 2);
             this.size += 30;
+            this.halfSize = size / 2;
             this.sprite.setSize(size, size);
             this.sprite.setPosition(pos.x - halfSize, pos.y - halfSize);
         }
@@ -328,8 +330,8 @@ public abstract class Cat {
     }
 
     public Texture getMenuTexture() {
-        List<Texture> stateTextures = textures.get(currentState);
-        return stateTextures.get(0);
+        List<Texture> defaultTextures = textures.get(PictureSwapper.DEFAULT);
+        return defaultTextures.get(0);
     }
 
     /**
