@@ -48,6 +48,7 @@ public class HelpState extends State {
         sb.end();
 
         if (model.getStartGame()) {
+            model.resetStartGame();
             gsm.set(new PlayState(gsm, model));
         }
         stage.draw();

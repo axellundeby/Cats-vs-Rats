@@ -26,7 +26,7 @@ public class PlayState extends State {
     private Stage stage;
     private Stage upgradeStage;
     private CatMenu catMenu;
-   // private Button pauseButton;
+    // private Button pauseButton;
     private Texture mapTexture;
     private MenuButtons menu;
     private UpgradeButtons upgradeButtons;
@@ -44,13 +44,12 @@ public class PlayState extends State {
 
         this.mapTexture = new Texture("map/Spill_Plattform.jpg");
 
-       upgradeButtons = new UpgradeButtons(model);
+        upgradeButtons = new UpgradeButtons(model);
         menu = new MenuButtons(model);
 
         addUpgradeButtonsToStage();
         addMenuButtonsToStage();
 
-        
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -131,16 +130,21 @@ public class PlayState extends State {
         }
 
         if (model.isGameWon()) {
-            gsm.set(new WinState(gsm, model));
+            if (model.isGameWon()) {
+                model.resetStartGame();
+                gsm.set(new WinState(gsm, model));
+
+            }
+            if (model.isGameOver()) {
+                model.resetStartGame();
+                gsm.set(new GameOverState(gsm, model));
+            }
+            if (model.getHelp()) {
+                model.resetStartGame();
+                gsm.set(new HelpState(gsm, model));
+            }
 
         }
-        if (model.isGameOver()) {
-            gsm.set(new GameOverState(gsm, model));
-        }
-        if (model.getHelp()) {
-            gsm.set(new HelpState(gsm, model));
-        }
-
     }
 
     private void drawGameStatus(SpriteBatch batch) {
@@ -149,7 +153,7 @@ public class PlayState extends State {
         font.draw(batch, "Din Score: " + model.getPoints(), 800, 800);
         font.draw(batch, "Level: " + model.getLevel(), 700, 800);
         font.draw(batch, model.nextWaveText(), 500, 170);
-      
+
         font.setColor(Color.WHITE);
     }
 

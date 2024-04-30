@@ -29,7 +29,7 @@ public interface IMenuButtons {
      * Creates and returns a restart button.
      * @return the created restart button.
      */
-    Button restarButton();
+    Button restartButton();
 
     /**
      * Updates the appearance of the buttons.
@@ -37,7 +37,7 @@ public interface IMenuButtons {
     void updateButtonAppearance();
     
 
-    Button helpButtonPlay();
+    Button helpButton();
 
     Button playButton();
 

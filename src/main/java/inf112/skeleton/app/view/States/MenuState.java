@@ -37,9 +37,11 @@ public class MenuState extends State {
 
         stage.draw();
         if (model.getHelp()) {
+            model.resetStartGame();
             gsm.set(new HelpState(gsm, model));
         } 
         if (model.getStartGame()) {
+            model.resetStartGame();
             gsm.set(new PlayState(gsm, model));
         }
 

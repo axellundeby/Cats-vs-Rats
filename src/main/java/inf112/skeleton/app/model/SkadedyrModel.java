@@ -95,7 +95,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         if (!isPaused) {
             float deltaTime = timeSource.getDeltaTime();
             updateCatAnimations(deltaTime);
-            handleUserInput();
+            //handleUserInput();
             attackRat();
             catRotater();
             ratHandler(deltaTime);
@@ -346,6 +346,10 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     public boolean getHelp() {
         return isHelp;
+    }
+
+    public void resetStartGame() {
+        startGame = false;
     }
 
     public void setStartGame() {

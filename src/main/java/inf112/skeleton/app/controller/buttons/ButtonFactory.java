@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.entities.cat.Cat;
+import inf112.skeleton.app.view.LibGDXResourceFactory;
 
 public class ButtonFactory {
 
@@ -40,12 +41,13 @@ public class ButtonFactory {
      *                      state.
      * @return A new ImageButton with the specified images.
      */
-    public static ImageButton createImageButton(String upImagePath, String downImagePath) {
+    public static ImageButton createImageButton(Texture upImagePath, Texture downImagePath) {
+       // LibGDXResourceFactory resourceFactory = LibGDXResourceFactory.getInstance();
 
         Drawable upDrawable = new TextureRegionDrawable(
-                new TextureRegion(new Texture(Gdx.files.internal(upImagePath))));
+            new TextureRegion(upImagePath));
         Drawable downDrawable = new TextureRegionDrawable(
-                new TextureRegion(new Texture(Gdx.files.internal(downImagePath))));
+            new TextureRegion(downImagePath));
         ImageButtonStyle style = new ImageButtonStyle();
         style.up = upDrawable;
         style.down = downDrawable;
@@ -53,7 +55,7 @@ public class ButtonFactory {
         return new ImageButton(style);
     }
 
-    public Button createUpgradeButton(int cost, String textureUp, String textureDown, int xPosition, int yPosition,
+    public Button createUpgradeButton(int cost, Texture textureUp, Texture textureDown, int xPosition, int yPosition,
             Consumer<Cat> upgradeAction) {
         Button upgradeButton = ButtonFactory.createImageButton(textureUp, textureDown);
         upgradeButton.setSize(UPGRADE_BUTTON_WIDTH, UPGRADE_BUTTON_HEIGHT);
@@ -74,13 +76,13 @@ public class ButtonFactory {
         return upgradeButton;
     }
 
-    public Button createMenuButton(String textureUp, String textureDown, int xPosition, int yPosition,  Runnable action) {
-        Button button = ButtonFactory.createImageButton(textureUp, textureDown);
+    public Button createMenuButton(Texture texture, Texture texture2, int xPosition, int yPosition,  Runnable action) {
+        Button button = ButtonFactory.createImageButton(texture, texture2);
         button.setSize(MENU_BUTTON_WIDTH, MENU_BUTTON_HEIGHT);
         button.setPosition(xPosition, yPosition);
         button.addListener(new ClickListener() {
             @Override
-            public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+            public void clicked(InputEvent event, float x, float y) {
                 action.run();
                 //updateButtonAppearance();
             }
