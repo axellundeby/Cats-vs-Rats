@@ -233,19 +233,11 @@ public class RatTest {
         assertEquals(expectedRotationWhennMovingUp, sprite.getRotation());
     }
 
-     
-    @Test
-    void testImageDirectionAndRotationForOutMovment() {
-       
-    }
-    
-    
-
-
+   
     @Test
     void isOutTest() {
         assertFalse(rat.isOut());
-        rat.setPosition(new Vector2(1150, 310));
+        rat.setDirection(Direction.OUT);
         assertTrue(rat.isOut());
     }
 

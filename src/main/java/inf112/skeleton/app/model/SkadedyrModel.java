@@ -7,8 +7,6 @@ import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
-
-import inf112.skeleton.app.controller.buttons.upgrade.UpgradeButtons;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
 import inf112.skeleton.app.model.entities.cat.Cat;
@@ -16,7 +14,6 @@ import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
-import inf112.skeleton.app.view.States.MenuState;
 import inf112.skeleton.app.view.States.PlayState;
 import inf112.skeleton.app.view.States.State;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
@@ -162,6 +159,7 @@ public class SkadedyrModel implements ISkadedyrModel {
             writeText = false;
         }
     }
+
 
     private void roundOver(float deltaTime) {
         level++;
@@ -396,6 +394,10 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     public void addRat(Rat rat) {
         aliveRats.add(rat);
+    }
+
+    public ArrayList<Rat> getAliveRats() {
+        return aliveRats;
     }
 
    

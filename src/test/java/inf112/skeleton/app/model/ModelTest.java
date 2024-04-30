@@ -4,25 +4,21 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import java.util.HashMap;
 import java.util.LinkedList;
-
 import org.junit.jupiter.api.*;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-
 import inf112.skeleton.app.model.entities.cat.BasicCat;
-import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.model.entities.cat.Cat.PictureSwapper;
-import inf112.skeleton.app.model.entities.rat.BasicRat;
 import inf112.skeleton.app.model.entities.rat.Rat;
+import inf112.skeleton.app.model.entities.rat.Rat.Direction;
+import inf112.skeleton.app.model.entities.rat.RatFactory;
 import inf112.skeleton.app.view.GameResourceFactory;
 import inf112.skeleton.app.view.TimeSource;
+
+
 import com.badlogic.gdx.audio.Sound;
 
 
@@ -33,6 +29,7 @@ public class ModelTest {
     private ShotgunCat shotgunCat;
     private TimeSource mockTimeSource;
     private LinkedList<Rat> rats;
+    private RatFactory ratFactory;
 
    
     @BeforeEach
@@ -50,6 +47,7 @@ public class ModelTest {
         shotgunCat = new ShotgunCat(mockFactory);
         basicCat = new BasicCat(mockFactory);
         model = new SkadedyrModel(mockFactory, mockTimeSource);
+        ratFactory = new RatFactory(mockFactory);
 
         rats = new LinkedList<>();
     }
@@ -147,27 +145,68 @@ public class ModelTest {
        
            
     }
+
+    @Test
+    void ratHanderTest(){
+
+    }
     
     @Test
     void roundTester(){
-        addRatsWithHighHp(3);
-
+        addRatsWithLowHp(1);
+        
         assertEquals(0, model.getLevel());
         model.setPause();
-        Rat rat1 = rats.get(0);
-        Rat rat2 = rats.get(1);
-        Rat rat3 = rats.get(2);
         
-        rat1.setPosition(new Vector2(2000,15));
-        rat2.setPosition(new Vector2(2000,15));
-        rat3.setPosition(new Vector2(2000,15));
+        
+        int killedRatsForRound0 = 0;
+        for (Rat rat : rats) {
+            rat.setDirection(Direction.OUT);
+            killedRatsForRound0++;
+        }
+        assertEquals(killedRatsForRound0, ratFactory.calculateRatsForRound(model.getLevel()));
+        for (Rat rat : rats) {
+            assertTrue(rat.isOut());
+        }
+        
+        assertEquals("", model.nextWaveText());
+        
+        for (int i = 0; i < 100; i++) {
+            model.clockTick();
+        }
+        assertEquals(4, model.getLives());
+        assertEquals(1, model.getLevel());
+        assertTrue(model.isPaused());
+        assertEquals("Round over. Press unPause to continue.", model.nextWaveText());
 
-        System.out.println(rat1.getPosition() +":"+ rat2.getPosition() +":"+ rat3.getPosition());
-        
-        model.clockTick();
-        // assertTrue(model.isPaused());
-        // assertEquals(1, model.getLevel());
         rats.removeAll(rats);
+
+        addRatsWithLowHp(6);
+        model.setPause();
+        model.clockTick();
+        int killedRatsForRound1 = 0;
+        for (Rat rat : rats) {
+            rat.setDirection(Direction.OUT);
+            killedRatsForRound1++;
+        }
+        assertEquals(killedRatsForRound1, ratFactory.calculateRatsForRound(model.getLevel()));
+        for (Rat rat : rats) {
+            assertTrue(rat.isOut());
+        }
+        assertEquals("", model.nextWaveText());
+        for (int i = 0; i < 100; i++) {
+            model.clockTick();
+        }
+        assertEquals(0, model.getLives());
+        assertEquals(2, model.getLevel());
+        assertTrue(model.isPaused());
+        assertEquals("Round over. Press unPause to continue.", model.nextWaveText());
+        rats.removeAll(rats);
+    }
+
+    @Test
+    void nextWaveTextTest(){
+       
     }
 
 
@@ -207,10 +246,6 @@ public class ModelTest {
         }
         rats.removeAll(rats);
     }
-
-    @Test 
-    void ratsMoveTest(){}
-
 
     
     @Test
