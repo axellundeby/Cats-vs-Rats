@@ -55,4 +55,6 @@ public class ShotgunCat extends Cat {
         s.play(0.6f);
     }
 
+    
+
 }

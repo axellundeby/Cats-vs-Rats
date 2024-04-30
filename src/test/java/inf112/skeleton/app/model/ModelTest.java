@@ -3,9 +3,12 @@ package inf112.skeleton.app.model;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.util.LinkedList;
 import org.junit.jupiter.api.*;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
@@ -30,6 +33,8 @@ public class ModelTest {
     private TimeSource mockTimeSource;
     private LinkedList<Rat> rats;
     private RatFactory ratFactory;
+    @Mock
+    private Sound mockSound; 
 
    
     @BeforeEach
@@ -37,12 +42,11 @@ public class ModelTest {
         MockitoAnnotations.openMocks(this);  
         GameResourceFactory mockFactory = mock(GameResourceFactory.class);
         mockTexture = mock(Texture.class);
-        Sound mockSound = mock(Sound.class);  
     
         mockTimeSource = mock(TimeSource.class);
         when(mockTimeSource.getDeltaTime()).thenReturn(0.1f);
         when(mockFactory.getTexture(anyString())).thenReturn(mockTexture);
-        when(mockFactory.getSound(anyString())).thenReturn(mockSound);  
+        when(mockFactory.getSound(anyString())).thenReturn(mockSound); 
     
         shotgunCat = new ShotgunCat(mockFactory);
         basicCat = new BasicCat(mockFactory);
@@ -141,9 +145,49 @@ public class ModelTest {
     }
 
     @Test
-    void removeDeadOrExitedRatsTest(){
-       
-           
+    void removeKilledRatsTest(){
+           addRatsWithLowHp(1);
+            model.setPause();
+
+            basicCat.setPos(15, 15);
+            model.addCat(basicCat);
+            int initialPoints = model.getPoints();
+            int initialMoney = model.getMoney();
+
+            Rat rat = rats.get(0);
+            rat.setPosition(new Vector2(15,15));
+            
+            model.clockTick();
+
+            assertTrue(rat.isKilled());
+            assertEquals(rat.getPoints() + initialPoints, model.getPoints());
+            assertEquals(rat.getBounty() + initialMoney, model.getMoney());
+            assertTrue(rat.isrewardClaimed());
+            verify(mockSound, times(2)).play(0.6f);
+
+            for (int index = 0; index < 50; index++) {
+                model.clockTick();
+            }
+            assertTrue(model.getRats().isEmpty());
+            rats.removeAll(rats);
+    }
+
+    @Test
+    void removeExitedRatsTest(){
+        addRatsWithLowHp(6);
+        model.setPause();
+        for (Rat rat : rats) {
+            rat.setDirection(Direction.OUT);
+        }
+        model.clockTick();
+        
+        assertEquals(0, model.getLives());
+        verify(mockSound, times(6)).play(0.6f);
+        for (Rat rat : rats) {
+            assertTrue(rat.isExited());
+        }
+        assertTrue(model.getRats().isEmpty());
+        rats.removeAll(rats);
     }
 
     @Test
@@ -204,13 +248,7 @@ public class ModelTest {
         rats.removeAll(rats);
     }
 
-    @Test
-    void nextWaveTextTest(){
-       
-    }
-
-
-
+  
     private float calculateExpectedAngle(float catX, float catY, float targetX, float targetY) {
         float dx = targetX - catX;
         float dy = targetY - catY;

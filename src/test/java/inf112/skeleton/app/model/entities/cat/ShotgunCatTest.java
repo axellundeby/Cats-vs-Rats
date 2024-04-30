@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import java.util.LinkedList;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -75,4 +78,14 @@ public class ShotgunCatTest {
         shotgunCat.upgradeFireRate();
         assertEquals(initialFireRate * 0.75, shotgunCat.getFireRate(), 0.01);
     }
+
+     @Test
+    void testPlayAttackSound() {
+        if (shotgunCat.canAttack()) {
+            shotgunCat.attack(rats);
+            verify(mockSound, times(1)).play(0.6f);
+        }
+    }
+
+    
 }
