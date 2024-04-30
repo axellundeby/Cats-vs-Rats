@@ -20,9 +20,8 @@ import inf112.skeleton.app.model.entities.rat.Rat.Direction;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
 import inf112.skeleton.app.view.GameResourceFactory;
 import inf112.skeleton.app.view.TimeSource;
-
-
 import com.badlogic.gdx.audio.Sound;
+
 
 
 public class ModelTest {
@@ -33,6 +32,8 @@ public class ModelTest {
     private TimeSource mockTimeSource;
     private LinkedList<Rat> rats;
     private RatFactory ratFactory;
+
+
     @Mock
     private Sound mockSound; 
 
@@ -42,7 +43,8 @@ public class ModelTest {
         MockitoAnnotations.openMocks(this);  
         GameResourceFactory mockFactory = mock(GameResourceFactory.class);
         mockTexture = mock(Texture.class);
-    
+        
+        
         mockTimeSource = mock(TimeSource.class);
         when(mockTimeSource.getDeltaTime()).thenReturn(0.1f);
         when(mockFactory.getTexture(anyString())).thenReturn(mockTexture);
@@ -52,12 +54,10 @@ public class ModelTest {
         basicCat = new BasicCat(mockFactory);
         model = new SkadedyrModel(mockFactory, mockTimeSource);
         ratFactory = new RatFactory(mockFactory);
-
         rats = new LinkedList<>();
     }
-    
 
-
+   
     
     @Test
     void updateCatAnimationsTest(){
@@ -182,6 +182,7 @@ public class ModelTest {
         model.clockTick();
         
         assertEquals(0, model.getLives());
+        assertTrue(model.isGameOver());
         verify(mockSound, times(6)).play(0.6f);
         for (Rat rat : rats) {
             assertTrue(rat.isExited());
@@ -323,6 +324,128 @@ public class ModelTest {
         assertEquals(initialMoney + 100, model.getMoney());
     }
 
+
+    @Test
+    void speedUpTest(){
+        float initialSpeed = model.getSpeed();
+        model.setSpeed();
+        float newSpeed = model.getSpeed();
+        assertTrue(initialSpeed > newSpeed);
+        assertTrue(model.isSpeedUp());
+        model.setSpeed();
+        assertTrue(model.getSpeed() > newSpeed);
+    }
+
+    //MANGER!
+    // @Test
+    // void getBuyMenuTest(){
+    //     assertEquals(0, model.getBuyMenu());
+    // }
+
+
+    //mangler noe her og ikke kall på addCata
+    @Test
+    void testNewCat(){
+        int initialMoney = model.getMoney();
+        model.addCat(basicCat);
+        assertEquals(1, model.getCats().size());
+        model.addCat(shotgunCat);
+        assertEquals(2, model.getCats().size());
+        //assertEquals(initialMoney - (shotgunCat.getCost() + basicCat.getCost()) , model.getMoney());
+    }
+
+    @Test
+    void getAliveRatsTest(){
+        addRatsWithHighHp(3);
+        assertEquals(3, model.getAliveRats().size());
+        rats.removeAll(rats);
+    }
+
+    @Test 
+    void restartGameTest(){
+        model.restart();
+        assertEquals(5, model.getLives());
+        assertEquals(0, model.getLevel());
+        assertEquals(1000, model.getMoney());
+        assertEquals(0, model.getPoints());
+        assertTrue(model.isPaused());
+    }
+
+    @Test
+    void gameIsWonTest(){
+        assertFalse(model.isGameWon());
+        model.setLevel(10);
+        assertTrue(model.isGameWon());
+    }
+
+    @Test
+    void setLevelTester(){
+        model.setLevel(10);
+        assertEquals(10, model.getLevel());
+    }
+
+    @Test
+    void helpTester(){
+        model.setStartGame();
+        assertFalse(model.getHelp());
+        assertTrue(model.getStartGame());
+        model.setHelp();
+        assertTrue(model.getHelp());
+        assertFalse(model.getStartGame());
+    }
+
+    @Test 
+    void setMoneyTest(){
+        model.setMoney(1000);
+        assertEquals(1000, model.getMoney());
+        verify(mockSound, times(1)).play(0.6f);
+
+    }
+
+    @Test 
+    void getCatsTest(){
+        model.addCat(basicCat);
+        model.addCat(shotgunCat);
+        assertEquals(2, model.getCats().size());
+    }
+
+    @Test 
+    void exitTest(){
+        model.exit();
+        assertEquals("cannot exit while game is running", model.exit());
+    }
+
+    @Test
+    void startTextTest(){
+        assertEquals("Press unPause to start", model.nextWaveText());
+        model.setPause();
+        model.clockTick();
+        assertEquals("", model.nextWaveText());
+    }
+
+    @Test 
+    void catSelectedTextTest(){
+        assertEquals("No cat selected", model.uppgradeErrorText());
+        model.addCat(basicCat);
+        model.setSelectedCat(basicCat);
+        assertEquals("", model.uppgradeErrorText());
+
+    }
+
+    @Test
+    void getAndSetSelectedCatTest(){
+        model.setSelectedCat(basicCat);
+        assertEquals(basicCat, model.getSelectedCat());
+    }
+
+
+
+}
+
+   
+
+
+
  
    
-}
+
