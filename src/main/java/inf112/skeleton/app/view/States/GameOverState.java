@@ -1,8 +1,7 @@
-
 package inf112.skeleton.app.view.States;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -23,30 +22,25 @@ public class GameOverState extends State {
         this.model = model;
         this.resourceFactory = resourceFactory;
 
-        this.stage = new Stage();
-        this.gameOverImage = new Texture("Spill_GameOver.jpg");
+        this.stage = resourceFactory.createStage();
+        this.gameOverImage = resourceFactory.getTexture("Spill_GameOver.jpg");
 
         menu = new MenuButtons(model, resourceFactory);
         stage.addActor(menu.exitButton());
-        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void render(SpriteBatch sb) {
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        sb.begin();
+        resourceFactory.clearScreen(Color.WHITE);
         if (alpha < 1f) {
             alpha += 0.01f;
             alpha = Math.min(alpha, 1f);
         }
         sb.setColor(1f, 1f, 1f, alpha);
+        sb.begin();
         sb.draw(gameOverImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         sb.setColor(1f, 1f, 1f, 1f);
         sb.end();
-
-        
-
-        
 
         stage.draw();
     }

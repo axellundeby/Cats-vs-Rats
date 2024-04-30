@@ -363,7 +363,7 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     @Override
     public boolean isGameOver() {
-        return lives <= 0;
+        return lives <= 4;
     }
 
     @Override
