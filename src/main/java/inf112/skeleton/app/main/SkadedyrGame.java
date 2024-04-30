@@ -15,7 +15,6 @@ public class SkadedyrGame implements ApplicationListener{
     private final SkadedyrModel model;
     private final SkadedyrView view;
     private final SkadedyrController controller;
-    private TimeSource timeSource;
 
     public SkadedyrGame(){
         GameResourceFactory factory = new LibGDXResourceFactory();
@@ -28,7 +27,7 @@ public class SkadedyrGame implements ApplicationListener{
             
         };
         this.model  = new SkadedyrModel(factory, timeSource);
-        this.controller = new SkadedyrController(model);
+        this.controller = new SkadedyrController(model,factory,timeSource);
         this.view = new SkadedyrView(model);
        
 
