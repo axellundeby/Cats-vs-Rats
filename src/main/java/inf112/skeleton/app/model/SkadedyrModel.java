@@ -25,11 +25,10 @@ public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Cat> cats = new ArrayList<>();
     private ArrayList<Rat> aliveRats = new ArrayList<>();
     private RatFactory ratFactory;
-    private int lives = 5;
-    private int money = 1000000;
+    private int lives;
+    private int money;
     private int points = 0;
     private int level = 0;
-    private int ratsSpawned;
     private boolean isPaused;
     private float intervalSeconds = (float) 0.05;
     private CatMenu catMenu;
@@ -43,11 +42,10 @@ public class SkadedyrModel implements ISkadedyrModel {
     private State currentState;
     private boolean isHelp = false;
     private boolean startGame = false;
-    private boolean uppgradePressed = false;
     private List<Rat> newRats;
     private GameResourceFactory resourceFactory;
     private TimeSource timeSource;
-    private float elapsedTime = 0.0f;
+
 
    
     public SkadedyrModel(GameResourceFactory resourceFactory, TimeSource timeSource) {
@@ -66,6 +64,8 @@ public class SkadedyrModel implements ISkadedyrModel {
         aliveRats.clear();
         newRats.clear();
         ratFactory.resetRatFactory();
+        money = 1000;
+        lives = 5;
         isPaused = true;
         intervalSeconds = 0.05f;
         speedUp = false;
@@ -133,13 +133,11 @@ public class SkadedyrModel implements ISkadedyrModel {
                     iterator.remove();
                 }
             } else if (rat.getDirection() == Direction.OUT) {
-                if (!rat.isrewardClaimed()) {
-                    if (!rat.isExited()) {
-                        lives = Math.max(0, lives - 1);
-                        Sound livesSound = resourceFactory.getSound("sound/hp.mp3");
-                        livesSound.play(0.6f);
-                        rat.exit();
-                    }
+                if (!rat.isExited()) {
+                    lives = Math.max(0, lives - 1);
+                    Sound livesSound = resourceFactory.getSound("sound/hp.mp3");
+                    livesSound.play(0.6f);
+                    rat.exit();
                     iterator.remove();
                 }
             }
@@ -198,7 +196,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     public boolean pressedUppgradeButton() {
-        return uppgradePressed = true;
+        return true;
     }
 
     public String uppgradeErrorText() {
@@ -244,6 +242,10 @@ public class SkadedyrModel implements ISkadedyrModel {
         return selectedCat;
     }
 
+    public Cat setSelectedCat(Cat cat) {
+        return selectedCat = cat;
+    }
+
     
     public void addCat(Cat cat) {
         cats.add(cat);
@@ -287,10 +289,11 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     @Override
-    public void exit() {
+    public String exit() {
         if (isPaused) {
             System.exit(0);
         }
+        return "cannot exit while game is running";
     }
 
     @Override
@@ -303,10 +306,6 @@ public class SkadedyrModel implements ISkadedyrModel {
         return aliveRats;
     }
 
-    @Override
-    public int getRatsSpawned() {
-        return ratsSpawned;
-    }
 
     @Override
     public int getMoney() {
@@ -318,9 +317,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         this.money = money;
         if (currentState instanceof PlayState) {
             ((PlayState) currentState).updateUpgradeButtons();
-            
-                ((PlayState) currentState).addUpgradeButtonsToStage();
-            
+            ((PlayState) currentState).addUpgradeButtonsToStage();
         }
         Sound buySound = resourceFactory.getSound("sound/cashier.mp3");
         buySound.play(0.6f);
@@ -335,6 +332,10 @@ public class SkadedyrModel implements ISkadedyrModel {
     @Override
     public boolean isGameWon() {
         return level == 10;
+    }
+
+    public void setLevel(int levelSetter){
+        level = levelSetter;
     }
 
     public void setHelp() {

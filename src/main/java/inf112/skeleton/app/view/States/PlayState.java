@@ -44,7 +44,7 @@ public class PlayState extends State {
 
         this.mapTexture = new Texture("map/Spill_Plattform.jpg");
 
-       upgradeButtons = new UpgradeButtons(model);
+        upgradeButtons = new UpgradeButtons(model);
         menu = new MenuButtons(model);
 
         addUpgradeButtonsToStage();
@@ -81,6 +81,10 @@ public class PlayState extends State {
     public void render(SpriteBatch batch) {
         Cat selectedCat = model.getSelectedCat();
         ScreenUtils.clear(Color.DARK_GRAY);
+
+        if (shapeRenderer == null) {
+            shapeRenderer = new ShapeRenderer();
+        }
 
         if (alpha < 1f) {
             alpha += Gdx.graphics.getDeltaTime() / 2; // Increase alpha over time

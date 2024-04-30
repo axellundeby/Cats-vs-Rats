@@ -56,14 +56,9 @@ public interface ISkadedyrModel {
     /**
      * Exits the game
      */
-    void exit();
+    String exit();
 
-    /**
-     * Spawns new rats
-     * @return the number of rats spawned
-     */
-    int getRatsSpawned();
-
+  
     /**
      * Get the amount of money the player has
      * @return the amount of money the player has
