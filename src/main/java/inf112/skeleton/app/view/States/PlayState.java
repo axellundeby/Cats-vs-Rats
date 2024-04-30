@@ -1,7 +1,6 @@
 package inf112.skeleton.app.view.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -38,19 +37,14 @@ public class PlayState extends State {
         this.shapeRenderer = new ShapeRenderer();
         this.font = new BitmapFont();
         font.setColor(Color.BLACK);
-        this.catMenu = model.getBuyMenu();
+        this.catMenu = model.getCatMenu();
         this.stage = new Stage();
         this.upgradeStage = new Stage();
-
         this.mapTexture = new Texture("map/Spill_Plattform.jpg");
-
-       upgradeButtons = new UpgradeButtons(model);
+        upgradeButtons = new UpgradeButtons(model);
         menu = new MenuButtons(model);
-
         addUpgradeButtonsToStage();
         addMenuButtonsToStage();
-
-        
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -81,6 +75,10 @@ public class PlayState extends State {
     public void render(SpriteBatch batch) {
         Cat selectedCat = model.getSelectedCat();
         ScreenUtils.clear(Color.DARK_GRAY);
+
+        if (shapeRenderer == null) {
+            shapeRenderer = new ShapeRenderer();
+        }
 
         if (alpha < 1f) {
             alpha += Gdx.graphics.getDeltaTime() / 2; // Increase alpha over time
