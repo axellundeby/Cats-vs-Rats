@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.skeleton.app.controller.buttons.menu.MenuButtons;
 import inf112.skeleton.app.model.SkadedyrModel;
+import inf112.skeleton.app.view.GameResourceFactory;
 
 public class WinState extends State {
     private SkadedyrModel model;
@@ -15,15 +16,17 @@ public class WinState extends State {
     private Texture winImage;
     private float alpha = 0f;
     private MenuButtons menu;
+    private GameResourceFactory resourceFactory;
 
-    public WinState(GameStateManager gsm, SkadedyrModel model) {
+    public WinState(GameStateManager gsm, SkadedyrModel model, GameResourceFactory resourceFactory) {
         super(gsm);
         this.model = model;
+        this.resourceFactory = resourceFactory;
 
         this.stage = new Stage();
         this.winImage = new Texture("Spill_Won.jpg");
 
-        menu = new MenuButtons(model);
+        menu = new MenuButtons(model, resourceFactory);
         stage.addActor(menu.exitButton());
       
 

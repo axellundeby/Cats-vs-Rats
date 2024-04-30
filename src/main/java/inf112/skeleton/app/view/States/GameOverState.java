@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.skeleton.app.controller.buttons.menu.MenuButtons;
 import inf112.skeleton.app.model.SkadedyrModel;
+import inf112.skeleton.app.view.GameResourceFactory;
 
 public class GameOverState extends State {
     private SkadedyrModel model;
@@ -15,15 +16,17 @@ public class GameOverState extends State {
     private Texture gameOverImage;
     private float alpha = 0f;
     private MenuButtons menu;
+    private GameResourceFactory resourceFactory;
 
-    public GameOverState(GameStateManager gsm, SkadedyrModel model) {
+    public GameOverState(GameStateManager gsm, SkadedyrModel model, GameResourceFactory resourceFactory) {
         super(gsm);
         this.model = model;
+        this.resourceFactory = resourceFactory;
 
         this.stage = new Stage();
         this.gameOverImage = new Texture("Spill_GameOver.jpg");
 
-        menu = new MenuButtons(model);
+        menu = new MenuButtons(model, resourceFactory);
         stage.addActor(menu.exitButton());
         Gdx.input.setInputProcessor(stage);
     }

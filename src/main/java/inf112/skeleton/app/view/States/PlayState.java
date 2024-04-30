@@ -1,5 +1,6 @@
 package inf112.skeleton.app.view.States;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
@@ -18,6 +19,7 @@ import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
+import inf112.skeleton.app.view.GameResourceFactory;
 
 public class PlayState extends State {
     private ShapeRenderer shapeRenderer;
@@ -31,8 +33,10 @@ public class PlayState extends State {
     private MenuButtons menu;
     private UpgradeButtons upgradeButtons;
     private float alpha = 0f;
+    private GameResourceFactory resourceFactory;
 
-    public PlayState(GameStateManager gsm, SkadedyrModel model) {
+
+    public PlayState(GameStateManager gsm, SkadedyrModel model, GameResourceFactory resourceFactory) {
         super(gsm);
         this.model = model;
         this.shapeRenderer = new ShapeRenderer();
@@ -41,11 +45,12 @@ public class PlayState extends State {
         this.catMenu = model.getBuyMenu();
         this.stage = new Stage();
         this.upgradeStage = new Stage();
+        this.resourceFactory = resourceFactory;
 
         this.mapTexture = new Texture("map/Spill_Plattform.jpg");
 
         upgradeButtons = new UpgradeButtons(model);
-        menu = new MenuButtons(model);
+        menu = new MenuButtons(model, resourceFactory);
 
         addUpgradeButtonsToStage();
         addMenuButtonsToStage();
@@ -132,16 +137,16 @@ public class PlayState extends State {
         if (model.isGameWon()) {
             if (model.isGameWon()) {
                 model.resetStartGame();
-                gsm.set(new WinState(gsm, model));
+                gsm.set(new WinState(gsm, model, resourceFactory));
 
             }
             if (model.isGameOver()) {
                 model.resetStartGame();
-                gsm.set(new GameOverState(gsm, model));
+                gsm.set(new GameOverState(gsm, model, resourceFactory));
             }
             if (model.getHelp()) {
                 model.resetStartGame();
-                gsm.set(new HelpState(gsm, model));
+                gsm.set(new HelpState(gsm, model, resourceFactory));
             }
 
         }

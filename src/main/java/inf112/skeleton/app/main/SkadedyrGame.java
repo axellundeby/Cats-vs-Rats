@@ -29,7 +29,7 @@ public class SkadedyrGame implements ApplicationListener{
         };
         this.model  = new SkadedyrModel(factory, timeSource);
         this.controller = new SkadedyrController(model);
-        this.view = new SkadedyrView(model);
+        this.view = new SkadedyrView(model, factory);
        
 
     }

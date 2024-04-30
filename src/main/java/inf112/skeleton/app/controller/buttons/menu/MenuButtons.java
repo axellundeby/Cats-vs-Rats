@@ -7,7 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import inf112.skeleton.app.controller.buttons.ButtonFactory;
 import inf112.skeleton.app.model.SkadedyrModel;
+import inf112.skeleton.app.view.GameResourceFactory;
 import inf112.skeleton.app.view.LibGDXResourceFactory;
+import inf112.skeleton.app.view.TimeSource;
 import inf112.skeleton.app.view.States.HelpState;
 import inf112.skeleton.app.view.States.MenuState;
 import inf112.skeleton.app.view.States.PlayState;
@@ -22,16 +24,20 @@ public class MenuButtons implements IMenuButtons {
     private Button pauseButton;
     private Button speedButton;
 
-    private ButtonFactory buttonFactory;
-    private LibGDXResourceFactory resourceFactory;
-
+    
     private int MENU_BUTTONS_Y_POS = 750;
     private int MENU_BUTTONS_X_POS = 0;
+    
+    private ButtonFactory buttonFactory;
+   
 
-    public MenuButtons(SkadedyrModel model) {
+    GameResourceFactory resourceFactory;
+
+    public MenuButtons(SkadedyrModel model, GameResourceFactory resourceFactory) {
         this.model = model;
         this.buttonFactory = new ButtonFactory(model);
         this.resourceFactory = new LibGDXResourceFactory();
+
 
     }
 

@@ -20,9 +20,11 @@ public class SkadedyrView {
     private final SkadedyrModel model;
     private GameStateManager gsm;
     private ShapeRenderer shapeRenderer;
+    private GameResourceFactory resourceFactory;
 
-    public SkadedyrView(SkadedyrModel model) {
+    public SkadedyrView(SkadedyrModel model, GameResourceFactory resourceFactory) {
         this.model = model;
+        this.resourceFactory = resourceFactory;
     }
 
     /**
@@ -36,7 +38,7 @@ public class SkadedyrView {
         font = new BitmapFont();
         font.setColor(Color.RED);
         gsm = new GameStateManager();
-        gsm.set(new MenuState(gsm, model));
+        gsm.set(new MenuState(gsm, model, resourceFactory));
 
         Gdx.graphics.setForegroundFPS(60);
     }

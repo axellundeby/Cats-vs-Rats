@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import inf112.skeleton.app.controller.buttons.menu.MenuButtons;
 import inf112.skeleton.app.model.SkadedyrModel;
+import inf112.skeleton.app.view.GameResourceFactory;
 
 public class HelpState extends State {
 
@@ -15,13 +16,15 @@ public class HelpState extends State {
     private Texture help;
     private float alpha = 0f;
     private MenuButtons menu;
+    private GameResourceFactory resourceFactory;
 
-    public HelpState(GameStateManager gsm, SkadedyrModel model) {
+    public HelpState(GameStateManager gsm, SkadedyrModel model, GameResourceFactory resourceFactory) {
         super(gsm);
         this.model = model;
         this.stage = new Stage();
         this.help = new Texture("Spill_Help.png");
-        menu = new MenuButtons(model);
+        this.resourceFactory = resourceFactory;
+        menu = new MenuButtons(model, resourceFactory);
         stage.addActor(menu.playButton());
 
         Gdx.input.setInputProcessor(stage);
@@ -49,7 +52,7 @@ public class HelpState extends State {
 
         if (model.getStartGame()) {
             model.resetStartGame();
-            gsm.set(new PlayState(gsm, model));
+            gsm.set(new PlayState(gsm, model, resourceFactory));
         }
         stage.draw();
     }
