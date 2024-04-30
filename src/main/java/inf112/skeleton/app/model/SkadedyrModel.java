@@ -191,9 +191,20 @@ public class SkadedyrModel implements ISkadedyrModel {
         return true;
     }
 
+    public boolean triendToAddCat() {
+        return true;
+    }
+
     public String uppgradeErrorText() {
         if (getSelectedCat() == null && pressedUppgradeButton()) {
             return "No cat selected";
+        }
+        return "";
+    }
+
+    public String setErrorText() {
+        if (getSelectedCat() == null && triendToAddCat()) {
+            return "No enough money to buy cat";
         }
         return "";
     }
@@ -203,56 +214,6 @@ public class SkadedyrModel implements ISkadedyrModel {
             cat.updateAnimation(deltaTime);
         }
     }
-
-    // public void handleUserInput() {
-    //     int mouseX = Gdx.input.getX();
-    //     int mouseY = Gdx.input.getY();
-    //     Vector2 mouse = new Vector2(mouseX, 842 - mouseY);
-    //     if (Gdx.input.isTouched() && mouseY > 100 && mouseY < 650) {
-    //         newCat(mouseX, 842 - mouseY);
-    //         catMenu.deselect();
-    //     }
-    //     if (Gdx.input.isTouched()) {
-    //         catMenu.selector(mouse);
-    //         selectCat(mouse);
-    //     }
-    // }
-
-    // private void selectCat(Vector2 mouse) {
-    //     if (mouse.y < 200)
-    //         return;
-    //     for (Cat cat : cats) {
-    //         if (cat.getSelectionCircle().contains(mouse)) {
-    //             selectedCat = cat;
-    //             return;
-    //         }
-    //     }
-    //     selectedCat = null;
-    // }
-
-
-    // private void newCat(float mouseX, float mouseY) {
-    //     Cat cat = catMenu.getSelectedCat();
-    //     int cost = 0;
-    //     if (cat instanceof BasicCat) {
-    //         cat = new BasicCat(resourceFactory);
-
-    //     } else if (cat instanceof ShotgunCat) {
-    //         cat = new ShotgunCat(resourceFactory);
-
-    //     } else if (cat instanceof FreezeCat) {
-    //         cat = new FreezeCat(resourceFactory, timeSource);
-    //     }
-    //     if (cat != null) {
-    //         cost = cat.getCost();
-
-    //         if (money >= cost) {
-    //             cat.setPos(mouseX, mouseY);
-    //             addCat(cat);
-    //             setMoney(money - cost);
-    //         }
-    //     }
-    // }
 
     public Cat getSelectedCat() {
         return selectedCat;

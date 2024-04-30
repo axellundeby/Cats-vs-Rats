@@ -6,15 +6,24 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
 import inf112.skeleton.app.model.SkadedyrModel;
+import inf112.skeleton.app.model.entities.cat.BasicCat;
 import inf112.skeleton.app.model.entities.cat.Cat;
+import inf112.skeleton.app.model.entities.cat.FreezeCat;
+import inf112.skeleton.app.model.entities.cat.ShotgunCat;
+import inf112.skeleton.app.view.GameResourceFactory;
+import inf112.skeleton.app.view.TimeSource;
 
 public class SkadedyrController {
     private final SkadedyrModel model;
-    boolean speedUp = false;
     private Task currentClockTickTask = null;
+    private final GameResourceFactory resourceFactory;
+    private TimeSource timeSource;
 
-    public SkadedyrController(SkadedyrModel model) {
+    public SkadedyrController(SkadedyrModel model, GameResourceFactory resourceFactory, TimeSource timeSource) {
         this.model = model;
+        this.resourceFactory = resourceFactory;
+        this.timeSource = timeSource;
+        
     }
 
     /**
@@ -33,7 +42,7 @@ public class SkadedyrController {
         Timer.schedule(currentClockTickTask, delay, model.getSpeed());
     }
 
-      public void handleUserInput() {
+    private void handleUserInput() {
         int mouseX = Gdx.input.getX();
         int mouseY = Gdx.input.getY();
         Vector2 mouse = new Vector2(mouseX, 842 - mouseY);
@@ -48,19 +57,32 @@ public class SkadedyrController {
     }
 
     private void newCat(float mouseX, float mouseY) {
-        Cat cat = model.getCatMenu().getSelectedCat();
-        if (cat != null) {  
-            int cost = cat.getCost();
-            if (model.getMoney() >= cost) {
-                cat.setPos(mouseX, mouseY);  
-                model.addCat(cat);
-                model.setMoney(model.getMoney() - cost);
-            }
-        } else {
+        Cat selectedTemplate = model.getCatMenu().getSelectedCat();
+        if (selectedTemplate == null) {
             model.pressedUppgradeButton();
+            return; 
         }
+        Cat newCat = null;
+        if (selectedTemplate instanceof BasicCat) {
+            newCat = new BasicCat(resourceFactory);
+        } else if (selectedTemplate instanceof ShotgunCat) {
+            newCat = new ShotgunCat(resourceFactory);
+        } else if (selectedTemplate instanceof FreezeCat) {
+            newCat = new FreezeCat(resourceFactory, timeSource);
+        }
+    
+        if (newCat != null) {
+            int cost = newCat.getCost();
+            if (model.getMoney() >= cost) {
+                newCat.setPos(mouseX, mouseY);
+                model.addCat(newCat);
+                model.setMoney(model.getMoney() - cost);
+            } else {
+                model.setErrorText();
+            }
+        } 
     }
-
+    
     private void selectCat(Vector2 mouse) {
         if (mouse.y < 200) return;
         for (Cat cat : model.getCats()) {
