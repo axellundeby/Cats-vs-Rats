@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.badlogic.gdx.ApplicationListener;
@@ -31,29 +32,31 @@ import inf112.skeleton.app.model.entities.cat.AttackCat;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 
-public class ViewTest {
+public class MainViewTest {
 
     private static SkadedyrModel model;
+    @Mock
     private static SkadedyrView view;
     private static Texture mockTexture;
     private static TimeSource mockTimeSource;
     private static GameResourceFactory mockFactory;
     private static Sound mockSound;
+    private static ApplicationListener listener;
 
     private GL20 gl20Mock;
 
     @BeforeAll
     static void setUpBeforeAll() {
 
-        // mockFactory = mock(GameResourceFactory.class);
-        // mockTexture = mock(Texture.class);
-        // mockTimeSource = mock(TimeSource.class);
+        mockFactory = mock(GameResourceFactory.class);
+        mockTexture = mock(Texture.class);
+        mockTimeSource = mock(TimeSource.class);
 
-        // model = new SkadedyrModel(mockFactory, mockTimeSource);
-        // view = new SkadedyrView(model);
+        model = new SkadedyrModel(mockFactory, mockTimeSource);
+        view = new SkadedyrView(model);
 
         HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();
-        ApplicationListener listener = new ApplicationListener() {
+        listener = new ApplicationListener() {
 
             @Override
             public void create() {
@@ -80,10 +83,11 @@ public class ViewTest {
 
             @Override
             public void dispose() {
-                // view.dispose();
+                view.dispose();
             }
         };
         new HeadlessApplication(listener, config);
+
 
     }
 
@@ -92,25 +96,29 @@ public class ViewTest {
 
         MockitoAnnotations.openMocks(this);
 
-        mockFactory = mock(GameResourceFactory.class);
-        mockTexture = mock(Texture.class);
-        mockTimeSource = mock(TimeSource.class);    
-        mockSound = mock(Sound.class);
+        // mockFactory = mock(GameResourceFactory.class);
+        // mockTexture = mock(Texture.class);
+        // mockTimeSource = mock(TimeSource.class);    
+        // mockSound = mock(Sound.class);
 
 
-        model = new SkadedyrModel(mockFactory, mockTimeSource);
-        view = new SkadedyrView(model);
+        // model = new SkadedyrModel(mockFactory, mockTimeSource);
+        // view = new SkadedyrView(model);
 
         gl20Mock = mock(GL20.class);
         Gdx.gl20 = gl20Mock;
         Gdx.gl = gl20Mock;
     }
 
+
     @Test
     public void testInitialization() {
-
+        
+        listener.create();
+        
         assertThrows(com.badlogic.gdx.utils.GdxRuntimeException.class, () -> view.create());
 
+        assertThrows(com.badlogic.gdx.utils.GdxRuntimeException.class, view::create);
         // verify(gl20Mock, atLeastOnce());
 
     }
@@ -118,6 +126,8 @@ public class ViewTest {
     @Test
     public void testDispose() {
         assertThrows(com.badlogic.gdx.utils.GdxRuntimeException.class, () -> view.create());
+        listener.dispose();
+
 
         // Assuming model has methods to get cats and rats already filled with mock data
         when(mockFactory.getTexture(anyString())).thenReturn(mockTexture);
@@ -129,6 +139,7 @@ public class ViewTest {
         model.addRat(mockRat);
 
         assertThrows(java.lang.NullPointerException.class, () -> view.dispose());
+        assertThrows(java.lang.NullPointerException.class, view::dispose);
 
         verify(mockTexture, times(0)).dispose();
         verify(mockCat, atLeast(0)).getTexture();
@@ -138,8 +149,11 @@ public class ViewTest {
 
     @Test
     public void testRender() {
+        listener.render();
+
         assertThrows(com.badlogic.gdx.utils.GdxRuntimeException.class, () -> view.create());
         assertThrows(java.lang.NullPointerException.class, () -> view.render());
+        assertThrows(java.lang.NullPointerException.class, view::render);
         // verify(gl20Mock).glDrawArrays(2, 2, 2); // Verify that draw calls are made
     }
 
@@ -158,10 +172,10 @@ public class ViewTest {
         when(mockFactory.getSound(anyString())).thenReturn(mockSound);
         Sound sound = mockFactory.getSound(anyString());
 
-        assertEquals(mockTexture, sound);
+        assertEquals(mockSound, sound);
     }
 
-    @CsvSource(value = {"0", "1"})
+    @CsvSource(value = {"0", "1", "0.0001"})
     @ParameterizedTest(name = "Float: {0}")
     public void timeSourceTest(Float expected){
         when(mockTimeSource.getDeltaTime()).thenReturn(expected);

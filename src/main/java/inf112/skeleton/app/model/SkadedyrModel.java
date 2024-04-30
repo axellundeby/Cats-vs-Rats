@@ -14,12 +14,12 @@ import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
-import inf112.skeleton.app.view.States.PlayState;
-import inf112.skeleton.app.view.States.State;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
 import java.util.List;
 import inf112.skeleton.app.view.GameResourceFactory;
 import inf112.skeleton.app.view.TimeSource;
+import inf112.skeleton.app.view.states.PlayState;
+import inf112.skeleton.app.view.states.State;
 
 public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<Cat> cats = new ArrayList<>();

@@ -1,4 +1,4 @@
-package inf112.skeleton.app.view.States;
+package inf112.skeleton.app.view.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -95,14 +95,9 @@ public class PlayState extends State {
 
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
-        if (selectedCat != null) {
-
-            Circle range = selectedCat.getRangeCircle();
-            shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
-            shapeRenderer.circle(range.x, range.y, range.radius);
-        }
+        drawRangeCircleFor(selectedCat);
         shapeRenderer.end();
 
         drawCatMenu(batch);
@@ -112,24 +107,24 @@ public class PlayState extends State {
         batch.begin();
         drawCats(batch);
         drawRats(batch);
-        batch.end();
+        // batch.end();
 
-        batch.begin();
+        // batch.begin();
         drawGameStatus(batch);
         batch.end();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
-        if (selectedCat != null) {
-            Gdx.input.setInputProcessor(upgradeStage);
-            upgradeStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-            upgradeStage.draw();
+        
+        drawUpgradeButtons(selectedCat);
 
-        } else {
-            Gdx.input.setInputProcessor(stage);
-        }
+        changeState();
 
+    }
+
+
+    private void changeState(){
         if (model.isGameWon()) {
             gsm.set(new WinState(gsm, model));
 
@@ -140,7 +135,26 @@ public class PlayState extends State {
         if (model.getHelp()) {
             gsm.set(new HelpState(gsm, model));
         }
+    }
 
+    private void drawRangeCircleFor(Cat selectedCat){
+        if (selectedCat != null) {
+
+            Circle range = selectedCat.getRangeCircle();
+            shapeRenderer.setColor(0.2f, 0.2f, 0.2f, 0.5f);
+            shapeRenderer.circle(range.x, range.y, range.radius);
+        }
+    }
+
+    private void drawUpgradeButtons(Cat selectedCat){
+        if (selectedCat != null) {
+            Gdx.input.setInputProcessor(upgradeStage);
+            upgradeStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+            upgradeStage.draw();
+
+        } else {
+            Gdx.input.setInputProcessor(stage);
+        }
     }
 
     private void drawGameStatus(SpriteBatch batch) {
