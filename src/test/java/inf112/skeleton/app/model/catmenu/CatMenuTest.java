@@ -47,9 +47,6 @@ public class CatMenuTest {
         spriteBatchMock = mock(SpriteBatch.class);
         shapeRendererMock = mock(ShapeRenderer.class);
 
-
-        model = new SkadedyrModel(mockFactory, mockTimeSource);
-
         
 
         HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();
