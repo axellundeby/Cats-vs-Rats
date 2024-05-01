@@ -367,38 +367,12 @@ public class TestCat {
         assertEquals(selectionCircle , cat.getSelectionCircle());
     }
 
-
-
-
-
-
-
-
-  
-    
-   
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
+    @Test
+    void canUpgradeTest(){
+        assertTrue(cat.canUpgrade());
+        cat.setUpgradeCounter(4);
+        assertFalse(cat.canUpgrade());
+    }
     
 
 }

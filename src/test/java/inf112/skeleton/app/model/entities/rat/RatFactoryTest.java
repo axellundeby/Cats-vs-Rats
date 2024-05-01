@@ -1,9 +1,12 @@
 package inf112.skeleton.app.model.entities.rat;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.badlogic.gdx.graphics.Texture;
+
 import inf112.skeleton.app.view.GameResourceFactory;
 
 public class RatFactoryTest {
@@ -58,10 +62,29 @@ public class RatFactoryTest {
 
     @Test
     void testRatVariationLevels() {
-        IRat ratLevel1 = ratFactory.updateRatFactory(12, 1).get(0);
-        assertTrue(ratLevel1 instanceof BasicRat);
+        assertTrue(ratFactory.getRats().isEmpty());
+        Map<Class<?>, Integer> counts = new HashMap<>();
+        counts.put(BasicRat.class, 0);
+        counts.put(FastRat.class, 0);
+        counts.put(StrongRat.class, 0);
 
-        IRat ratLevel5 = ratFactory.updateRatFactory(12, 5).get(0);
-        assertTrue(ratLevel5 instanceof BasicRat || ratLevel5 instanceof FastRat || ratLevel5 instanceof StrongRat);
+        int level = 7;  
+        int numRatsToTest = 1000;
+        float deltaTime = 11;  
+
+        for (int i = 0; i < numRatsToTest; i++) {
+            ratFactory.updateRatFactory(deltaTime, level);
+            IRat lastRat = ratFactory.getRats().get(ratFactory.getRats().size() - 1);
+            counts.put(lastRat.getClass(), counts.get(lastRat.getClass()) + 1);
+            assertFalse(ratFactory.getRats().isEmpty());
+            ratFactory.resetRatFactory();  
+            assertTrue(ratFactory.getRats().isEmpty());
+        }
+        assertTrue(Math.abs(counts.get(BasicRat.class) - 400) < 50);
+        assertTrue(Math.abs(counts.get(FastRat.class) - 300) < 50);
+        assertTrue(Math.abs(counts.get(StrongRat.class) - 300) < 50);
     }
 }
+
+
+
