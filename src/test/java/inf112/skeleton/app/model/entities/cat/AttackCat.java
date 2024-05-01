@@ -1,7 +1,5 @@
 package inf112.skeleton.app.model.entities.cat;
 import java.util.LinkedList;
-
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import java.util.List;
 import inf112.skeleton.app.model.entities.rat.Rat;

@@ -2,18 +2,15 @@ package inf112.skeleton.app.model.entities.cat;
 
 import java.util.Arrays;
 import java.util.LinkedList;
-
 import com.badlogic.gdx.audio.Sound;
-
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.GameResourceFactory;
-import inf112.skeleton.app.view.TimeSource;
+
 
 public class FreezeCat extends Cat {
-    private TimeSource timeSource;
     private GameResourceFactory resourceFactory;
     
-    public FreezeCat(GameResourceFactory resourceFactory, TimeSource timeSource) {
+    public FreezeCat(GameResourceFactory resourceFactory) {
         super(
             5,
             100, 
@@ -21,7 +18,6 @@ public class FreezeCat extends Cat {
             Arrays.asList(resourceFactory.getTexture("cats/Spill_Frysekatt2_angrip.png"),resourceFactory.getTexture("cats/Spill_Frysekatt3_angrip.png")), 
             50.0f,
             1000);
-            this.timeSource = timeSource;
             this.resourceFactory = resourceFactory;
     }
 
@@ -30,9 +26,8 @@ public class FreezeCat extends Cat {
         if (canAttack()) {
             triggerAttackImage();
             playAttackSound();
-            float deltaTime = timeSource.getDeltaTime();
             for (Rat rat : rats) {
-                rat.freeze(deltaTime);
+                rat.setFrozen();
                 rat.takeDamage(getStrength());
             }
             resetAttackTimer();

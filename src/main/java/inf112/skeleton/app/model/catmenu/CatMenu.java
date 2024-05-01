@@ -30,20 +30,18 @@ public class CatMenu implements ICatMenu{
     private Cat selected;
     private Texture coinSackTexture;
     private GameResourceFactory resourceFactory;
-    private TimeSource timeSource;
 
-    public CatMenu(GameResourceFactory resourceFactory, TimeSource timeSource) {
+    public CatMenu(GameResourceFactory resourceFactory) {
         this.catsMap = new HashMap<>();
         this.availableCatsList = new ArrayList<>();
         this.resourceFactory = resourceFactory;
-        this.timeSource = timeSource;
     }
     
     @Override
     public void init(){
         this.coinSackTexture = new Texture(Gdx.files.internal("buttons_game/noMoney.png"));
         availableCatsList.add(new BasicCat(resourceFactory));
-        availableCatsList.add(new FreezeCat(resourceFactory, timeSource));
+        availableCatsList.add(new FreezeCat(resourceFactory));
         availableCatsList.add(new ShotgunCat(resourceFactory));
 
         int i = 0;

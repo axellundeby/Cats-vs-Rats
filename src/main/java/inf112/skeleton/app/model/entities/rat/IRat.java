@@ -5,121 +5,101 @@ import com.badlogic.gdx.math.Vector2;
 
 public interface IRat {
 
-  
-    /** Metode for å håndtere hva som skjer når en rotte blir drept */
-    void killedAnimation();
-
+   
     /**
-     * Sjekker om rotten er fanget eller ikke.
-     * 
-     * @return true hvis rotten er fanget, ellers false.
+     * @return true if the rat has less than 1 health
      */
     boolean isKilled();
 
+   
     /**
-     * Returnerer rottens gjenværende helsepoeng.
-     * 
-     * @return Rottens gjenværende helsepoeng.
+     * @return the health of the rat
      */
     int getHealth();
 
+
     /**
-     * Returnerer rottens posisjon i spillet.
-     * 
-     * @return En Vector2 som representerer rottens posisjon.
+     * @return the position of the rat
      */
     Vector2 getPosition();
 
+    
     /**
-     * Checks if the reward has been claimed.
-     * 
-     * @return true if the reward has been claimed, false otherwise.
+     * @return true if the reward has been claimed
      */
     boolean isrewardClaimed();
 
+  
     /**
-     * Checks if the rat has exited the game.
-     * 
-     * @return true if the rat has exited the game, false otherwise.
+     * @return true if the rat has exited the board, method is made so that the rat can be removed from the board and does only take 1 life
      */
     boolean isExited();
 
+
     /**
-     * Marks the reward as claimed.
+     * @return sets the rewardClaimed to true
      */
     void rewardClaimed();
 
+ 
     /**
-     * Marks the rat as exited.
+     * @return sets the exited to true
      */
     void exit();
+ 
+
     /**
-     * Returns the bounty of the rat.
-     * 
-     * @return The bounty of the rat.
+     * @return the bounty of the rat
      */
     int getBounty();
 
+  
     /**
-     * Returns the points of the rat.
-     * 
-     * @return The points of the rat.
+     * @return the points of the rat
      */
     int getPoints();
 
+   
     /**
-     * Returns the current texture of the rat.
-     * 
-     * @return The current texture of the rat.
+     * @return the texture of the rat
      */
     Texture getTexture();
 
     /**
-     * Returns the rectangle representing the rat.
-     * 
-     * @return The rectangle representing the rat.
+     * @return the rectangle of the rat
      */
     Rectangle getRectangle();
 
-    // må kanskje endre denne, hvis et prosjektil treffer en rotte, så skal den ta
-    // skade. Er det berde.
     /**
-     * Reduces the health of the rat by the given damage.
-     * 
-     * @param damage The amount of damage to inflict on the rat.
+     * @param damage the damage the rat should take
+     * rat takes damage, if health is less than 1, the rat is killed and killedAnimation is called
      */
     void takeDamage(int damage);
 
+  
     /**
-     * Enum representing the possible directions of the rat.
-     */
-    // enum Direction;
-
-    /**
-     * Rotates the rat's image to face its direction.
+     * rotates the image of the rat
      */
     void rotateImage();
 
    
-
     /**
-     * Checks if the rat is out.
-     * 
-     * @return true if the rat is out, false otherwise.
+     * @return if the Direction of the rat is out or not
      */
     boolean isOut();
 
+  
     /**
-     * Sets the position of the rat.
-     * 
-     * @param pos The new position of the rat.
+     * @param pos the position the rat should be set to
+     * sets the position of the rat
      */
     void setPosition(Vector2 pos);
 
+
     /**
-     * Freezes the rat.
+     * 
      */
-    void freeze(float deltaTime);
+    void freeze();
 
 
 

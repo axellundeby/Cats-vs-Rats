@@ -25,8 +25,6 @@ public class Rat implements IRat {
     private Vector2[] controlPoints;
     private Direction direction = Direction.RIGHT;
     private int currentControlPoint = 0; 
-    private float freezeTimer = 0;
-    private static final float RAT_FREEZE_DELAY = 20;
     private float originalSpeed;
     private float effectiveSpeed;
 
@@ -160,15 +158,7 @@ public class Rat implements IRat {
         this.currentControlPoint = controlPoint;
     }
 
-    public void setFreezeTimer(float time) {
-        freezeTimer = time;
-    }
-
-    public float getFreezeTimer() {
-        return freezeTimer;
-    }
-
-
+   
     public void moveAlongPath(float delta) {
         if (currentControlPoint < controlPoints.length - 2) {
             Vector2 currentPoint = controlPoints[currentControlPoint];
@@ -278,9 +268,8 @@ public class Rat implements IRat {
     }
 
 
-    public void killedAnimation() {
+    private void killedAnimation() {
         swapImage(ImageSwapper.DEAD);
-        health = 0;
         effectiveSpeed = 0;
         this.sprite.setTexture(getTexture());
     }
@@ -312,25 +301,17 @@ public class Rat implements IRat {
 
 
     @Override
-    public void freeze(float deltaTime) {
-        if (!isFrozen) {
-            effectiveSpeed = originalSpeed - 15;  
-            swapImage(ImageSwapper.FROZEN);
-            this.sprite.setTexture(getTexture());
-            isFrozen = true;
-        }
-        freezeTimer += deltaTime;
-        if (freezeTimer > RAT_FREEZE_DELAY) {
-            unfreeze(); 
-        }
+    public void freeze() {
+        effectiveSpeed = originalSpeed - 15;  
+        swapImage(ImageSwapper.FROZEN);
+        this.sprite.setTexture(getTexture());
     }
     
-    private void unfreeze() {
+    public void unfreeze() {
         isFrozen = false;
         effectiveSpeed = originalSpeed;
         swapImage(ImageSwapper.ALIVE);
         this.sprite.setTexture(getTexture());
-        freezeTimer = 0;
     }
     
 }

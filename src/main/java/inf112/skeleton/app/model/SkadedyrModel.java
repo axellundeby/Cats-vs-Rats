@@ -39,12 +39,14 @@ public class SkadedyrModel implements ISkadedyrModel {
     private List<Rat> newRats;
     private GameResourceFactory resourceFactory;
     private TimeSource timeSource;
+    private float freezeTimer = 0;
+    private static final float RAT_FREEZE_DELAY = 100;
 
 
     public SkadedyrModel(GameResourceFactory resourceFactory, TimeSource timeSource) {
         this.resourceFactory = resourceFactory;
         this.timeSource = timeSource;
-        catMenu = new CatMenu(resourceFactory, timeSource);
+        catMenu = new CatMenu(resourceFactory);
         ratFactory = new RatFactory(resourceFactory);
         cats = new ArrayList<>();
         aliveRats = new ArrayList<>();
@@ -57,7 +59,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         aliveRats.clear();
         newRats.clear();
         ratFactory.resetRatFactory();
-        money = 1000;
+        money = 10000;
         lives = 5;
         isPaused = true;
         intervalSeconds = 0.05f;
@@ -90,7 +92,21 @@ public class SkadedyrModel implements ISkadedyrModel {
             ratHandler(deltaTime);
             roundHandler(deltaTime);
             removeDeadOrExitedRats(deltaTime);
+            freezeHandler(deltaTime);
         }
+    }
+
+    private void freezeHandler(float deltaTime) {
+       for (Rat rat : aliveRats) {
+            if (rat.isFrozen()) {
+                rat.freeze();
+                freezeTimer += deltaTime;
+                if (freezeTimer > RAT_FREEZE_DELAY) {
+                    rat.unfreeze();
+                    freezeTimer = 0;
+                }
+            }
+       }
     }
 
     private void ratHandler(float deltaTime){

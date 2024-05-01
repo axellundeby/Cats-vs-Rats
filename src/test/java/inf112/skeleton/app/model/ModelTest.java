@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
+import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.model.entities.cat.Cat.PictureSwapper;
 import inf112.skeleton.app.model.entities.rat.Rat;
@@ -25,10 +26,22 @@ import com.badlogic.gdx.audio.Sound;
 
 
 public class ModelTest {
-    Texture mockTexture;
+    @Mock
+    private Texture mockTexture;
+
+    @Mock
+    private Texture aliveTextureMock;
+
+    @Mock
+    private Texture frozenTextureMock;
+
+    @Mock
+    private Texture deadTextureMock;
+
     private static SkadedyrModel model;
     private BasicCat basicCat;
     private ShotgunCat shotgunCat;
+    private FreezeCat freezeCat;
     private TimeSource mockTimeSource;
     private LinkedList<Rat> rats;
     private RatFactory ratFactory;
@@ -52,6 +65,7 @@ public class ModelTest {
     
         shotgunCat = new ShotgunCat(mockFactory);
         basicCat = new BasicCat(mockFactory);
+        freezeCat = new FreezeCat(mockFactory);
         model = new SkadedyrModel(mockFactory, mockTimeSource);
         ratFactory = new RatFactory(mockFactory);
         rats = new LinkedList<>();
@@ -83,7 +97,7 @@ public class ModelTest {
 
     private void addRatsWithHighHp(int amount) {
         for (int i = 0; i < amount; i++) {
-            Rat rat = new Rat(1000, 10, mockTexture, 50, 20, mockTexture, 25, mockTexture);
+            Rat rat = new Rat(1000, 15, aliveTextureMock, 50, 20, frozenTextureMock, 25, deadTextureMock);
             rats.add(rat);
             model.addRat(rat);
         }
@@ -91,7 +105,7 @@ public class ModelTest {
 
     private void addRatsWithLowHp(int amount) {
         for (int i = 0; i < amount; i++) {
-            Rat rat = new Rat(10, 10, mockTexture, 50, 20, mockTexture, 25, mockTexture);
+            Rat rat = new Rat(10, 10, aliveTextureMock, 50, 20, frozenTextureMock, 25, deadTextureMock);
             rats.add(rat);
             model.addRat(rat);
         }
@@ -190,10 +204,16 @@ public class ModelTest {
         assertTrue(model.getRats().isEmpty());
         rats.removeAll(rats);
     }
-
     @Test
-    void ratHanderTest(){
+    void ratHandlerTest() {
+        addRatsWithHighHp(6);
+        model.setLevel(1);
+        model.setPause();
 
+        for (int i = 0; i < 15; i++) {
+            model.clockTick();
+        }
+        assertEquals(rats.size(), ratFactory.calculateRatsForRound(model.getLevel()));
     }
     
     @Test
@@ -336,23 +356,29 @@ public class ModelTest {
         assertTrue(model.getSpeed() > newSpeed);
     }
 
-    //MANGER!
-    // @Test
-    // void getBuyMenuTest(){
-    //     assertEquals(0, model.getBuyMenu());
-    // }
+   @Test
+   void freezeTest(){
+         addRatsWithHighHp(3);
+         model.addCat(freezeCat);
+         model.setPause();
+         freezeCat.setPos(15, 15);
+        
+        rats.get(0).setPosition(new Vector2(15,15));       
+        model.clockTick();
+        assertTrue(freezeCat.withinRange(rats.get(0)));
+        assertEquals(frozenTextureMock, rats.get(0).getTexture());
+        assertEquals(0, rats.get(0).getEffectiveSpeed());
+         
 
+         for (int i = 0; i < 1000; i++) {
+            model.clockTick();
+         }
 
-    //mangler noe her og ikke kall på addCata
-    @Test
-    void testNewCat(){
-        int initialMoney = model.getMoney();
-        model.addCat(basicCat);
-        assertEquals(1, model.getCats().size());
-        model.addCat(shotgunCat);
-        assertEquals(2, model.getCats().size());
-        //assertEquals(initialMoney - (shotgunCat.getCost() + basicCat.getCost()) , model.getMoney());
-    }
+        assertEquals(aliveTextureMock, rats.get(0).getTexture());
+        assertEquals(15, rats.get(0).getEffectiveSpeed());
+        rats.removeAll(rats);
+   }
+   
 
     @Test
     void getAliveRatsTest(){

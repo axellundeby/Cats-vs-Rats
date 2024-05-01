@@ -404,39 +404,10 @@ public class RatTest {
     }
 
     @Test
-    void testFreezing() {
-        assertFalse(rat.isFrozen());
-        rat.freeze(5); 
-        assertEquals(frozenTextureMock, rat.getTexture());
-        assertEquals(rat.getOriginalSpeed() - 15 ,rat.getEffectiveSpeed());
-        assertTrue(rat.isFrozen());
-        rat.setFreezeTimer(1000);
-        rat.freeze(0);
-        assertFalse(rat.isFrozen());
-        assertEquals(aliveTextureMock, rat.getTexture());
-    }
-
-    @Test
     void testSetFreeze(){
         assertFalse(rat.isFrozen());
         rat.setFrozen();
         assertTrue(rat.isFrozen());
-    }
-
-    @Test 
-    void testFreezingTime() {
-        rat.freeze(7);
-        assertEquals(7, rat.getFreezeTimer());
-    }
-
-    @Test
-    void getFreezeTimerTest() {
-        assertEquals(0, rat.getFreezeTimer());
-    }
-
-    @Test
-    void testUnfrezzeCallFromFreezeMethod(){
-        rat.freeze(5);
     }
 
     @Test 

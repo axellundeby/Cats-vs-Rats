@@ -11,19 +11,15 @@ import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.view.GameResourceFactory;
-import inf112.skeleton.app.view.TimeSource;
 
 public class SkadedyrController {
     private final SkadedyrModel model;
     private Task currentClockTickTask = null;
     private final GameResourceFactory resourceFactory;
-    private TimeSource timeSource;
 
-    public SkadedyrController(SkadedyrModel model, GameResourceFactory resourceFactory, TimeSource timeSource) {
+    public SkadedyrController(SkadedyrModel model, GameResourceFactory resourceFactory) {
         this.model = model;
         this.resourceFactory = resourceFactory;
-        this.timeSource = timeSource;
-        
     }
 
     /**
@@ -68,7 +64,7 @@ public class SkadedyrController {
         } else if (selectedTemplate instanceof ShotgunCat) {
             newCat = new ShotgunCat(resourceFactory);
         } else if (selectedTemplate instanceof FreezeCat) {
-            newCat = new FreezeCat(resourceFactory, timeSource);
+            newCat = new FreezeCat(resourceFactory);
         }
     
         if (newCat != null) {
