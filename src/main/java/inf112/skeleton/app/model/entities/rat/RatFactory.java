@@ -30,10 +30,21 @@ public class RatFactory {
         return rats;
     }
 
+    /**
+     * Resets the rat factory
+     */
     public void resetRatFactory() {
         rats.clear();
         ratsSpawned = 0;
         spawnTimer = 5;
+    }
+
+
+    /**
+     * @return the rats
+     */
+    public ArrayList<IRat> getRats() {
+        return rats;
     }
 
     /**
@@ -46,17 +57,14 @@ public class RatFactory {
     }
 
     private IRat ratVariation(int level) {
-        // Choose a rat variation within the level
-        int type = random.nextInt(100); // Random number between 0 and 99
+        int type = random.nextInt(100); 
     
         IRat newRat;
         if (level <= 2) {
-            newRat = new BasicRat(resourceFactory); // Only BasicRat at the first levels
+            newRat = new BasicRat(resourceFactory); 
         } else if (level <= 4) {
-            // 80% chance for BasicRat, 20% for SpeedRat
             newRat = (type < 80) ? new BasicRat(resourceFactory) : new FastRat(resourceFactory);
         } else if (level <= 6) {
-            // 50% BasicRat, 30% SpeedRat, 20% StrongRat
             if (type < 50) newRat = new BasicRat(resourceFactory);
             else if (type < 80) newRat = new FastRat(resourceFactory);
             else newRat = new StrongRat(resourceFactory);

@@ -183,6 +183,11 @@ public class Rat implements IRat {
             if (currentPoint.dst(pos) >= currentPoint.dst(nextPoint)) {
                 pos.set(nextPoint);
                 currentControlPoint++;
+                updateDirection(currentPoint, nextPoint);
+            }
+
+            if (currentControlPoint == controlPoints.length - 1) {
+                updateDirection(currentPoint, nextPoint);
             }
             sprite.setPosition(pos.x - halfsize, pos.y - halfsize); 
             spriteRect.setPosition(pos.x - halfsize, pos.y - halfsize); 
@@ -221,7 +226,7 @@ public class Rat implements IRat {
 
   
     private void updateDirection(Vector2 current, Vector2 next) {
-        if (current.x > 1200) {
+        if (currentControlPoint == controlPoints.length - 1) {
             direction = Direction.OUT;
         } else if (next.x > current.x) {
             direction = Direction.RIGHT;
@@ -261,8 +266,6 @@ public class Rat implements IRat {
     private int getRotationAngle() {
         Direction dir = getDirection();
         switch (dir) {
-            case UP:
-                return 0;
             case DOWN:
                 return 180;
             case LEFT:
