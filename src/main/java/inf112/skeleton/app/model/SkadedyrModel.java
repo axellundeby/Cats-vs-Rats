@@ -5,8 +5,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import com.badlogic.gdx.audio.Sound;
 import inf112.skeleton.app.model.catmenu.CatMenu;
-import inf112.skeleton.app.model.entities.cat.Cat;
-import inf112.skeleton.app.model.entities.rat.Rat;
+import inf112.skeleton.app.model.entities.cat.ICat;
+import inf112.skeleton.app.model.entities.rat.IRat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
 import inf112.skeleton.app.view.States.PlayState;
 import inf112.skeleton.app.view.States.State;
@@ -16,8 +16,8 @@ import inf112.skeleton.app.view.GameResourceFactory;
 import inf112.skeleton.app.view.TimeSource;
 
 public class SkadedyrModel implements ISkadedyrModel {
-    private ArrayList<Cat> cats = new ArrayList<>();
-    private ArrayList<Rat> aliveRats = new ArrayList<>();
+    private ArrayList<ICat> cats = new ArrayList<>();
+    private ArrayList<IRat> aliveRats = new ArrayList<>();
     private RatFactory ratFactory;
     private int lives;
     private int money;
@@ -32,19 +32,21 @@ public class SkadedyrModel implements ISkadedyrModel {
     private boolean roundOver = false;
     private boolean writeText = false;
     private boolean speedUp = false;
-    private Cat selectedCat;
+    private ICat selectedCat;
     private State currentState;
     private boolean isHelp = false;
     private boolean startGame = false;
-    private List<Rat> newRats;
+    private List<IRat> newRats;
     private GameResourceFactory resourceFactory;
     private TimeSource timeSource;
+    private float freezeTimer = 0;
+    private static final float RAT_FREEZE_DELAY = 100;
 
 
     public SkadedyrModel(GameResourceFactory resourceFactory, TimeSource timeSource) {
         this.resourceFactory = resourceFactory;
         this.timeSource = timeSource;
-        catMenu = new CatMenu(resourceFactory, timeSource);
+        catMenu = new CatMenu(resourceFactory);
         ratFactory = new RatFactory(resourceFactory);
         cats = new ArrayList<>();
         aliveRats = new ArrayList<>();
@@ -57,7 +59,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         aliveRats.clear();
         newRats.clear();
         ratFactory.resetRatFactory();
-        money = 1000;
+        money = 10000;
         lives = 5;
         isPaused = true;
         intervalSeconds = 0.05f;
@@ -90,14 +92,28 @@ public class SkadedyrModel implements ISkadedyrModel {
             ratHandler(deltaTime);
             roundHandler(deltaTime);
             removeDeadOrExitedRats(deltaTime);
+            freezeHandler(deltaTime);
         }
+    }
+
+    private void freezeHandler(float deltaTime) {
+       for (IRat rat : aliveRats) {
+            if (rat.isFrozen()) {
+                rat.freeze();
+                freezeTimer += deltaTime;
+                if (freezeTimer > RAT_FREEZE_DELAY) {
+                    rat.unfreeze();
+                    freezeTimer = 0;
+                }
+            }
+       }
     }
 
     private void ratHandler(float deltaTime){
         newRats = ratFactory.updateRatFactory(deltaTime, level); 
-            for (Rat newRat : newRats) {
+            for (IRat newRat : newRats) {
                 newRat.moveAlongPath(deltaTime);
-                newRat.rotateImage();
+                //newRat.rotateImage();
                 if (!aliveRats.contains(newRat)) {
                     aliveRats.add(newRat);
                 }
@@ -105,9 +121,9 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     private void removeDeadOrExitedRats(float deltaTime) {
-        Iterator<Rat> iterator = aliveRats.iterator();
+        Iterator<IRat> iterator = aliveRats.iterator();
         while (iterator.hasNext()) {
-            Rat rat = iterator.next();
+            IRat rat = iterator.next();
             if (rat.isKilled()) {
                 rat.updateCoinVisibility(deltaTime);
                 if (!rat.isrewardClaimed()) {
@@ -121,7 +137,7 @@ public class SkadedyrModel implements ISkadedyrModel {
                     Sound collectCoinSound = resourceFactory.getSound("sound/coin.mp3");
                     collectCoinSound.play(0.6f);
                 }
-                if (rat.coinVisibleTime >= COIN_DURATION) {
+                if (rat.getCoinVisibleTime() >= COIN_DURATION) {
                     iterator.remove();
                 }
             } else if (rat.getDirection() == Direction.OUT) {
@@ -158,14 +174,14 @@ public class SkadedyrModel implements ISkadedyrModel {
         removeAllRats();
 
         setPause();
-        for (Cat cat : cats) {
+        for (ICat cat : cats) {
             cat.resetAttackTimer();
         }
     }
 
     private void isRoundOver() {
         int killedRats = 0;
-        for (Rat rat : aliveRats) {
+        for (IRat rat : aliveRats) {
             if (rat.isKilled() || rat.isOut()) {
                 killedRats++;
             }
@@ -210,21 +226,21 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     private void updateCatAnimations(float deltaTime) {
-        for (Cat cat : cats) {
+        for (ICat cat : cats) {
             cat.updateAnimation(deltaTime);
         }
     }
 
-    public Cat getSelectedCat() {
+    public ICat getSelectedCat() {
         return selectedCat;
     }
 
-    public Cat setSelectedCat(Cat cat) {
+    public ICat setSelectedCat(ICat cat) {
         return selectedCat = cat;
     }
 
     
-    public void addCat(Cat cat) {
+    public void addCat(ICat cat) {
         cats.add(cat);
     }
 
@@ -274,12 +290,12 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     @Override
-    public ArrayList<Cat> getCats() {
+    public ArrayList<ICat> getCats() {
         return cats;
     }
 
     @Override
-    public ArrayList<Rat> getRats() {
+    public ArrayList<IRat> getRats() {
         return aliveRats;
     }
 
@@ -344,11 +360,11 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     private void catRotater() {
-        HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
-        for (Cat cat : cats) {
-            LinkedList<Rat> attackableRats = attackMap.get(cat);
+        HashMap<ICat, LinkedList<IRat>> attackMap = attackQueueForEachCat();
+        for (ICat cat : cats) {
+            LinkedList<IRat> attackableRats = attackMap.get(cat);
             if (!attackableRats.isEmpty()) {
-                Rat firstRat = attackableRats.getFirst();
+                IRat firstRat = attackableRats.getFirst();
                 cat.setRotationToward(firstRat);
             }
         }
@@ -370,20 +386,20 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     }
 
-    public void addRat(Rat rat) {
+    public void addRat(IRat rat) {
         aliveRats.add(rat);
     }
 
-    public ArrayList<Rat> getAliveRats() {
+    public ArrayList<IRat> getAliveRats() {
         return aliveRats;
     }
 
    
-    private HashMap<Cat, LinkedList<Rat>> attackQueueForEachCat() {
-        HashMap<Cat, LinkedList<Rat>> attackMap = new HashMap<>();
-        for (Cat cat : cats) {
-            LinkedList<Rat> attackableRats = new LinkedList<>();
-            for (Rat rat : aliveRats) {
+    private HashMap<ICat, LinkedList<IRat>> attackQueueForEachCat() {
+        HashMap<ICat, LinkedList<IRat>> attackMap = new HashMap<>();
+        for (ICat cat : cats) {
+            LinkedList<IRat> attackableRats = new LinkedList<>();
+            for (IRat rat : aliveRats) {
                 if (!rat.isKilled() && cat.withinRange(rat)) { 
                     attackableRats.addLast(rat);
                 }
@@ -395,10 +411,10 @@ public class SkadedyrModel implements ISkadedyrModel {
 
   
     private void attackRat() {
-        HashMap<Cat, LinkedList<Rat>> attackMap = attackQueueForEachCat();
-        for (Cat cat : cats) {
+        HashMap<ICat, LinkedList<IRat>> attackMap = attackQueueForEachCat();
+        for (ICat cat : cats) {
             cat.updateAttackTimer(timeSource.getDeltaTime());
-            LinkedList<Rat> attackableRats = attackMap.get(cat);
+            LinkedList<IRat> attackableRats = attackMap.get(cat);
             if (cat.canAttack() && !attackableRats.isEmpty()) {
                 cat.attack(attackableRats);
                 cat.resetAttackTimer();

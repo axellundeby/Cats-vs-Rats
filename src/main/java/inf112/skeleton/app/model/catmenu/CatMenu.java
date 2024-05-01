@@ -1,6 +1,5 @@
 package inf112.skeleton.app.model.catmenu;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,45 +8,41 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
-import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
+import inf112.skeleton.app.model.entities.cat.ICat;
 import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.view.GameResourceFactory;
 import inf112.skeleton.app.view.SkadedyrView;
-import inf112.skeleton.app.view.TimeSource;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CatMenu implements ICatMenu{
 
-    private HashMap<Cat, Rectangle> catsMap;
-    private ArrayList<Cat> availableCatsList;
+    private HashMap<ICat, Rectangle> catsMap;
+    private ArrayList<ICat> availableCatsList;
     private Rectangle menuRect = new Rectangle(0, 0, SkadedyrView.screenRect.x - 800, SkadedyrView.screenRect.y);
     private static final int CATDIM = 150;
     private static final int MARGIN_Y = 50;
     private static final int MARGIN_X = 30;
-    private Cat selected;
+    private ICat selected;
     private Texture coinSackTexture;
     private GameResourceFactory resourceFactory;
-    private TimeSource timeSource;
 
-    public CatMenu(GameResourceFactory resourceFactory, TimeSource timeSource) {
+    public CatMenu(GameResourceFactory resourceFactory) {
         this.catsMap = new HashMap<>();
         this.availableCatsList = new ArrayList<>();
         this.resourceFactory = resourceFactory;
-        this.timeSource = timeSource;
     }
     
     @Override
     public void init(){
         this.coinSackTexture = new Texture(Gdx.files.internal("buttons_game/noMoney.png"));
         availableCatsList.add(new BasicCat(resourceFactory));
-        availableCatsList.add(new FreezeCat(resourceFactory, timeSource));
+        availableCatsList.add(new FreezeCat(resourceFactory));
         availableCatsList.add(new ShotgunCat(resourceFactory));
 
         int i = 0;
-        for (Cat cat : availableCatsList) {
+        for (ICat cat : availableCatsList) {
             catsMap.put(cat, new Rectangle(getX() + MARGIN_X + i * CATDIM, getY() + MARGIN_Y, CATDIM, CATDIM));
             i++;
         }
@@ -57,7 +52,7 @@ public class CatMenu implements ICatMenu{
     
     @Override
     public void draw(SpriteBatch batch, int playerMoney) {
-        for (Cat cat : availableCatsList) {
+        for (ICat cat : availableCatsList) {
             Rectangle crt = catsMap.get(cat);
             batch.draw(cat.getMenuTexture(), crt.x, crt.y, crt.width, crt.height);
             if (playerMoney < cat.getCost()) {
@@ -81,7 +76,7 @@ public class CatMenu implements ICatMenu{
     
     @Override
     public void selector(Vector2 pos){
-        for (Cat cat : availableCatsList) {
+        for (ICat cat : availableCatsList) {
             if (catsMap.get(cat).contains(pos)){
                 selected = cat;
                 return;
@@ -96,7 +91,7 @@ public class CatMenu implements ICatMenu{
     }
 
     @Override
-    public Cat getSelectedCat(){
+    public ICat getSelectedCat(){
         return selected;
     }
 

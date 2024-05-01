@@ -8,7 +8,7 @@ public class RatFactory {
     private float spawnTimer = 5;
     private int ratsSpawned = 0;
     private static final int RAT_SPAWN_DELAY = 10; 
-    private ArrayList<Rat> rats = new ArrayList<Rat>();
+    private ArrayList<IRat> rats = new ArrayList<IRat>();
     private Random random = new Random();
     private GameResourceFactory resourceFactory;
 
@@ -20,7 +20,7 @@ public class RatFactory {
      * spawns rats with space between them
      * @param deltaTime
      */
-    public ArrayList<Rat> updateRatFactory(float deltaTime, Integer level) {
+    public ArrayList<IRat> updateRatFactory(float deltaTime, Integer level) {
         spawnTimer += deltaTime;
         if (spawnTimer > RAT_SPAWN_DELAY && ratsSpawned < calculateRatsForRound(level)) {
             spawnTimer = 0; 
@@ -45,11 +45,11 @@ public class RatFactory {
         return 1 + (round * 5);
     }
 
-    private Rat ratVariation(int level) {
+    private IRat ratVariation(int level) {
         // Choose a rat variation within the level
         int type = random.nextInt(100); // Random number between 0 and 99
     
-        Rat newRat;
+        IRat newRat;
         if (level <= 2) {
             newRat = new BasicRat(resourceFactory); // Only BasicRat at the first levels
         } else if (level <= 4) {
