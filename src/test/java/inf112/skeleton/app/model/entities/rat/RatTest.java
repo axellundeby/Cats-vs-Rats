@@ -172,7 +172,7 @@ public class RatTest {
     void testImageDirectionAndRotationForRightMovment(){
         int startPointIndex = 0; 
         rat.setPosition(controlPoints[startPointIndex]);
-        rat.currentControlPoint = startPointIndex;
+        rat.setControlPoint(startPointIndex);
         rat.setEffectiveSpeed(10);
         float deltaTime = 0.1f; 
         rat.moveAlongPath(deltaTime);
@@ -189,7 +189,7 @@ public class RatTest {
     void testImageDirectionAndRotationForUpMovment(){
         int startPointIndex = 2; 
         rat.setPosition(controlPoints[startPointIndex]);
-        rat.currentControlPoint = startPointIndex;
+        rat.setControlPoint(startPointIndex);
         rat.setEffectiveSpeed(10);
         float deltaTime = 0.1f; 
         rat.moveAlongPath(deltaTime);
@@ -205,7 +205,7 @@ public class RatTest {
     void testImageDirectionAndRotationForLeftMovment(){
         int startPointIndex = 3; 
         rat.setPosition(controlPoints[startPointIndex]);
-        rat.currentControlPoint = startPointIndex;
+        rat.setControlPoint(startPointIndex);
         rat.setEffectiveSpeed(10);
         float deltaTime = 0.1f; 
         rat.moveAlongPath(deltaTime);
@@ -221,7 +221,7 @@ public class RatTest {
     void testImageDirectionAndRotationForDownMovment(){
         int startPointIndex = 7; 
         rat.setPosition(controlPoints[startPointIndex]);
-        rat.currentControlPoint = startPointIndex;
+        rat.setControlPoint(startPointIndex);
         rat.setEffectiveSpeed(10);
         float deltaTime = 0.1f; 
         rat.moveAlongPath(deltaTime);
@@ -447,6 +447,12 @@ public class RatTest {
     @Test 
     void getCurrentControlPointTest(){
         assertEquals(0, rat.getCurrentControlPoint());
+    }
+
+    @Test
+    void setControlPointTest(){
+        rat.setControlPoint(5);
+        assertEquals(5, rat.getCurrentControlPoint());
     }
 
     

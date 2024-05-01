@@ -121,7 +121,7 @@ public class SkadedyrModel implements ISkadedyrModel {
                     Sound collectCoinSound = resourceFactory.getSound("sound/coin.mp3");
                     collectCoinSound.play(0.6f);
                 }
-                if (rat.coinVisibleTime >= COIN_DURATION) {
+                if (rat.getCoinVisibleTime() >= COIN_DURATION) {
                     iterator.remove();
                 }
             } else if (rat.getDirection() == Direction.OUT) {
