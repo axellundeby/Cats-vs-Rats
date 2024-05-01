@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.entities.cat.Cat;
+import inf112.skeleton.app.model.entities.rat.IRat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.States.GameStateManager;
 import inf112.skeleton.app.view.States.MenuState;
@@ -53,7 +54,7 @@ public class SkadedyrView {
         for (Cat cat : model.getCats()) {
             cat.getTexture().dispose();
         }
-        for (Rat rat : model.getRats()) {
+        for (IRat rat : model.getRats()) {
             rat.getTexture().dispose();
         }
         shapeRenderer.dispose();

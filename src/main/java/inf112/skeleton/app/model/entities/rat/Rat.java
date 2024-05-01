@@ -48,22 +48,27 @@ public class Rat implements IRat {
 
     }
 
+    @Override
     public Vector2[] getControlPoints() {
         return controlPoints;
     }
 
+    @Override
     public CatmullRomSpline<Vector2> getPath() {
         return path;
     }
 
+    @Override
     public int getCurrentControlPoint() {
         return currentControlPoint;
     }
 
+    @Override
     public void setEffectiveSpeed(float newSpeed) {
         this.effectiveSpeed = newSpeed;
     }
 
+    @Override
     public Direction getDirection(){
         return direction;
     }
@@ -113,14 +118,18 @@ public class Rat implements IRat {
         return spriteRect;
     }
 
+
+    @Override
     public void setDirection(Direction dir) {
         this.direction = dir;
     }
 
+    @Override
     public Sprite getSprite() {
         return sprite;
     }
 
+    @Override
     public float getCoinVisibleTime() {
         return coinVisibleTime;
     }
@@ -140,25 +149,30 @@ public class Rat implements IRat {
         return pos;
     }
 
+    @Override
     public boolean isFrozen() {
         return isFrozen;
     }
+    @Override
     public void setFrozen() {
         isFrozen = true;
     }
 
+    @Override
     public float getEffectiveSpeed() {
        return effectiveSpeed;
     }
+    @Override
     public float getOriginalSpeed() {
         return originalSpeed;
     }
 
+    @Override
     public void setControlPoint(int controlPoint) {
         this.currentControlPoint = controlPoint;
     }
 
-   
+   @Override
     public void moveAlongPath(float delta) {
         if (currentControlPoint < controlPoints.length - 2) {
             Vector2 currentPoint = controlPoints[currentControlPoint];
@@ -179,6 +193,7 @@ public class Rat implements IRat {
         }
     }
 
+    @Override
     public void createPath() {
         controlPoints = new Vector2[] {
             new Vector2(-10,290),
@@ -260,8 +275,8 @@ public class Rat implements IRat {
 
     }
 
-    @Override
-    public void rotateImage() {
+
+    private void rotateImage() {
         int angle = getRotationAngle();
         this.sprite.setOriginCenter();
         this.sprite.setRotation(angle);
@@ -274,6 +289,7 @@ public class Rat implements IRat {
         this.sprite.setTexture(getTexture());
     }
 
+    @Override
     public void updateCoinVisibility(float deltaTime) {
         if (isKilled()) {
             coinVisibleTime += deltaTime;
@@ -307,6 +323,7 @@ public class Rat implements IRat {
         this.sprite.setTexture(getTexture());
     }
     
+    @Override
     public void unfreeze() {
         isFrozen = false;
         effectiveSpeed = originalSpeed;

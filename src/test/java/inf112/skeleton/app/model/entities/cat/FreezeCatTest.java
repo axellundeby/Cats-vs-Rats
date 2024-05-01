@@ -14,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+
+import inf112.skeleton.app.model.entities.rat.IRat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.GameResourceFactory;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +35,7 @@ public class FreezeCatTest {
     @Mock
     private Sound mockSound; 
 
-    private LinkedList<Rat> rats;
+    private LinkedList<IRat> rats;
 
     @BeforeEach
     void setup() {
@@ -53,7 +55,7 @@ public class FreezeCatTest {
     @Test
     void testAttack() {
         ArrayList<Integer> healthList = new ArrayList<>();
-        for (Rat rat : rats) {
+        for (IRat rat : rats) {
            Integer initialHealth = rat.getHealth();
               healthList.add(initialHealth);
         }

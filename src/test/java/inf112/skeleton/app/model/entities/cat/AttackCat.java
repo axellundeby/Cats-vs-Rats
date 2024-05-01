@@ -2,7 +2,8 @@ package inf112.skeleton.app.model.entities.cat;
 import java.util.LinkedList;
 import com.badlogic.gdx.graphics.Texture;
 import java.util.List;
-import inf112.skeleton.app.model.entities.rat.Rat;
+import inf112.skeleton.app.model.entities.rat.IRat;
+
 
 public class AttackCat extends Cat {
 
@@ -11,7 +12,7 @@ public class AttackCat extends Cat {
     }
 
     @Override
-    public void attack(LinkedList<Rat> rats) {
+    public void attack(LinkedList<IRat> rats) {
         if (canAttack()) {
             triggerAttackImage();
             playAttackSound();

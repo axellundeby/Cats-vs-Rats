@@ -16,6 +16,7 @@ import inf112.skeleton.app.model.entities.cat.BasicCat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.model.entities.cat.Cat.PictureSwapper;
+import inf112.skeleton.app.model.entities.rat.IRat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
@@ -43,7 +44,7 @@ public class ModelTest {
     private ShotgunCat shotgunCat;
     private FreezeCat freezeCat;
     private TimeSource mockTimeSource;
-    private LinkedList<Rat> rats;
+    private LinkedList<IRat> rats;
     private RatFactory ratFactory;
 
 
@@ -121,8 +122,8 @@ public class ModelTest {
         model.addCat(shotgunCat);
         shotgunCat.setPos(800, 800);
 
-        Rat rat1 = rats.get(0);
-        Rat rat2 = rats.get(1);
+        IRat rat1 = rats.get(0);
+        IRat rat2 = rats.get(1);
 
         int initialHealth1 = rat1.getHealth();
         int initialHealth2 = rat2.getHealth();
@@ -148,7 +149,7 @@ public class ModelTest {
         model.addCat(shotgunCat);
         shotgunCat.setPos(800, 800);
 
-        Rat rat1 = rats.get(0);
+        IRat rat1 = rats.get(0);
         rat1.setPosition(new Vector2(15,15));
         model.clockTick();
     
@@ -168,7 +169,7 @@ public class ModelTest {
             int initialPoints = model.getPoints();
             int initialMoney = model.getMoney();
 
-            Rat rat = rats.get(0);
+            IRat rat = rats.get(0);
             rat.setPosition(new Vector2(15,15));
             
             model.clockTick();
@@ -190,7 +191,7 @@ public class ModelTest {
     void removeExitedRatsTest(){
         addRatsWithLowHp(6);
         model.setPause();
-        for (Rat rat : rats) {
+        for (IRat rat : rats) {
             rat.setDirection(Direction.OUT);
         }
         model.clockTick();
@@ -198,7 +199,7 @@ public class ModelTest {
         assertEquals(0, model.getLives());
         assertTrue(model.isGameOver());
         verify(mockSound, times(6)).play(0.6f);
-        for (Rat rat : rats) {
+        for (IRat rat : rats) {
             assertTrue(rat.isExited());
         }
         assertTrue(model.getRats().isEmpty());
@@ -225,12 +226,12 @@ public class ModelTest {
         
         
         int killedRatsForRound0 = 0;
-        for (Rat rat : rats) {
+        for (IRat rat : rats) {
             rat.setDirection(Direction.OUT);
             killedRatsForRound0++;
         }
         assertEquals(killedRatsForRound0, ratFactory.calculateRatsForRound(model.getLevel()));
-        for (Rat rat : rats) {
+        for (IRat rat : rats) {
             assertTrue(rat.isOut());
         }
         
@@ -250,12 +251,12 @@ public class ModelTest {
         model.setPause();
         model.clockTick();
         int killedRatsForRound1 = 0;
-        for (Rat rat : rats) {
+        for (IRat rat : rats) {
             rat.setDirection(Direction.OUT);
             killedRatsForRound1++;
         }
         assertEquals(killedRatsForRound1, ratFactory.calculateRatsForRound(model.getLevel()));
-        for (Rat rat : rats) {
+        for (IRat rat : rats) {
             assertTrue(rat.isOut());
         }
         assertEquals("", model.nextWaveText());

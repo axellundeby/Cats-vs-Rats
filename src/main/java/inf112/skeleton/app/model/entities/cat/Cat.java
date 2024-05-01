@@ -8,7 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
-import inf112.skeleton.app.model.entities.rat.Rat;
+
+import inf112.skeleton.app.model.entities.rat.IRat;
 
 public abstract class Cat {
 
@@ -156,7 +157,7 @@ public abstract class Cat {
      * @param rats The rats to attack.
      * @return A list of projectiles fired by the cat.
      */
-    public abstract void attack(LinkedList<Rat> rats);
+    public abstract void attack(LinkedList<IRat> rats);
 
      /**
      * Upgrades the cat's damage.
@@ -210,7 +211,7 @@ public abstract class Cat {
      *
      * @param target The rat that the cat should face.
      */
-    public void setRotationToward(Rat target) {
+    public void setRotationToward(IRat target) {
         if (target != null) {
             float dx = target.getPosition().x - this.pos.x;
             float dy = target.getPosition().y - this.pos.y;
@@ -233,7 +234,7 @@ public abstract class Cat {
 
     /**
      * Updates the cat's range circle.
-     * The range circle is used to determine which rats are within the cat's attack range.
+     * The range circle is used to determine which IRats are within the cat's attack range.
      */
     public void circleUpdater() {
         this.rangeCircle = new Circle(pos, range);
@@ -287,12 +288,12 @@ public abstract class Cat {
     }
 
     /**
-     * Returns whether the specified rat is within the cat's range.
+     * Returns whether the specified IRat is within the cat's range.
      *
-     * @param target The rat to check.
-     * @return True if the rat is within the cat's range, false otherwise.
+     * @param target The IRat to check.
+     * @return True if the IRat is within the cat's range, false otherwise.
      */
-    public boolean withinRange(Rat target) {
+    public boolean withinRange(IRat target) {
         if (target.getPosition() != null) {
             boolean isWithinRange = rangeCircle.contains(target.getPosition());
             if (!isWithinRange) {

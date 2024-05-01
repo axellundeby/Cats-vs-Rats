@@ -289,21 +289,6 @@ public class RatTest {
         assertEquals(90, rat.getHealth());
     }
 
-    @Test
-    void testRotateImageDown() {
-        rat.setDirection(Direction.DOWN);
-        rat.rotateImage();
-        assertEquals(180, rat.getSprite().getRotation());
-    }
-
-
-    @Test
-    void testRotateImageUp() {
-        rat.setDirection(Direction.UP);
-        rat.rotateImage();
-        assertEquals(0, rat.getSprite().getRotation());
-    }
-
 
     @Test
     void setDirectionTest() {
@@ -396,12 +381,6 @@ public class RatTest {
         assertArrayEquals(controlPoints, rat.getControlPoints());
     }
 
-    @Test
-    void testRotationAngleForOutDirection() {
-        rat.setDirection(Direction.OUT);
-        rat.rotateImage(); 
-        assertEquals(0, rat.getSprite().getRotation());
-    }
 
     @Test
     void testSetFreeze(){
@@ -424,6 +403,14 @@ public class RatTest {
     void setControlPointTest(){
         rat.setControlPoint(5);
         assertEquals(5, rat.getCurrentControlPoint());
+    }
+
+    @Test
+    void unfreezeTest(){
+        rat.setFrozen();
+        assertTrue(rat.isFrozen());
+        rat.unfreeze();
+        assertFalse(rat.isFrozen());
     }
 
     
