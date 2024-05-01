@@ -39,7 +39,7 @@ public class RatFactoryTest {
     void testUpdateRatFactorySpawning() {
         float deltaTime = 11;
         int initialSize = ratFactory.updateRatFactory(0, 1).size(); 
-        ArrayList<Rat> rats = ratFactory.updateRatFactory(deltaTime, 1);
+        ArrayList<IRat> rats = ratFactory.updateRatFactory(deltaTime, 1);
         assertEquals(initialSize + 1, rats.size());
     }
 
@@ -58,10 +58,10 @@ public class RatFactoryTest {
 
     @Test
     void testRatVariationLevels() {
-        Rat ratLevel1 = ratFactory.updateRatFactory(12, 1).get(0);
+        IRat ratLevel1 = ratFactory.updateRatFactory(12, 1).get(0);
         assertTrue(ratLevel1 instanceof BasicRat);
 
-        Rat ratLevel5 = ratFactory.updateRatFactory(12, 5).get(0);
+        IRat ratLevel5 = ratFactory.updateRatFactory(12, 5).get(0);
         assertTrue(ratLevel5 instanceof BasicRat || ratLevel5 instanceof FastRat || ratLevel5 instanceof StrongRat);
     }
 }

@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 import com.badlogic.gdx.audio.Sound;
 
-import inf112.skeleton.app.model.entities.rat.Rat;
+import inf112.skeleton.app.model.entities.rat.IRat;
 import inf112.skeleton.app.view.GameResourceFactory;
 
 public class ShotgunCat extends Cat {
@@ -23,7 +23,7 @@ public class ShotgunCat extends Cat {
     }
 
     @Override
-    public void attack(LinkedList<Rat> rats) {
+    public void attack(LinkedList<IRat> rats) {
         if (canAttack()) {
             triggerAttackImage();
             playAttackSound();

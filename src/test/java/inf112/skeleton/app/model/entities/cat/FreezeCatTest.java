@@ -14,9 +14,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+
+import inf112.skeleton.app.model.entities.rat.IRat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.GameResourceFactory;
-import inf112.skeleton.app.view.TimeSource;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -34,18 +35,17 @@ public class FreezeCatTest {
     @Mock
     private Sound mockSound; 
 
-    private LinkedList<Rat> rats;
+    private LinkedList<IRat> rats;
 
     @BeforeEach
     void setup() {
     GameResourceFactory mockFactory = mock(GameResourceFactory.class);
     Texture mockTexture = mock(Texture.class);
-    TimeSource mockTimeSource = () -> 0.016f; 
 
     lenient().when(mockFactory.getSound("sound/ice.mp3")).thenReturn(this.mockSound);
     lenient().when(mockFactory.getTexture(anyString())).thenReturn(mockTexture);
 
-    freezeCat = new FreezeCat(mockFactory,mockTimeSource);
+    freezeCat = new FreezeCat(mockFactory);
         rats = new LinkedList<>();
         for (int i = 0; i < 3; i++) {
             rats.add(new Rat(100, 10, aliveTextureMock, 50, 20, frozenTextureMock, 25, deadTextureMock));
@@ -55,7 +55,7 @@ public class FreezeCatTest {
     @Test
     void testAttack() {
         ArrayList<Integer> healthList = new ArrayList<>();
-        for (Rat rat : rats) {
+        for (IRat rat : rats) {
            Integer initialHealth = rat.getHealth();
               healthList.add(initialHealth);
         }

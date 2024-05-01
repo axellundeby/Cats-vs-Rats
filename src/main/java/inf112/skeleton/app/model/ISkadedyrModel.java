@@ -3,8 +3,8 @@ package inf112.skeleton.app.model;
 import java.util.ArrayList;
 
 import inf112.skeleton.app.model.catmenu.CatMenu;
-import inf112.skeleton.app.model.entities.cat.Cat;
-import inf112.skeleton.app.model.entities.rat.Rat;
+import inf112.skeleton.app.model.entities.cat.ICat;
+import inf112.skeleton.app.model.entities.rat.IRat;
 
 public interface ISkadedyrModel {
     
@@ -12,13 +12,13 @@ public interface ISkadedyrModel {
      * Gets all cats currently in the game
      * @return an ArrayList of Cat objects
      */
-    ArrayList<Cat> getCats();
+    ArrayList<ICat> getCats();
 
     /**
      * Gets all currently alive rats in the game
      * @return an ArrayList of Rat objects
      */
-    ArrayList<Rat> getRats();
+    ArrayList<IRat> getRats();
 
  
     /**

@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 
 import inf112.skeleton.app.model.SkadedyrModel;
-import inf112.skeleton.app.model.entities.cat.Cat;
+import inf112.skeleton.app.model.entities.cat.ICat;
 
 public class ButtonFactory {
 
@@ -54,19 +54,18 @@ public class ButtonFactory {
     }
 
     public Button createUpgradeButton(int cost, String textureUp, String textureDown, int xPosition, int yPosition,
-            Consumer<Cat> upgradeAction) {
+            Consumer<ICat> upgradeAction) {
         Button upgradeButton = ButtonFactory.createImageButton(textureUp, textureDown);
         upgradeButton.setSize(UPGRADE_BUTTON_WIDTH, UPGRADE_BUTTON_HEIGHT);
         upgradeButton.setPosition(xPosition, yPosition);
         upgradeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Cat selectedCat = model.getSelectedCat();
+                ICat selectedCat = model.getSelectedCat();
                 if (selectedCat != null && model.getMoney() >= cost && selectedCat.getUpgradeCount() < 4) {
                     upgradeAction.accept(selectedCat);
                     model.setMoney(model.getMoney() - cost);
                     selectedCat.upgradeTexture();
-                    //updateButtonAppearance();
                 }
             }
         });
@@ -82,7 +81,6 @@ public class ButtonFactory {
             @Override
             public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
                 action.run();
-                //updateButtonAppearance();
             }
         });
         return button;
