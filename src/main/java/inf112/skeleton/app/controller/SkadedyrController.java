@@ -4,7 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-import inf112.skeleton.app.model.SkadedyrModel;
+
+import inf112.skeleton.app.model.ISkadedyrModel;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
 import inf112.skeleton.app.model.entities.cat.ICat;
@@ -12,11 +13,11 @@ import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.view.GameResourceFactory;
 
 public class SkadedyrController {
-    private final SkadedyrModel model;
+    private final ISkadedyrModel model;
     private Task currentClockTickTask = null;
     private final GameResourceFactory resourceFactory;
 
-    public SkadedyrController(SkadedyrModel model, GameResourceFactory resourceFactory) {
+    public SkadedyrController(ISkadedyrModel model, GameResourceFactory resourceFactory) {
         this.model = model;
         this.resourceFactory = resourceFactory;
     }

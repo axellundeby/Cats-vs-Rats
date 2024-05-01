@@ -36,7 +36,6 @@ public class SkadedyrGame implements ApplicationListener{
     @Override
     public void create() {
         controller.startTimer();
-        //timeSource.getDeltaTime();
         view.create();
         model.initCatMenu();
     }

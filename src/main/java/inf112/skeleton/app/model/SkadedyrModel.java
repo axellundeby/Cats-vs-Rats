@@ -71,18 +71,23 @@ public class SkadedyrModel implements ISkadedyrModel {
         newRats = new ArrayList<>();
     }
 
+    @Override
     public void initCatMenu() {
         catMenu.init();
     }
 
+    @Override
     public void setState(State newState) {
         this.currentState = newState;
     }
 
+    @Override
     public State getState() {
         return currentState;
     }
 
+
+    @Override
     public void clockTick() {
         if (!isPaused) {
             float deltaTime = timeSource.getDeltaTime();
@@ -194,6 +199,7 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     }
 
+    @Override
     public String nextWaveText() {
         if (writeText) {
             return "Round over. Press unPause to continue.";
@@ -203,14 +209,17 @@ public class SkadedyrModel implements ISkadedyrModel {
         return "";
     }
 
+    @Override
     public boolean pressedUppgradeButton() {
         return true;
     }
 
+    @Override
     public boolean triendToAddCat() {
         return true;
     }
 
+    @Override
     public String uppgradeErrorText() {
         if (getSelectedCat() == null && pressedUppgradeButton()) {
             return "No cat selected";
@@ -218,6 +227,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         return "";
     }
 
+    @Override
     public String setErrorText() {
         if (getSelectedCat() == null && triendToAddCat()) {
             return "No enough money to buy cat";
@@ -231,15 +241,17 @@ public class SkadedyrModel implements ISkadedyrModel {
         }
     }
 
+    @Override
     public ICat getSelectedCat() {
         return selectedCat;
     }
 
+    @Override
     public ICat setSelectedCat(ICat cat) {
         return selectedCat = cat;
     }
 
-    
+    @Override
     public void addCat(ICat cat) {
         cats.add(cat);
     }
@@ -262,6 +274,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         return intervalSeconds;
     }
 
+    @Override
     public boolean isSpeedUp() {
         return speedUp;
     }
@@ -327,24 +340,29 @@ public class SkadedyrModel implements ISkadedyrModel {
         return level == 10;
     }
 
+    @Override
     public void setLevel(int levelSetter){
         level = levelSetter;
     }
 
+    @Override
     public void setHelp() {
         isHelp = !isHelp;
         startGame = false;
     }
 
+    @Override
     public boolean getHelp() {
         return isHelp;
     }
 
+    @Override
     public void setStartGame() {
         startGame = !startGame;
         isHelp = false;
     }
 
+    @Override
     public boolean getStartGame() {
         return startGame;
     }
@@ -381,15 +399,18 @@ public class SkadedyrModel implements ISkadedyrModel {
         return lives;
     }
 
+    @Override
     public void restart() {
         initializeGame();
 
     }
 
+    @Override
     public void addRat(IRat rat) {
         aliveRats.add(rat);
     }
 
+    @Override
     public ArrayList<IRat> getAliveRats() {
         return aliveRats;
     }
