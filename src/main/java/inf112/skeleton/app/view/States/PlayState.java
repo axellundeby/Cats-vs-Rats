@@ -71,8 +71,8 @@ public class PlayState extends State {
     public void render(SpriteBatch batch) {
         resourceFactory.clearScreen(Color.DARK_GRAY);
         
-        batch.begin();
         batch.setColor(1, 1, 1, Math.min(alpha += 0.01, 1f));
+        batch.begin();
         batch.draw(mapTexture, 0, 200, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() - 300);
         batch.end();
 
