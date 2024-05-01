@@ -4,11 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
-import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
+import inf112.skeleton.app.model.entities.cat.ICat;
 import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.view.GameResourceFactory;
 
@@ -53,12 +52,12 @@ public class SkadedyrController {
     }
 
     private void newCat(float mouseX, float mouseY) {
-        Cat selectedTemplate = model.getCatMenu().getSelectedCat();
+        ICat selectedTemplate = model.getCatMenu().getSelectedCat();
         if (selectedTemplate == null) {
             model.pressedUppgradeButton();
             return; 
         }
-        Cat newCat = null;
+        ICat newCat = null;
         if (selectedTemplate instanceof BasicCat) {
             newCat = new BasicCat(resourceFactory);
         } else if (selectedTemplate instanceof ShotgunCat) {
@@ -81,7 +80,7 @@ public class SkadedyrController {
     
     private void selectCat(Vector2 mouse) {
         if (mouse.y < 200) return;
-        for (Cat cat : model.getCats()) {
+        for (ICat cat : model.getCats()) {
             if (cat.getSelectionCircle().contains(mouse)) {
                 model.setSelectedCat(cat);
                 return;

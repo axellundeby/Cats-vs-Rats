@@ -2,9 +2,7 @@ package inf112.skeleton.app.model.entities.cat;
 import java.util.Arrays;
 import java.util.LinkedList;
 import com.badlogic.gdx.audio.Sound;
-
 import inf112.skeleton.app.model.entities.rat.IRat;
-import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.GameResourceFactory;
 
 

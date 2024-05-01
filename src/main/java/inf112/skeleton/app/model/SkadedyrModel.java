@@ -5,9 +5,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import com.badlogic.gdx.audio.Sound;
 import inf112.skeleton.app.model.catmenu.CatMenu;
-import inf112.skeleton.app.model.entities.cat.Cat;
+import inf112.skeleton.app.model.entities.cat.ICat;
 import inf112.skeleton.app.model.entities.rat.IRat;
-import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
 import inf112.skeleton.app.view.States.PlayState;
 import inf112.skeleton.app.view.States.State;
@@ -17,7 +16,7 @@ import inf112.skeleton.app.view.GameResourceFactory;
 import inf112.skeleton.app.view.TimeSource;
 
 public class SkadedyrModel implements ISkadedyrModel {
-    private ArrayList<Cat> cats = new ArrayList<>();
+    private ArrayList<ICat> cats = new ArrayList<>();
     private ArrayList<IRat> aliveRats = new ArrayList<>();
     private RatFactory ratFactory;
     private int lives;
@@ -33,7 +32,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private boolean roundOver = false;
     private boolean writeText = false;
     private boolean speedUp = false;
-    private Cat selectedCat;
+    private ICat selectedCat;
     private State currentState;
     private boolean isHelp = false;
     private boolean startGame = false;
@@ -175,7 +174,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         removeAllRats();
 
         setPause();
-        for (Cat cat : cats) {
+        for (ICat cat : cats) {
             cat.resetAttackTimer();
         }
     }
@@ -227,21 +226,21 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     private void updateCatAnimations(float deltaTime) {
-        for (Cat cat : cats) {
+        for (ICat cat : cats) {
             cat.updateAnimation(deltaTime);
         }
     }
 
-    public Cat getSelectedCat() {
+    public ICat getSelectedCat() {
         return selectedCat;
     }
 
-    public Cat setSelectedCat(Cat cat) {
+    public ICat setSelectedCat(ICat cat) {
         return selectedCat = cat;
     }
 
     
-    public void addCat(Cat cat) {
+    public void addCat(ICat cat) {
         cats.add(cat);
     }
 
@@ -291,7 +290,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     @Override
-    public ArrayList<Cat> getCats() {
+    public ArrayList<ICat> getCats() {
         return cats;
     }
 
@@ -361,8 +360,8 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
     private void catRotater() {
-        HashMap<Cat, LinkedList<IRat>> attackMap = attackQueueForEachCat();
-        for (Cat cat : cats) {
+        HashMap<ICat, LinkedList<IRat>> attackMap = attackQueueForEachCat();
+        for (ICat cat : cats) {
             LinkedList<IRat> attackableRats = attackMap.get(cat);
             if (!attackableRats.isEmpty()) {
                 IRat firstRat = attackableRats.getFirst();
@@ -396,9 +395,9 @@ public class SkadedyrModel implements ISkadedyrModel {
     }
 
    
-    private HashMap<Cat, LinkedList<IRat>> attackQueueForEachCat() {
-        HashMap<Cat, LinkedList<IRat>> attackMap = new HashMap<>();
-        for (Cat cat : cats) {
+    private HashMap<ICat, LinkedList<IRat>> attackQueueForEachCat() {
+        HashMap<ICat, LinkedList<IRat>> attackMap = new HashMap<>();
+        for (ICat cat : cats) {
             LinkedList<IRat> attackableRats = new LinkedList<>();
             for (IRat rat : aliveRats) {
                 if (!rat.isKilled() && cat.withinRange(rat)) { 
@@ -412,8 +411,8 @@ public class SkadedyrModel implements ISkadedyrModel {
 
   
     private void attackRat() {
-        HashMap<Cat, LinkedList<IRat>> attackMap = attackQueueForEachCat();
-        for (Cat cat : cats) {
+        HashMap<ICat, LinkedList<IRat>> attackMap = attackQueueForEachCat();
+        for (ICat cat : cats) {
             cat.updateAttackTimer(timeSource.getDeltaTime());
             LinkedList<IRat> attackableRats = attackMap.get(cat);
             if (cat.canAttack() && !attackableRats.isEmpty()) {

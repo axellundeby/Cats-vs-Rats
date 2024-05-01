@@ -15,7 +15,7 @@ import inf112.skeleton.app.controller.buttons.menu.MenuButtons;
 import inf112.skeleton.app.controller.buttons.upgrade.UpgradeButtons;
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.catmenu.CatMenu;
-import inf112.skeleton.app.model.entities.cat.Cat;
+import inf112.skeleton.app.model.entities.cat.ICat;
 import inf112.skeleton.app.model.entities.rat.IRat;
 
 public class PlayState extends State {
@@ -73,7 +73,7 @@ public class PlayState extends State {
 
     @Override
     public void render(SpriteBatch batch) {
-        Cat selectedCat = model.getSelectedCat();
+        ICat selectedCat = model.getSelectedCat();
         ScreenUtils.clear(Color.DARK_GRAY);
 
         if (shapeRenderer == null) {
@@ -164,7 +164,7 @@ public class PlayState extends State {
     }
 
     private void drawCats(SpriteBatch batch) {
-        for (Cat cat : model.getCats()) {
+        for (ICat cat : model.getCats()) {
             Sprite catSprite = cat.getSprite();
             catSprite.draw(batch);
         }
