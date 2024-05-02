@@ -44,7 +44,7 @@
 #### Hva skal vi gjøre til neste møte?
 - Fullføre applikasjonen.
   - **TO DO:**
-    - Objectfabrikkene våre er ikke optimale - Snart klart
+    - Objectfabrikkene våre er ikke optimale - Veldig snart i boks 
     - Tester er automatiske, og trenger litt høyere prosent for å nå kravet til tester - Nærmest Ferdig
     - Gå over dokumentasjon - 95% gjennomgått
 
