@@ -206,7 +206,7 @@ Som en spiller ønsker jeg at mine katter skal kunne skyte prosjektiler mot angr
 # Produkt og kode
 
 ## Oppdateringer siden sist
-
+![alt text](image.png)
 ### Vi har gjort følgende forbedringer og tillegg til spillet siden Oblig 2:
 
 - **POM fil:** Vi har oppdatert POM-filen med korrekt prosjektnavn, main-klassenavn etc.
