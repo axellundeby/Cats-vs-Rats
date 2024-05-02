@@ -7,15 +7,13 @@
     * *Jacob Foss - Developer/Testansvarlig* 
 
 ### Om spillet
-I dette strategispillet er målet å forsvare byen mot en invasjon av rotter ved hjelp av ulike typer katter plassert langs rottens invasjonsrute. Spillet foregår i en todimensjonal verden, ned i kloakken, hvor spillere kan utplassere kattene rundt røret som rottene kryper i.
+I dette strategispillet er målet å forsvare byen mot en invasjon av rotter ved hjelp av ulike typer katter plassert langs rottens invasjonsrute. Spillet foregår i en todimensjonal verden, nede i kloakken, hvor spillere kan utplassere kattene rundt røret som rottene kryper i.
 
-### Hvordan spille spillet
-Når spillet starter får man frem et bilde med en play-knapp. Man trykker på denne, og kommer inn til selve spillet. Her må man trykke på play/pause-knappen for å starte. Da kan man sette ut katter ved å klikke på katten man vil ha, og deretter plassere den hvor man vil på mapet. Man får penger av å drepe rottene, og med disse pengen kan man kjøpe oppgraderinger, eventuelt flere katter. Oppdateringene kjøper man ved å trykke på ikonenen til høyre for kattene. For å pause spillet trykker man på play/pause-knappen. For å gå ut av spillet tryukker man på "exit"-knappen. For å starte spillet på nytt trykker man på "restart"-knappen.
+### Hvordan spille spilletspillmodus
+Når man starter spillet blir man møtt av en forside. Her kan man enten åpne hjelpe-menyen ved å trykke på "help", eller gå rett til spillmodus ved å trykke på "Play". Etter man har trykket på play kan man plassere ut katter. Det gjør man ved å trykke på den katten man vil velge, og deretter trykke på kartet. Videre trykker man på "play/pause"-knappen for å starte spillet. Da vil rottene komme, og hvis man synes at det går for sakte kan man trykke på "fast-forward"-knappen. Den finner man ved siden av play/pause. Når rottene er drept er runden over. For å oppgradere kattene kan man trykke på en av kattene man har stående ute på kartet, og deretter trykke på et av de tre ikonene som ligger langs bunnlinjen på høyre side. Disse oppgraderer firerate, range og damage. Øverst til høyre på skjermen ser man oversikt over statestikken sin. Trenger man hjelp kan man trykke på "hjelp"-knappen. Da får man se hjelpemenyen, og kan fortsette spillet igjen når man har sett ferdig.
+
 
 ### Kjente feil
-Spillet opptar masse minne, og krasjer. 
-Rottene følger ikke stien. 
-Man kan plassere katter på stien.
 
 
 ### Kjøring
