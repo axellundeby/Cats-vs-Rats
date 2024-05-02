@@ -393,7 +393,7 @@ public class ModelTest {
         model.restart();
         assertEquals(5, model.getLives());
         assertEquals(0, model.getLevel());
-        assertEquals(1000, model.getMoney());
+        assertEquals(10000, model.getMoney());
         assertEquals(0, model.getPoints());
         assertTrue(model.isPaused());
     }
