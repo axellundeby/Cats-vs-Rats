@@ -387,7 +387,7 @@ public class ModelTest {
         model.restart();
         assertEquals(5, model.getLives());
         assertEquals(0, model.getLevel());
-        assertEquals(10000, model.getMoney());
+        assertEquals(400, model.getMoney());
         assertEquals(0, model.getPoints());
         assertTrue(model.isPaused());
     }
@@ -395,7 +395,7 @@ public class ModelTest {
     @Test
     void gameIsWonTest(){
         assertFalse(model.isGameWon());
-        model.setLevel(10);
+        model.setLevel(8);
         assertTrue(model.isGameWon());
     }
 
