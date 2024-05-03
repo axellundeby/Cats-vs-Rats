@@ -21,8 +21,6 @@ public class SkadedyrModel implements ISkadedyrModel {
     private RatFactory ratFactory;
     private int lives;
     private int money;
-    private int points = 0;
-    private int level = 0;
     private boolean isPaused;
     private float intervalSeconds = (float) 0.05;
     private CatMenu catMenu;
@@ -41,6 +39,9 @@ public class SkadedyrModel implements ISkadedyrModel {
     private TimeSource timeSource;
     private float freezeTimer = 0;
     private static final float RAT_FREEZE_DELAY = 100;
+    private int points;
+    private int level;
+    private int killedRats = 0;
 
 
     public SkadedyrModel(GameResourceFactory resourceFactory, TimeSource timeSource) {
@@ -59,11 +60,13 @@ public class SkadedyrModel implements ISkadedyrModel {
         aliveRats.clear();
         newRats.clear();
         ratFactory.resetRatFactory();
-        money = 10000;
+        money = 400;
         lives = 5;
         isPaused = true;
         intervalSeconds = 0.05f;
         speedUp = false;
+        points = 0;
+        level = 0;
     }
 
     private void removeAllRats() {
@@ -177,27 +180,31 @@ public class SkadedyrModel implements ISkadedyrModel {
         writeText = true;
         nextWaveText();
         removeAllRats();
-
+        ratFactory.setRatsSpawned();
+        killedRats = 0;
         setPause();
         for (ICat cat : cats) {
             cat.resetAttackTimer();
         }
     }
-
+    
     private void isRoundOver() {
-        int killedRats = 0;
+        int totalRatsForRound = ratFactory.calculateRatsForRound(level);
+        boolean anyRatKilledOrOut = false;
         for (IRat rat : aliveRats) {
             if (rat.isKilled() || rat.isOut()) {
-                killedRats++;
-            }
-            if (killedRats == ratFactory.calculateRatsForRound(level)) {
-                roundOver = true;
+                anyRatKilledOrOut = true;
                 break;
             }
-            roundOver = false;
         }
-
+        if (anyRatKilledOrOut && !roundOver) { 
+            killedRats++;
+        }
+        roundOver = (killedRats >= totalRatsForRound);
     }
+    
+    
+    
 
     @Override
     public String nextWaveText() {

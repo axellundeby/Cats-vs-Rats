@@ -57,7 +57,7 @@ public class RatFactoryTest {
 
     @Test
     void testCalculateRatsForRound() {
-        assertEquals(6, ratFactory.calculateRatsForRound(1));
+        assertEquals(5, ratFactory.calculateRatsForRound(1));
     }
 
     @Test

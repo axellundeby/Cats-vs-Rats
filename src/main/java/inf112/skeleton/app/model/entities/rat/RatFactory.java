@@ -7,7 +7,7 @@ import inf112.skeleton.app.view.GameResourceFactory;
 public class RatFactory {
     private float spawnTimer = 5;
     private int ratsSpawned = 0;
-    private static final int RAT_SPAWN_DELAY = 10; 
+    private static final int RAT_SPAWN_DELAY = 7; 
     private ArrayList<IRat> rats = new ArrayList<IRat>();
     private Random random = new Random();
     private GameResourceFactory resourceFactory;
@@ -24,9 +24,12 @@ public class RatFactory {
         spawnTimer += deltaTime;
         if (spawnTimer > RAT_SPAWN_DELAY && ratsSpawned < calculateRatsForRound(level)) {
             spawnTimer = 0; 
+            rats.clear();
             rats.add(ratVariation(level));
             ratsSpawned++;
+            System.out.println(ratsSpawned);
         }
+      
         return rats;
     }
 
@@ -37,6 +40,10 @@ public class RatFactory {
         rats.clear();
         ratsSpawned = 0;
         spawnTimer = 5;
+    }
+
+    public void setRatsSpawned(){
+        ratsSpawned = 0;
     }
 
 
@@ -53,7 +60,7 @@ public class RatFactory {
      * @return
      */
     public int calculateRatsForRound(int round) {
-        return 1 + (round * 5);
+        return 1 + (round * 3);
     }
 
     private IRat ratVariation(int level) {

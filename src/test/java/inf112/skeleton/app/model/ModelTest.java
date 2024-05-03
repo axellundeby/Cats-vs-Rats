@@ -207,7 +207,7 @@ public class ModelTest {
     }
     @Test
     void ratHandlerTest() {
-        addRatsWithHighHp(6);
+        addRatsWithHighHp(5);
         model.setLevel(1);
         model.setPause();
 
@@ -219,7 +219,7 @@ public class ModelTest {
     
     @Test
     void roundTester(){
-        addRatsWithLowHp(1);
+        addRatsWithLowHp(2);
         
         assertEquals(0, model.getLevel());
         model.setPause();
@@ -240,14 +240,14 @@ public class ModelTest {
         for (int i = 0; i < 100; i++) {
             model.clockTick();
         }
-        assertEquals(4, model.getLives());
+        assertEquals(3, model.getLives());
         assertEquals(1, model.getLevel());
         assertTrue(model.isPaused());
         assertEquals("Round over. Press unPause to continue.", model.nextWaveText());
 
         rats.removeAll(rats);
 
-        addRatsWithLowHp(6);
+        addRatsWithLowHp(5);
         model.setPause();
         model.clockTick();
         int killedRatsForRound1 = 0;
@@ -368,7 +368,7 @@ public class ModelTest {
         model.clockTick();
         assertTrue(freezeCat.withinRange(rats.get(0)));
         assertEquals(frozenTextureMock, rats.get(0).getTexture());
-        assertEquals(0, rats.get(0).getEffectiveSpeed());
+        assertEquals(7.5, rats.get(0).getEffectiveSpeed());
          
 
          for (int i = 0; i < 1000; i++) {

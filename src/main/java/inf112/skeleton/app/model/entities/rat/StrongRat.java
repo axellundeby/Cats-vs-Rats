@@ -8,7 +8,7 @@ public class StrongRat extends Rat{
         super(500, 
         20,
         resourceFactory.getTexture("rats/Spill_Rotte3.png"),
-         500,
+         400,
          3,
         resourceFactory.getTexture("rats/Spill_Rotte3_freezed.png"),
          60, 

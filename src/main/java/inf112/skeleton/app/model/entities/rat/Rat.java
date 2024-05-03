@@ -226,7 +226,7 @@ public class Rat implements IRat {
 
   
     private void updateDirection(Vector2 current, Vector2 next) {
-        if (currentControlPoint == controlPoints.length - 1) {
+        if (current.x > 1200) {
             direction = Direction.OUT;
         } else if (next.x > current.x) {
             direction = Direction.RIGHT;
@@ -321,7 +321,7 @@ public class Rat implements IRat {
 
     @Override
     public void freeze() {
-        effectiveSpeed = originalSpeed - 15;  
+        effectiveSpeed = originalSpeed / 2;  
         swapImage(ImageSwapper.FROZEN);
         this.sprite.setTexture(getTexture());
     }
