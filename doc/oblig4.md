@@ -168,7 +168,7 @@ Vi har for øyeblikket ingen identifiserte bugs i spillet.
 
 ## Utbedring av Feil siden Sist
 
-Vi har rettet og forbedret følgende punkter siden forrige rapport:
+Vi har rettet og forbedret følgende punkter siden forrige rapport :
 
 - **Lydeffekter:** Implementert unike lydeffekter for hver kattetype når de angriper, kjøpes eller oppgraderes, samt når spilleren mister liv av rotter.
 - **Abstraksjon:**
