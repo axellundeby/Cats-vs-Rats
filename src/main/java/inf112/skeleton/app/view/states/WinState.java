@@ -26,10 +26,7 @@ public class WinState extends State {
         menu = new MenuButtons(model);
         stage.addActor(menu.exitButton());
       
-
         Gdx.input.setInputProcessor(stage);
-
-      
     }
 
     
@@ -47,10 +44,6 @@ public class WinState extends State {
         sb.draw(winImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         sb.setColor(1f, 1f, 1f, 1f);
         sb.end();
-
-        
-
-        
 
         stage.draw();
     }

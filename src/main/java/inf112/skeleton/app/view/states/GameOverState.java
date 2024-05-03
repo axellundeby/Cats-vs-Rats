@@ -40,11 +40,7 @@ public class GameOverState extends State {
         sb.draw(gameOverImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         sb.setColor(1f, 1f, 1f, 1f);
         sb.end();
-
         
-
-        
-
         stage.draw();
     }
 
