@@ -20,7 +20,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
-import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.entities.cat.AttackCat;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.view.GameResourceFactory;

@@ -409,11 +409,11 @@ public class ModelTest {
         assertEquals(2, model.getCats().size());
     }
 
-    // @Test 
-    // void exitTest(){
-    //     model.exit();
-    //     assertEquals("cannot exit while game is running", model.exit());
-    // }
+    @Test 
+    void exitTest(){
+        model.exit();
+        assertEquals("cannot exit while game is running", model.exit());
+    }
 
     @Test
     void startTextTest(){
