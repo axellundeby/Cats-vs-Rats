@@ -213,8 +213,8 @@ Utførte oppgaver er ferdige, og vi har fjernet filer og kode som ikke er releva
 
 ### Klassediagram
 
-Vi har utarbeidet et klassediagram som viser strukturen til de viktigste klassene i prosjektet.
-![Klassediagram](/src/main/resources/buttons_game/angryCat.png)
+
+![Klassediagram](/src/main/resources/uml_oblig4.png)
 
 
 
