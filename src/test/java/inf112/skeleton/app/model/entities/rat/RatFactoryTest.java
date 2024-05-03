@@ -51,13 +51,13 @@ public class RatFactoryTest {
     void testResetRatFactory() {
         ratFactory.updateRatFactory(12, 1); 
         assertFalse(ratFactory.updateRatFactory(0, 1).isEmpty());
-        ratFactory.resetRatFactory();
+        ratFactory.removeRats();
         assertTrue(ratFactory.updateRatFactory(0, 1).isEmpty());
     }
 
     @Test
     void testCalculateRatsForRound() {
-        assertEquals(6, ratFactory.calculateRatsForRound(1));
+        assertEquals(5, ratFactory.calculateRatsForRound(1));
     }
 
     @Test
@@ -77,7 +77,8 @@ public class RatFactoryTest {
             IRat lastRat = ratFactory.getRats().get(ratFactory.getRats().size() - 1);
             counts.put(lastRat.getClass(), counts.get(lastRat.getClass()) + 1);
             assertFalse(ratFactory.getRats().isEmpty());
-            ratFactory.resetRatFactory();  
+            ratFactory.removeRats();  
+            ratFactory.resetRatFactory();
             assertTrue(ratFactory.getRats().isEmpty());
         }
         assertTrue(Math.abs(counts.get(BasicRat.class) - 400) < 50);
@@ -85,6 +86,7 @@ public class RatFactoryTest {
         assertTrue(Math.abs(counts.get(StrongRat.class) - 300) < 50);
     }
 }
+
 
 
 

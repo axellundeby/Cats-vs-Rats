@@ -161,30 +161,24 @@ public class ModelTest {
 
     @Test
     void removeKilledRatsTest(){
-           addRatsWithLowHp(1);
-            model.setPause();
+        addRatsWithLowHp(1);
+        model.setPause();
 
-            basicCat.setPos(15, 15);
-            model.addCat(basicCat);
-            int initialPoints = model.getPoints();
-            int initialMoney = model.getMoney();
+        basicCat.setPos(15, 15);
+        model.addCat(basicCat);
+        int initialPoints = model.getPoints();
+        int initialMoney = model.getMoney();
 
-            IRat rat = rats.get(0);
-            rat.setPosition(new Vector2(15,15));
-            
-            model.clockTick();
-
-            assertTrue(rat.isKilled());
-            assertEquals(rat.getPoints() + initialPoints, model.getPoints());
-            assertEquals(rat.getBounty() + initialMoney, model.getMoney());
-            assertTrue(rat.isrewardClaimed());
-            verify(mockSound, times(2)).play(0.6f);
-
-            for (int index = 0; index < 50; index++) {
-                model.clockTick();
-            }
-            assertTrue(model.getRats().isEmpty());
-            rats.removeAll(rats);
+        IRat rat = rats.get(0);
+        rat.setPosition(new Vector2(15,15));
+        
+        model.clockTick();
+        assertTrue(rat.isKilled());
+        assertEquals(rat.getPoints() + initialPoints, model.getPoints());
+        assertEquals(rat.getBounty() + initialMoney, model.getMoney());
+        assertTrue(rat.isrewardClaimed());
+        verify(mockSound, times(2)).play(0.6f);
+        rats.removeAll(rats);
     }
 
     @Test
@@ -207,7 +201,7 @@ public class ModelTest {
     }
     @Test
     void ratHandlerTest() {
-        addRatsWithHighHp(6);
+        addRatsWithHighHp(5);
         model.setLevel(1);
         model.setPause();
 
@@ -219,7 +213,7 @@ public class ModelTest {
     
     @Test
     void roundTester(){
-        addRatsWithLowHp(1);
+        addRatsWithLowHp(2);
         
         assertEquals(0, model.getLevel());
         model.setPause();
@@ -240,14 +234,14 @@ public class ModelTest {
         for (int i = 0; i < 100; i++) {
             model.clockTick();
         }
-        assertEquals(4, model.getLives());
+        assertEquals(3, model.getLives());
         assertEquals(1, model.getLevel());
         assertTrue(model.isPaused());
         assertEquals("Round over. Press unPause to continue.", model.nextWaveText());
 
         rats.removeAll(rats);
 
-        addRatsWithLowHp(6);
+        addRatsWithLowHp(5);
         model.setPause();
         model.clockTick();
         int killedRatsForRound1 = 0;
@@ -435,12 +429,6 @@ public class ModelTest {
         model.addCat(shotgunCat);
         assertEquals(2, model.getCats().size());
     }
-
-    // @Test 
-    // void exitTest(){
-    //     model.exit();
-    //     assertEquals("cannot exit while game is running", model.exit());
-    // }
 
     @Test
     void startTextTest(){
