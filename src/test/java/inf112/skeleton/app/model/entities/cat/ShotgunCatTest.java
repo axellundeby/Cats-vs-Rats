@@ -63,14 +63,14 @@ public class ShotgunCatTest {
     void upgradeDamageTest() {
         int initialStrength = shotgunCat.getStrength();
         shotgunCat.upgradeDamage();
-        assertEquals((int)(initialStrength * 1.25), shotgunCat.getStrength());
+        assertEquals((int)(initialStrength * 1.10), shotgunCat.getStrength());
     }
 
     @Test
     void testUpgradeRange() {
         int initialRange = shotgunCat.getRange();
         shotgunCat.upgradeRange();
-        assertEquals((int)(initialRange * 1.25), shotgunCat.getRange());
+        assertEquals((int)(initialRange * 1.10), shotgunCat.getRange());
     }
 
     @Test

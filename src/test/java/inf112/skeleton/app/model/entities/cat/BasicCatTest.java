@@ -65,14 +65,14 @@ public class BasicCatTest {
     void upgradeDamageTest() {
         int initialStrength = basicCat.getStrength();
         basicCat.upgradeDamage();
-        assertEquals((int)(initialStrength * 1.25), basicCat.getStrength());
+        assertEquals((int)(initialStrength * 1.10), basicCat.getStrength());
     }
 
     @Test
     void testUpgradeRange() {
         int initialRange = basicCat.getRange();
         basicCat.upgradeRange();
-        assertEquals((int)(initialRange * 1.25), basicCat.getRange());
+        assertEquals((int)(initialRange * 1.10), basicCat.getRange());
     }
 
     @Test

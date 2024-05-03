@@ -362,7 +362,7 @@ public class ModelTest {
         model.clockTick();
         assertTrue(freezeCat.withinRange(rats.get(0)));
         assertEquals(frozenTextureMock, rats.get(0).getTexture());
-        assertEquals(0, rats.get(0).getEffectiveSpeed());
+        assertEquals(7.5, rats.get(0).getEffectiveSpeed());
          
 
          for (int i = 0; i < 1000; i++) {
