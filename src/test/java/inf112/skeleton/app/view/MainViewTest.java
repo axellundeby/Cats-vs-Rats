@@ -24,6 +24,8 @@ import static org.mockito.Mockito.*;
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.rat.Rat;
+import inf112.skeleton.app.view.GdxTimeSource;
+import inf112.skeleton.app.view.GameResourceFactory;
 
 public class MainViewTest {
 
@@ -31,7 +33,8 @@ public class MainViewTest {
     @Mock
     private static SkadedyrView view;
     private static Texture mockTexture;
-    private static TimeSource mockTimeSource;
+    @Mock
+    private static GdxTimeSource mockTimeSource;
     private static GameResourceFactory mockFactory;
     private static Sound mockSound;
     private static ApplicationListener listener;
@@ -43,7 +46,7 @@ public class MainViewTest {
 
         mockFactory = mock(GameResourceFactory.class);
         mockTexture = mock(Texture.class);
-        mockTimeSource = mock(TimeSource.class);
+        mockTimeSource = mock(GdxTimeSource.class);
 
         model = new SkadedyrModel(mockFactory, mockTimeSource);
         view = new SkadedyrView(model);

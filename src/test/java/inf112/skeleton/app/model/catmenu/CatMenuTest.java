@@ -27,7 +27,6 @@ import inf112.skeleton.app.view.TimeSource;
 
 public class CatMenuTest {
     private static Texture mockTexture;
-    private static TimeSource mockTimeSource;
     private static GameResourceFactory mockFactory;
     private static ApplicationListener listener;
     private static SpriteBatch spriteBatchMock;
@@ -41,7 +40,6 @@ public class CatMenuTest {
 
         mockFactory = mock(GameResourceFactory.class);
         mockTexture = mock(Texture.class);
-        mockTimeSource = mock(TimeSource.class);
 
         spriteBatchMock = mock(SpriteBatch.class);
         shapeRendererMock = mock(ShapeRenderer.class);
@@ -82,12 +80,12 @@ public class CatMenuTest {
 
     @BeforeEach
     void beforeEach(){
-        catMenu = new CatMenu(mockFactory, mockTimeSource);
+        catMenu = new CatMenu(mockFactory);
     }
 
     @Test
     public void constructionTest(){
-        CatMenu localCatMenu = new CatMenu(mockFactory, mockTimeSource);
+        CatMenu localCatMenu = new CatMenu(mockFactory);
         assertNotNull(localCatMenu);
     }
 

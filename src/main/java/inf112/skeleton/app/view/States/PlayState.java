@@ -135,7 +135,7 @@ public class PlayState extends State {
         }
     }
 
-    private void drawRangeCircleFor(Cat selectedCat){
+    private void drawRangeCircleFor(ICat selectedCat){
         if (selectedCat != null) {
 
             Circle range = selectedCat.getRangeCircle();
@@ -144,7 +144,7 @@ public class PlayState extends State {
         }
     }
 
-    private void drawUpgradeButtons(Cat selectedCat){
+    private void drawUpgradeButtons(ICat selectedCat){
         if (selectedCat != null) {
             Gdx.input.setInputProcessor(upgradeStage);
             upgradeStage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
