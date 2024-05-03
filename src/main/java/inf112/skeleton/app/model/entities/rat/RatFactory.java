@@ -34,7 +34,6 @@ public class RatFactory {
      * Resets the rat factory
      */
     public void resetRatFactory() {
-        rats.clear();
         ratsSpawned = 0;
         spawnTimer = 5;
     }
@@ -53,7 +52,7 @@ public class RatFactory {
      * @return
      */
     public int calculateRatsForRound(int round) {
-        return 1 + (round * 5);
+        return 2 + (round * 3);
     }
 
     private IRat ratVariation(int level) {

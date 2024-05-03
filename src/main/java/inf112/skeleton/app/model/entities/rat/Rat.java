@@ -27,6 +27,7 @@ public class Rat implements IRat {
     private int currentControlPoint = 0; 
     private float originalSpeed;
     private float effectiveSpeed;
+    private boolean counted = false;
 
     
 
@@ -226,7 +227,7 @@ public class Rat implements IRat {
 
   
     private void updateDirection(Vector2 current, Vector2 next) {
-        if (currentControlPoint == controlPoints.length - 1) {
+        if (current.x > 1200) {
             direction = Direction.OUT;
         } else if (next.x > current.x) {
             direction = Direction.RIGHT;
@@ -332,6 +333,16 @@ public class Rat implements IRat {
         effectiveSpeed = originalSpeed;
         swapImage(ImageSwapper.ALIVE);
         this.sprite.setTexture(getTexture());
+    }
+
+    @Override
+    public boolean isCounted() {
+        return counted;
+    }
+
+    @Override
+    public void setCounted(boolean counted) {
+        this.counted = counted;
     }
     
 }
