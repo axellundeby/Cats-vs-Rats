@@ -109,7 +109,7 @@ public class CatMenu implements ICatMenu{
      * Simply adds a cat to the buy menu
      * @param cat to add 
      */
-    public void addCat(Cat cat){
+    public void addCat(ICat cat){
         availableCatsList.add(cat);
         catsMap.put(cat, new Rectangle(0, 0, 10, 10));
     }

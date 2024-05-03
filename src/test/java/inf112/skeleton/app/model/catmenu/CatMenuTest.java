@@ -82,12 +82,12 @@ public class CatMenuTest {
 
     @BeforeEach
     void beforeEach(){
-        catMenu = new CatMenu(mockFactory, mockTimeSource);
+        catMenu = new CatMenu(mockFactory);
     }
 
     @Test
     public void constructionTest(){
-        CatMenu localCatMenu = new CatMenu(mockFactory, mockTimeSource);
+        CatMenu localCatMenu = new CatMenu(mockFactory);
         assertNotNull(localCatMenu);
     }
 

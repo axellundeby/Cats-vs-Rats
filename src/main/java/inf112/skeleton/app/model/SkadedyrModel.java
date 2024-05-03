@@ -8,8 +8,6 @@ import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.cat.ICat;
 import inf112.skeleton.app.model.entities.rat.IRat;
 import inf112.skeleton.app.model.entities.rat.Rat.Direction;
-import inf112.skeleton.app.view.states.PlayState;
-import inf112.skeleton.app.view.states.State;
 import inf112.skeleton.app.model.entities.rat.RatFactory;
 import java.util.List;
 import inf112.skeleton.app.view.GameResourceFactory;

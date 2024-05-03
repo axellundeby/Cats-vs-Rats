@@ -41,7 +41,7 @@ public class ControllerTest {
         mockTask = mock(Timer.Task.class);
         mockTask2 = mock(Timer.Task.class);
 
-        controller = new SkadedyrController(mockModel, mockFactory, mockTimeSource);
+        controller = new SkadedyrController(mockModel, mockFactory);
 
         Gdx.gl = mock(GL20.class);
         Gdx.gl20 = mock(GL20.class);
