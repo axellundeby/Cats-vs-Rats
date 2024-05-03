@@ -1,5 +1,12 @@
 # Rapport – innlevering 4
 
+**Team:** 
+* Team: *Skadedyrkontrollørene_inc* (Gruppe 1): 
+    * *Jonathan Christensen - Developer/Git*
+    * *Axel Lundeby - Developer/Grafikk*
+    * *Theodor Nissen-Meyer - Lead Developer*
+    * *Jacob Foss - Developer/Testansvarlig*
+
 
 ## Referat 15. april 2024
 **Tilstede:** Alle 
