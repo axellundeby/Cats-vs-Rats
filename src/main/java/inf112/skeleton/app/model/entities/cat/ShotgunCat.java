@@ -13,12 +13,12 @@ public class ShotgunCat extends Cat {
 
     public ShotgunCat(GameResourceFactory resourceFactory) {
         super(
-            10,
-            200,
+            7,
+            150,
             Arrays.asList(resourceFactory.getTexture("cats/Spill_Skytekatt1.png"),resourceFactory.getTexture("cats/Spill_Skytekatt2.png"),resourceFactory.getTexture("cats/Spill_Skytekatt3.png")),
             Arrays.asList(resourceFactory.getTexture("cats/Spill_Skytekatt1_angrip.png"),resourceFactory.getTexture("cats/Spill_Skytekatt2_angrip.png"),resourceFactory.getTexture("cats/Spill_Skytekatt3_angrip.png")),
-            5.0f,
-            200);
+            3.0f,
+            500);
             this.resourceFactory = resourceFactory;
     }
 
@@ -34,13 +34,13 @@ public class ShotgunCat extends Cat {
 
     @Override
     public void upgradeDamage() {
-       this.strength *= 1.25;
+       this.strength *= 1.10;
 
     }
 
     @Override
     public void upgradeRange() {
-        this.range *= 1.25;
+        this.range *= 1.10;
         this.circleUpdater();
     }
 

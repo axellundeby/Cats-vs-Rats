@@ -9,10 +9,12 @@ import inf112.skeleton.app.view.GameResourceFactory;
 public class BasicCat extends Cat {
     private GameResourceFactory resourceFactory;
       public BasicCat(GameResourceFactory resourceFactory) {
-        super(50, 100, 
+        super(55,
+             115, 
             Arrays.asList(resourceFactory.getTexture("cats/Spill_Kosekatt1.png"), resourceFactory.getTexture("cats/Spill_Kosekatt2.png"), resourceFactory.getTexture("cats/Spill_Kosekatt3.png")), 
             Arrays.asList(resourceFactory.getTexture("cats/Spill_Kosekatt1_angrip.png"), resourceFactory.getTexture("cats/Spill_Kosekatt3_angrip.png"), resourceFactory.getTexture("cats/Spill_Kosekatt3_angrip.png")), 
-            25.0f, 200);
+            15.0f,
+             200);
 
             this.resourceFactory = resourceFactory;
     }
@@ -29,12 +31,12 @@ public class BasicCat extends Cat {
 
     @Override
     public void upgradeDamage() {
-       this.strength *= 1.25;
+       this.strength *= 1.10;
     }
 
     @Override
     public void upgradeRange() {
-        this.range *= 1.25;
+        this.range *= 1.10;
         this.circleUpdater();
     }
 
@@ -43,7 +45,6 @@ public class BasicCat extends Cat {
         this.fireRate *= 0.75;
     }
 
-    @Override
     public void playAttackSound() {
         Sound s = this.resourceFactory.getSound("sound/fart.mp3"); 
         s.play(0.6f);
