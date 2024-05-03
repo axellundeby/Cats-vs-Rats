@@ -1,6 +1,6 @@
 package inf112.skeleton.app.model.catmenu;
 
-import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -105,10 +105,7 @@ public class CatMenu implements ICatMenu{
         return menuRect.y;
     }
 
-    /**
-     * Simply adds a cat to the buy menu
-     * @param cat to add 
-     */
+    @Override
     public void addCat(ICat cat){
         availableCatsList.add(cat);
         catsMap.put(cat, new Rectangle(0, 0, 10, 10));

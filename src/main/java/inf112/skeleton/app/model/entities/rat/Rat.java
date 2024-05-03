@@ -322,7 +322,7 @@ public class Rat implements IRat {
 
     @Override
     public void freeze() {
-        effectiveSpeed = originalSpeed - 15;  
+        effectiveSpeed = originalSpeed / 2;  
         swapImage(ImageSwapper.FROZEN);
         this.sprite.setTexture(getTexture());
     }
