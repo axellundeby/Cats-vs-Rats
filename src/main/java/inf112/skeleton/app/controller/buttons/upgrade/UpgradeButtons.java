@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import inf112.skeleton.app.controller.buttons.ButtonFactory;
 import inf112.skeleton.app.model.SkadedyrModel;
-import inf112.skeleton.app.model.entities.cat.Cat;
+import inf112.skeleton.app.model.entities.cat.ICat;
 
 public class UpgradeButtons {
     private SkadedyrModel model;
@@ -36,19 +36,19 @@ public class UpgradeButtons {
 
     public Button upgradeDamageButton() {
         this.upgradeDamageButton = buttonFactory.createUpgradeButton(20, damageTexture, clickTexture, 660, Y_POS,
-                Cat::upgradeDamage);
+                ICat::upgradeDamage);
         return upgradeDamageButton;
     }
 
     public Button upgradeFireRateButton() {
         this.upgradeFireRateButton = buttonFactory.createUpgradeButton(20, fireRateTexture, clickTexture, 825, Y_POS,
-                Cat::upgradeFireRate);
+        ICat::upgradeFireRate);
         return upgradeFireRateButton;
     }
 
     public Button upgradeRangeButton() {
         this.upgradeRangeButton = buttonFactory.createUpgradeButton(20, rangeTexture, clickTexture, 990, Y_POS,
-                Cat::upgradeRange);
+        ICat::upgradeRange);
         return upgradeRangeButton;
     }
 
@@ -60,7 +60,7 @@ public class UpgradeButtons {
     }
 
     private void updateUpgradeButtonAppearances(Button button, String upgradeTexture) {
-        Cat selectedCat = model.getSelectedCat();
+        ICat selectedCat = model.getSelectedCat();
         TextureRegionDrawable newDrawable = null;
         if (selectedCat != null) {
 

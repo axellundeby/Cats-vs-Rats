@@ -8,10 +8,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
-import inf112.skeleton.app.model.entities.rat.Rat;
+import inf112.skeleton.app.model.entities.rat.IRat;
 
-public abstract class Cat {
-
+public abstract class Cat implements ICat{
     protected int strength;
     protected int range;
     private Vector2 pos;
@@ -19,7 +18,7 @@ public abstract class Cat {
     private int size;
     private int halfSize;
     private EnumMap<PictureSwapper, List<Texture>> textures = new EnumMap<>(PictureSwapper.class);
-    public PictureSwapper currentState = PictureSwapper.DEFAULT;
+    private PictureSwapper currentState = PictureSwapper.DEFAULT;
     protected float fireRate;
     private float attackTimer;
     private float attackImageTimer = 0;
@@ -56,36 +55,47 @@ public abstract class Cat {
         textures.put(PictureSwapper.ATTACK, new ArrayList<>(attackImages));
     }
 
+    @Override
+    public abstract void attack(LinkedList<IRat> rats);
+
+    @Override
+    public abstract void upgradeDamage();
+
+    @Override
+    public abstract void upgradeRange();
+
+    @Override
+    public abstract void upgradeFireRate();
+
+    @Override
+    public abstract void playAttackSound();
+
+    @Override
     public PictureSwapper getCurrentState() {
         return this.currentState;
     }
 
- 
+    @Override
     public int setUpgradeCounter(int upgradeCounter){
         return this.upgradeCounter = upgradeCounter;
     }
 
-     /**
-     * Checks if the cat can be further upgraded.
-     * @return true if upgrades are still possible, false otherwise.
-     */
+    @Override
     public boolean canUpgrade() {
         return upgradeCounter < MAX_UPGRADES;
     }
 
-    /**
-     * Returns the current number of upgrades.
-     * @return the current upgrade counter.
-     */
+    @Override
     public int getUpgradeCount() {
         return upgradeCounter;
     }
 
+    @Override
     public int getSize(){
         return size;
     }
 
-    
+    @Override
     public void upgradeTexture(){
         upgradeCounter++;
         if (upgradeCounter == 2) {
@@ -118,19 +128,12 @@ public abstract class Cat {
         }
     }
 
-      /**
-     * Triggers the attack image for the cat.
-     */
-    public void triggerAttackImage() {
+    protected void triggerAttackImage() {
         swapImage(PictureSwapper.ATTACK);
         attackImageTimer = ATTACKIMAGEDURATION;
     }
 
-    /**
-     * Updates the cat's animation based on the elapsed time.
-     *
-     * @param deltaTime The time elapsed since the last frame.
-     */
+    @Override
     public void updateAnimation(float deltaTime) {
         if (attackImageTimer > 0) {
             attackImageTimer -= deltaTime;
@@ -141,46 +144,17 @@ public abstract class Cat {
         updateAttackTimer(deltaTime);
     }
 
+    @Override
     public float getAttackImageTimer(){
         return attackImageTimer;
     }
 
+    @Override
     public float getAttackTimer(){
         return attackTimer;
     }
-
-
-    /**
-     * Attacks the specified rats.
-     *
-     * @param rats The rats to attack.
-     * @return A list of projectiles fired by the cat.
-     */
-    public abstract void attack(LinkedList<Rat> rats);
-
-     /**
-     * Upgrades the cat's damage.
-     */
-    public abstract void upgradeDamage();
-
-    /**
-     * Upgrades the cat's range.
-     */
-    public abstract void upgradeRange();
-
-    /**
-     * Upgrades the cat's fire rate.
-     */
-    public abstract void upgradeFireRate();
-
-
-    public abstract void playAttackSound();
-    /**
-     * Sets the cat's position.
-     *
-     * @param x The new x-coordinate of the cat.
-     * @param y The new y-coordinate of the cat.
-     */
+    
+    @Override
     public void setPos(float x, float y) {
         pos.x = x;
         pos.y = y;
@@ -188,29 +162,23 @@ public abstract class Cat {
         circleUpdater();
     }
 
-    /**
-     * Gets the cat's Circle for selection in-game
-     * @return A Circle-object surrounding the cat sprite
-     */
+    @Override
     public Circle getSelectionCircle(){
         return selectionCircle;
     }
 
+    @Override
     public Vector2 getLastTargetPosition() {
         return lastTargetPosition;
     }
 
+    @Override
     public void setLastTargetPosition(Vector2 lastTargetPosition) {
         this.lastTargetPosition = lastTargetPosition;
     }
    
-
-    /**
-     * Sets the cat's rotation to face the specified rat.
-     *
-     * @param target The rat that the cat should face.
-     */
-    public void setRotationToward(Rat target) {
+    @Override
+    public void setRotationToward(IRat target) {
         if (target != null) {
             float dx = target.getPosition().x - this.pos.x;
             float dy = target.getPosition().y - this.pos.y;
@@ -221,78 +189,47 @@ public abstract class Cat {
         }
     }
     
-
-    /**
-     * Returns the current rotation angle of the cat.
-     *
-     * @return The current rotation angle of the cat.
-     */
+    @Override
     public float getRotationAngle() {
         return currentRotationAngle;
     }
 
-    /**
-     * Updates the cat's range circle.
-     * The range circle is used to determine which rats are within the cat's attack range.
-     */
+    @Override
     public void circleUpdater() {
         this.rangeCircle = new Circle(pos, range);
         this.selectionCircle = new Circle(pos, halfSize);
     }
 
-
-    /**
-     * Sets the size of the cat.
-     *
-     * @param size The new size of the cat.
-     */
+    @Override
     public void setSize(int size) {
         this.size = size;
     }
 
 
-    /**
-     * Enum representing the possible states of the cat's image.
-     */
     public enum PictureSwapper {
         DEFAULT,
         ATTACK
     }
 
-     /**
-     * Updates the cat's attack timer based on the elapsed time.
-     *
-     * @param deltaTime The time elapsed since the last frame.
-     */
+    @Override
     public void updateAttackTimer(float deltaTime) {
         if (attackTimer > 0) {
             attackTimer -= deltaTime;
         }
     }
 
-    /**
-     * Returns whether the cat can attack.
-     *
-     * @return True if the cat can attack, false otherwise.
-     */
+    @Override
     public boolean canAttack() {
         return attackTimer <= 0;
     }
 
-    /**
-     * Resets the cat's attack timer.
-     */
+    @Override
     public void resetAttackTimer() {
         attackTimer = fireRate;
     }
 
-    /**
-     * Returns whether the specified rat is within the cat's range.
-     *
-     * @param target The rat to check.
-     * @return True if the rat is within the cat's range, false otherwise.
-     */
-    public boolean withinRange(Rat target) {
+    @Override
+    public boolean withinRange(IRat target) {
         if (target.getPosition() != null) {
             boolean isWithinRange = rangeCircle.contains(target.getPosition());
             if (!isWithinRange) {
@@ -304,85 +241,58 @@ public abstract class Cat {
         return false;
     }
     
-    
+    @Override
+    public void swapImage(PictureSwapper image) {
+        currentState = image;
+        List<Texture> stateTextures = textures.get(currentState);
+        Texture newTexture = stateTextures.get(Math.min(upgradeCounter, stateTextures.size() - 1));
+        sprite.setTexture(newTexture);
+        sprite.setOriginCenter();
+    }
 
-    /**
-     * Swaps the cat's image to the specified state.
-     *
-     * @param image The new state of the cat's image.
-     */
-   public void swapImage(PictureSwapper image) {
-    currentState = image;
-    List<Texture> stateTextures = textures.get(currentState);
-    Texture newTexture = stateTextures.get(Math.min(upgradeCounter, stateTextures.size() - 1));
-    sprite.setTexture(newTexture);
-    sprite.setOriginCenter();
-}
-
-    /**
-     * Returns the current texture of the cat.
-     *
-     * @return The current texture of the cat.
-     */
+    @Override
     public Texture getTexture() {
         List<Texture> stateTextures = textures.get(currentState);
         return stateTextures.get(Math.min(upgradeCounter, stateTextures.size() - 1));
     }
 
+    @Override
     public Texture getMenuTexture() {
         List<Texture> defaultTextures = textures.get(PictureSwapper.DEFAULT);
         return defaultTextures.get(0);
     }
 
-    /**
-     * Returns the sprite representing the cat.
-     *
-     * @return The sprite representing the cat.
-     */
+    @Override
     public Sprite getSprite() {
         return sprite;
     }
 
-     /**
-     * Returns the circle representing the cat's range.
-     *
-     * @return The circle representing the cat's range.
-     */
+    @Override
     public Circle getRangeCircle() {
         return rangeCircle;
     }
 
-    /**
-     * Returns the strength of the cat.
-     *
-     * @return The strength of the cat.
-     */
+    @Override
     public int getStrength() {
         return strength;
     }
-
+    
+    @Override
     public int getRange() {
         return range;
     }
 
+    @Override
     public float getFireRate() {
         return fireRate;
     }
 
-    /**
-     * Returns the position of the cat.
-     *
-     * @return The position of the cat.
-     */
+    @Override
     public Vector2 getPosition() {
         return pos;
     }
 
-    /**
-     * Returns the cost of the cat.
-     *
-     * @return The cost of the cat.
-     */
+    @Override
     public int getCost() {
         return cost;
     }

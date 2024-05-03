@@ -18,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
+import inf112.skeleton.app.model.entities.rat.IRat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import inf112.skeleton.app.view.GameResourceFactory;
 
@@ -33,7 +34,7 @@ public class ShotgunCatTest {
     @Mock
     private Sound mockSound; 
 
-    private LinkedList<Rat> rats;
+    private LinkedList<IRat> rats;
 
     @BeforeEach
     void setup() {

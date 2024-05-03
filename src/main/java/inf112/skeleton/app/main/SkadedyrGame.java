@@ -27,7 +27,7 @@ public class SkadedyrGame implements ApplicationListener{
             
         };
         this.model  = new SkadedyrModel(factory, timeSource);
-        this.controller = new SkadedyrController(model,factory,timeSource);
+        this.controller = new SkadedyrController(model,factory);
         this.view = new SkadedyrView(model);
        
 
@@ -36,7 +36,6 @@ public class SkadedyrGame implements ApplicationListener{
     @Override
     public void create() {
         controller.startTimer();
-        //timeSource.getDeltaTime();
         view.create();
         model.initCatMenu();
     }

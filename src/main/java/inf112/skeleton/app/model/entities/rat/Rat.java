@@ -8,28 +8,23 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.EnumMap;
 
 public class Rat implements IRat {
-    private float speed;
     private Vector2 pos;
     private int health;
     private Rectangle spriteRect;
-    private float secs;
     private Integer bounty;
     private Integer points;
     private boolean rewardClaimed = false;
     private boolean exited = false;
-    public float coinVisibleTime = 0f;
+    private float coinVisibleTime = 0f;
     private Sprite sprite;
     private boolean isFrozen = false;
-    public ImageSwapper currentState = ImageSwapper.ALIVE;
+    private ImageSwapper currentState = ImageSwapper.ALIVE;
     private EnumMap<ImageSwapper, Texture> textures = new EnumMap<>(ImageSwapper.class);
-    int halfsize = 25;
+    private int halfsize = 25;
     private CatmullRomSpline<Vector2> path;
-    private float progress;
     private Vector2[] controlPoints;
     private Direction direction = Direction.RIGHT;
-    public int currentControlPoint = 0; 
-    private float freezeTimer = 0;
-    private static final float RAT_FREEZE_DELAY = 20;
+    private int currentControlPoint = 0; 
     private float originalSpeed;
     private float effectiveSpeed;
 
@@ -37,7 +32,6 @@ public class Rat implements IRat {
 
     public Rat(int health, float speed, Texture texture, Integer bounty, Integer points, Texture frozenTexture, int halfsize, Texture deadTexture) {
         this.health = health;
-        this.speed = speed;
         this.points = points;
         this.bounty = bounty;
         createPath();
@@ -45,7 +39,6 @@ public class Rat implements IRat {
         this.sprite = new Sprite(texture);
         this.sprite.setSize(halfsize * 2, halfsize * 2);
         this.sprite.setPosition(pos.x - halfsize, pos.y - halfsize);
-        this.secs = 0;
         textures.put(ImageSwapper.ALIVE, texture);
         textures.put(ImageSwapper.FROZEN, frozenTexture);
         textures.put(ImageSwapper.DEAD, deadTexture);
@@ -55,83 +48,27 @@ public class Rat implements IRat {
 
     }
 
-    public void moveAlongPath(float delta) {
-        if (currentControlPoint < controlPoints.length - 2) {
-            Vector2 currentPoint = controlPoints[currentControlPoint];
-            Vector2 nextPoint = controlPoints[currentControlPoint + 1];
-            Vector2 directionToNextPoint = new Vector2(nextPoint).sub(currentPoint).nor();
-            Vector2 movementThisFrame = new Vector2(directionToNextPoint).scl(effectiveSpeed * delta);
-            pos.add(movementThisFrame);
-            if (currentPoint.dst(pos) >= currentPoint.dst(nextPoint)) {
-                pos.set(nextPoint);
-                currentControlPoint++;
-            }
-            sprite.setPosition(pos.x - halfsize, pos.y - halfsize); 
-            spriteRect.setPosition(pos.x - halfsize, pos.y - halfsize); 
-            if (pos.epsilonEquals(controlPoints[currentControlPoint], 1.0f)) {
-                updateDirection(controlPoints[currentControlPoint], controlPoints[currentControlPoint + 1]);
-                rotateImage();
-            }
-        }
-    }
-
-    public int getCurrentControlPoint() {
-        return currentControlPoint;
-    }
-
-    public void setEffectiveSpeed(float newSpeed) {
-        this.effectiveSpeed = newSpeed;
-    }
-
-    public void createPath() {
-        controlPoints = new Vector2[] {
-            new Vector2(-10,290),
-            new Vector2(8,290),
-            new Vector2(200,290),
-            new Vector2(200,422),
-            new Vector2(85,422),
-            new Vector2(85,616),
-            new Vector2(106,616),
-            new Vector2(435,620),
-            new Vector2(435,290),
-            new Vector2(654,290),
-            new Vector2(654,360),
-            new Vector2(875,360),
-            new Vector2(875,490),
-            new Vector2(660,490),
-            new Vector2(660,610),
-            new Vector2(1080,610),
-            new Vector2(1080,310),
-            new Vector2(1300,310),
-            new Vector2(1500,310),
-        };
-        this.path = new CatmullRomSpline<>(controlPoints, false);
-    }
-
+    @Override
     public Vector2[] getControlPoints() {
         return controlPoints;
     }
 
+    @Override
     public CatmullRomSpline<Vector2> getPath() {
         return path;
     }
 
-
-    private void updateDirection(Vector2 current, Vector2 next) {
-        if (current.x > 1200) {
-            direction = Direction.OUT;
-        } else if (next.x > current.x) {
-            direction = Direction.RIGHT;
-        } else if (next.x < current.x) {
-            direction = Direction.LEFT;
-        } else if (next.y > current.y) {
-            direction = Direction.UP;
-        } else if (next.y < current.y) {
-            direction = Direction.DOWN;
-        }
+    @Override
+    public int getCurrentControlPoint() {
+        return currentControlPoint;
     }
-    
 
+    @Override
+    public void setEffectiveSpeed(float newSpeed) {
+        this.effectiveSpeed = newSpeed;
+    }
+
+    @Override
     public Direction getDirection(){
         return direction;
     }
@@ -156,13 +93,6 @@ public class Rat implements IRat {
         this.exited = true;
     }
 
-    private enum ImageSwapper {
-        ALIVE,
-        FROZEN,
-        DEAD;
-    }
-
-   
 
     @Override
     public int getBounty() {
@@ -188,6 +118,134 @@ public class Rat implements IRat {
         return spriteRect;
     }
 
+
+    @Override
+    public void setDirection(Direction dir) {
+        this.direction = dir;
+    }
+
+    @Override
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    @Override
+    public float getCoinVisibleTime() {
+        return coinVisibleTime;
+    }
+
+    @Override
+    public boolean isKilled() {
+        return health <= 0;
+    }
+
+    @Override
+    public int getHealth() {
+        return health;
+    }
+
+    @Override
+    public Vector2 getPosition() {
+        return pos;
+    }
+
+    @Override
+    public boolean isFrozen() {
+        return isFrozen;
+    }
+    @Override
+    public void setFrozen() {
+        isFrozen = true;
+    }
+
+    @Override
+    public float getEffectiveSpeed() {
+       return effectiveSpeed;
+    }
+    @Override
+    public float getOriginalSpeed() {
+        return originalSpeed;
+    }
+
+    @Override
+    public void setControlPoint(int controlPoint) {
+        this.currentControlPoint = controlPoint;
+    }
+
+   @Override
+    public void moveAlongPath(float delta) {
+        if (currentControlPoint < controlPoints.length - 2) {
+            Vector2 currentPoint = controlPoints[currentControlPoint];
+            Vector2 nextPoint = controlPoints[currentControlPoint + 1];
+            Vector2 directionToNextPoint = new Vector2(nextPoint).sub(currentPoint).nor();
+            Vector2 movementThisFrame = new Vector2(directionToNextPoint).scl(effectiveSpeed * delta);
+            pos.add(movementThisFrame);
+            if (currentPoint.dst(pos) >= currentPoint.dst(nextPoint)) {
+                pos.set(nextPoint);
+                currentControlPoint++;
+                updateDirection(currentPoint, nextPoint);
+            }
+
+            if (currentControlPoint == controlPoints.length - 1) {
+                updateDirection(currentPoint, nextPoint);
+            }
+            sprite.setPosition(pos.x - halfsize, pos.y - halfsize); 
+            spriteRect.setPosition(pos.x - halfsize, pos.y - halfsize); 
+            if (pos.epsilonEquals(controlPoints[currentControlPoint], 1.0f)) {
+                updateDirection(controlPoints[currentControlPoint], controlPoints[currentControlPoint + 1]);
+                rotateImage();
+            }
+        }
+    }
+
+    @Override
+    public void createPath() {
+        controlPoints = new Vector2[] {
+            new Vector2(-10,290),
+            new Vector2(8,290),
+            new Vector2(200,290),
+            new Vector2(200,422),
+            new Vector2(85,422),
+            new Vector2(85,616),
+            new Vector2(106,616),
+            new Vector2(435,620),
+            new Vector2(435,290),
+            new Vector2(654,290),
+            new Vector2(654,360),
+            new Vector2(875,360),
+            new Vector2(875,490),
+            new Vector2(660,490),
+            new Vector2(660,610),
+            new Vector2(1080,610),
+            new Vector2(1080,310),
+            new Vector2(1300,310),
+            new Vector2(1500,310),
+        };
+        this.path = new CatmullRomSpline<>(controlPoints, false);
+    }
+
+  
+    private void updateDirection(Vector2 current, Vector2 next) {
+        if (currentControlPoint == controlPoints.length - 1) {
+            direction = Direction.OUT;
+        } else if (next.x > current.x) {
+            direction = Direction.RIGHT;
+        } else if (next.x < current.x) {
+            direction = Direction.LEFT;
+        } else if (next.y > current.y) {
+            direction = Direction.UP;
+        } else if (next.y < current.y) {
+            direction = Direction.DOWN;
+        }
+    }
+    
+
+    private enum ImageSwapper {
+        ALIVE,
+        FROZEN,
+        DEAD;
+    }
+
     @Override
     public void takeDamage(int damage) {
         health -= damage;
@@ -205,15 +263,9 @@ public class Rat implements IRat {
         OUT,
     }
 
-    public void setDirection(Direction dir) {
-        this.direction = dir;
-    }
-
     private int getRotationAngle() {
         Direction dir = getDirection();
         switch (dir) {
-            case UP:
-                return 0;
             case DOWN:
                 return 180;
             case LEFT:
@@ -226,38 +278,25 @@ public class Rat implements IRat {
 
     }
 
-    @Override
-    public void rotateImage() {
+
+    private void rotateImage() {
         int angle = getRotationAngle();
         this.sprite.setOriginCenter();
         this.sprite.setRotation(angle);
     }
 
-   
-    public Sprite getSprite() {
-        return sprite;
-    }
 
-    public void killedAnimation() {
+    private void killedAnimation() {
         swapImage(ImageSwapper.DEAD);
-        health = 0;
-        speed = 0;
+        effectiveSpeed = 0;
         this.sprite.setTexture(getTexture());
     }
 
+    @Override
     public void updateCoinVisibility(float deltaTime) {
         if (isKilled()) {
             coinVisibleTime += deltaTime;
         }
-    }
-
-    public float getCoinVisibleTime() {
-        return coinVisibleTime;
-    }
-
-    @Override
-    public boolean isKilled() {
-        return health <= 0;
     }
 
     @Override
@@ -279,58 +318,20 @@ public class Rat implements IRat {
         spriteRect.y = pos.y - halfsize;
     }
 
-    @Override
-    public int getHealth() {
-        return health;
-    }
 
     @Override
-    public Vector2 getPosition() {
-        return pos;
-    }
-
-    @Override
-    public void freeze(float deltaTime) {
-        if (!isFrozen) {
-            effectiveSpeed = originalSpeed - 15;  
-            swapImage(ImageSwapper.FROZEN);
-            this.sprite.setTexture(getTexture());
-            isFrozen = true;
-        }
-        freezeTimer += deltaTime;
-        if (freezeTimer > RAT_FREEZE_DELAY) {
-            unfreeze(); 
-        }
-    }
-
-    public void setFreezeTimer(float time) {
-        freezeTimer = time;
-    }
-
-    public float getFreezeTimer() {
-        return freezeTimer;
+    public void freeze() {
+        effectiveSpeed = originalSpeed - 15;  
+        swapImage(ImageSwapper.FROZEN);
+        this.sprite.setTexture(getTexture());
     }
     
-    private void unfreeze() {
+    @Override
+    public void unfreeze() {
         isFrozen = false;
         effectiveSpeed = originalSpeed;
         swapImage(ImageSwapper.ALIVE);
         this.sprite.setTexture(getTexture());
-        freezeTimer = 0;
     }
     
-
-    public boolean isFrozen() {
-        return isFrozen;
-    }
-    public void setFrozen() {
-        isFrozen = true;
-    }
-
-    public float getEffectiveSpeed() {
-       return effectiveSpeed;
-    }
-    public float getOriginalSpeed() {
-        return originalSpeed;
-    }
 }

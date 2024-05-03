@@ -6,10 +6,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-
 import inf112.skeleton.app.model.SkadedyrModel;
-import inf112.skeleton.app.model.entities.cat.Cat;
-import inf112.skeleton.app.model.entities.rat.Rat;
+import inf112.skeleton.app.model.entities.cat.ICat;
+import inf112.skeleton.app.model.entities.rat.IRat;
 import inf112.skeleton.app.view.states.GameStateManager;
 import inf112.skeleton.app.view.states.MenuState;
 
@@ -50,10 +49,10 @@ public class SkadedyrView {
         batch.dispose();
         font.dispose();
 
-        for (Cat cat : model.getCats()) {
+        for (ICat cat : model.getCats()) {
             cat.getTexture().dispose();
         }
-        for (Rat rat : model.getRats()) {
+        for (IRat rat : model.getRats()) {
             rat.getTexture().dispose();
         }
         shapeRenderer.dispose();

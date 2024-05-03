@@ -3,8 +3,7 @@ package inf112.skeleton.app.model.catmenu;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-
-import inf112.skeleton.app.model.entities.cat.Cat;
+import inf112.skeleton.app.model.entities.cat.ICat;
 /**
  * Interface for a menu that allows the player to select a cat.
  */
@@ -47,7 +46,7 @@ public interface ICatMenu {
      *
      * @return The currently selected cat.
      */
-    Cat getSelectedCat();
+    ICat getSelectedCat();
 
     /**
      * Returns the x-coordinate of the cat menu.

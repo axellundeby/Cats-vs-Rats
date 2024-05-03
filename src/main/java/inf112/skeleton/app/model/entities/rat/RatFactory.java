@@ -8,7 +8,7 @@ public class RatFactory {
     private float spawnTimer = 5;
     private int ratsSpawned = 0;
     private static final int RAT_SPAWN_DELAY = 10; 
-    private ArrayList<Rat> rats = new ArrayList<Rat>();
+    private ArrayList<IRat> rats = new ArrayList<IRat>();
     private Random random = new Random();
     private GameResourceFactory resourceFactory;
 
@@ -20,7 +20,7 @@ public class RatFactory {
      * spawns rats with space between them
      * @param deltaTime
      */
-    public ArrayList<Rat> updateRatFactory(float deltaTime, Integer level) {
+    public ArrayList<IRat> updateRatFactory(float deltaTime, Integer level) {
         spawnTimer += deltaTime;
         if (spawnTimer > RAT_SPAWN_DELAY && ratsSpawned < calculateRatsForRound(level)) {
             spawnTimer = 0; 
@@ -30,10 +30,21 @@ public class RatFactory {
         return rats;
     }
 
+    /**
+     * Resets the rat factory
+     */
     public void resetRatFactory() {
         rats.clear();
         ratsSpawned = 0;
         spawnTimer = 5;
+    }
+
+
+    /**
+     * @return the rats
+     */
+    public ArrayList<IRat> getRats() {
+        return rats;
     }
 
     /**
@@ -45,18 +56,15 @@ public class RatFactory {
         return 1 + (round * 5);
     }
 
-    private Rat ratVariation(int level) {
-        // Choose a rat variation within the level
-        int type = random.nextInt(100); // Random number between 0 and 99
+    private IRat ratVariation(int level) {
+        int type = random.nextInt(100); 
     
-        Rat newRat;
+        IRat newRat;
         if (level <= 2) {
-            newRat = new BasicRat(resourceFactory); // Only BasicRat at the first levels
+            newRat = new BasicRat(resourceFactory); 
         } else if (level <= 4) {
-            // 80% chance for BasicRat, 20% for SpeedRat
             newRat = (type < 80) ? new BasicRat(resourceFactory) : new FastRat(resourceFactory);
         } else if (level <= 6) {
-            // 50% BasicRat, 30% SpeedRat, 20% StrongRat
             if (type < 50) newRat = new BasicRat(resourceFactory);
             else if (type < 80) newRat = new FastRat(resourceFactory);
             else newRat = new StrongRat(resourceFactory);

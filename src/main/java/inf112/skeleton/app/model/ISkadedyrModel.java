@@ -3,8 +3,9 @@ package inf112.skeleton.app.model;
 import java.util.ArrayList;
 
 import inf112.skeleton.app.model.catmenu.CatMenu;
-import inf112.skeleton.app.model.entities.cat.Cat;
-import inf112.skeleton.app.model.entities.rat.Rat;
+import inf112.skeleton.app.model.entities.cat.ICat;
+import inf112.skeleton.app.model.entities.rat.IRat;
+import inf112.skeleton.app.view.states.State;
 
 public interface ISkadedyrModel {
     
@@ -12,13 +13,13 @@ public interface ISkadedyrModel {
      * Gets all cats currently in the game
      * @return an ArrayList of Cat objects
      */
-    ArrayList<Cat> getCats();
+    ArrayList<ICat> getCats();
 
     /**
      * Gets all currently alive rats in the game
      * @return an ArrayList of Rat objects
      */
-    ArrayList<Rat> getRats();
+    ArrayList<IRat> getRats();
 
  
     /**
@@ -105,19 +106,124 @@ public interface ISkadedyrModel {
     boolean isGameWon();
 
 
-      /**
+    /**
      * Checks if the game is over.
      * @return a boolean value - true if the game is over, false otherwise.
      */
     boolean isGameOver();
 
+    /**
+     * Checks if the help menu is open.
+     */
+    void initCatMenu();
 
 
+    /**
+     * 
+     * @param newState the new state of the game
+     * sets the state of the game
+     */
+    void setState(State newState);
+
+    /**
+     * 
+     * @return the state of the game
+     */
+    State getState();
+
+    /**
+     * @return info about the game based on the game stiuation
+     */
+    String nextWaveText();
+
+    /**
+     * 
+     * @return if an upgrade error has occured then true 
+     */
+    boolean pressedUppgradeButton();
+
+    /**
+     * 
+     * @return true if an error was detected while placing a cat, false otherwise
+     */
+    boolean triendToAddCat();
 
 
+    /**
+     * 
+     * @return the error message if an error was detected while upgrading a cat
+     */
+    String uppgradeErrorText();
+
+    /**
+     * 
+     * @return the error message if an error was detected while placing a cat
+     */
+    String setErrorText(); 
+    
+    
+    /**
+     * @return a list of all alive rats
+     */
+    ArrayList<IRat> getAliveRats();
+
+    
+    /**
+     * @param rat the rat to be added
+     * adds a rat to the aliveRats list
+     */
+    void addRat(IRat rat); 
+
+    /**
+     * 
+     * @return true if the game is speed up, false otherwise
+     */
+    boolean isSpeedUp();
+
+    /**
+     * Sets the level of the game.
+     * @param levelSetter the new level to set.
+     */
+    void setLevel(int levelSetter);
+
+    /**
+     * Toggles the help status of the game and sets the start game status to false.
+     */
+    void setHelp();
+
+    /**
+     * Returns the help status of the game.
+     * @return the help status of the game.
+     */
+    boolean getHelp();
+
+    /**
+     * Toggles the start game status and sets the help status to false.
+     */
+    void setStartGame();
+
+    /**
+     * Returns the start game status.
+     * @return the start game status.
+     */
+    boolean getStartGame();
 
 
+    /**
+     * @return the selected cat
+     */
+    ICat getSelectedCat(); 
 
 
+    /**
+     * @param cat the cat to be selected
+     * @return the selected cat
+     */
+    ICat setSelectedCat(ICat cat);
+
+    /**
+     * adds a cat to the cats list.
+     */
+    void addCat(ICat cat);
 
 }

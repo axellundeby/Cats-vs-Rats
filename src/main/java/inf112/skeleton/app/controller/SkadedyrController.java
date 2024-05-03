@@ -5,25 +5,21 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
-import inf112.skeleton.app.model.SkadedyrModel;
+import inf112.skeleton.app.model.ISkadedyrModel;
 import inf112.skeleton.app.model.entities.cat.BasicCat;
-import inf112.skeleton.app.model.entities.cat.Cat;
 import inf112.skeleton.app.model.entities.cat.FreezeCat;
+import inf112.skeleton.app.model.entities.cat.ICat;
 import inf112.skeleton.app.model.entities.cat.ShotgunCat;
 import inf112.skeleton.app.view.GameResourceFactory;
-import inf112.skeleton.app.view.TimeSource;
 
 public class SkadedyrController {
-    private final SkadedyrModel model;
+    private final ISkadedyrModel model;
     private Task currentClockTickTask = null;
     private final GameResourceFactory resourceFactory;
-    private TimeSource timeSource;
 
-    public SkadedyrController(SkadedyrModel model, GameResourceFactory resourceFactory, TimeSource timeSource) {
+    public SkadedyrController(ISkadedyrModel model, GameResourceFactory resourceFactory) {
         this.model = model;
         this.resourceFactory = resourceFactory;
-        this.timeSource = timeSource;
-        
     }
 
     /**
@@ -57,18 +53,18 @@ public class SkadedyrController {
     }
 
     private void newCat(float mouseX, float mouseY) {
-        Cat selectedTemplate = model.getCatMenu().getSelectedCat();
+        ICat selectedTemplate = model.getCatMenu().getSelectedCat();
         if (selectedTemplate == null) {
             model.pressedUppgradeButton();
             return; 
         }
-        Cat newCat = null;
+        ICat newCat = null;
         if (selectedTemplate instanceof BasicCat) {
             newCat = new BasicCat(resourceFactory);
         } else if (selectedTemplate instanceof ShotgunCat) {
             newCat = new ShotgunCat(resourceFactory);
         } else if (selectedTemplate instanceof FreezeCat) {
-            newCat = new FreezeCat(resourceFactory, timeSource);
+            newCat = new FreezeCat(resourceFactory);
         }
     
         if (newCat != null) {
@@ -85,7 +81,7 @@ public class SkadedyrController {
     
     private void selectCat(Vector2 mouse) {
         if (mouse.y < 200) return;
-        for (Cat cat : model.getCats()) {
+        for (ICat cat : model.getCats()) {
             if (cat.getSelectionCircle().contains(mouse)) {
                 model.setSelectedCat(cat);
                 return;

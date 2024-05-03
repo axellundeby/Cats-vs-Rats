@@ -172,7 +172,7 @@ public class RatTest {
     void testImageDirectionAndRotationForRightMovment(){
         int startPointIndex = 0; 
         rat.setPosition(controlPoints[startPointIndex]);
-        rat.currentControlPoint = startPointIndex;
+        rat.setControlPoint(startPointIndex);
         rat.setEffectiveSpeed(10);
         float deltaTime = 0.1f; 
         rat.moveAlongPath(deltaTime);
@@ -189,7 +189,7 @@ public class RatTest {
     void testImageDirectionAndRotationForUpMovment(){
         int startPointIndex = 2; 
         rat.setPosition(controlPoints[startPointIndex]);
-        rat.currentControlPoint = startPointIndex;
+        rat.setControlPoint(startPointIndex);
         rat.setEffectiveSpeed(10);
         float deltaTime = 0.1f; 
         rat.moveAlongPath(deltaTime);
@@ -205,7 +205,7 @@ public class RatTest {
     void testImageDirectionAndRotationForLeftMovment(){
         int startPointIndex = 3; 
         rat.setPosition(controlPoints[startPointIndex]);
-        rat.currentControlPoint = startPointIndex;
+        rat.setControlPoint(startPointIndex);
         rat.setEffectiveSpeed(10);
         float deltaTime = 0.1f; 
         rat.moveAlongPath(deltaTime);
@@ -221,7 +221,7 @@ public class RatTest {
     void testImageDirectionAndRotationForDownMovment(){
         int startPointIndex = 7; 
         rat.setPosition(controlPoints[startPointIndex]);
-        rat.currentControlPoint = startPointIndex;
+        rat.setControlPoint(startPointIndex);
         rat.setEffectiveSpeed(10);
         float deltaTime = 0.1f; 
         rat.moveAlongPath(deltaTime);
@@ -287,21 +287,6 @@ public class RatTest {
     void testTakeDamage(){
         rat.takeDamage(10);
         assertEquals(90, rat.getHealth());
-    }
-
-    @Test
-    void testRotateImageDown() {
-        rat.setDirection(Direction.DOWN);
-        rat.rotateImage();
-        assertEquals(180, rat.getSprite().getRotation());
-    }
-
-
-    @Test
-    void testRotateImageUp() {
-        rat.setDirection(Direction.UP);
-        rat.rotateImage();
-        assertEquals(0, rat.getSprite().getRotation());
     }
 
 
@@ -396,47 +381,12 @@ public class RatTest {
         assertArrayEquals(controlPoints, rat.getControlPoints());
     }
 
-    @Test
-    void testRotationAngleForOutDirection() {
-        rat.setDirection(Direction.OUT);
-        rat.rotateImage(); 
-        assertEquals(0, rat.getSprite().getRotation());
-    }
-
-    @Test
-    void testFreezing() {
-        assertFalse(rat.isFrozen());
-        rat.freeze(5); 
-        assertEquals(frozenTextureMock, rat.getTexture());
-        assertEquals(rat.getOriginalSpeed() - 15 ,rat.getEffectiveSpeed());
-        assertTrue(rat.isFrozen());
-        rat.setFreezeTimer(1000);
-        rat.freeze(0);
-        assertFalse(rat.isFrozen());
-        assertEquals(aliveTextureMock, rat.getTexture());
-    }
 
     @Test
     void testSetFreeze(){
         assertFalse(rat.isFrozen());
         rat.setFrozen();
         assertTrue(rat.isFrozen());
-    }
-
-    @Test 
-    void testFreezingTime() {
-        rat.freeze(7);
-        assertEquals(7, rat.getFreezeTimer());
-    }
-
-    @Test
-    void getFreezeTimerTest() {
-        assertEquals(0, rat.getFreezeTimer());
-    }
-
-    @Test
-    void testUnfrezzeCallFromFreezeMethod(){
-        rat.freeze(5);
     }
 
     @Test 
@@ -448,6 +398,21 @@ public class RatTest {
     void getCurrentControlPointTest(){
         assertEquals(0, rat.getCurrentControlPoint());
     }
+
+    @Test
+    void setControlPointTest(){
+        rat.setControlPoint(5);
+        assertEquals(5, rat.getCurrentControlPoint());
+    }
+
+    @Test
+    void unfreezeTest(){
+        rat.setFrozen();
+        assertTrue(rat.isFrozen());
+        rat.unfreeze();
+        assertFalse(rat.isFrozen());
+    }
+
 
     
 }

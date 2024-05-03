@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import inf112.skeleton.app.model.entities.cat.Cat.PictureSwapper;
+import inf112.skeleton.app.model.entities.rat.IRat;
 import inf112.skeleton.app.model.entities.rat.Rat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -39,8 +40,8 @@ public class TestCat {
     @Mock
     private List<Texture>  attacksTextureMock;
     private Cat cat;   
-    private Rat rat;
-    private LinkedList<Rat> rats = new LinkedList<>();
+    private IRat rat;
+    private LinkedList<IRat> rats = new LinkedList<>();
     private int range;
 
 
@@ -366,38 +367,12 @@ public class TestCat {
         assertEquals(selectionCircle , cat.getSelectionCircle());
     }
 
-
-
-
-
-
-
-
-  
-    
-   
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
+    @Test
+    void canUpgradeTest(){
+        assertTrue(cat.canUpgrade());
+        cat.setUpgradeCounter(4);
+        assertFalse(cat.canUpgrade());
+    }
     
 
 }
