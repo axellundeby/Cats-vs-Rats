@@ -21,8 +21,8 @@ public class SkadedyrModel implements ISkadedyrModel {
     private RatFactory ratFactory;
     private int lives;
     private int money;
-    private int points = 0;
-    private int level = 0;
+    private int points;
+    private int level;
     private boolean isPaused;
     private float intervalSeconds = (float) 0.05;
     private CatMenu catMenu;
@@ -65,6 +65,8 @@ public class SkadedyrModel implements ISkadedyrModel {
         isPaused = true;
         intervalSeconds = 0.05f;
         speedUp = false;
+        level = 0;
+        points = 0;
     }
 
     private void removeAllRats() {

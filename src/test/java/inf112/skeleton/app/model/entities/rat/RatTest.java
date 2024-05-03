@@ -413,6 +413,13 @@ public class RatTest {
         assertFalse(rat.isFrozen());
     }
 
+    @Test
+    void setCounted(){
+        assertFalse(rat.isCounted());
+        rat.setCounted(true);
+        assertTrue(rat.isCounted());
+    }
+
 
     
 }

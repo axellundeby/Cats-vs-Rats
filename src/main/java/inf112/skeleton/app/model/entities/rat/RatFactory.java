@@ -38,6 +38,10 @@ public class RatFactory {
         spawnTimer = 5;
     }
 
+    public void removeRats() {
+        rats.clear();
+    }
+
 
     /**
      * @return the rats
