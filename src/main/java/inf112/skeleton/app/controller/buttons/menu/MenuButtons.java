@@ -7,9 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import inf112.skeleton.app.controller.buttons.ButtonFactory;
 import inf112.skeleton.app.model.SkadedyrModel;
+import inf112.skeleton.app.view.states.GameOverState;
 import inf112.skeleton.app.view.states.HelpState;
 import inf112.skeleton.app.view.states.MenuState;
 import inf112.skeleton.app.view.states.PlayState;
+import inf112.skeleton.app.view.states.WinState;
 
 public class MenuButtons implements IMenuButtons{
     private SkadedyrModel model;
@@ -61,8 +63,15 @@ public class MenuButtons implements IMenuButtons{
 
     @Override
     public Button exitButton() {
+        if (model.getState() instanceof PlayState) {
+            MENU_BUTTONS_X_POS = 500;
+            MENU_BUTTONS_Y_POS = 80;
+        } else {
+            MENU_BUTTONS_X_POS = 10;
+            
+        }
         this.exitButton = buttonFactory.createMenuButton("buttons_game/Spill_Exit.png", "buttons_game/Spill_Exit.png",
-                10, MENU_BUTTONS_Y_POS, () -> model.exit());
+                MENU_BUTTONS_X_POS, MENU_BUTTONS_Y_POS, () -> model.exit());
         return exitButton;
     }
 

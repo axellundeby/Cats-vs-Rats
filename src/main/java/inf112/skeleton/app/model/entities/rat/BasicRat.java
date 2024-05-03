@@ -9,7 +9,7 @@ public class BasicRat extends Rat {
         70, 
         20, 
         resourceFactory.getTexture("rats/Spill_Rotte1.png"),
-        200, 
+        100, 
         1, 
         resourceFactory.getTexture("rats/Spill_Rotte1_freezed.png"),
         40, 

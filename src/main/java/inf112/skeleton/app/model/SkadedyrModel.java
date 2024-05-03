@@ -60,7 +60,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         aliveRats.clear();
         newRats.clear();
         ratFactory.resetRatFactory();
-        money = 10000;
+        money = 400;
         lives = 5;
         isPaused = true;
         intervalSeconds = 0.05f;
@@ -334,7 +334,7 @@ public class SkadedyrModel implements ISkadedyrModel {
 
     @Override
     public boolean isGameWon() {
-        return level == 10;
+        return level == 8;
     }
 
     @Override

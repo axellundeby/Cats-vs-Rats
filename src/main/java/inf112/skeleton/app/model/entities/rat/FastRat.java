@@ -8,7 +8,7 @@ public class FastRat extends Rat {
         super(70, 
         40, 
         resourceFactory.getTexture("rats/Spill_Rotte2.png"),
-        300,
+        200,
         2,
         resourceFactory.getTexture("rats/Spill_Rotte2_freezed.png"),
         35, 

@@ -36,21 +36,21 @@ public class UpgradeButton implements IUpgradeButtons {
 
     @Override
     public Button upgradeDamageButton() {
-        this.upgradeDamageButton = buttonFactory.createUpgradeButton(20, damageTexture, clickTexture, 660, Y_POS,
+        this.upgradeDamageButton = buttonFactory.createUpgradeButton(100, damageTexture, clickTexture, 660, Y_POS,
                 ICat::upgradeDamage);
         return upgradeDamageButton;
     }
 
     @Override
     public Button upgradeFireRateButton() {
-        this.upgradeFireRateButton = buttonFactory.createUpgradeButton(20, fireRateTexture, clickTexture, 825, Y_POS,
+        this.upgradeFireRateButton = buttonFactory.createUpgradeButton(100, fireRateTexture, clickTexture, 825, Y_POS,
         ICat::upgradeFireRate);
         return upgradeFireRateButton;
     }
 
     @Override
     public Button upgradeRangeButton() {
-        this.upgradeRangeButton = buttonFactory.createUpgradeButton(20, rangeTexture, clickTexture, 990, Y_POS,
+        this.upgradeRangeButton = buttonFactory.createUpgradeButton(100, rangeTexture, clickTexture, 990, Y_POS,
         ICat::upgradeRange);
         return upgradeRangeButton;
     }
