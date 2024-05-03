@@ -14,6 +14,8 @@ import inf112.skeleton.app.model.entities.rat.RatFactory;
 import java.util.List;
 import inf112.skeleton.app.view.GameResourceFactory;
 import inf112.skeleton.app.view.TimeSource;
+import inf112.skeleton.app.view.states.PlayState;
+import inf112.skeleton.app.view.states.State;
 
 public class SkadedyrModel implements ISkadedyrModel {
     private ArrayList<ICat> cats = new ArrayList<>();

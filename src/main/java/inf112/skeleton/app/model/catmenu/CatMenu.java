@@ -36,7 +36,7 @@ public class CatMenu implements ICatMenu{
     
     @Override
     public void init(){
-        this.coinSackTexture = new Texture(Gdx.files.internal("buttons_game/noMoney.png"));
+        this.coinSackTexture = resourceFactory.getTexture("buttons_game/noMoney.png");
         availableCatsList.add(new BasicCat(resourceFactory));
         availableCatsList.add(new FreezeCat(resourceFactory));
         availableCatsList.add(new ShotgunCat(resourceFactory));
@@ -103,5 +103,14 @@ public class CatMenu implements ICatMenu{
     @Override
     public float getY() {
         return menuRect.y;
+    }
+
+    /**
+     * Simply adds a cat to the buy menu
+     * @param cat to add 
+     */
+    public void addCat(Cat cat){
+        availableCatsList.add(cat);
+        catsMap.put(cat, new Rectangle(0, 0, 10, 10));
     }
 }
