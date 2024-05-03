@@ -24,13 +24,11 @@ Vi har ingen kjente feil på nåværende tidspunkt.
 * Krever Java 21 eller senere
 
 ### Credits
-Fabian Christensen - Grafikk
+**Fabian Christensen** - Grafikk
 
-Fart sound:                         https://freesound.org/people/Jagadamba/sounds/253801/
-Coin sound:                         https://freesound.org/people/Valenspire/sounds/699502/
-Ice sound:                          https://pixabay.com/sound-effects/ice-cracking-field-recording-06-139709/
-HP sound: "Retro arcade game over"  https://mixkit.co/free-sound-effects/lose/   
-Cashier sound                       https://pixabay.com/sound-effects/cash-register-purchase-87313/
-Gunshot sound:                      https://pixabay.com/sound-effects/9mm-pistol-shot-6349/
-
-
+- Fart sound: [Freesound - Jagadamba](https://freesound.org/people/Jagadamba/sounds/253801/)
+- Coin sound: [Freesound - Valenspire](https://freesound.org/people/Valenspire/sounds/699502/)
+- Ice sound: [Pixabay](https://pixabay.com/sound-effects/ice-cracking-field-recording-06-139709/)
+- HP sound: "Retro arcade game over" [Mixkit](https://mixkit.co/free-sound-effects/lose/)
+- Cashier sound: [Pixabay](https://pixabay.com/sound-effects/cash-register-purchase-87313/)
+- Gunshot sound: [Pixabay](https://pixabay.com/sound-effects/9mm-pistol-shot-6349/)
