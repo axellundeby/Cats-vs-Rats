@@ -41,6 +41,7 @@ public class SkadedyrModel implements ISkadedyrModel {
     private TimeSource timeSource;
     private float freezeTimer = 0;
     private static final float RAT_FREEZE_DELAY = 100;
+    private int killedRats = 0;
 
 
     public SkadedyrModel(GameResourceFactory resourceFactory, TimeSource timeSource) {
@@ -118,7 +119,6 @@ public class SkadedyrModel implements ISkadedyrModel {
         newRats = ratFactory.updateRatFactory(deltaTime, level); 
             for (IRat newRat : newRats) {
                 newRat.moveAlongPath(deltaTime);
-            
                 if (!aliveRats.contains(newRat)) {
                     aliveRats.add(newRat);
                 }
@@ -173,27 +173,28 @@ public class SkadedyrModel implements ISkadedyrModel {
         writeText = true;
         nextWaveText();
         removeAllRats();
-
+        ratFactory.resetRatFactory();
+        killedRats = 0;
         setPause();
+        roundOver = false;
         for (ICat cat : cats) {
             cat.resetAttackTimer();
         }
     }
 
     private void isRoundOver() {
-        int killedRats = 0;
-        for (IRat rat : aliveRats) {
-            if (rat.isKilled() || rat.isOut()) {
-                killedRats++;
+        int totalRatsForRound = ratFactory.calculateRatsForRound(level);
+        if (!roundOver) {
+            for (IRat rat : aliveRats) {
+                if ((rat.isKilled() || rat.isOut()) && !rat.isCounted()) {
+                    killedRats++;
+                    rat.setCounted(true); 
+                }
             }
-            if (killedRats == ratFactory.calculateRatsForRound(level)) {
-                roundOver = true;
-                break;
-            }
-            roundOver = false;
+            roundOver = (killedRats >= totalRatsForRound);
         }
-
     }
+    
 
     @Override
     public String nextWaveText() {

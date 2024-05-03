@@ -198,6 +198,19 @@ public interface IRat {
      * sets is frozen to true
      */
     void setFrozen(); 
+
+    /**
+     * 
+     * @param counted sets the counted to true or false
+     * sets the counted to true or false
+     */
+    void setCounted(boolean counted);
+
+    /**
+     *
+     * @return if the rat is counted or not
+     */
+    boolean isCounted();
 }
 
 
