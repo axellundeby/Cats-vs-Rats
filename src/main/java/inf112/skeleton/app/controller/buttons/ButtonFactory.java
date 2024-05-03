@@ -53,6 +53,14 @@ public class ButtonFactory {
         return new ImageButton(style);
     }
 
+    /**
+     * Creates a new UpgradeButton with the specified images for the up and down states.
+     *
+     * @param upImagePath   The path to the image to use for the button's up state.
+     * @param downImagePath The path to the image to use for the button's down
+     *                      state.
+     * @return A new UpgradeButton with the specified images.
+     */
     public Button createUpgradeButton(int cost, String textureUp, String textureDown, int xPosition, int yPosition,
             Consumer<ICat> upgradeAction) {
         Button upgradeButton = ButtonFactory.createImageButton(textureUp, textureDown);
@@ -73,6 +81,16 @@ public class ButtonFactory {
         return upgradeButton;
     }
 
+
+
+    /**
+     * Creates a new MenuButton with the specified images for the up and down states.
+     *
+     * @param textureUp   The path to the image to use for the button's up state.
+     * @param textureDown The path to the image to use for the button's down
+     *                      state.
+     * @return A new MenuButton with the specified images.
+     */
     public Button createMenuButton(String textureUp, String textureDown, int xPosition, int yPosition,  Runnable action) {
         Button button = ButtonFactory.createImageButton(textureUp, textureDown);
         button.setSize(MENU_BUTTON_WIDTH, MENU_BUTTON_HEIGHT);
