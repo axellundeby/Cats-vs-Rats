@@ -185,7 +185,7 @@ Vi har rettet og forbedret følgende punkter siden forrige rapport:
 
 ### README.md Dokumentasjon
 
-For å lette bygging, testing og kjøring av koden vår, har vi oppdatert README.md med detaljert informasjon om prosjektet. Under vurdering vil koden også bli brukertestet.
+For å bygge, teste og kjøre  koden vår, har vi oppdatert README.md med detaljert informasjon om prosjektet.
 
 ### Plattformkompatibilitet
 
