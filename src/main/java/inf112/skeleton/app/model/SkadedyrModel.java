@@ -118,7 +118,7 @@ public class SkadedyrModel implements ISkadedyrModel {
         newRats = ratFactory.updateRatFactory(deltaTime, level); 
             for (IRat newRat : newRats) {
                 newRat.moveAlongPath(deltaTime);
-                //newRat.rotateImage();
+            
                 if (!aliveRats.contains(newRat)) {
                     aliveRats.add(newRat);
                 }
@@ -132,10 +132,6 @@ public class SkadedyrModel implements ISkadedyrModel {
             if (rat.isKilled()) {
                 rat.updateCoinVisibility(deltaTime);
                 if (!rat.isrewardClaimed()) {
-                    // Buttons update each time a rat is killed
-                    if (currentState instanceof PlayState) {
-                     //   ((PlayState) currentState).updateUpgradeButtons();
-                    }
                     money += rat.getBounty();
                     points += rat.getPoints();
                     rat.rewardClaimed();

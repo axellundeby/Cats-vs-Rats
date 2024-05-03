@@ -18,6 +18,10 @@ public class GameStateManager {
         currentState = newState;
     }
 
+    /**
+     * Gets the current game state.
+     * @return The current game state.
+     */
     public State getState(){
         return currentState;
     }

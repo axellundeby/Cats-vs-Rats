@@ -105,10 +105,7 @@ public class CatMenu implements ICatMenu{
         return menuRect.y;
     }
 
-    /**
-     * Simply adds a cat to the buy menu
-     * @param cat to add 
-     */
+    @Override
     public void addCat(ICat cat){
         availableCatsList.add(cat);
         catsMap.put(cat, new Rectangle(0, 0, 10, 10));

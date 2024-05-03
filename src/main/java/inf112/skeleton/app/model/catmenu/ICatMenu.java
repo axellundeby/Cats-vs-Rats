@@ -61,4 +61,10 @@ public interface ICatMenu {
      * @return The y-coordinate of the cat menu.
      */
     float getY();
+
+    /**
+     * Simply adds a cat to the buy menu
+     * @param cat to add 
+     */
+    void addCat(ICat cat);
 }

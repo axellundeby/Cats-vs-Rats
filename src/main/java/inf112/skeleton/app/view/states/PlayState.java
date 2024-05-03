@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import inf112.skeleton.app.controller.buttons.menu.MenuButtons;
-import inf112.skeleton.app.controller.buttons.upgrade.UpgradeButtons;
+import inf112.skeleton.app.controller.buttons.upgrade.UpgradeButton;
 import inf112.skeleton.app.model.SkadedyrModel;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.cat.ICat;
@@ -25,10 +25,10 @@ public class PlayState extends State {
     private Stage stage;
     private Stage upgradeStage;
     private CatMenu catMenu;
-   // private Button pauseButton;
+ 
     private Texture mapTexture;
     private MenuButtons menu;
-    private UpgradeButtons upgradeButtons;
+    private UpgradeButton upgradeButtons;
     private float alpha = 0f;
 
     public PlayState(GameStateManager gsm, SkadedyrModel model) {
@@ -41,7 +41,7 @@ public class PlayState extends State {
         this.stage = new Stage();
         this.upgradeStage = new Stage();
         this.mapTexture = new Texture("map/Spill_Plattform.jpg");
-        upgradeButtons = new UpgradeButtons(model);
+        upgradeButtons = new UpgradeButton(model);
         menu = new MenuButtons(model);
         addUpgradeButtonsToStage();
         addMenuButtonsToStage();
@@ -62,10 +62,17 @@ public class PlayState extends State {
         stage.addActor(menu.restartButton());
     }
 
+
+    /**
+     * Updates the appearance of the upgrade buttons
+     */
     public void updateUpgradeButtons() {
         upgradeButtons.updateButtonAppearance();
     }
 
+    /**
+     * Updates the appearance of the menu buttons
+     */
     public void updateMenuButtons() {
         menu.updateButtonAppearance();
 
@@ -81,7 +88,7 @@ public class PlayState extends State {
         }
 
         if (alpha < 1f) {
-            alpha += Gdx.graphics.getDeltaTime() / 2; // Increase alpha over time
+            alpha += Gdx.graphics.getDeltaTime() / 2;
         }
 
         batch.begin();
@@ -105,9 +112,7 @@ public class PlayState extends State {
         batch.begin();
         drawCats(batch);
         drawRats(batch);
-        // batch.end();
-
-        // batch.begin();
+       
         drawGameStatus(batch);
         batch.end();
 
@@ -160,7 +165,7 @@ public class PlayState extends State {
         font.draw(batch, "Dine penger: " + model.getMoney(), 925, 800);
         font.draw(batch, "Din Score: " + model.getPoints(), 800, 800);
         font.draw(batch, "Level: " + model.getLevel(), 700, 800);
-        font.draw(batch, model.nextWaveText(), 500, 150);
+        font.draw(batch, model.nextWaveText(), 500, 170);
         font.draw(batch, model.uppgradeErrorText(), 900, 190);
         font.setColor(Color.WHITE);
     }
