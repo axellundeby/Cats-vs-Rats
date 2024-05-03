@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import inf112.skeleton.app.model.catmenu.CatMenu;
 import inf112.skeleton.app.model.entities.cat.ICat;
 import inf112.skeleton.app.model.entities.rat.IRat;
-import inf112.skeleton.app.view.States.State;
+import inf112.skeleton.app.view.states.State;
 
 public interface ISkadedyrModel {
     
