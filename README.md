@@ -15,6 +15,8 @@ Når man starter spillet blir man møtt av en forside. Her kan man enten åpne h
 
 ### Kjente feil
 
+Vi har ingen kjente feil på nåværende tidspunkt.
+
 
 ### Kjøring
 * Kompileres med `mvn package`.
