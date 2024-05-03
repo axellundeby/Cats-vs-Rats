@@ -24,10 +24,8 @@ public class RatFactory {
         spawnTimer += deltaTime;
         if (spawnTimer > RAT_SPAWN_DELAY && ratsSpawned < calculateRatsForRound(level)) {
             spawnTimer = 0; 
-            rats.clear();
             rats.add(ratVariation(level));
             ratsSpawned++;
-            System.out.println(ratsSpawned);
         }
       
         return rats;
