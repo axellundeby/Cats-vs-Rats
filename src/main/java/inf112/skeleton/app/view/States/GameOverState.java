@@ -1,5 +1,5 @@
 
-package inf112.skeleton.app.view.States;
+package inf112.skeleton.app.view.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;

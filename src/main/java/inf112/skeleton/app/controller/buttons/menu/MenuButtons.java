@@ -7,9 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import inf112.skeleton.app.controller.buttons.ButtonFactory;
 import inf112.skeleton.app.model.SkadedyrModel;
-import inf112.skeleton.app.view.States.HelpState;
-import inf112.skeleton.app.view.States.MenuState;
-import inf112.skeleton.app.view.States.PlayState;
+import inf112.skeleton.app.view.states.HelpState;
+import inf112.skeleton.app.view.states.MenuState;
+import inf112.skeleton.app.view.states.PlayState;
 
 public class MenuButtons {
     private SkadedyrModel model;
