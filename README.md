@@ -24,11 +24,16 @@ Vi har ingen kjente feil på nåværende tidspunkt.
 * Krever Java 21 eller senere
 
 ### Credits
-**Fabian Christensen** - Grafikk
+**Fabian Christensen** - Grafikk (laget på oppdrag fra oss)
 
-- Fart sound: [Freesound - Jagadamba](https://freesound.org/people/Jagadamba/sounds/253801/)
-- Coin sound: [Freesound - Valenspire](https://freesound.org/people/Valenspire/sounds/699502/)
-- Ice sound: [Pixabay](https://pixabay.com/sound-effects/ice-cracking-field-recording-06-139709/)
-- HP sound: "Retro arcade game over" [Mixkit](https://mixkit.co/free-sound-effects/lose/)
-- Cashier sound: [Pixabay](https://pixabay.com/sound-effects/cash-register-purchase-87313/)
-- Gunshot sound: [Pixabay](https://pixabay.com/sound-effects/9mm-pistol-shot-6349/)
+This game uses these sounds from Freesound:
+- Fart 02.wav by Jagadamba -- [https://freesound.org/s/253801/](https://freesound.org/s/253801/) -- License: Attribution 4.0
+- Coin_Drop_07 by Valenspire -- [https://freesound.org/s/699502/](https://freesound.org/s/699502/) -- License: Creative Commons 0
+
+This game uses these sounds from Pixabay:
+- Ice - Cracking - Field Recording - 06 by GregorQuendel_SoundDesign -- [https://pixabay.com/sound-effects/ice-cracking-field-recording-06-139709/](https://pixabay.com/sound-effects/ice-cracking-field-recording-06-139709/) -- License: Content License
+- Cash Register Purchase by Pixabay -- [https://pixabay.com/sound-effects/cash-register-purchase-87313/](https://pixabay.com/sound-effects/cash-register-purchase-87313/) -- License: Content License
+- 9mm pistol shot by Pixabay -- [https://pixabay.com/sound-effects/9mm-pistol-shot-6349/](https://pixabay.com/sound-effects/9mm-pistol-shot-6349/) -- License: Content License
+
+This game uses one sound from Mixkit
+- Retro arcade game over -- [https://mixkit.co/free-sound-effects/lose/](https://mixkit.co/free-sound-effects/lose/) -- License: Mixkit Sound Effects Free License
