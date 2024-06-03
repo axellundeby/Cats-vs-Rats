@@ -19,7 +19,7 @@ I dette strategispillet er målet å forsvare byen mot en invasjon av rotter ved
 <img src="src/main/resources/Spill_Help.png" width="500" alt="Help Screen">
 
 ### Last ned spillet herifra
-[click me to download](skadedyrkontrollorene-inc.jar)
+<a href="skadedyrkontrollorene-inc.jar" download>Click me to Download</a>
 
 
 ### Hvordan spille spillet
