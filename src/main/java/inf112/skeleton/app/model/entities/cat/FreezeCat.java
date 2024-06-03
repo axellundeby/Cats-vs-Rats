@@ -14,7 +14,7 @@ public class FreezeCat extends Cat {
             5,
             100, 
             Arrays.asList(resourceFactory.getTexture("cats/Spill_Frysekatt1.png")),
-            Arrays.asList(resourceFactory.getTexture("cats/Spill_Frysekatt2_angrip.png"),resourceFactory.getTexture("cats/Spill_Frysekatt3_angrip.png")), 
+            Arrays.asList(resourceFactory.getTexture("cats/Spill_Frysekatt2_angrip.png")), 
             50.0f,
             0);
             this.resourceFactory = resourceFactory;
